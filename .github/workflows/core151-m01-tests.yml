@@ -53,3 +53,7 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m unittest discover -v -s tests -p 'test_m01_native_claim_boundary.py'
+      - name: M01 native read-only isolation on real Core151 world
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_native_core151_isolation.py'
