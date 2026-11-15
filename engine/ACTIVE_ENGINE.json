@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Core151 text source + Book-owned M01 gateway + trusted-local whole-world checkpoint source tracked on experimental GitHub branch; restart integration tests NOT RUN",
+  "source_status": "Core151 source and M01 gateway tracked on experimental GitHub branch; actual GitHub Actions clean-checkout restart suite passed on previous commit; replay receipt validation added and pending new CI",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "workflow committed, zero runs observed",
+    "github_ci": "PASS: run 43711738074 at 1eee064cb (6 authority + 9 gateway + 6 checkpoint = 21 tests); new receipt validation tests pending",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -26,22 +26,20 @@
     "knowledge_architecture": "6/6 PASS local extracted exact SHA archive source",
     "pilot": "seed400, 1 day PASS, 100 Founders verified separately, 16 tree residents, Book mass error -2.73e-12, energy error -1.12e-8",
     "m01_gateway_headless": "previous cycle 6/6; new replay tests authored NOT RUN in this invocation",
-    "m01_checkpoint_replay": "Book-only pickle replay test authored NOT RUN; whole-world disk checkpoint NOT VERIFIED",
+    "m01_checkpoint_replay": "PASS in GitHub Actions at 1eee064cb; new forged-receipt validation pending",
     "checkpoint_envelope_local": "4/4 PASS with locally mirrored checkpoint implementation; GitHub checkout NOT RUN",
-    "whole_world_checkpoint": "authored 2 integration tests; NOT RUN; potential pickle incompatibilities remain"
+    "whole_world_checkpoint": "PASS in GitHub Actions at 1eee064cb: replay idempotence and one-step restarted vs uninterrupted Book/tick equality"
   },
-  "book_audit": "Checkpoint code calls canonical Book audit before save and after restore; whole-world audit NOT RUN this cycle",
+  "book_audit": "PASS during GitHub Actions real Core151 checkpoint and one-step comparisons at 1eee064cb; no native WorldBox",
   "open_gates": [
-    "execute whole-world checkpoint/replay integration tests",
-    "run clean-checkout GitHub CI tests and repair failures",
-    "verify whole-world checkpoint roundtrip and restart/replay",
-    "verify crash-safe external ACK and durable settlement protocol",
-    "M05 independent SQLite Book migration/removal",
+    "verify CI on latest replay-receipt validation commit",
+    "extend restart test beyond one tick and establish crash-safe external ACK",
+    "M05 SQLite Book migration/removal",
     "native WorldBox source identity, units and version",
     "long-horizon ecological regression"
   ],
-  "next_cycle": "Run GitHub CI or a real clean-checkout Core151 restart test; repair serialization failures and prove identical Book receipts/stock/tick after save/load; do not enable external WorldBox transfers",
-  "last_cycle": "2026-11-15 M01 whole-world checkpoint implementation",
+  "next_cycle": "Verify CI for three new forged-receipt tests, then extend restart comparison across several ticks and an interrupted Book settlement; do not enable external WorldBox",
+  "last_cycle": "2026-11-15 M01 receipt-integrity checkpoint guard",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772"
 }
