@@ -47,6 +47,44 @@ class IntegratedCheckpointTests(unittest.TestCase):
                           restored.book)
             restored.audit()
 
+    def test_reject_receipt_claiming_future_book_sequence(self):
+        from dataclasses import replace
+        from founders_engine.checkpoint import save_checkpoint
+        self.session.harvest('F001', 'receipt-sequence', '1',
+                             'forest', 'plant', .01, .001)
+        book = self.session.book
+        request_id = next(iter(book.request_receipts))
+        legs, receipt = book.request_receipts[request_id]
+        book.request_receipts[request_id] = (
+            legs, replace(receipt, seq=book.seq + 1))
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(ValueError, 'inconsistent Book replay receipt'):
+                save_checkpoint(self.world, self.tree_id, Path(tmp) / 'invalid.cp')
+
+    def test_reject_receipt_with_modified_transfer_legs(self):
+        from founders_engine.checkpoint import save_checkpoint
+        self.session.harvest('F001', 'receipt-legs', '1',
+                             'forest', 'plant', .01, .001)
+        book = self.session.book
+        request_id = next(iter(book.request_receipts))
+        legs, receipt = book.request_receipts[request_id]
+        book.request_receipts[request_id] = (
+            (legs[0], ()), receipt)
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(ValueError, 'inconsistent Book replay receipt'):
+                save_checkpoint(self.world, self.tree_id, Path(tmp) / 'invalid.cp')
+
+    def test_reject_two_request_ids_claiming_same_settlement(self):
+        from founders_engine.checkpoint import save_checkpoint
+        self.session.harvest('F001', 'receipt-collision', '1',
+                             'forest', 'plant', .01, .001)
+        book = self.session.book
+        record = next(iter(book.request_receipts.values()))
+        book.request_receipts['forged-request-id'] = record
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(ValueError, 'duplicate Book settlement sequence'):
+                save_checkpoint(self.world, self.tree_id, Path(tmp) / 'invalid.cp')
+
     def test_restarted_and_uninterrupted_match(self):
         from founders_engine.checkpoint import save_checkpoint, load_checkpoint
         with tempfile.TemporaryDirectory() as tmp:
