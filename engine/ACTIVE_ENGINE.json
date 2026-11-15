@@ -14,12 +14,12 @@
   "source_status": "Core151 source tracked; added real Core151 native observation isolation tests for read-only cross-batch boundary (no new engine, no native settlement)",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS previous run 43755590950 at 248a36d; new native Core151 isolation CI pending",
+    "github_ci": "PASS GitHub Actions 43761534283 at 0671863f3309570ceee7eac87faeaea0304c8ad7 (includes new real Core151 native isolation step)",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "PASS GitHub Actions checkout and Python 3.11 unittest at f3a5179, run 43738903675",
-    "book_audit_this_cycle": "New tests call actual world.book.audit() before/after observations and rejected native writes; execution pending",
+    "book_audit_this_cycle": "PASS in actual Core151 native isolation CI tests before/after observation, rejection and deny; no native writes",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "NOT RUN",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -35,9 +35,9 @@
     "m01_subprocess_termination": "PASS 2/2 in GitHub Actions run 43733194584 on 1b853df19b858ad57d5a0114eb7ea74985111126: os._exit before/after os.replace, Book receipt replay, 100 Founders and mass/energy audits",
     "m01_subprocess_fsync": "PASS 4/4 in GitHub Actions run 43738903675 at f3a517942d647845d97a6febc9b55128c9aaef53; child os._exit at before/after temporary-file and directory fsync",
     "native_claim_boundary": "11/11 cross-batch native claim tests PASS at GitHub Actions 43755590950, commit 248a36dfe78eae3be7cc1f33d9e3b1f41aec0e17",
-    "native_core151_isolation": "3 actual-world tests committed at 11e584cfce2dbf097361fc853f443b3148d0edf5; new CI pending"
+    "native_core151_isolation": "PASS 3/3 GitHub Actions run 43761534283 on code commit 0671863f3309570ceee7eac87faeaea0304c8ad7; real Core151 native observation/deny tests"
   },
-  "book_audit": "New native isolation tests committed but results pending; no new production Book transfer",
+  "book_audit": "PASS real Core151 Book audit invoked before/after each native isolation test at 0671863f, no native settlement",
   "open_gates": [
     "Native WorldBox IDs/units/version and exactly-once external ACK remain unverified; no writes",
     "Power-loss and filesystem persistence not established by process-exit tests",
@@ -48,6 +48,6 @@
   "last_cycle": "2026-11-15 M01 native claim isolation against actual Core151 Book and Founder registry",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "08ae74134779b835622e943a09c4d0286d2c0bda",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43749781470"
+  "last_verified_code_commit": "0671863f3309570ceee7eac87faeaea0304c8ad7",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43761534283"
 }
