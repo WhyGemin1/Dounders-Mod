@@ -32,5 +32,35 @@ class NativeBoundaryTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 self.boundary.inspect(replace(self.claim, quantity=value))
 
+
+    def test_batch_identical_replay_remains_read_only(self):
+        result = self.boundary.inspect_batch([self.claim, self.claim])
+        self.assertEqual(len(result), 2)
+        self.assertTrue(all(not x['book_settlement_allowed'] and
+                            not x['ack_allowed'] for x in result))
+
+    def test_batch_rejects_changed_request_identity_or_amount(self):
+        for field, value in [('object_id', 'other-object'),
+                             ('object_revision', 'r2'),
+                             ('quantity', 2.0),
+                             ('resource_unit', 'other-unit'),
+                             ('ack_token', 'other-ack')]:
+            with self.subTest(field=field), self.assertRaisesRegex(
+                    ValueError, 'conflicting native request replay'):
+                self.boundary.inspect_batch([
+                    self.claim, replace(self.claim, **{field: value})])
+
+    def test_batch_rejects_ack_token_collision(self):
+        with self.assertRaisesRegex(ValueError, 'ACK token reused'):
+            self.boundary.inspect_batch([
+                self.claim, replace(self.claim, request_id='request-2')])
+
+    def test_batch_invalid_claim_rejected_before_observation(self):
+        with self.assertRaises(ValueError):
+            self.boundary.inspect_batch([
+                self.claim, replace(self.claim, quantity=float('nan'))])
+        with self.assertRaises(TypeError):
+            self.boundary.inspect_batch(iter((self.claim,)))
+
 if __name__ == '__main__':
     unittest.main()
