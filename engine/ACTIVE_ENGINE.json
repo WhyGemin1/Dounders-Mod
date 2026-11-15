@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Core151 source, M01 Book gateway, checkpoint, and 3-tick restart regression tracked as text on experimental GitHub branch; clean GitHub Actions checkout PASS at 88cca9f (run 43717975764)",
+  "source_status": "Core151 source, M01 gateway, Book receipts, checkpoint and durable-harvest guard tracked on experimental GitHub branch. Fault-injection CI run 43722361460 pending verification.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS run 43717975764 on 88cca9fcc4a0b43f7572e51bb138d24168775df0: 6 authority + 9 gateway + 9 checkpoint + 2 multi-tick restart = 26 tests, all steps successful (clean GitHub Actions checkout)",
+    "github_ci": "Prior 26/26 passed run 43718107273 at ee431ac8. New durable-harvest tests pending run 43722361460; do not count as passing yet.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -29,17 +29,18 @@
     "m01_checkpoint_replay": "PASS GitHub Actions 43717975764 incl previous 9 checkpoint tests and new 3-tick comparison",
     "checkpoint_envelope_local": "4/4 PASS with locally mirrored checkpoint implementation; GitHub checkout NOT RUN",
     "whole_world_checkpoint": "PASS 9/9 checkpoint tests in GitHub Actions, including 3 invalid receipt rejection cases and 2 actual Core151 restart tests",
-    "m01_multitick_restart": "PASS 2/2 tests at seed400: 3 live days vs 3 per-day restarted days; synthetic Book harvest before and after checkpoint; daily exact Book balances/receipts, Founder IDs, Tree residents, creation state and clock comparison"
+    "m01_multitick_restart": "PASS 2/2 tests at seed400: 3 live days vs 3 per-day restarted days; synthetic Book harvest before and after checkpoint; daily exact Book balances/receipts, Founder IDs, Tree residents, creation state and clock comparison",
+    "m01_durable_harvest": "3 real-world fault-injection tests committed; GitHub CI run 43722361460 pending at state-update time; not yet verified"
   },
-  "book_audit": "PASS in GitHub Actions run 43717975764 at commit 88cca9f, multiple ticks and pre/post-checkpoint synthetic harvest both arms; zero new resource authority, no native WorldBox",
+  "book_audit": "Prior multi-tick GitHub Actions audit passed; new durable-harvest Book audit result pending",
   "open_gates": [
-    "crash-safe external WorldBox inbound claim/ACK semantics with native source ID/version/unit mapping (currently read-only)",
-    "M05 SQLite Book migration/removal; no second writer",
-    "native WorldBox source identity, units, game version and save/reload proof",
-    "30/180/360/720/1080-day ecological regression with failed Tree conditions"
+    "Verify new durable local checkpoint fault-injection CI and repair failures",
+    "native WorldBox IDs, source units/version and exactly-once external ACK/transaction boundary (writes disabled)",
+    "M05 SQLite Book remains read-only; migration/removal pending",
+    "long-horizon ecological stability and actual game testing not run"
   ],
-  "next_cycle": "Implement a durable pending/settled/acknowledged inbound harvest claim boundary within the SAME Core151 checkpoint/Book, with fault-injection tests for interruption at Book commit and replay; keep WorldBox external writes disabled",
-  "last_cycle": "2026-11-15 M01 multi-tick checkpoint equivalence with harvest before/after restart",
+  "next_cycle": "Inspect fault-injection CI; harden checkpoint commit boundary with crash/partial-write tests, then design native external ACK only after verified WorldBox identities and units",
+  "last_cycle": "2026-11-15 M01 durable local harvest checkpoint gate + failure quarantine",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "88cca9fcc4a0b43f7572e51bb138d24168775df0",
