@@ -53,8 +53,12 @@ class AdapterCompatibilityTests(unittest.TestCase):
                              root/'docs/INTEGRATION_025/APPROVED_DRIFT_C016.json')
         self.assertEqual(older['status'],'drift_requires_review')
         self.assertIn('founders_civ/experimental/world_integration.py', older['unapproved_files'])
+        c017=reviewed_check(root,root/'docs/INTEGRATION_025/BASELINE_HASHES.json',
+                             root/'docs/INTEGRATION_025/APPROVED_DRIFT_C017.json')
+        self.assertEqual(c017['status'],'drift_requires_review')
+        self.assertIn('founders_civ/experimental/world_integration.py',c017['unapproved_files'])
         candidate=reviewed_check(root,root/'docs/INTEGRATION_025/BASELINE_HASHES.json',
-                                 root/'docs/INTEGRATION_025/APPROVED_DRIFT_C017.json')
+                                 root/'docs/INTEGRATION_025/APPROVED_DRIFT_C018.json')
         self.assertEqual(candidate['status'],'approved_drift')
         self.assertEqual(candidate['unapproved_files'],[])
     def test_legacy_social_branch_readonly(self):

@@ -1,6 +1,6 @@
 {
   "source": "U026-C017 verified canonical source",
-  "files": 496,
+  "files": 497,
   "sha256": {
     "Founders_CIV_CoreCompletion151/source/capacity_dose_021131.py": "fc9800b1846604edfd1bee305bc866030748f109929825b4422671127808e036",
     "Founders_CIV_CoreCompletion151/source/check_cycle136_crossprocess.py": "98ba465a0114ee85335150cc9d955b889eccade366cd5318b51ae82a6ddfa694",
@@ -467,7 +467,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/test_world_tree_023.py": "f417520ef235d99bcdf4eeb6f0f24103fdbd04dfe8f87c5486bc535f1e6496ad",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_autonomous_provisioning_c003.py": "25419535b87a74cfa5e632b78355234509046847277f33240d582411e556bc79",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_book_assets_c002.py": "a42a8d38e714b427385a094c1a2bbf13d51f04284e53420b6ed4a0fa4fe7155e",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c002_provenance.py": "0a3d1ef7b2ad5517c2c1b4b174e2359bf51e968e953f1100e15cd398fbca2b5a",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c002_provenance.py": "ebb27d6d0b18c5f00e43318640b0b61b42134c91ffcc8103003bacd2fc9b4ee2",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c010_digestion_fuel.py": "6dda563c953750894d41ea5ccf1727c4d70cdd8ce61ecb892721e9f8023ed3ef",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c013_lot_isolation.py": "79f0693cbdf86a81233977dd08c9ed9010ca107661b069cffc58d8bb8f273264",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c015_founder_nutrition.py": "4075b144018323dec45160b2701484ac2260c88886185d01063b7ffd8b317d49",
@@ -479,7 +479,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_drift_provenance_069.py": "e2ffa6e15b8631d39320ef31c7f3b18ca680415158df627a0829c1ad006c977b",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_founder_harvesting_c004.py": "dd31b5e2c195cc182002c0b85b041e33925d40739ab31179a415e6f7e75e66ca",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_four_systems.py": "6ea1e70f3df0716589fc97bc9717e877dba368e71dc48b0ba8fe45cdd19c65b1",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_integration_025.py": "da270a2611ec895c2e2001f264c386b4560d7c334ebd49aa7d0b9b5da183af0b",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_integration_025.py": "4a59f4dd3bda858cd1dfce635dda4961d58fee582db87df53802297c2a417626",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_knowledge_architecture.py": "c4ad0208e202b906c2f0cc94eae80d00ca7d54e52ac4aa152c3cd4a11580a999",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_observatory.py": "5f0d183fdaef124171109d5bb8ff32049da04114c3a49b7d102caee905ab2442",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_release.py": "9e55fc979866a2e667038e762c2487080695fbbd9ebd1868cb371d7a5afd3b69",
@@ -497,7 +497,8 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/styles.css": "599cbc94b42122a2b5d5676d99c6cca4c43d185f3dc1aedaa4e4ab497ca51157",
     "Founders_CIV_CoreCompletion151/source/world_funding_141_results.csv": "24f6b734926f13fcb6f874f5c97337cefe46edd43c6841dbc1b735234b1fa38f",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "ac92d141ff5535147d6ff33f88f7e984055aef956ef958521e94cdc057fbf50a",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "e004009859edc3fd48a7c07db8b22c276d10a01be52588a78dddee398999123d"
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "e004009859edc3fd48a7c07db8b22c276d10a01be52588a78dddee398999123d",
+    "Founders_CIV_CoreCompletion151/source/world023024/docs/INTEGRATION_025/APPROVED_DRIFT_C018.json": "fdd10aa0f31d80b2bd9a63c7e4c36d767b9d424a0a2b8ab65caa71229503e43a"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",

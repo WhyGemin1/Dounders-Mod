@@ -16,11 +16,17 @@ C004=ROOT/'docs/INTEGRATION_025/APPROVED_DRIFT_C004.json'
 C015=ROOT/'docs/INTEGRATION_025/APPROVED_DRIFT_C015.json'
 C016=ROOT/'docs/INTEGRATION_025/APPROVED_DRIFT_C016.json'
 C017=ROOT/'docs/INTEGRATION_025/APPROVED_DRIFT_C017.json'
+C018=ROOT/'docs/INTEGRATION_025/APPROVED_DRIFT_C018.json'
 
 
 class C002ProvenanceTests(unittest.TestCase):
-    def test_c017_candidate_exact_attestation_passes(self):
+    def test_c017_attestation_rejects_c018_scheduler(self):
         r=reviewed_check(ROOT,BASE,C017)
+        self.assertEqual(r['status'],'drift_requires_review')
+        self.assertIn('founders_civ/experimental/world_integration.py',r['unapproved_files'])
+
+    def test_c018_candidate_exact_attestation_passes(self):
+        r=reviewed_check(ROOT,BASE,C018)
         self.assertEqual(r['status'],'approved_drift')
         self.assertEqual(set(r['approved_files']),{
             'founders_civ/core/ledger.py','founders_civ/experimental/world_trees.py',
@@ -69,7 +75,7 @@ class C002ProvenanceTests(unittest.TestCase):
                 dst=tr/name;dst.parent.mkdir(parents=True,exist_ok=True)
                 dst.write_bytes((ROOT/name).read_bytes())
             (tr/'knowledge_architecture.py').write_text('tampered')
-            r=reviewed_check(tr,BASE,C017)
+            r=reviewed_check(tr,BASE,C018)
             self.assertEqual(r['status'],'drift_requires_review')
             self.assertIn('knowledge_architecture.py',r['unapproved_files'])
 
@@ -80,7 +86,7 @@ class C002ProvenanceTests(unittest.TestCase):
                 if name!='founder_world.html':
                     dst=tr/name;dst.parent.mkdir(parents=True,exist_ok=True)
                     dst.write_bytes((ROOT/name).read_bytes())
-            r=reviewed_check(tr,BASE,C017)
+            r=reviewed_check(tr,BASE,C018)
             self.assertIn('founder_world.html',r['unapproved_files'])
 
 if __name__=='__main__':unittest.main()
