@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Core151 source, M01 gateway, Book receipts, checkpoint and durable-harvest guard tracked on experimental GitHub branch. Fault-injection CI run 43722361460 pending verification.",
+  "source_status": "Core151 and M01 durable local checkpointed harvest implemented on experimental GitHub branch; GitHub Actions clean-checkout run 43722361460 succeeded at bc5e0c9.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "Prior 26/26 passed run 43718107273 at ee431ac8. New durable-harvest tests pending run 43722361460; do not count as passing yet.",
+    "github_ci": "PASS run 43722361460 at bc5e0c9a9c2c59c9ca2ef5058b65a18f0e292fd6: 6 authority + 9 gateway + 9 checkpoint + 2 multi-tick + 3 durable harvest = 29 tests, all workflow steps successful",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
-    "clean_checkout": "PASS GitHub Actions checkout, imported Python compile + 4 unittest commands; local git clone DNS issue does not affect CI evidence",
-    "book_audit_this_cycle": "PASS at every tested day across both arms in 3-day GitHub CI run; synthetic mass and energy conservation; no native WorldBox",
+    "clean_checkout": "PASS GitHub Actions checkout at bc5e0c9; python -m compileall -q src and five PYTHONPATH=src unittest discover commands",
+    "book_audit_this_cycle": "PASS in 3 durable-harvest tests (successful restored world and recovered replay), plus prior suites; no native WorldBox",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "NOT RUN",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -30,19 +30,19 @@
     "checkpoint_envelope_local": "4/4 PASS with locally mirrored checkpoint implementation; GitHub checkout NOT RUN",
     "whole_world_checkpoint": "PASS 9/9 checkpoint tests in GitHub Actions, including 3 invalid receipt rejection cases and 2 actual Core151 restart tests",
     "m01_multitick_restart": "PASS 2/2 tests at seed400: 3 live days vs 3 per-day restarted days; synthetic Book harvest before and after checkpoint; daily exact Book balances/receipts, Founder IDs, Tree residents, creation state and clock comparison",
-    "m01_durable_harvest": "3 real-world fault-injection tests committed; GitHub CI run 43722361460 pending at state-update time; not yet verified"
+    "m01_durable_harvest": "PASS 3/3 tests in GitHub Actions run 43722361460 at bc5e0c9: durable replay, interrupted save quarantine/recovery, invalid request without mutation"
   },
-  "book_audit": "Prior multi-tick GitHub Actions audit passed; new durable-harvest Book audit result pending",
+  "book_audit": "PASS GitHub Actions run 43722361460 at bc5e0c9 for real Core151 headless tests; no native WorldBox",
   "open_gates": [
-    "Verify new durable local checkpoint fault-injection CI and repair failures",
-    "native WorldBox IDs, source units/version and exactly-once external ACK/transaction boundary (writes disabled)",
-    "M05 SQLite Book remains read-only; migration/removal pending",
-    "long-horizon ecological stability and actual game testing not run"
+    "External WorldBox ACK/transaction not implemented: local checkpoint receipt must not be represented as native ACK",
+    "Native WorldBox IDs, units and game version unverified; writes remain disabled",
+    "Crash window and disk fsync failure beyond mocked save_checkpoint requires deeper fault injection",
+    "M05 SQLite migration/removal pending; long-horizon ecology and in-game testing unverified"
   ],
-  "next_cycle": "Inspect fault-injection CI; harden checkpoint commit boundary with crash/partial-write tests, then design native external ACK only after verified WorldBox identities and units",
+  "next_cycle": "Test atomic checkpoint failure modes (fsync/replace/interrupted file) and recovery; do not add external ACK until native identities/units/version are verified",
   "last_cycle": "2026-11-15 M01 durable local harvest checkpoint gate + failure quarantine",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "88cca9fcc4a0b43f7572e51bb138d24168775df0",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43717975764"
+  "last_verified_code_commit": "bc5e0c9a9c2c59c9ca2ef5058b65a18f0e292fd6",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43722361460"
 }
