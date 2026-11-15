@@ -1,0 +1,27 @@
+name: Core151 M01 single-Book regression
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - '.github/workflows/core151-m01-tests.yml'
+  workflow_dispatch:
+jobs:
+  headless:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile imported source
+        run: python -m compileall -q src
+      - name: One-engine and M01 gateway regression
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_*authority*.py'
+      - name: M01 Book-funded harvest regression
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_gateway_integration.py'
