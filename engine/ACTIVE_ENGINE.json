@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Core151 single-engine source tracked; 4 child-process fsync boundary tests and CI workflow committed; execution pending",
+  "source_status": "Core151 single-engine source tracked; 4 child-process fsync boundary tests verified on GitHub Actions clean checkout at f3a5179",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "Prior verified 34/34 at run 43733285383 on 859e28a; current fsync tests pending CI",
+    "github_ci": "PASS 38/38 (6+9+9+2+3+3+2+4) in run 43738903675 at f3a517942d647845d97a6febc9b55128c9aaef53; all 8 unittest steps passed",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
-    "clean_checkout": "PASS GitHub Actions checkout on run 43733194584; no local clone claimed",
-    "book_audit_this_cycle": "Not yet executed for new fsync tests; each test calls final.audit() if run",
+    "clean_checkout": "PASS GitHub Actions checkout and Python 3.11 unittest at f3a5179, run 43738903675",
+    "book_audit_this_cycle": "PASS 4 child-process recovery cases in GitHub Actions, each calling final.audit(); numeric residuals not separately captured",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "NOT RUN",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -33,19 +33,19 @@
     "m01_durable_harvest": "PASS 3/3 tests in GitHub Actions run 43722361460 at bc5e0c9: durable replay, interrupted save quarantine/recovery, invalid request without mutation",
     "m01_disk_faults": "PASS GitHub Actions job step at 94c9e2b: file fsync failure, atomic replace failure, directory fsync failure after replacement; each tests poisoned session and recovery replay with one Book",
     "m01_subprocess_termination": "PASS 2/2 in GitHub Actions run 43733194584 on 1b853df19b858ad57d5a0114eb7ea74985111126: os._exit before/after os.replace, Book receipt replay, 100 Founders and mass/energy audits",
-    "m01_subprocess_fsync": "4/4 new tests committed at 17c4b7b; CI command added at f3a5179; result not yet confirmed"
+    "m01_subprocess_fsync": "PASS 4/4 in GitHub Actions run 43738903675 at f3a517942d647845d97a6febc9b55128c9aaef53; child os._exit at before/after temporary-file and directory fsync"
   },
-  "book_audit": "Prior 34-test GitHub CI passed Book audits; no numeric residual captured for this new cycle",
+  "book_audit": "PASS Book mass/energy audit after each fsync subprocess termination and same-ID replay in run 43738903675; numeric residuals not logged",
   "open_gates": [
     "Native WorldBox IDs/units/version and exactly-once external ACK remain unverified; no writes",
     "Power-loss and filesystem persistence not established by process-exit tests",
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Review fsync subprocess CI and repair failures; then develop crash-safe native claim/ACK contract while WorldBox stays read-only",
-  "last_cycle": "2026-11-15 M01 subprocess exits at temporary-file and directory fsync boundaries; new CI pending",
+  "next_cycle": "Define and implement a fail-closed native WorldBox claim/ACK protocol boundary with typed identity/units/version checks and no external writes; keep one Book and M01 repair lock",
+  "last_cycle": "2026-11-15 M01 child-process exits at file/directory fsync, 38/38 clean GitHub Actions tests passed",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "1b853df19b858ad57d5a0114eb7ea74985111126",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43733194584"
+  "last_verified_code_commit": "f3a517942d647845d97a6febc9b55128c9aaef53",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43738903675"
 }
