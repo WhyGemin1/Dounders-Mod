@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Core151 and M01 durable local checkpointed harvest implemented on experimental GitHub branch; GitHub Actions clean-checkout run 43722361460 succeeded at bc5e0c9.",
+  "source_status": "Actual Core151 single-Book source tracked; checkpointed harvest and 3 actual checkpoint disk fault-injection regressions on experimental branch",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS run 43722361460 at bc5e0c9a9c2c59c9ca2ef5058b65a18f0e292fd6: 6 authority + 9 gateway + 9 checkpoint + 2 multi-tick + 3 durable harvest = 29 tests, all workflow steps successful",
+    "github_ci": "Run 43727116268 at 94c9e2bc648a6a6a34b732282fab066a0ec65f1a: all 6 test steps including new 3 disk fault cases passed per GitHub jobs API; workflow final status was in progress at observation; previous complete 29/29 run 43722446144 success",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
-    "clean_checkout": "PASS GitHub Actions checkout at bc5e0c9; python -m compileall -q src and five PYTHONPATH=src unittest discover commands",
-    "book_audit_this_cycle": "PASS in 3 durable-harvest tests (successful restored world and recovered replay), plus prior suites; no native WorldBox",
+    "clean_checkout": "PASS GitHub Actions checkout and all test steps at 94c9e2b; final workflow status to be checked",
+    "book_audit_this_cycle": "PASS as part of 3 new real Core151 recovery cases; checked mass/energy through Book.audit after recovery; no numerical error measurements separately exported",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "NOT RUN",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -30,19 +30,20 @@
     "checkpoint_envelope_local": "4/4 PASS with locally mirrored checkpoint implementation; GitHub checkout NOT RUN",
     "whole_world_checkpoint": "PASS 9/9 checkpoint tests in GitHub Actions, including 3 invalid receipt rejection cases and 2 actual Core151 restart tests",
     "m01_multitick_restart": "PASS 2/2 tests at seed400: 3 live days vs 3 per-day restarted days; synthetic Book harvest before and after checkpoint; daily exact Book balances/receipts, Founder IDs, Tree residents, creation state and clock comparison",
-    "m01_durable_harvest": "PASS 3/3 tests in GitHub Actions run 43722361460 at bc5e0c9: durable replay, interrupted save quarantine/recovery, invalid request without mutation"
+    "m01_durable_harvest": "PASS 3/3 tests in GitHub Actions run 43722361460 at bc5e0c9: durable replay, interrupted save quarantine/recovery, invalid request without mutation",
+    "m01_disk_faults": "PASS GitHub Actions job step at 94c9e2b: file fsync failure, atomic replace failure, directory fsync failure after replacement; each tests poisoned session and recovery replay with one Book"
   },
-  "book_audit": "PASS GitHub Actions run 43722361460 at bc5e0c9 for real Core151 headless tests; no native WorldBox",
+  "book_audit": "PASS via real Core151 headless Book.audit() in three new recovery tests; no native WorldBox or power loss",
   "open_gates": [
-    "External WorldBox ACK/transaction not implemented: local checkpoint receipt must not be represented as native ACK",
-    "Native WorldBox IDs, units and game version unverified; writes remain disabled",
-    "Crash window and disk fsync failure beyond mocked save_checkpoint requires deeper fault injection",
-    "M05 SQLite migration/removal pending; long-horizon ecology and in-game testing unverified"
+    "Native WorldBox ID/unit/version and exactly-once external ACK unverified; keep writes disabled",
+    "Real process kill, filesystem crash and power-loss persistence semantics unverified; directory fsync mock does not prove post-power-loss durability",
+    "M05 SQLite second-writer removal/migration remains blocked",
+    "Long-horizon ecological stability and in-game testing not run"
   ],
-  "next_cycle": "Test atomic checkpoint failure modes (fsync/replace/interrupted file) and recovery; do not add external ACK until native identities/units/version are verified",
-  "last_cycle": "2026-11-15 M01 durable local harvest checkpoint gate + failure quarantine",
+  "next_cycle": "Test recovery after actual process termination using subprocess and a persisted checkpoint, distinguishing before/after atomic replace; preserve one Book and disable native writes",
+  "last_cycle": "2026-11-15 M01 checkpoint fsync and atomic replace fault-injection tests",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "bc5e0c9a9c2c59c9ca2ef5058b65a18f0e292fd6",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43722361460"
+  "last_verified_code_commit": "94c9e2bc648a6a6a34b732282fab066a0ec65f1a",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43727116268"
 }
