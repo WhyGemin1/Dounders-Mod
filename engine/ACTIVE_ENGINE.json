@@ -14,7 +14,7 @@
   "source_status": "Core151 source and M01 gateway tracked on experimental GitHub branch; actual GitHub Actions clean-checkout restart suite passed on previous commit; replay receipt validation added and pending new CI",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS: run 43711738074 at 1eee064cb (6 authority + 9 gateway + 6 checkpoint = 21 tests); new receipt validation tests pending",
+    "github_ci": "PASS run 43716911154 at a4e947b: 6 authority + 9 gateway + 9 checkpoint = 24 tests (clean GitHub Actions checkout)",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -28,17 +28,16 @@
     "m01_gateway_headless": "previous cycle 6/6; new replay tests authored NOT RUN in this invocation",
     "m01_checkpoint_replay": "PASS in GitHub Actions at 1eee064cb; new forged-receipt validation pending",
     "checkpoint_envelope_local": "4/4 PASS with locally mirrored checkpoint implementation; GitHub checkout NOT RUN",
-    "whole_world_checkpoint": "PASS in GitHub Actions at 1eee064cb: replay idempotence and one-step restarted vs uninterrupted Book/tick equality"
+    "whole_world_checkpoint": "PASS 9/9 checkpoint tests in GitHub Actions, including 3 invalid receipt rejection cases and 2 actual Core151 restart tests"
   },
   "book_audit": "PASS during GitHub Actions real Core151 checkpoint and one-step comparisons at 1eee064cb; no native WorldBox",
   "open_gates": [
-    "verify CI on latest replay-receipt validation commit",
     "extend restart test beyond one tick and establish crash-safe external ACK",
     "M05 SQLite Book migration/removal",
     "native WorldBox source identity, units and version",
     "long-horizon ecological regression"
   ],
-  "next_cycle": "Verify CI for three new forged-receipt tests, then extend restart comparison across several ticks and an interrupted Book settlement; do not enable external WorldBox",
+  "next_cycle": "Extend deterministic uninterrupted/restarted comparison to multiple ticks, then design atomic native WorldBox ACK and Book settlement; M01 remains experimental",
   "last_cycle": "2026-11-15 M01 receipt-integrity checkpoint guard",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772"
