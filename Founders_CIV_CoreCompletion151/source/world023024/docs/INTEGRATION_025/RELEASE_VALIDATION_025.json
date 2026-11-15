@@ -1,0 +1,27 @@
+{
+  "release": "INTEGRATION-025",
+  "base": "WORLD-024",
+  "source_core_and_social_world_unchanged": true,
+  "unchanged_source_files_compared": 6,
+  "baseline_comparison": "byte equality against provided WORLD-024 archive",
+  "unit_tests": {
+    "tests_directory": 100,
+    "top_level": 53,
+    "new_compat_tests": 15
+  },
+  "scenario_checks": {
+    "paired_seeds": [
+      820,
+      821
+    ],
+    "policy_variants": 8,
+    "scenarios_completed": 16,
+    "cycles_per_scenario": 4,
+    "no_model_exceptions": true,
+    "max_abs_mass_residual": 2.7284841053187847e-12,
+    "max_abs_energy_residual": 2.2060703486204147e-08
+  },
+  "release_scope": "optional versioned scenario and read-only extension host; no new full-state migration or physical action API",
+  "evidence": "results/integration_025/matrix.csv; unittest output recorded during build",
+  "scientific_limits": "No claim of human trust realism, ecological persistence, or consciousness"
+}

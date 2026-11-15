@@ -1,7 +1,4 @@
-"""C010 regression: digestion consumes real Book chemical fuel and replays exactly.
-The production living_assets.py implementation is staged in the C010 handoff;
-do not promote Core until it is committed and these tests pass on checkout.
-"""
+"""C010 regression: digestion must consume actual Book chemical fuel and replay exactly."""
 import pytest
 from founders_civ.core.living_assets import TreeResourceOps
 from founders_civ.core.ledger import Book
@@ -15,8 +12,9 @@ class Tree:
 
 def prepared(founder_fuel,body_fuel=0,number=1):
     tree=Tree();b=tree.sim.book
-    b.seed_mass('gut:founder:F1',.08*number)
-    b.seed_energy('gut_energy:founder:F1',.02*number)
+    for n in range(number):
+        b.seed_mass(f'gut:founder:F1:lot:L{n}',.08)
+        b.seed_energy(f'gut_energy:founder:F1:lot:L{n}',.02)
     b.seed_energy('founder:F1',founder_fuel)
     b.seed_energy('body_chemical:founder:F1',body_fuel)
     b.freeze()

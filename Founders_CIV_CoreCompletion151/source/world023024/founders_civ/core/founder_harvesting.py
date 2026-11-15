@@ -86,39 +86,3 @@ def perform_harvest(sim,founder,target):
             txn=txn,creation=tid,lot=lot,resource_kind=kind,
             observed_at_tick=evidence['seen_tick'])
     return txn
-
-
-def propose_ingestion(sim, founder):
-    """Offer actual Founder-held food; ingestion is not instant energy recovery."""
-    if not getattr(sim,'founder_harvest_enabled',False):return []
-    actor=sim.founders.people.get(founder)
-    if actor is None or not actor.alive:return []
-    options=[]
-    for tid,tree in sorted(sim.world_trees.worlds.items()):
-        if tree.provisioning is None:continue
-        for lot,record in sorted(tree.provisioning.lots.items()):
-            if record.kind!='food':continue
-            source=f'portable_food:lot:{lot}:founder:{founder}'
-            energy=f'food_energy:lot:{lot}:founder:{founder}'
-            if tree.book.mass[source]>.079999 and tree.book.energy[energy]>.019999:
-                options.append((3.35,'tree_ingest',None,(tid,lot)))
-    return options
-
-
-def perform_ingestion(sim,founder,target):
-    """Atomic Book relocation from personal inventory to gut; no fuel minted."""
-    if not getattr(sim,'founder_harvest_enabled',False):
-        raise ValueError('Founder harvest policy disabled')
-    if not isinstance(target,(tuple,list)) or len(target)!=2:
-        raise ValueError('malformed food target')
-    tid,lot=target
-    actor=sim.founders.people.get(founder)
-    if actor is None or not actor.alive:raise ValueError('Founder unavailable')
-    tree=sim.world_trees.worlds.get(tid)
-    if tree is None or tree.provisioning is None:raise ValueError('unknown food Tree')
-    record=tree.provisioning.lots.get(lot)
-    if record is None or record.kind!='food':raise ValueError('unknown food lot')
-    txn=tree.resources.eat_food(lot,founder)
-    sim.log('tree_founder_ingest',founder,parent=getattr(sim,'_current_parent',None),
-            txn=txn,creation=tid,lot=lot)
-    return txn

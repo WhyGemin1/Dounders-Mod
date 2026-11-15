@@ -218,3 +218,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# U026: never commit generated WorldBox/game artifacts or local actor state
+*.dll
+*.pdb
+*.exe
+*.sqlite
+*.sqlite3
+*.db
+*.log
+*.cache
+obj/
+bin/
+*.user
+*.suo
+.env.*

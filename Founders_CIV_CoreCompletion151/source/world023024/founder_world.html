@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Founders · Living World Trees and First House</title>
+<style>
+:root{color-scheme:dark;--bg:#08171c;--panel:#102328;--panel2:#153037;--ink:#e2ece7;--muted:#a0b5b8;--line:#34515a;--gold:#dabd83;--mint:#85c8a9;--cyan:#8ac5d0;--rose:#cdb0b1;--shadow:0 15px 38px #0006}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 40% -20%,#24484e,transparent 48%),var(--bg);font-family:Georgia,'Times New Roman',serif;color:var(--ink)}button,input,select{font:inherit}button{cursor:pointer;background:#18363d;border:1px solid #56777a;border-radius:8px;color:var(--ink);padding:9px 12px;transition:.15s}button:hover{background:#28525a;border-color:#9bc9c3}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold)}button:disabled{opacity:.4;cursor:not-allowed}.primary{background:#b69c6a;color:#102126;border-color:#d6c29b;font-weight:bold}.primary:hover{background:#dfc48e;color:#102126}h1,h2,h3,p{margin:0}h1{font-size:25px;letter-spacing:.035em;font-weight:normal}h2{font-size:16px;letter-spacing:.075em;font-weight:normal;text-transform:uppercase;color:#e9dcc4}h3{font-size:14px;font-weight:normal;color:var(--gold);letter-spacing:.04em}small{font-family:system-ui,sans-serif;color:var(--muted);font-size:11px}label{font-size:12px;color:#acc1be;display:block;margin-bottom:5px;font-family:system-ui,sans-serif}input,select{width:100%;background:#0b1f24;color:var(--ink);border:1px solid #3f5c62;border-radius:7px;padding:8px 9px;min-width:0}input[type=range]{padding:0;accent-color:var(--gold)}.header{padding:20px 26px;display:flex;align-items:center;gap:20px;justify-content:space-between;border-bottom:1px solid var(--line)}.eyebrow{color:var(--gold);font:11px system-ui,sans-serif;letter-spacing:.25em;text-transform:uppercase}.sub{font:12px system-ui,sans-serif;color:var(--muted);margin-top:6px}.header-stat{text-align:right;font:12px system-ui,sans-serif;color:var(--muted)}.header-stat strong{font-size:20px;display:block;color:var(--ink);margin-top:4px}.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(310px,.72fr);gap:18px;padding:18px;max-width:1800px;margin:auto}.panel{background:linear-gradient(146deg,#10272c,#0d1d23);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);overflow:hidden}.panel-head{padding:14px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px}.panel-body{padding:15px}.map-wrap{background:radial-gradient(ellipse at 30% 25%,#35728132,transparent 60%),#0b252e;position:relative;overflow:hidden;min-height:490px}.map-wrap svg{width:100%;height:auto;min-height:490px;display:block;cursor:crosshair}.world-label{font-size:12px;fill:#d8e9df;pointer-events:none;paint-order:stroke;stroke:#0c262b;stroke-width:3px}.realm-label{font-size:11px;fill:#f0dcaf;pointer-events:none;paint-order:stroke;stroke:#173537;stroke-width:2.8px}.legend{display:flex;gap:15px;flex-wrap:wrap;padding:11px 17px;border-top:1px solid var(--line);font:11px system-ui,sans-serif;color:#afc9c6}.dot{width:9px;height:9px;border-radius:100%;display:inline-block;margin-right:6px}.action-bar{display:flex;flex-wrap:wrap;gap:7px}.status-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}.metric{padding:12px;background:#122e34;border:1px solid #304e54;border-radius:9px}.metric strong{font:19px Georgia,serif;color:#f2e6ce}.metric span{display:block;font:10px system-ui,sans-serif;color:#b2c6c5;margin-top:5px}.side{display:flex;flex-direction:column;gap:16px}.stack{display:grid;gap:13px}.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.soft{color:#c5d1ce;font:12px/1.55 system-ui,sans-serif}.tag{display:inline-block;border-radius:15px;background:#214147;padding:4px 9px;color:#acd7c7;font:10px system-ui,sans-serif}.rule{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 0}.rule label{margin:0;flex:1}.rule input{width:48%;flex:1}.rule output{width:27px;text-align:right;font:11px system-ui,sans-serif;color:#e3d1a0}.list{max-height:244px;overflow:auto;display:grid;gap:6px}.item{padding:9px 10px;border:1px solid #3c555d;border-radius:8px;background:#10262c;cursor:pointer}.item.active{border-color:#d8ba86;background:#243b3d}.item strong{font-size:13px;font-weight:normal}.item .more{margin-top:5px;color:#a6bfbd;font:11px/1.45 system-ui,sans-serif}.logs{max-height:260px;overflow-y:auto;display:grid;gap:7px;font:11px/1.45 system-ui,sans-serif}.log{border-left:2px solid #3f6f73;padding:5px 8px;background:#0b2227}.warn{border-left-color:#ddab8f}.error{color:#f7b5ad;font:12px system-ui,sans-serif;padding:8px 0;min-height:18px}.toast{color:#b4e1c8;font:12px system-ui,sans-serif;min-height:18px}.note{padding:10px 13px;background:#263735;border:1px solid #54726c;border-radius:8px;font:11px/1.5 system-ui,sans-serif;color:#d6ded2}.scroll-side{max-height:88vh;overflow:auto;padding-right:3px}.map-controls{position:absolute;right:12px;top:11px;background:#102a30bb;border:1px solid #52717a;border-radius:10px;padding:5px;display:flex;gap:5px;z-index:3}.map-controls button{padding:6px 9px}.foot{margin:0 18px 20px;max-width:1700px;color:#9cbbb8;font:12px/1.65 system-ui,sans-serif}.status-icon{color:#a1e2bb}.status-icon.bad{color:#d6a4a0}svg [data-id]{cursor:pointer;transition:opacity .2s;outline:none}svg [data-id]:hover{opacity:.68}svg .selected{filter:drop-shadow(0 0 8px #d6bf84)}@media(max-width:950px){.layout{grid-template-columns:1fr}.scroll-side{max-height:none}.map-wrap,.map-wrap svg{min-height:300px}}@media(max-width:540px){.header{padding:14px;flex-wrap:wrap}.layout{padding:9px}.status-grid{grid-template-columns:repeat(2,1fr)}.panel-body{padding:12px}}
+
+.tree-header{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.tree-header select{min-width:210px;max-width:310px}
+.tree-habitats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.habitat{background:linear-gradient(160deg,#1f4746,#132f34);border:1px solid #476e67;border-radius:11px;padding:12px;min-height:128px}
+.habitat h3{color:#e8d4ac;font:14px Georgia,serif;margin-bottom:9px;text-transform:capitalize}
+.habitat .num{font:24px Georgia,serif;color:#dbebdf}
+.habitat .details{font:11px/1.6 system-ui,sans-serif;color:#b4d0c7;margin-top:7px}
+.tree-chart{height:132px;width:100%;background:#0c2229;border:1px solid #3f5a5a;border-radius:9px;margin-top:11px}
+.tree-legend{font:11px system-ui,sans-serif;color:#b1cebb;margin-top:8px}
+@media(max-width:1000px){.tree-habitats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.tree-habitats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style></head>
+<body>
+<header class="header"><div><div class="eyebrow">Founders-CIV · The First House</div><h1>The Sea · Living Worlds</h1><p class="sub">100 autonomous Founders · shared physical ledger · blueprints before creation</p></div><div class="header-stat">Simulation cycle<strong id="cycle">0</strong><span id="state-flag">Connecting to the living engine…</span></div></header>
+<main class="layout">
+ <section class="stack">
+  <div class="panel"><div class="panel-head"><h2>World canvas</h2><span class="tag" id="sea-label">The Sea · unexplored</span></div>
+   <div class="map-wrap"><div class="map-controls"><button id="zoom-out" title="Zoom out">−</button><button id="zoom-in" title="Zoom in">＋</button><button id="zoom-home" title="Reset map">⌖</button></div>
+   <svg id="world-map" viewBox="0 0 1200 750" role="img" aria-label="Interactive Sea map showing House, waterfall, river, fields and Founder creations">
+    <defs><radialGradient id="sea" cx="44%" cy="43%" r="78%"><stop stop-color="#2b6370"/><stop offset=".58" stop-color="#1b4958"/><stop offset="1" stop-color="#0a2634"/></radialGradient><linearGradient id="shore" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9ab4a0"/><stop offset=".55" stop-color="#6f9489"/><stop offset="1" stop-color="#3f6f71"/></linearGradient><linearGradient id="river" x1="0" x2="1"><stop stop-color="#9bd6df" stop-opacity=".5"/><stop offset=".7" stop-color="#b7e0d8"/><stop offset="1" stop-color="#5aadb5" stop-opacity=".5"/></linearGradient><filter id="blur"><feGaussianBlur stdDeviation="12"/></filter><filter id="soft"><feGaussianBlur stdDeviation="2.1"/></filter>
+    <pattern id="ripples" width="95" height="75" patternUnits="userSpaceOnUse"><path d="M4 29 Q35 23 69 30" fill="none" stroke="#c6e8de" opacity=".09"/><path d="M17 59 Q40 54 83 60" fill="none" stroke="#c6e8de" opacity=".075"/></pattern></defs>
+    <rect width="1200" height="750" fill="url(#sea)"/><rect width="1200" height="750" fill="url(#ripples)"/>
+    <path d="M30 270 Q52 208 105 192 Q169 144 230 200 Q280 205 340 270 Q414 338 385 420 Q346 525 229 540 Q102 528 59 437 Q0 357 30 270Z" fill="#b8e2c6" opacity=".17" filter="url(#blur)"/>
+    <path d="M31 270 Q52 208 105 192 Q169 144 230 200 Q280 205 340 270 Q414 338 385 420 Q346 525 229 540 Q102 528 59 437 Q0 357 31 270Z" fill="url(#shore)" stroke="#b7d4c2" stroke-width="3" opacity=".82"/>
+    <path d="M49 304 Q112 276 169 316 T308 353 Q317 412 263 459 L145 459 L89 410Z" fill="#33645f" opacity=".30"/>
+    <path d="M85 215 L140 132 182 209 209 153 270 248" stroke="#b5d0c4" stroke-width="3" fill="none" opacity=".70"/>
+    <path d="M126 152 Q142 200 117 230 Q99 263 132 301 Q164 349 199 347 Q241 352 267 389" stroke="#6bd0d8" stroke-width="23" opacity=".35" fill="none" filter="url(#soft)"/>
+    <path d="M126 152 Q142 200 117 230 Q99 263 132 301 Q164 349 199 347 Q241 352 267 389" stroke="url(#river)" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <path d="M114 169 q12 17 26 0 M112 181 q15 18 29 0" stroke="#dcf4de" stroke-width="4" fill="none"/>
+    <g transform="translate(189 340)"><path d="M-21 -7 L0 -28 21 -7 21 18 -21 18Z" fill="#d5bd95" stroke="#f5e2b9" stroke-width="3"/><path d="M-30 -9 L0 -37 30 -9" fill="none" stroke="#58605c" stroke-width="7"/><rect x="-6" y="1" width="12" height="17" fill="#46565b"/></g>
+    <g fill="none" stroke="#d3d2ad" stroke-width="3" opacity=".7"><path d="M252 414 q20 -18 40 0 t40 0"/><path d="M237 433 q16 -12 35 0 t35 0"/><path d="M230 452 q20 -11 40 0 t40 0"/></g>
+    <path d="M55 465 L100 474 L115 502 L90 520" fill="none" stroke="#ddc6a7" stroke-width="7" stroke-dasharray="9 6"/>
+    <text x="138" y="114" class="world-label" font-size="16">The waterfall</text><text x="187" y="395" class="world-label" font-size="18">The First House</text><text x="266" y="467" class="world-label">Cultivation Fields</text><text x="45" y="556" class="world-label">The Gate</text><text x="85" y="246" class="world-label">Mountains</text><text x="683" y="89" font-family="Georgia" fill="#dbebda" font-size="31" opacity=".35">THE SEA</text>
+    <g id="creations-layer"></g>
+   </svg></div>
+   <div class="legend"><span><span class="dot" style="background:#d6be8b"></span>Realm · island</span><span><span class="dot" style="background:#75c0a2"></span>World · tree</span><span><span class="dot" style="background:#d2b4c7"></span>Underworld · flower</span><span><span class="dot" style="background:#9babc5"></span>Other creations</span><span>Click empty Sea to pick planting coordinates</span></div>
+  </div>
+  <div class="panel"><div class="panel-head"><h2>Living simulation</h2><span class="tag">WORLD–022 experimental</span></div><div class="panel-body">
+   <div class="status-grid"><div class="metric"><strong id="count-founders">100</strong><span>Founders</span></div><div class="metric"><strong id="count-factions">0</strong><span>Factions</span></div><div class="metric"><strong id="count-seeds">0</strong><span>Blueprints</span></div><div class="metric"><strong id="count-creations">0</strong><span>Planted creations</span></div></div>
+   <div class="action-bar"><button class="primary" id="step-one">Advance one cycle</button><button id="starter-world" title="Research and peer-review three seeds using the same simulation rules">Start reviewed living world</button><button id="step-ten">Advance ×10</button><button id="step-thirty">Advance ×30</button><button id="export-state">Export state</button><button id="reset-state">New run</button></div>
+   <div class="toast" id="message" aria-live="polite"></div><div class="error" id="error" aria-live="assertive"></div>
+   <p class="soft">Each cycle advances the existing ecological engine, living habitats inside planted World Trees, 100 Founders’ social decisions, and physically funded construction upkeep. Sea geometry remains schematic; the four World Tree habitats are simulated stocks and residents.</p>
+  </div></div>
+  <div class="panel" id="tree-world-panel"><div class="panel-head tree-header"><h2>Living World Tree · habitat observatory</h2><select id="tree-select" aria-label="Select a living World Tree"></select></div>
+    <div class="panel-body stack">
+      <div id="tree-overview" class="soft">Plant a reviewed World Tree Seed on a Realm Island, then a reviewed Species Seed in that world. The tree begins without inhabitants.</div>
+      <div class="tree-habitats" id="tree-habitats"></div><div id="tree-residents" class="soft"></div>
+      <svg class="tree-chart" id="tree-chart" viewBox="0 0 730 130" role="img" aria-label="Population and biomass history chart"><text x="20" y="65" fill="#a1b7b6" font-size="15">World history appears after planting.</text></svg>
+      <div class="tree-legend">Population <span style="color:#e4d6ad">━━</span> &nbsp; Plant biomass <span style="color:#8ed1b9">━━</span> &nbsp; (separate scales; simulated daily)</div>
+      <div class="action-bar"><button id="tree-observe">Selected Founder · Observe</button><button id="tree-study">Research observed world</button></div>
+      <p class="soft">Four habitats have real plant, soil, detritus, water and chemical-energy accounts. World populations change by grazing, migration, reproduction and death. A Founder must be at the House observatory or riverbank to observe; research requires a recent observation. These are simulation functions, not biological validation.</p>
+    </div>
+  </div>
+  <div class="panel"><div class="panel-head"><h2>Recent world events</h2><span class="tag" id="event-count">0 logged</span></div><div class="panel-body"><div class="logs" id="log"></div></div></div>
+ </section>
+ <aside class="scroll-side"><div class="side">
+  <div class="panel"><div class="panel-head"><h2>Founder inspector</h2><span class="tag">Personal agency</span></div><div class="panel-body stack">
+   <div><label for="actor">Selected Founder</label><select id="actor"></select></div>
+   <div id="founder-info" class="soft"></div>
+   <div class="two"><div><label for="goal">Current goal</label><select id="goal"><option>mastery</option><option>research</option><option>exploration</option><option>solidarity</option><option>leadership</option><option>security</option></select></div><div><label for="travel">Travel one mapped connection</label><select id="travel"></select></div></div>
+   <div class="action-bar"><button id="save-goal">Set goal</button><button id="move-actor">Travel</button><button id="recharge">Draw river / House energy</button><button id="checkpoint">Save House checkpoint</button></div>
+  </div></div>
+  <div class="panel"><div class="panel-head"><h2>Design a living seed</h2><span class="tag">Blueprint laboratory</span></div><div class="panel-body stack">
+   <div class="note">A seed is a blueprint of a creation's operating rules. It must be researched on two distinct cycles, independently reviewed, and physically planted with material and energy. Before planting, no island, world, or underworld exists.</div>
+   <div class="two"><div><label for="seed-kind">Creation type</label><select id="seed-kind"><option value="realm">Realm · island</option><option value="world">World · tree</option><option value="underworld">Underworld · flower</option><option value="species">Species · sprout</option><option value="dimension">Dimension · portal</option></select></div><div><label for="seed-parent">Host creation</label><select id="seed-parent"></select></div></div>
+   <div><label for="seed-name">Seed name</label><input id="seed-name" value="First Dawn" maxlength="52"></div>
+   <div class="two"><div><label for="seed-x">Sea X (0–100)</label><input id="seed-x" type="number" min="0" max="100" value="58"></div><div><label for="seed-y">Sea Y (0–100)</label><input id="seed-y" type="number" min="0" max="100" value="48"></div></div>
+   <h3>Operating blueprint</h3><div id="rule-controls"></div>
+   <button class="primary" id="draft-seed">Record seed blueprint</button>
+   <div class="soft">Creation rules govern projected stability, upkeep, accessibility, water assumptions and future ecology parameters. New World Trees develop four real habitats once planted. Mortal inhabitants require a separately researched Species Seed.</div>
+  </div></div>
+  <div class="panel"><div class="panel-head"><h2>Blueprint archive</h2><span class="tag" id="archive-count">0 records</span></div><div class="panel-body stack"><div class="list" id="blueprint-list"></div><div id="blueprint-detail" class="soft">Choose a blueprint to inspect its required research and validation.</div><div class="action-bar"><button id="research-seed">Research (author)</button><button id="validate-seed">Peer review</button><button class="primary" id="plant-seed">Plant seed</button></div></div></div>
+  <div class="panel"><div class="panel-head"><h2>Existing creations</h2><span class="tag">Physical maintenance</span></div><div class="panel-body stack"><div class="list" id="creation-list"></div><div id="creation-detail" class="soft">Click a planted island, tree, or flower.</div><div class="action-bar"><button id="tend-creation">Fund +0.6 upkeep energy</button></div></div></div>
+ </div></aside>
+</main>
+<footer class="foot">This is a runnable local research prototype. It uses the original v0.18 physical ledger and ecological step, SOCIAL-021 Founders, and WORLD-022 seed creation. Physical stock and social events are simulated; detailed physics and chemistry, complete world civilizations, and conscious experience are not simulated. Numerical parameters and behavior are experimental, not established canon.</footer>
+<script>
+(() => {
+'use strict';
+let state=null, chosenSeed=null, chosenCreation=null, chosenTree=null, busy=false, zoom=1;
+const $=id=>document.getElementById(id);
+const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rules={daylight:.55,moisture:.60,biodiversity:.45,stability:.75,recycling:.60,openness:.50,lifespan:.65};
+const kindParents={realm:null,world:'realm',underworld:'world',species:'world',dimension:'realm'};
+const LINKS={house:['riverbank','fields'],riverbank:['house','ridge'],fields:['house','ridge'],ridge:['riverbank','fields']};
+for(const [key,val] of Object.entries(rules)){
+ const row=document.createElement('div');row.className='rule';row.innerHTML=`<label for="r-${key}">${key[0].toUpperCase()+key.slice(1)}</label><input type="range" id="r-${key}" min="0" max="1" step="0.05" value="${val}"><output id="v-${key}">${val.toFixed(2)}</output>`;
+ $('rule-controls').appendChild(row);row.querySelector('input').addEventListener('input',e=>{$('v-'+key).textContent=Number(e.target.value).toFixed(2)});
+}
+for(let i=1;i<=100;i++){let o=document.createElement('option');o.value='F'+String(i).padStart(3,'0');o.textContent=o.value;$('actor').appendChild(o)}
+function flash(msg,isError=false){$(isError?'error':'message').textContent=msg;$(isError?'message':'error').textContent=''}
+async function fetchState(){const res=await fetch('/api/state');if(!res.ok)throw Error('Cannot connect to Python world server');state=await res.json();render()}
+async function action(payload){if(busy)return;busy=true;flash('Working…');try{const res=await fetch('/api/action',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await res.json();if(!res.ok||!data.ok)throw Error(data.error||'Action failed');await fetchState();flash('Action completed. '+Object.entries(data.result||{}).map(([k,v])=>`${k}: ${v}`).join(' · '));}catch(e){flash(e.message,true)}finally{busy=false}}
+const current=()=>state?.actors.find(a=>a.id===$('actor').value);
+function setText(id,value){$(id).textContent=value}
+function render(){
+ if(!state)return;
+ setText('cycle',state.tick);setText('state-flag',`Seed ${state.seed} · energy residual ${Number(state.physical_ledger.energy_error).toExponential(2)}`);
+ setText('count-founders',state.actors.length);setText('count-factions',state.social.factions);setText('count-seeds',state.creation_system.blueprints.length);setText('count-creations',state.creation_system.creations.length);
+ setText('sea-label',`${state.creation_system.creations.filter(c=>c.status==='stable').length} stable creations`);
+ setText('event-count',`${state.latest_events.length} most recent`);
+ renderFounder();renderParents();renderArchive();renderCreatures();renderTree();renderMap();renderLog();
+}
+function renderFounder(){const a=current();if(!a)return;const energy=state.social?.energy_mass_audit?.energy_total;setText('founder-info',`${a.id} · ${a.squad} · partner ${a.partner} · ${a.officer?'officer':'squad member'} · current site ${a.location} · energy ${Number(a.energy).toFixed(2)} · ambition ${a.ambition.toFixed(2)} · faction ${a.faction||'none'} · knowledge ${Object.keys(a.knowledge).length} topics · trust in partner ${a.partner_trust.toFixed(2)}. Skills: ${Object.entries(a.skills).map(([k,v])=>k+' '+v.toFixed(2)).join(' · ')}`);$('goal').value=a.goal;
+ const t=$('travel');t.innerHTML=(LINKS[a.location]||[]).map(k=>`<option value="${k}">${k}</option>`).join('');$('move-actor').disabled=!t.options.length;
+}
+function renderParents(){const required=kindParents[$('seed-kind').value];const options=state.creation_system.creations.filter(x=>x.status==='stable'&&x.kind===required);
+ const el=$('seed-parent'), old=el.value;
+ el.innerHTML=required?`<option value="">Choose ${required}…</option>`+options.map(x=>`<option value="${safe(x.id)}">${safe(x.name)} (${safe(x.id)})</option>`).join(''):'<option value="">The Sea (no parent)</option>';
+ if([...el.options].some(o=>o.value===old))el.value=old;else if(options.length)el.value=options[0].id;
+}
+function renderArchive(){const all=state.creation_system.blueprints;setText('archive-count',`${all.length} records`);
+ if(!all.some(b=>b.id===chosenSeed))chosenSeed=all.length?all[all.length-1].id:null;
+ $('blueprint-list').innerHTML=all.length?all.slice(-22).reverse().map(b=>`<div class="item ${b.id===chosenSeed?'active':''}" data-bp="${safe(b.id)}"><strong>${safe(b.name)}</strong> <span class="tag">${safe(b.kind)}</span><div class="more">${safe(b.id)} · ${safe(b.stage)} · author ${safe(b.author)} · research ${b.research_ticks.length}/2 cycles · reviewer ${safe(b.reviewer||'none')}</div></div>`).join(''):'<p class="soft">No blueprints. Design your first Realm-island seed to begin.</p>';
+ for(const el of $('blueprint-list').querySelectorAll('[data-bp]'))el.onclick=()=>{chosenSeed=el.dataset.bp;renderArchive()};
+ const b=all.find(x=>x.id===chosenSeed);
+ setText('blueprint-detail',b?`Blueprint ${b.id}: ${b.name}. Stage: ${b.stage}. Operating rules: ${Object.entries(b.rules).map(([k,v])=>`${k} ${v.toFixed(2)}`).join(' · ')}. Evidence: ${b.evidence_ids.length} research events. Research on two distinct cycles, have another Founder at the same location review it, then return to the author to plant.`:'Choose a blueprint to inspect.');
+ $('research-seed').disabled=!b||!['draft','researching'].includes(b.stage);
+ $('validate-seed').disabled=!b||b.stage!=='researching'||b.research_ticks.length<2;
+ $('plant-seed').disabled=!b||b.stage!=='validated';
+}
+function renderCreatures(){const xs=state.creation_system.creations;
+ if(!xs.some(c=>c.id===chosenCreation))chosenCreation=xs.length?xs[xs.length-1].id:null;
+ $('creation-list').innerHTML=xs.length?xs.slice(-22).reverse().map(c=>`<div class="item ${c.id===chosenCreation?'active':''}" data-creation="${safe(c.id)}"><strong>${safe(c.name)}</strong> <span class="tag">${safe(c.symbol)}</span><div class="more">${safe(c.id)} · ${safe(c.status)} · reserve ${Number(c.reserve).toFixed(2)} · upkeep ${Number(c.upkeep).toFixed(2)}/cycle</div></div>`).join(''):'<p class="soft">No creations yet. A validated seed must be planted with actual world material and funded energy.</p>';
+ for(const el of $('creation-list').querySelectorAll('[data-creation]'))el.onclick=()=>{chosenCreation=el.dataset.creation;renderCreatures();renderMap()};
+ const c=xs.find(c=>c.id===chosenCreation);
+ setText('creation-detail',c?`${c.name} · ${c.kind}. Status: ${c.status}. Creator: ${c.owner}. Host: ${c.parent||'the Sea'}. Physical material: ${c.mass}. Integrity: ${c.integrity??1}. Available upkeep energy: ${Number(c.reserve).toFixed(3)}. Active rules: ${Object.entries(c.rules).map(([k,v])=>`${k} ${v.toFixed(2)}`).join(' · ')}.`:'Select a creation.');
+ $('tend-creation').disabled=!c||c.status!=='stable';
+}
+function renderTree(){
+ const all=state.tree_worlds||[], selector=$('tree-select');
+ if(!all.some(w=>w.id===chosenTree))chosenTree=all.length?all[0].id:null;
+ selector.innerHTML=all.length?all.map(w=>`<option value="${safe(w.id)}">${safe(w.id)} · ${safe(w.state)}</option>`).join(''):'<option value="">No World Trees planted</option>';
+ if(chosenTree)selector.value=chosenTree;
+ const w=all.find(q=>q.id===chosenTree);
+ $('tree-observe').disabled=!w||w.state==='archived';$('tree-study').disabled=!w||w.state==='archived';
+ if(!w){$('tree-overview').textContent='No World Tree interior exists yet. Plant a Realm Island seed and then a reviewed World Tree seed; a separate Species Seed must introduce mortals.';$('tree-habitats').innerHTML='';$('tree-residents').textContent='';$('tree-chart').innerHTML='<text x="20" y="65" fill="#a1b7b6" font-size="15">World history appears after planting.</text>';return}
+ const last=w.recent||{}, pc=Number(w.population)||0;
+ $('tree-overview').innerHTML=`<strong>${safe(w.id)}</strong> · ${safe(w.state)} · ${safe(w.age)} habitat cycles · ${pc} living residents · ${safe(w.births)} births · ${safe(w.deaths)} deaths · Species Seeds: ${w.species_seeds.length}. Four connected habitats · creator ${safe(w.owner)} · parent ${safe(w.parent)}.`;
+ $('tree-habitats').innerHTML=w.habitats.map(h=>`<div class="habitat"><h3>${safe(h.biome)}</h3><div class="num">${h.population} <small>residents</small></div><div class="details">Plants ${h.plant.toFixed(2)} · soil ${h.soil.toFixed(2)}<br>Water ${h.water.toFixed(2)} · detritus ${h.detritus.toFixed(2)}<br>${safe(h.season)} season · neighbors: ${h.neighbors.map(safe).join(', ')}</div></div>`).join('');
+ const living=(w.residents||[]).filter(r=>r.alive).slice(0,18);
+ $('tree-residents').innerHTML=living.length?`<strong>Individual mortal residents</strong> · showing ${living.length}/${w.population}: `+living.map(r=>`${safe(r.id)} (gen ${r.generation}, age ${r.age}, ${safe(r.habitat)})`).join(' · '):'<strong>Residents:</strong> no living individuals in this world.';
+ const history=w.history||[], x0=37,y0=12,W=670,H=96;
+ if(history.length<2){$('tree-chart').innerHTML='<text x="20" y="65" fill="#a1b7b6" font-size="15">Advance cycles to see a population history.</text>';return}
+ const maxPop=Math.max(20,...history.map(h=>h.population));const maxPlants=Math.max(10,...history.map(h=>h.plants));
+ const path=(field,max)=>history.map((q,i)=>`${i===0?'M':'L'} ${(x0+i*W/Math.max(1,history.length-1)).toFixed(1)} ${(y0+H-(q[field]/max)*H).toFixed(1)}`).join(' ');
+ $('tree-chart').innerHTML=`<line x1="${x0}" y1="${y0+H}" x2="${x0+W}" y2="${y0+H}" stroke="#547078"/><path d="${path('population',maxPop)}" stroke="#e4d6ad" stroke-width="2.5" fill="none"/><path d="${path('plants',maxPlants)}" stroke="#8ed1b9" stroke-width="2.5" fill="none"/><text x="40" y="125" fill="#a3bdbc" font-size="11">cycle ${history[0].age}</text><text x="626" y="125" fill="#a3bdbc" font-size="11">cycle ${history[history.length-1].age}</text>`;
+}
+function petal(x,y,deg){return `<ellipse cx="${x}" cy="${y-8}" rx="5" ry="10" transform="rotate(${deg} ${x} ${y})" fill="#d6b7c9" opacity=".86" stroke="#ebdbe0" stroke-width=".8"/>`}
+function graphic(c){const x=c.x*12,y=c.y*7.5,dead=c.status!=='stable',sel=c.id===chosenCreation?'selected':'',on=dead?'.38':'1',id=safe(c.id),nm=safe(c.name);
+ let v='';
+ if(c.kind==='realm')v=`<ellipse cx="0" cy="0" rx="46" ry="23" fill="#4d7871" stroke="#e3d3aa" stroke-width="3"/><path d="M-36 -7 Q-20 -28 0 -9 T37 -7" fill="none" stroke="#b7d7b7" stroke-width="3" opacity=".7"/><ellipse cy="8" rx="46" ry="17" fill="#376860" opacity=".48"/>`;
+ if(c.kind==='world')v=`<path d="M0 22 Q-5 0 1 -15 M0 -3 Q-11 -11 -16 -23 M0 -8 Q10 -16 15 -24" stroke="#b6a17f" stroke-width="7" fill="none" stroke-linecap="round"/><ellipse cx="0" cy="-28" rx="23" ry="21" fill="#7cbaa4" opacity=".88"/><ellipse cx="-15" cy="-21" rx="15" ry="13" fill="#93cdb2" opacity=".80"/><ellipse cx="15" cy="-23" rx="16" ry="13" fill="#5fa694" opacity=".8"/>`;
+ if(c.kind==='underworld')v=`<path d="M0 13 L0 -9" stroke="#7cbaaa" stroke-width="3"/>`+[0,60,120,180,240,300].map(deg=>petal(0,-12,deg)).join('')+`<circle cx="0" cy="-12" r="6" fill="#e5ca95" stroke="#f4e1be"/>`;
+ if(c.kind==='species')v=`<path d="M0 17 L0 -10 M0 7 Q-15 2 -18 -5 M0 5 Q10 -4 17 -4" fill="none" stroke="#9accae" stroke-width="4"/><circle cx="0" cy="-12" r="6" fill="#a9d1ae"/>`;
+ if(c.kind==='dimension')v=`<ellipse cx="0" cy="0" rx="19" ry="29" fill="#6b82af" fill-opacity=".17" stroke="#b3c8ea" stroke-width="5"/><ellipse cx="0" cy="0" rx="7" ry="18" fill="#d9cae8" opacity=".45"/>`;
+ return `<g data-id="${id}" class="${sel}" transform="translate(${x} ${y})" opacity="${on}" role="button" tabindex="0" aria-label="${nm}">${v}<text text-anchor="middle" y="43" class="realm-label">${nm.length>24?nm.slice(0,24)+'…':nm}</text></g>`;
+}
+function renderMap(){const cs=state.creation_system.creations;const order=['realm','world','underworld','species','dimension'];$('creations-layer').innerHTML=order.flatMap(k=>cs.filter(c=>c.kind===k).map(graphic)).join('');
+ for(const el of $('creations-layer').querySelectorAll('[data-id]')){const select=()=>{chosenCreation=el.dataset.id;renderCreatures();renderMap()};el.addEventListener('click',e=>{e.stopPropagation();select()});el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select()}})}
+}
+function renderLog(){$('log').innerHTML=state.latest_events.slice(-38).reverse().map(e=>`<div class="log ${e.action.includes('rejected')||e.action.includes('collapsed')?'warn':''}"><strong>${safe(e.action.replace(/_/g,' '))}</strong> · cycle ${safe(e.tick)} · ${safe(e.actor)}<div style="color:#9cb8b7">${safe(e.creation||e.blueprint||e.target||e.claim||e.reason||e.faction||e.goal||'')}</div></div>`).join('')}
+$('tree-select').addEventListener('change',e=>{chosenTree=e.target.value;renderTree()});
+$('tree-observe').onclick=()=>action({action:'tree_observe',actor:$('actor').value,creation_id:chosenTree});
+$('tree-study').onclick=()=>action({action:'tree_research',actor:$('actor').value,creation_id:chosenTree});
+$('actor').addEventListener('change',renderFounder);$('seed-kind').addEventListener('change',renderParents);
+$('starter-world').onclick=()=>{if(confirm('Start a new pilot scenario? This resets the current run and goes through the actual research, review, and planting of Realm, World Tree, and Species Seeds.'))action({action:'starter_world'})};
+$('step-one').onclick=()=>action({action:'step',cycles:1});$('step-ten').onclick=()=>action({action:'step',cycles:10});$('step-thirty').onclick=()=>action({action:'step',cycles:30});
+$('draft-seed').onclick=()=>action({action:'draft',actor:$('actor').value,kind:$('seed-kind').value,name:$('seed-name').value,parent:$('seed-parent').value||null,x:Number($('seed-x').value),y:Number($('seed-y').value),rules:Object.fromEntries(Object.keys(rules).map(k=>[k,Number($('r-'+k).value)]))});
+$('research-seed').onclick=()=>action({action:'research',actor:$('actor').value,seed_id:chosenSeed});
+$('validate-seed').onclick=()=>action({action:'validate',actor:$('actor').value,seed_id:chosenSeed});
+$('plant-seed').onclick=()=>action({action:'plant',actor:$('actor').value,seed_id:chosenSeed});
+$('tend-creation').onclick=()=>action({action:'tend',actor:$('actor').value,creation_id:chosenCreation,amount:.6});
+$('save-goal').onclick=()=>action({action:'goal',actor:$('actor').value,goal:$('goal').value});
+$('move-actor').onclick=()=>action({action:'travel',actor:$('actor').value,destination:$('travel').value});
+$('checkpoint').onclick=()=>action({action:'checkpoint',actor:$('actor').value});
+$('recharge').onclick=()=>action({action:'recharge',actor:$('actor').value});
+$('reset-state').onclick=()=>{const seed=prompt('New random seed (0–10,000,000)',String((state?.seed??400)+1));if(seed!==null)action({action:'reset',seed:Number(seed)})};
+$('export-state').onclick=async()=>{try{const r=await fetch('/api/export');if(!r.ok)throw Error('export failed');const blob=new Blob([await r.text()],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`Founders_WORLD022_seed${state.seed}_tick${state.tick}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}catch(e){flash(e.message,true)}};
+$('world-map').addEventListener('click',event=>{if(event.target.closest('[data-id]'))return;const box=$('world-map').getBoundingClientRect();const w=box.width,h=box.height;const p=$('world-map').createSVGPoint();p.x=event.clientX;p.y=event.clientY;const local=p.matrixTransform($('world-map').getScreenCTM().inverse());const x=Math.max(0,Math.min(100,local.x/12)),y=Math.max(0,Math.min(100,local.y/7.5));$('seed-x').value=x.toFixed(1);$('seed-y').value=y.toFixed(1);flash(`Selected blueprint coordinates (${x.toFixed(1)}, ${y.toFixed(1)})`)});
+function zoomTo(v){zoom=Math.max(1,Math.min(2.6,v));const w=1200/zoom,h=750/zoom;const ox=(1200-w)/2,oy=(750-h)/2;$('world-map').setAttribute('viewBox',`${ox} ${oy} ${w} ${h}`)}
+$('zoom-in').onclick=()=>zoomTo(zoom*1.25);$('zoom-out').onclick=()=>zoomTo(zoom/1.25);$('zoom-home').onclick=()=>zoomTo(1);
+fetchState().catch(err=>flash('Launch the Python server with START_FOUNDER_WORLD.bat (Windows) or python launch_founder_world.py. '+err.message,true));
+})();
+</script></body></html>
