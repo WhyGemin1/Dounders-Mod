@@ -79,3 +79,24 @@ class NativeClaimBoundary:
             by_ack[claim.ack_token] = claim.request_id
             observations.append(observed)
         return tuple(observations)
+
+    def inspect_against_history(self, historical_claims, incoming_claims):
+        """Read-only cross-batch correlation using caller-supplied trusted history.
+
+        This is NOT durable storage, an ACK journal, or a native identity
+        verification. A caller must supply the complete authenticated history;
+        missing history must fail closed rather than imply unseen claims are new.
+        No Book, world clock, or WorldBox state is modified.
+        """
+        if historical_claims is None:
+            raise ValueError('complete trusted native observation history required')
+        if not isinstance(historical_claims, (tuple, list)):
+            raise TypeError('ordered historical claim batch required')
+        if not isinstance(incoming_claims, (tuple, list)):
+            raise TypeError('ordered incoming claim batch required')
+        # Validate both history and incoming observations together. The
+        # existing batch conflict rules now apply across the boundary too.
+        # Reject collisions before returning any observations to the caller.
+        combined = tuple(historical_claims) + tuple(incoming_claims)
+        observations = self.inspect_batch(combined)
+        return observations[len(historical_claims):]
