@@ -28,6 +28,7 @@ def observed_lots(tree):
 
 def propose_harvest(sim, founder):
     """Use ONLY previously perceived lots; do not inspect current Book for choice."""
+    if not getattr(sim,'founder_harvest_enabled',False):return []
     f=sim.founders.people[founder]
     if not f.alive or f.location!='riverbank':return []
     goal=sim.states[founder].main_goal
@@ -51,6 +52,8 @@ def propose_harvest(sim, founder):
 
 def perform_harvest(sim,founder,target):
     """Check physical access and last perception; then move exactly one lot."""
+    if not getattr(sim,'founder_harvest_enabled',False):
+        raise ValueError('Founder harvest policy disabled')
     if not (isinstance(target,(tuple,list)) and len(target)==3):
         raise ValueError('malformed resource target')
     tid,lot,kind=target
