@@ -1,0 +1,202 @@
+{
+  "title": "Founders-CIV v0.16 Integrated Operations Plan",
+  "status": "proposed_not_executed",
+  "model_version": "0.16",
+  "steps": 720,
+  "base_seed_count": 30,
+  "factors": {
+    "social_network_diversity": [
+      false,
+      true
+    ],
+    "fear_logic_commitments": [
+      false,
+      true
+    ],
+    "collective_belief_and_coordination": [
+      false,
+      true
+    ],
+    "institution_feedback": [
+      false,
+      true
+    ]
+  },
+  "factorial_arms": 16,
+  "proposed_total_runs": 480,
+  "control": {
+    "same_worlds": true,
+    "same_starting_resources": true,
+    "same_climate_seeds": true,
+    "same_founder_policy": true
+  },
+  "logging": {
+    "entity_snapshots": [
+      "actor",
+      "relationship",
+      "group",
+      "material_batch",
+      "energy_account",
+      "habitat_patch",
+      "institution"
+    ],
+    "event_required_fields": [
+      "id",
+      "tick",
+      "location",
+      "actor_id",
+      "action",
+      "causal_parents",
+      "input_debits",
+      "output_credits",
+      "toll",
+      "preconditions",
+      "observations",
+      "actual_outcome",
+      "memory_event_ids"
+    ],
+    "metrics": [
+      "underfed_actor_days",
+      "mortality_by_age_species",
+      "material_conservation_error",
+      "energy_conservation_error",
+      "sunlight_reserve",
+      "underworld_flow",
+      "wildlife_extinctions",
+      "migration_success",
+      "skill_retention",
+      "knowledge_error_rate",
+      "private_belief",
+      "public_compliance",
+      "trust_network",
+      "completed_projects",
+      "institution_survival",
+      "cost_incidence"
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "ledger",
+      "hypothesis": "All transactions reconcile; no duplication",
+      "tests": [
+        "chop",
+        "cook",
+        "eat",
+        "trade",
+        "decompose",
+        "house_sunlight"
+      ],
+      "fatal_if": "any_unexplained_energy_or_material_discrepancy"
+    },
+    {
+      "id": "predator_culture",
+      "hypothesis": "Learned techniques and social transfer can change hunting outcomes",
+      "contrast": "learning_off_vs_learning_on",
+      "metrics": [
+        "hunt_attempt_success",
+        "net_energy_per_hunt",
+        "offspring_survival",
+        "herbivore_persistence"
+      ]
+    },
+    {
+      "id": "kin_learning",
+      "hypothesis": "Social structure changes retention and access",
+      "contrast": "isolated_vs_family_vs_family_mentors_vs_full_network",
+      "metrics": [
+        "practical_skill",
+        "knowledge_accuracy",
+        "learning_inequality"
+      ]
+    },
+    {
+      "id": "norm_psw",
+      "hypothesis": "Normative motivation and instrumental capacity interact",
+      "contrast": "two_by_two_rsw_psw",
+      "metrics": [
+        "project_completion",
+        "resource_distribution",
+        "coordination_cost",
+        "dissent"
+      ]
+    },
+    {
+      "id": "false_claim",
+      "hypothesis": "Shared mistaken conviction may worsen resource preparation",
+      "contrast": "true_and_false_claims_matched_exposure",
+      "metrics": [
+        "misinformation_adoption",
+        "belief_revision_latency",
+        "underfed_days",
+        "trust"
+      ]
+    },
+    {
+      "id": "policy_capture",
+      "hypothesis": "Concentrated resource control can increase compliance and inequality",
+      "contrast": "open_resource_governance_vs_exclusive_family_control",
+      "metrics": [
+        "welfare_by_group",
+        "legitimacy",
+        "resource_ownership",
+        "conflict",
+        "resilience"
+      ]
+    },
+    {
+      "id": "founder_light",
+      "hypothesis": "Founder daylight changes ecology through sunlight absorption, not energy creation",
+      "contrast": "matched_daylight_intervention",
+      "metrics": [
+        "absorbed_energy",
+        "biomass",
+        "house_reserve",
+        "ecosystem_persistence"
+      ]
+    },
+    {
+      "id": "planning",
+      "hypothesis": "Multi-step goal plans improve projects but incur opportunity costs",
+      "contrast": "one_step_vs_memory_only_vs_plan",
+      "metrics": [
+        "project_completion",
+        "starvation",
+        "planning_abandonment",
+        "opportunity_cost"
+      ]
+    },
+    {
+      "id": "institution_origin",
+      "hypothesis": "Institution requires persistent memberships, commitments, resources and rules",
+      "contrast": "cooperation_events_only_vs_governance_enabled",
+      "metrics": [
+        "legitimate_institutions",
+        "dissolved_institutions",
+        "rule_compliance",
+        "member_exit"
+      ]
+    },
+    {
+      "id": "underworld_bottleneck",
+      "hypothesis": "High transformation load creates delay/queue but does not create free energy",
+      "contrast": "throughput_limited_vs_relaxed",
+      "metrics": [
+        "queue_length",
+        "house_flow",
+        "energy_conservation_error",
+        "world_accessible_energy"
+      ]
+    }
+  ],
+  "rejection_criteria": [
+    "state_duplicate",
+    "unpaid_material_transition_toll",
+    "memoryless_skill_gain",
+    "social_norm_without_contact",
+    "institution_without_operational_membership",
+    "direct_religion_productivity_bonus",
+    "sunlight_without_house_account_debit",
+    "overfit_to_training_seeds"
+  ],
+  "reference_spec": "Founders_CIV_v016_Integration_Blueprint.md"
+}
