@@ -392,7 +392,7 @@ class IntegratedWorld(SocialSimulation):
             if tree.state!='active' or self.seeds.plants[cid]['status']!='stable':continue
             if tree.owner!=a:continue  # first slice: the creator is the responsible steward
             intel=tree.observations.get(a)
-            if founder.location in ('house','riverbank') and self._energy(a)>.12:
+            if founder.location in ('house','riverbank') and self._energy(a)>=.19:
                 if intel is None or self.tick-intel['seen_tick']>=5:
                     urgency=.4 if intel and intel['population']<10 else 0.
                     props.append((2.2+urgency+.5*(agenda=='research')+.25*state.curiosity,
