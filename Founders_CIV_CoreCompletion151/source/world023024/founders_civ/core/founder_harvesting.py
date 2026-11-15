@@ -32,6 +32,9 @@ def propose_harvest(sim, founder):
     f=sim.founders.people[founder]
     if not f.alive or f.location!='riverbank':return []
     goal=sim.states[founder].main_goal
+    # C026: prioritize known edible food over propagation fruit when depleted.
+    # This is a decision preference, never a fuel toll or inventory scan.
+    usable=sim.book.energy[f'founder:{founder}']
     proposals=[]
     for tid,tree in sorted(sim.world_trees.worlds.items()):
         evidence=tree.observations.get(founder)
@@ -44,6 +47,7 @@ def propose_harvest(sim, founder):
             # A stale observation can cause a rejected attempt, as in a real world.
             if entry['kind']=='food':
                 score=2.35+.6*(goal in ('security','solidarity'))
+                if usable < .19:score += 1.0
             else:
                 score=2.45+.75*(goal in ('research','exploration','leadership'))
             proposals.append((score,'tree_harvest',None,(tid,lot,entry['kind'])))
