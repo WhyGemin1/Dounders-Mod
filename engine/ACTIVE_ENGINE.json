@@ -11,34 +11,37 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Core151 source and M01 gateway tracked on experimental GitHub branch; actual GitHub Actions clean-checkout restart suite passed on previous commit; replay receipt validation added and pending new CI",
+  "source_status": "Core151 source, M01 Book gateway, checkpoint, and 3-tick restart regression tracked as text on experimental GitHub branch; clean GitHub Actions checkout PASS at 88cca9f (run 43717975764)",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS run 43716911154 at a4e947b: 6 authority + 9 gateway + 9 checkpoint = 24 tests (clean GitHub Actions checkout)",
+    "github_ci": "PASS run 43717975764 on 88cca9fcc4a0b43f7572e51bb138d24168775df0: 6 authority + 9 gateway + 9 checkpoint + 2 multi-tick restart = 26 tests, all steps successful (clean GitHub Actions checkout)",
     "worldbox_game": "NOT RUN",
-    "ecology_long_horizon": "NOT RUN",
+    "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
-    "clean_checkout": "NOT RUN: git clone DNS unavailable",
-    "book_audit_this_cycle": "PASS headless Core151 pilot, no native WorldBox",
+    "clean_checkout": "PASS GitHub Actions checkout, imported Python compile + 4 unittest commands; local git clone DNS issue does not affect CI evidence",
+    "book_audit_this_cycle": "PASS at every tested day across both arms in 3-day GitHub CI run; synthetic mass and energy conservation; no native WorldBox",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "NOT RUN",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
     "knowledge_architecture": "6/6 PASS local extracted exact SHA archive source",
     "pilot": "seed400, 1 day PASS, 100 Founders verified separately, 16 tree residents, Book mass error -2.73e-12, energy error -1.12e-8",
     "m01_gateway_headless": "previous cycle 6/6; new replay tests authored NOT RUN in this invocation",
-    "m01_checkpoint_replay": "PASS in GitHub Actions at 1eee064cb; new forged-receipt validation pending",
+    "m01_checkpoint_replay": "PASS GitHub Actions 43717975764 incl previous 9 checkpoint tests and new 3-tick comparison",
     "checkpoint_envelope_local": "4/4 PASS with locally mirrored checkpoint implementation; GitHub checkout NOT RUN",
-    "whole_world_checkpoint": "PASS 9/9 checkpoint tests in GitHub Actions, including 3 invalid receipt rejection cases and 2 actual Core151 restart tests"
+    "whole_world_checkpoint": "PASS 9/9 checkpoint tests in GitHub Actions, including 3 invalid receipt rejection cases and 2 actual Core151 restart tests",
+    "m01_multitick_restart": "PASS 2/2 tests at seed400: 3 live days vs 3 per-day restarted days; synthetic Book harvest before and after checkpoint; daily exact Book balances/receipts, Founder IDs, Tree residents, creation state and clock comparison"
   },
-  "book_audit": "PASS during GitHub Actions real Core151 checkpoint and one-step comparisons at 1eee064cb; no native WorldBox",
+  "book_audit": "PASS in GitHub Actions run 43717975764 at commit 88cca9f, multiple ticks and pre/post-checkpoint synthetic harvest both arms; zero new resource authority, no native WorldBox",
   "open_gates": [
-    "extend restart test beyond one tick and establish crash-safe external ACK",
-    "M05 SQLite Book migration/removal",
-    "native WorldBox source identity, units and version",
-    "long-horizon ecological regression"
+    "crash-safe external WorldBox inbound claim/ACK semantics with native source ID/version/unit mapping (currently read-only)",
+    "M05 SQLite Book migration/removal; no second writer",
+    "native WorldBox source identity, units, game version and save/reload proof",
+    "30/180/360/720/1080-day ecological regression with failed Tree conditions"
   ],
-  "next_cycle": "Extend deterministic uninterrupted/restarted comparison to multiple ticks, then design atomic native WorldBox ACK and Book settlement; M01 remains experimental",
-  "last_cycle": "2026-11-15 M01 receipt-integrity checkpoint guard",
+  "next_cycle": "Implement a durable pending/settled/acknowledged inbound harvest claim boundary within the SAME Core151 checkpoint/Book, with fault-injection tests for interruption at Book commit and replay; keep WorldBox external writes disabled",
+  "last_cycle": "2026-11-15 M01 multi-tick checkpoint equivalence with harvest before/after restart",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
-  "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772"
+  "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
+  "last_verified_code_commit": "88cca9fcc4a0b43f7572e51bb138d24168775df0",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43717975764"
 }
