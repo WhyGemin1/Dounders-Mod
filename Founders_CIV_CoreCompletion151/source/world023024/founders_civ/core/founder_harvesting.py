@@ -66,9 +66,12 @@ def perform_harvest(sim,founder,target):
         raise ValueError('resource not known through a recent observation')
     record=tree.provisioning.lots.get(lot)
     if record is None or record.kind!=kind:raise ValueError('unavailable identified resource lot')
-    if record.state not in ('stored','mature') or (kind=='fruit' and record.state!='mature'):
-        # Learning from an actual failed attempt is permitted; a stale memory
-        # must not induce the same Founder to chase the same lot indefinitely.
+    source=f'{"portable_food" if kind=="food" else "fruit"}:lot:{lot}:tree:{tid}'
+    if (record.state not in ('stored','mature') or (kind=='fruit' and record.state!='mature') or
+        tree.book.mass[source]<=1e-9):
+        # The Founder learns the specific lot is unavailable only by reaching
+        # the claimed resource or personally attempting the transfer.
+        if tree.book.mass[source]<=1e-9:record.state='transferred'
         evidence['known_lots']=[x for x in evidence['known_lots'] if x.get('lot')!=lot]
         raise ValueError('resource no longer available')
     # No arbitrary decision/transfer cost; real labor physiology is separate.
