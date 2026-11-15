@@ -69,20 +69,20 @@ class NativeBoundaryTests(unittest.TestCase):
         for field, value in (
             ('request_id', ' request-1'),
             ('request_id', 'request-1 '),
-            ('request_id', 'request-1\\n'),
-            ('request_id', 'request-1\\u200b'),
+            ('request_id', 'request-1\n'),
+            ('request_id', 'request-1\u200b'),
             ('request_id', 'request-' + 'x' * 257),
-            ('world_id', 'world\\x00one'),
-            ('object_id', 'object-\\u0065\\u0301'),
-            ('resource_unit', 'kg\\t'),
-            ('ack_token', 'ack-1\\r'),
+            ('world_id', 'world\x00one'),
+            ('object_id', 'object-\u0065\u0301'),
+            ('resource_unit', 'kg\t'),
+            ('ack_token', 'ack-1\r'),
         ):
             with self.subTest(field=field, value=repr(value)):
                 with self.assertRaisesRegex(ValueError, 'noncanonical'):
                     self.boundary.inspect(replace(self.claim, **{field: value}))
 
     def test_noncanonical_history_rejected_before_replay_result(self):
-        invalid = replace(self.claim, request_id='request-1\\u200b')
+        invalid = replace(self.claim, request_id='request-1\u200b')
         with self.assertRaisesRegex(ValueError, 'noncanonical'):
             self.boundary.inspect_against_history([invalid], [self.claim])
         with self.assertRaisesRegex(ValueError, 'noncanonical'):
