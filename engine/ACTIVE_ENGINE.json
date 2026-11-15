@@ -11,28 +11,32 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 Cycle14 on Core151; local reconstruction of historical M01 modules",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Core151/Cycle152 archive verified by Drive metadata; actual ZIP bytes unavailable in this invocation; GitHub contains importer and hardened safety tests, but canonical 27 .py modules still not tracked",
+  "source_status": "27 authoritative Core151/Cycle152 .py modules committed as GitHub text source under src/; local extracted-source smoke test passed; clean GitHub clone blocked by network DNS",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "NOT RUN",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
-    "clean_checkout": "NOT RUN",
-    "book_audit_this_cycle": "NOT RUN",
+    "clean_checkout": "NOT RUN: git clone DNS unavailable",
+    "book_audit_this_cycle": "PASS headless Core151 pilot, no native WorldBox",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
-    "real_archive_this_cycle": "NOT RUN"
+    "real_archive_this_cycle": "NOT RUN",
+    "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
+    "knowledge_architecture": "6/6 PASS local extracted exact SHA archive source",
+    "pilot": "seed400, 1 day PASS, 100 Founders verified separately, 16 tree residents, Book mass error -2.73e-12, energy error -1.12e-8"
   },
   "book_audit": "initial+one-step pass on locally recovered engine",
   "open_gates": [
-    "archive bytes access for source import",
-    "27 Python modules tracked as source",
+    "M01 gateway overlay source absent from GitHub",
+    "clean GitHub checkout test",
     "clean-checkout tests",
     "M05 Book migration/removal",
     "WorldBox native source identity and ACK",
     "checkpoint and ecological regression"
   ],
-  "next_cycle": "Recover actual authorized Cycle152 archive bytes or equivalent source via accessible connector, verify SHA-256, import 27 source files individually into GitHub; run clean-checkout Book/identity/checkpoint tests",
-  "last_cycle": "2026-11-15 Cycle3 secure importer",
-  "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8"
+  "next_cycle": "Import/reconcile M01 Book gateway source into same src/founders_civ tree; run clean-checkout authority, invalid harvest rollback, checkpoint and identity tests; fix import packaging",
+  "last_cycle": "2026-11-15 Cycle4 import 27 source files",
+  "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
+  "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772"
 }
