@@ -10,3 +10,12 @@
 - Not run: GitHub CI, WorldBox in-game, complete Core151 regression suite, 30+ day ecological tests. No actual WorldBox mutation. Do not infer M05 live integration from its compiled source/repair instructions.
 - Blocker: Core151 full Python source is available locally in the verified historical archive but is still not tracked as individual source files in GitHub. This PR is a tested integration boundary, not a complete executable engine checkout.
 - Next: Git-track the original validated Core151 source files, reconcile M01 overlays, run full regression and Book checkpoint tests. Preserve all prior code history until verified migration.
+
+## 2026-11-15 — unified engine cycle 2: source recovery and deterministic importer
+- Recovered the exact authorized Drive archive `Founders_CIV_Cycle152_SparseFounding_Experimental.zip` (956,121 bytes), SHA-256 `29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8`. This matches the prior historical handoff fingerprint.
+- Source inspection identified 27 Python files under `Founders_CIV_CoreCompletion151/source/world023024/`: 25 `founders_civ/` modules plus `knowledge_architecture.py` and `run_world_tree_pilot.py`.
+- Implemented and committed `tools/import_core151.py` and `tools/test_import_core151.py` on `feat/single-core151-authority`. Importer verifies full archive SHA, selects only the single world source tree, rejects modified existing files and missing required dependencies, and generates a per-file SHA-256 manifest.
+- **Executed locally:** `python -m unittest -v test_import_core151` => 3/3 PASS (0.036 seconds). `python import_core151.py <authorized_zip> <staging_dir>` => 27 source files extracted. This is a source-import staging test, not an ecological simulation.
+- **NOT RUN:** Book audit, Founder tick, full regression, GitHub CI, WorldBox in-game, clean-checkout authority tests. No additional energy/resource mechanics implemented.
+- **BLOCKER:** GitHub now has the importer but does NOT yet contain the 27 extracted engine source files as separately tracked Python modules. The local staging directory is not GitHub; do not report source migration as complete. No canonical/main changes or merges.
+- **NEXT:** Commit the 27 verified source text modules and manifest to `src/` on this same branch, then execute clean-checkout tests and checkpoint/Book audits.
