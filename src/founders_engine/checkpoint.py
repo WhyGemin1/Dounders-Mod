@@ -37,6 +37,29 @@ def _validate_world(world, tree_id):
     if world.tick != world.ecology.day:
         raise ValueError('ecology and Founder clocks disagree')
     session.audit()
+    # Fail closed on Book receipt corruption before saving or accepting a
+    # restored world. A receipt must refer to a real committed Book move.
+    # The Book's resource accounts remain the only settlement authority.
+    from founders_civ.core.ledger import Transaction
+    receipts = getattr(session.book, 'request_receipts', None)
+    if not isinstance(receipts, dict):
+        raise ValueError('missing authoritative Book replay receipts')
+    seen_sequences = set()
+    for request_id, record in receipts.items():
+        if not isinstance(request_id, str) or not request_id.strip():
+            raise ValueError('invalid Book replay request id')
+        if not isinstance(record, tuple) or len(record) != 2:
+            raise ValueError('invalid Book replay record')
+        legs, receipt = record
+        if (not isinstance(legs, tuple) or len(legs) != 2
+                or not isinstance(receipt, Transaction)
+                or receipt.kind != 'move'
+                or receipt.material != legs[0] or receipt.energy != legs[1]
+                or receipt.seq < 1 or receipt.seq > session.book.seq):
+            raise ValueError('inconsistent Book replay receipt')
+        if receipt.seq in seen_sequences:
+            raise ValueError('duplicate Book settlement sequence')
+        seen_sequences.add(receipt.seq)
     return session
 
 def save_checkpoint(world, tree_id, path):
