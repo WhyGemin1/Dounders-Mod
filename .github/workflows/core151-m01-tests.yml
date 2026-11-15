@@ -41,3 +41,7 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m unittest discover -v -s tests -p 'test_m01_checkpoint_disk_faults.py'
+      - name: M01 actual subprocess exit at atomic checkpoint boundary
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_subprocess_termination.py'
