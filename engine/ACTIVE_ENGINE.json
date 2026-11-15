@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Core151 tracked on experimental branch; native claim boundary implemented as fail-closed read-only validation; native WorldBox connection NOT implemented",
+  "source_status": "Core151 tracked; M01 native read-only boundary now rejects conflicting request replay and ACK token collisions within a single observation batch; no native connector or writable protocol",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "Prior 38/38 PASS at d1a7af62078c5d44983313212a2dac0496bcb51b; new native admission test run not yet observed",
+    "github_ci": "Previous native boundary run 43744559602 PASS at ed6b064; current batch replay test commit c1651228 pending CI observation",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -34,19 +34,19 @@
     "m01_disk_faults": "PASS GitHub Actions job step at 94c9e2b: file fsync failure, atomic replace failure, directory fsync failure after replacement; each tests poisoned session and recovery replay with one Book",
     "m01_subprocess_termination": "PASS 2/2 in GitHub Actions run 43733194584 on 1b853df19b858ad57d5a0114eb7ea74985111126: os._exit before/after os.replace, Book receipt replay, 100 Founders and mass/energy audits",
     "m01_subprocess_fsync": "PASS 4/4 in GitHub Actions run 43738903675 at f3a517942d647845d97a6febc9b55128c9aaef53; child os._exit at before/after temporary-file and directory fsync",
-    "native_claim_boundary": "3 new tests committed; GitHub CI pending at source commit 1d0f242da835106415871452bb7e6e95da54d95f; no native game test"
+    "native_claim_boundary": "Previous 3/3 PASS run 43744559602; 4 new batch collision tests committed, result PENDING"
   },
-  "book_audit": "NOT RUN this cycle; prior 38/38 GitHub CI included Book audit at d1a7af6; new boundary has no Book access",
+  "book_audit": "NOT RUN for current read-only claim boundary change; no Book touched",
   "open_gates": [
     "Native WorldBox IDs/units/version and exactly-once external ACK remain unverified; no writes",
     "Power-loss and filesystem persistence not established by process-exit tests",
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Validate native WorldBox object identity, version and unit conversion using a documented fixture/contract; add tests that reject ambiguous or replayed ACKs; do not enable native writes",
-  "last_cycle": "2026-11-15 M01 read-only native claim admission gate",
+  "next_cycle": "Confirm current GitHub CI; validate cross-batch durable claim correlation with native identity/unit/version fixtures, without enabling external settlement",
+  "last_cycle": "2026-11-15 M01 read-only batch replay and ACK collision rejection",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "f3a517942d647845d97a6febc9b55128c9aaef53",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43738903675"
+  "last_verified_code_commit": "ed6b0640f6516e92e9bb156dc9c321d4a9b7a01e",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43744559602"
 }
