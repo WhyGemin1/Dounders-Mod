@@ -35,6 +35,8 @@ class Book:
         self.max_abs_mass_error=0.
         self.max_abs_energy_error=0.
         self.last=None
+        # Same authoritative Book owns replay receipts; no secondary SQLite ledger.
+        self.request_receipts={}
 
     def seed_mass(self,key,value):
         assert self.start_mass is None and value>=0 and math.isfinite(value)
@@ -116,6 +118,28 @@ class Book:
 
     def move(self,material=(),energy=()):
         return self.apply('move',material,energy)
+
+    def move_once(self, request_id, material=(), energy=()):
+        """Idempotent Book move. Receipt and stock update share one in-memory commit.
+
+        Request receipts survive deepcopy/pickle of this Book. They do NOT prove
+        external disk checkpoint atomicity or native WorldBox acknowledgement.
+        """
+        if not isinstance(request_id, str) or not request_id.strip():
+            raise ValueError('nonempty request id required')
+        legs = (tuple(tuple(x) for x in material),
+                tuple(tuple(x) for x in energy))
+        previous = self.request_receipts.get(request_id)
+        if previous is not None:
+            prior_legs, receipt = previous
+            if prior_legs != legs:
+                raise ValueError('request id reused with different transfer')
+            return receipt, False
+        # apply prevalidates and commits the complete Book move. No receipt
+        # is written if it rejects; no untracked second resource authority.
+        receipt = self.move(material=legs[0], energy=legs[1])
+        self.request_receipts[request_id] = (legs, receipt)
+        return receipt, True
 
     def ingest(self, material, energy):
         """Atomic, fee-free relocation of already edible food into gut.
