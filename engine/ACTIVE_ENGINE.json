@@ -9,9 +9,9 @@
   "iteration": 3,
   "working_branch": "feat/single-core151-authority",
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
-  "overlay": "M01 Cycle14 on Core151; local reconstruction of historical M01 modules",
+  "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 authoritative Core151/Cycle152 .py modules committed as GitHub text source under src/; local extracted-source smoke test passed; clean GitHub clone blocked by network DNS",
+  "source_status": "27 Core151 modules plus M01 gateway now tracked in GitHub text source; headless targeted tests passed locally against extracted exact Cycle152 archive",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "NOT RUN",
@@ -24,19 +24,20 @@
     "real_archive_this_cycle": "NOT RUN",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
     "knowledge_architecture": "6/6 PASS local extracted exact SHA archive source",
-    "pilot": "seed400, 1 day PASS, 100 Founders verified separately, 16 tree residents, Book mass error -2.73e-12, energy error -1.12e-8"
+    "pilot": "seed400, 1 day PASS, 100 Founders verified separately, 16 tree residents, Book mass error -2.73e-12, energy error -1.12e-8",
+    "m01_gateway_headless": "6/6 PASS seed400, local extracted Core151 + same authored gateway implementation; no GitHub checkout execution",
+    "m01_checkpoint_replay": "NOT RUN"
   },
-  "book_audit": "initial+one-step pass on locally recovered engine",
+  "book_audit": "M01 seed400: 6 targeted tests passed; positive mass and energy transfers conserved, invalid/duplicate request Book seq unchanged; 1 world tick and 100 Founder identities",
   "open_gates": [
-    "M01 gateway overlay source absent from GitHub",
-    "clean GitHub checkout test",
-    "clean-checkout tests",
+    "checkpoint/restart persistent idempotency for M01 requests",
+    "clean GitHub checkout tests",
     "M05 Book migration/removal",
-    "WorldBox native source identity and ACK",
-    "checkpoint and ecological regression"
+    "native WorldBox source identity and ACK",
+    "full ecological regression and long horizon"
   ],
-  "next_cycle": "Import/reconcile M01 Book gateway source into same src/founders_civ tree; run clean-checkout authority, invalid harvest rollback, checkpoint and identity tests; fix import packaging",
-  "last_cycle": "2026-11-15 Cycle4 import 27 source files",
+  "next_cycle": "Run exact GitHub checkout authority and gateway tests; implement checkpoint-persistent M01 request receipt/idempotency, prove no duplicate Book transactions after restart",
+  "last_cycle": "2026-11-15 Cycle5 M01 Book-funded gateway integration",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772"
 }
