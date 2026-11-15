@@ -6,17 +6,20 @@
   "authoritative_book": "IntegratedWorld.book (founders_civ.core.ledger.Book)",
   "authoritative_clock": "IntegratedWorld.tick",
   "active_workstream": "SINGLE_ENGINE_INTEGRATION",
-  "iteration": 1,
+  "iteration": 2,
   "working_branch": "feat/single-core151-authority",
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 Cycle14 on Core151; local reconstruction of historical M01 modules",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "experimental glue on GitHub; Core151 full source NOT yet imported as git-tracked text",
+  "source_status": "verified archive recovered; 27 canonical source Python files extracted and tested locally; GitHub importer committed; 27 files NOT YET tracked individually in GitHub",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "NOT RUN",
     "worldbox_game": "NOT RUN",
-    "ecology_long_horizon": "NOT RUN"
+    "ecology_long_horizon": "NOT RUN",
+    "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
+    "clean_checkout": "NOT RUN; core modules still absent",
+    "book_audit_this_cycle": "NOT RUN; source staging only"
   },
   "book_audit": "initial+one-step pass on locally recovered engine",
   "open_gates": [
@@ -26,5 +29,7 @@
     "native WorldBox source identity & exactly-once ACK",
     "checkpoint and ecological regression"
   ],
-  "next_cycle": "Import a provenance-checked Core151/Cycle152 package as text source under src/founders_civ and run same tests from clean checkout, no alternative engine."
+  "next_cycle": "Commit the 27 verified extracted Core151 modules as individual text files into src/; then run authority and checkpoint tests from clean checkout without archive.",
+  "last_cycle": "2026-11-15 Cycle2 source import staging",
+  "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8"
 }
