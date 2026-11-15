@@ -62,5 +62,35 @@ class NativeBoundaryTests(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.boundary.inspect_batch(iter((self.claim,)))
 
+
+    def test_cross_batch_replay_is_read_only(self):
+        observations = self.boundary.inspect_against_history(
+            [self.claim], [self.claim])
+        self.assertEqual(len(observations), 1)
+        self.assertEqual(observations[0]['status'], 'OBSERVED_UNVERIFIED')
+        self.assertFalse(observations[0]['ack_allowed'])
+        self.assertFalse(observations[0]['book_settlement_allowed'])
+
+    def test_cross_batch_changed_quantity_and_identity_rejected(self):
+        for field, value in [('quantity', 3.0),
+                             ('object_revision', 'r2'),
+                             ('resource_unit', 'another-unit'),
+                             ('game_version', 'other-version')]:
+            with self.subTest(field=field), self.assertRaisesRegex(
+                    ValueError, 'conflicting native request replay'):
+                self.boundary.inspect_against_history(
+                    [self.claim], [replace(self.claim, **{field: value})])
+
+    def test_cross_batch_ack_collision_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'ACK token reused'):
+            self.boundary.inspect_against_history(
+                [self.claim], [replace(self.claim, request_id='request-2')])
+
+    def test_missing_history_fails_closed(self):
+        with self.assertRaisesRegex(ValueError, 'complete trusted'):
+            self.boundary.inspect_against_history(None, [self.claim])
+        with self.assertRaises(TypeError):
+            self.boundary.inspect_against_history(iter([self.claim]), [self.claim])
+
 if __name__ == '__main__':
     unittest.main()
