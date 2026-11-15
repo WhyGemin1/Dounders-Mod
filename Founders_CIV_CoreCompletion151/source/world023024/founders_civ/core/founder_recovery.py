@@ -11,8 +11,7 @@ from math import isfinite
 @dataclass
 class RecoveryState:
     fatigue: float = 0.0
-    last_rest_tick: int = -1
-    last_rest_event: str | None = None
+    rest_decisions: int = 0
 
 
 def state_for(sim, founder):
@@ -57,17 +56,22 @@ def propose_rest(sim, founder):
     return [(score, 'rest', None, None)]
 
 
-def perform_rest(sim, founder, parent=None):
+def perform_rest(sim, founder, parent=None, decision_id=None):
     if not getattr(sim, 'founder_recovery_enabled', False):
         raise ValueError('recovery policy disabled')
     person = sim.founders.people.get(founder)
     if person is None or not person.alive:
         raise ValueError('active Founder required')
     state = state_for(sim, founder)
-    if state.last_rest_tick == sim.tick:
-        # Repeat within one scheduler cycle cannot cause repeat mobilization,
-        # further fatigue relief, or a second social event.
-        return state.last_rest_event
+    # Rest is a chosen physical action, not a purchase of elapsed time.
+    # Replay identity comes from the exact decision, NOT the simulation tick.
+    if decision_id is None:
+        decision_id = parent if parent is not None else f'manual:{sim.next_event + 1}'
+    if not isinstance(decision_id, str) or not 1 <= len(decision_id) <= 72:
+        raise ValueError('invalid recovery decision ID')
+    operation = f'founder:rest:{founder}:{decision_id}'
+    if operation in sim.recovery_receipts:
+        return sim.recovery_receipts[operation]
     store = f'body_chemical:founder:{founder}'
     work = f'founder:{founder}'
     heat = f'body_heat:founder:{founder}'
@@ -79,10 +83,11 @@ def perform_rest(sim, founder, parent=None):
         # Energy transfers are balanced: body store -> existing Book accounts.
         txn = sim.book.move(energy=[(store, work, .95*mobilized),
                                     (store, heat, .05*mobilized)],
-                            operation_id=f'founder:rest:{founder}:{sim.tick}')
+                            operation_id=operation)
     state.fatigue = max(0., state.fatigue - .20)
-    state.last_rest_tick = sim.tick
-    state.last_rest_event = sim.log('founder_physiological_rest', founder, parent,
-                                    txn=txn, mobilized=mobilized,
-                                    fatigue=state.fatigue)
-    return state.last_rest_event
+    state.rest_decisions += 1
+    event = sim.log('founder_physiological_rest', founder, parent,
+                    txn=txn, mobilized=mobilized, fatigue=state.fatigue,
+                    recovery_decision_id=decision_id)
+    sim.recovery_receipts[operation] = event
+    return event
