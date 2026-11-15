@@ -14,7 +14,7 @@
   "source_status": "27 Core151 modules plus M01 gateway now tracked in GitHub text source; headless targeted tests passed locally against extracted exact Cycle152 archive",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "NOT RUN",
+    "github_ci": "workflow committed, zero runs observed",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -25,19 +25,20 @@
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
     "knowledge_architecture": "6/6 PASS local extracted exact SHA archive source",
     "pilot": "seed400, 1 day PASS, 100 Founders verified separately, 16 tree residents, Book mass error -2.73e-12, energy error -1.12e-8",
-    "m01_gateway_headless": "6/6 PASS seed400, local extracted Core151 + same authored gateway implementation; no GitHub checkout execution",
-    "m01_checkpoint_replay": "NOT RUN"
+    "m01_gateway_headless": "previous cycle 6/6; new replay tests authored NOT RUN in this invocation",
+    "m01_checkpoint_replay": "Book-only pickle replay test authored NOT RUN; whole-world disk checkpoint NOT VERIFIED"
   },
-  "book_audit": "M01 seed400: 6 targeted tests passed; positive mass and energy transfers conserved, invalid/duplicate request Book seq unchanged; 1 world tick and 100 Founder identities",
+  "book_audit": "Book.move_once uses canonical Book move; fresh conservation audit NOT RUN this cycle",
   "open_gates": [
-    "checkpoint/restart persistent idempotency for M01 requests",
-    "clean GitHub checkout tests",
-    "M05 Book migration/removal",
-    "native WorldBox source identity and ACK",
-    "full ecological regression and long horizon"
+    "run clean-checkout GitHub CI tests and repair failures",
+    "verify whole-world checkpoint roundtrip and restart/replay",
+    "verify crash-safe external ACK and durable settlement protocol",
+    "M05 independent SQLite Book migration/removal",
+    "native WorldBox source identity, units and version",
+    "long-horizon ecological regression"
   ],
-  "next_cycle": "Run exact GitHub checkout authority and gateway tests; implement checkpoint-persistent M01 request receipt/idempotency, prove no duplicate Book transactions after restart",
-  "last_cycle": "2026-11-15 Cycle5 M01 Book-funded gateway integration",
+  "next_cycle": "Run clean-checkout CI; then integrate whole-world checkpoint serialization of Book receipts and prove replay across saved/restored world with identical Book sequence and stock",
+  "last_cycle": "2026-11-15 M01 Book-owned idempotent settlement repair",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772"
 }
