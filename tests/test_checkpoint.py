@@ -1,0 +1,65 @@
+"""Checkpoint envelope tests and actual Core151 restart tests."""
+import tempfile
+import unittest
+from pathlib import Path
+from founders_engine.checkpoint import _encode, _decode
+
+class EnvelopeTests(unittest.TestCase):
+    def test_roundtrip(self):
+        self.assertEqual(_decode(_encode(b'abc')), b'abc')
+
+    def test_corrupt_digest(self):
+        data = bytearray(_encode(b'abc'))
+        data[-1] ^= 1
+        with self.assertRaisesRegex(ValueError, 'digest'):
+            _decode(bytes(data))
+
+    def test_truncated_payload(self):
+        with self.assertRaisesRegex(ValueError, 'length'):
+            _decode(_encode(b'abc')[:-1])
+
+    def test_reject_foreign_format(self):
+        with self.assertRaisesRegex(ValueError, 'format'):
+            _decode(b'not a checkpoint')
+
+class IntegratedCheckpointTests(unittest.TestCase):
+    def setUp(self):
+        from run_world_tree_pilot import bootstrap
+        from founders_engine.authority import SingleEngineSession
+        self.world, _, self.tree_id = bootstrap(400)
+        self.session = SingleEngineSession(self.world, self.tree_id)
+
+    def test_restart_replay_is_idempotent(self):
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+        first = self.session.harvest('F001', 'checkpoint-replay', '1',
+                                     'forest', 'plant', .01, .001)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'state.cp'
+            save_checkpoint(self.world, self.tree_id, path)
+            restored = load_checkpoint(path, self.tree_id)
+            before = restored.book.seq
+            receipt = restored.harvest('F001', 'checkpoint-replay', '1',
+                                       'forest', 'plant', .01, .001)
+            self.assertEqual(receipt, first)
+            self.assertEqual(restored.book.seq, before)
+            self.assertEqual(restored.world.tick, self.world.tick)
+            self.assertIs(restored.world.world_trees.worlds[self.tree_id].book,
+                          restored.book)
+            restored.audit()
+
+    def test_restarted_and_uninterrupted_match(self):
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'state.cp'
+            save_checkpoint(self.world, self.tree_id, path)
+            restored = load_checkpoint(path, self.tree_id)
+            self.session.step()
+            restored.step()
+            self.assertEqual(restored.world.tick, self.world.tick)
+            self.assertEqual(restored.book.seq, self.world.book.seq)
+            self.assertEqual(dict(restored.book.mass), dict(self.world.book.mass))
+            self.assertEqual(dict(restored.book.energy), dict(self.world.book.energy))
+            restored.audit()
+
+if __name__ == '__main__':
+    unittest.main()
