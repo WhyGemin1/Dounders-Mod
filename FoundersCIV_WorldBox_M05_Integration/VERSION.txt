@@ -1,0 +1,5 @@
+Founders–CIV × WorldBox M05 source integration release candidate
+Version: 0.5.0-rc1
+Python sidecar: offline-tested
+WorldBox plugin: source-only; local .NET build and game validation needed
+Core151 source: not included; shared Book migration pending

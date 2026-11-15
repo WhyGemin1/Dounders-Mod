@@ -1,0 +1,12 @@
+{
+  "package": "FoundersCIV_WorldBox_M05_v0.5.2_REPAIR",
+  "type": "source-only patch; no Unity/BepInEx/game DLLs",
+  "mode": "in-place; preserves data and world config",
+  "files": {
+    "PATCH_GUIDE.md": "aba06b83086dc46541ba09bc07ee7b9a6820696a05f500513da8272cde7c67cd",
+    "Repair-M05.ps1": "0374bd043a476594e393d09961215ca04cef3ef0c2e619b933f6ddbce88ee398",
+    "payload/bridge/FoundersCIV_M05_Observer.cs": "ad575e9d8766b81f7a895b57f6d3289defdce27caa41842fec934be1cb2611a2",
+    "payload/bridge/FoundersCIV_M05_Observer.csproj": "0089a2c14dbefdbaa47f2e4b00f5a47641c7720181371b6edce7d405caaff5e6",
+    "payload/build_bridge.ps1": "863470d0b5fcd57172bc90db11b26781a664dee603259629f570900d743bc804"
+  }
+}

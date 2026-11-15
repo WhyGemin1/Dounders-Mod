@@ -1,0 +1,64 @@
+{
+  "world_key": "house-save-2026-11-13-test1",
+  "founders": [
+    "Solace",
+    "Jamun",
+    "Founder-003"
+  ],
+  "trees": [
+    {
+      "id": "WORLD-TREE-001",
+      "config": {
+        "anchor": {
+          "x": 100,
+          "y": 100,
+          "radius": 32
+        },
+        "canopy_capture": 52,
+        "maintenance": 8,
+        "food_web_provision": 8,
+        "reserve_floor": 35,
+        "fruit_bio": 10,
+        "fruit_charge": 30,
+        "fruit_ttl": 8,
+        "mature_at": 12,
+        "fruit_health_floor": 0.65,
+        "river_request": 30,
+        "habitats": [
+          {
+            "id": "forest",
+            "weight": 0.35,
+            "light": 0.85,
+            "water": 0.9,
+            "nutrients": 0.85,
+            "support": 0.9
+          },
+          {
+            "id": "grassland",
+            "weight": 0.3,
+            "light": 0.95,
+            "water": 0.75,
+            "nutrients": 0.8,
+            "support": 0.85
+          },
+          {
+            "id": "wetland",
+            "weight": 0.2,
+            "light": 0.8,
+            "water": 1,
+            "nutrients": 0.9,
+            "support": 0.85
+          },
+          {
+            "id": "ridge",
+            "weight": 0.15,
+            "light": 0.95,
+            "water": 0.5,
+            "nutrients": 0.55,
+            "support": 0.7
+          }
+        ]
+      }
+    }
+  ]
+}

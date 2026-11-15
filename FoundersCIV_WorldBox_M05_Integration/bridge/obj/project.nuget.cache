@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "F6wlmmXYruU=",
+  "success": true,
+  "projectFilePath": "C:\\Dev\\FoundersCIV_WorldBox_M05_Integration\\bridge\\FoundersCIV_M05_Observer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\eande\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
+    "C:\\Users\\eande\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net462\\1.0.3\\microsoft.netframework.referenceassemblies.net462.1.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,14 @@
+{
+  "source_archive": "BepInEx.rar",
+  "bepinex_reported_version": "5.4.23.2",
+  "worldbox_reported_version": "0.51.2",
+  "unity_reported_version": "2022.3.60f1",
+  "existing_bridge_version": "0.6.0",
+  "existing_bridge_reported_commands": 29,
+  "expected_game_assembly_sha256": "51d275f0168be2f6ca26341ab292406714e694e0270eafcb25b999d5df6dd69f",
+  "bepinex_dll_sha256": "c65b42034bc8ffb9f0b336e416dc3884e3f99fc5a5a89eb1f2ff7868412322cd",
+  "harmony_dll_sha256": "1a21cc03424fc82c3dd1346905d16494536b9595ae4162228d99fb7c285c1031",
+  "unity_managed_dlls_in_archive": false,
+  "m05_observer_in_archive": false,
+  "sensitive_config_data_included": false
+}

@@ -1,0 +1,27 @@
+﻿[
+    {
+        "assembly":  "BepInEx.dll",
+        "sha256":  "c65b42034bc8ffb9f0b336e416dc3884e3f99fc5a5a89eb1f2ff7868412322cd",
+        "staged":  "C:\\Dev\\FoundersCIV_WorldBox_M05_Integration\\build\\refs\\BepInEx.dll"
+    },
+    {
+        "assembly":  "0Harmony.dll",
+        "sha256":  "1a21cc03424fc82c3dd1346905d16494536b9595ae4162228d99fb7c285c1031",
+        "staged":  "C:\\Dev\\FoundersCIV_WorldBox_M05_Integration\\build\\refs\\0Harmony.dll"
+    },
+    {
+        "assembly":  "UnityEngine.dll",
+        "sha256":  "1f34ee9967ef0da405b79f7bdedfa82477b379cccc940789f71ddff678831163",
+        "staged":  "C:\\Dev\\FoundersCIV_WorldBox_M05_Integration\\build\\refs\\UnityEngine.dll"
+    },
+    {
+        "assembly":  "UnityEngine.CoreModule.dll",
+        "sha256":  "ca5b6ea1a048efc7d9c4d200c743eee97984c44a17cb1ed131f9e307a6f1bd71",
+        "staged":  "C:\\Dev\\FoundersCIV_WorldBox_M05_Integration\\build\\refs\\UnityEngine.CoreModule.dll"
+    },
+    {
+        "assembly":  "UnityEngine.IMGUIModule.dll",
+        "sha256":  "12e4aa7e6f9d0c2682fb8dd6e93ad511697d1afaba445e73fa76c682d5ce19f2",
+        "staged":  "C:\\Dev\\FoundersCIV_WorldBox_M05_Integration\\build\\refs\\UnityEngine.IMGUIModule.dll"
+    }
+]

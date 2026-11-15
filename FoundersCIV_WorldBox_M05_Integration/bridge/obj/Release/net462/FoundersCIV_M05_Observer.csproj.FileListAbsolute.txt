@@ -1,0 +1,3 @@
+C:\Dev\FoundersCIV_WorldBox_M05_Integration\bridge\obj\Release\net462\FoundersCIV_M05_Observer.csproj.AssemblyReference.cache
+C:\Dev\FoundersCIV_WorldBox_M05_Integration\bridge\obj\Release\net462\FoundersCIV_M05_Observer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dev\FoundersCIV_WorldBox_M05_Integration\bridge\obj\Release\net462\FoundersCIV_M05_Observer.csproj.CoreCompileInputs.cache

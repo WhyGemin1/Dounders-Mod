@@ -1,0 +1,6 @@
+arm,seed,horizon,tree_alive,tree_health,fruit_created,fruit_current,book_balanced,measurement
+baseline,0,30,1,1.0,30,8,True,virtual_tree_only_not_native_ecology
+baseline,0,180,1,1.0,180,8,True,virtual_tree_only_not_native_ecology
+baseline,0,360,1,1.0,360,8,True,virtual_tree_only_not_native_ecology
+baseline,0,720,1,1.0,720,8,True,virtual_tree_only_not_native_ecology
+baseline,0,1080,1,1.0,1080,8,True,virtual_tree_only_not_native_ecology

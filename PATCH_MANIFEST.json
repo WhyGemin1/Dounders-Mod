@@ -1,0 +1,16 @@
+{
+  "version": "0.5.3",
+  "release_type": "focused compiler repair",
+  "changes": [
+    "HarmonyX six-argument Patch overload",
+    "UnityEngine.JSONSerializeModule staged/ref added",
+    "scoped backed-up repair script"
+  ],
+  "csharp_build_verified": false,
+  "runtime_verified": false,
+  "files": {
+    "build_bridge.ps1": "97810f88432d252b6f7e51817377ae6352b6bbf54251792c18745c60351f3967",
+    "bridge/FoundersCIV_M05_Observer.cs": "fd7871bf2ce2a9f20807784dc32fd64c7c13f6c0bdb520eb9e694c0e6a5a51a8",
+    "bridge/FoundersCIV_M05_Observer.csproj": "862799658a91849f57662fa483ead69bd0df13cc87763175fe0ae6d2ea982a01"
+  }
+}

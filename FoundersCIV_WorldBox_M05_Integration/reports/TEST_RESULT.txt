@@ -1,0 +1,9 @@
+M05 unittest: 37/37 PASS, Python 3.13.5, offline synthetic data.
+M04 regression: 37/37 PASS, separate original prototype.
+WorldBox Assembly-CSharp.dll: 10/10 selected metadata signatures matched, SHA256 51d275f0168be2f6ca26341ab292406714e694e0270eafcb25b999d5df6dd69f.
+M05 event store: 6,001 synthetic actors imported; no 5,000 limit.
+Snapshot continuity: synthetic 2,293 -> 4,900 actors, shared 559, 0 conflicts; no birth/death inference.
+Synthetic M05 sensitivity smoke: 8 arms x 2 matched seeds x two horizons 30/180 -> 32 rows.
+Synthetic M05 long run: baseline 1 seed through 1080 periods; conserved ledger.
+C# BepInEx observer NOT compiled or run in Unity; HUD unverified in-game.
+Core151 real Book NOT linked; M05 resources isolated.

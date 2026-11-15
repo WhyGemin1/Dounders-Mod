@@ -1,0 +1,8 @@
+{
+  "WORLD-TREE-001": {
+    "forest": {"water": 0.25, "support": 0.6},
+    "grassland": {"water": 0.15, "support": 0.45},
+    "wetland": {"water": 0.6, "support": 0.65},
+    "ridge": {"water": 0.05, "support": 0.3}
+  }
+}

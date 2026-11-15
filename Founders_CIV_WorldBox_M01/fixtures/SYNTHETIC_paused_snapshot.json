@@ -1,0 +1,9 @@
+{
+  "world_seed": 9711, "tick": 300, "paused": true, "world_loading": false,
+  "matched": 2, "returned": 2, "offset": 0, "has_more": false,
+  "missing_identity_count": 0, "duplicate_identity_count": 0,
+  "items": [
+    {"native_actor_id": "11001", "asset_id": "rabbit", "name": "Moss", "x": 5, "y": 6, "parent_id_1": null, "parent_id_2": null, "generation": 0, "nutrition": 82, "stamina": 20},
+    {"native_actor_id": "11002", "asset_id": "fox", "name": "Bracken", "x": 9, "y": 6, "parent_id_1": null, "parent_id_2": null, "generation": 0, "nutrition": 70, "stamina": 18}
+  ]
+}

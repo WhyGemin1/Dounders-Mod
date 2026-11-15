@@ -1,0 +1,41 @@
+{
+  "files": {
+    "README.md": "3bb65cbf5241af75818cfa56411e2b593f18bb97dc80c6d4feba7a659693f513",
+    "VERSION.txt": "6d7f27a659b65986981aa04cc4fb28bc6239b899164a82fe6c7567ab82b4cbaf",
+    "assembly_compatibility.json": "6f0b6f1e704b31b228a2d11cbfc7ed06ef8b70208d9bfeaad189917cea8fad3e",
+    "bridge/FoundersCIV_M05_Observer.cs": "0d0f8ffe7bc8e7c6d460fe017fb5b0b9de4f75dd1d399d7cec62d252e04599a7",
+    "bridge/FoundersCIV_M05_Observer.csproj": "c34bb97d84c00c317f736bbca3932d3b1f188baf19d4f274c2d3f20b8b99141f",
+    "build_bridge.ps1": "b21f5d695665e4ba779d058471d603b235a39fdfd522cbc87ed3ad8568ef5859",
+    "docs/CORE151_ADAPTER_CONTRACT.md": "901cda61a66c77e0dc9efeda16f097b10a9901706adfca1854bbe4016247d225",
+    "docs/ENGINEERING_REPORT.md": "8ecfb48ec69b7c57ea42ed5e49832524da96254140dcacd6e33e6d962a103d76",
+    "docs/INSTALL_WINDOWS.md": "32fde2f739e8436fd49068ae8aa3246b48c7306cd5c9157b40f0cbc8bb10cc3d",
+    "docs/SNAPSHOT_FORMAT.md": "925375de378dd9d6288f344dd9bf1993780cc9006b69b8b78d35247661d49502",
+    "examples/conditions_dry.json": "ccb544766225234e5526c24a98b3ab83673280bb0a84031124e3db3b5b36014a",
+    "examples/synthetic_m03_events.jsonl": "d15e32f23e9bb1c9991dcf84d901668323f3d52c8f2584e9559aa82cfc9eafc3",
+    "examples/tree_config_for_new_world.json": "a43353d84108efe23ae3a17c33bef14fc6658ee3c52e3b63c20b5ec33fdb57ad",
+    "examples/world.json": "ade3c9a16126581c8b0482107cf2b970a4d4e5ef1c7d0d918bf9ef72e5e66186",
+    "m05.py": "0bd3d5462c9b763e3cb8204054fa1ec4cc0762f14499cd4a9abb435b74ca71fc",
+    "m05_core.py": "b02bedc1604ced7a4278058609b8cfe64826eb9295a4dfbbca945f6206df6504",
+    "reports/TEST_RESULT.txt": "91504302c6d475003196e83c6c070dce2767c6ae2b105b502ad4ad76086a2346",
+    "reports/assembly_signature_verification.json": "6f0b6f1e704b31b228a2d11cbfc7ed06ef8b70208d9bfeaad189917cea8fad3e",
+    "reports/synthetic_1080_baseline.csv": "0d9001b8bd6717aa8f26efb4567aab9658c4ca7a495e7ae3afa22edd405e1f1b",
+    "reports/synthetic_8arm_2seed_30_180.csv": "b7642467c531589ec18c037c1c091fef1dcb51416c6afd7cc3abd8dfe8c8776f",
+    "tests/test_m05.py": "c6be71965bbf2ec4d13307d6abcd8f1976f5aa2596173f188ea22a7d7a89f5c4",
+    "tools/inspect_assembly.py": "c89185a9108b9d863bc4af74cb0504042b2c2649a1dc096786f0e1f8979b8d55",
+    "tools/list_fruit.py": "82c919aed45d885d2e5a5c9726be456ab89f2c09eff7207c2ac19d9d3c180849",
+    "tools/run_batches.py": "73df6db76ddf0b1c4d547772988887ddffd337d29807bae8d47d9f456bd4e73c",
+    "tools/verify_hooks.py": "b2de52cff06f057e16134f995d244fdc44e89a2a66b41439b07c0ad1e82898b4"
+  },
+  "release": "M05 Living Energy Integration 0.5.0-rc1",
+  "status": {
+    "core151_book_integrated": false,
+    "csharp_compiled": false,
+    "live_worldbox_tested": false,
+    "native_method_metadata_verified": 10,
+    "native_worldbox_mutation_enabled": false,
+    "previous_m04_regression_passed": 37,
+    "python_offline_tested": true,
+    "python_unittest_passed": 37
+  },
+  "upload_assembly_sha256": "51d275f0168be2f6ca26341ab292406714e694e0270eafcb25b999d5df6dd69f"
+}

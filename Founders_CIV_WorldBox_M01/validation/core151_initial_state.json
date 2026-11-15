@@ -1,0 +1,1303 @@
+{
+  "engine": "UnifiedRegulatedForaging151",
+  "seed": 100001,
+  "day": 0,
+  "founder_count": 100,
+  "book_shared": true,
+  "book_rejections": 0,
+  "actor_count": 68,
+  "actors": [
+    {
+      "civ_actor_id": "WTBIO-0000001",
+      "species": "field_mouse",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9776506204587828,
+        "digestion": 1.084432413878667,
+        "locomotion": 0.998066207012406,
+        "endurance": 1.0564048142344382,
+        "sense": 1.0500400198675337,
+        "intake": 1.1481237794733603,
+        "vigilance": 1.0949494307845717,
+        "reproductive": 1.1418899260267321
+      },
+      "alive": true,
+      "age": 73,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000002",
+      "species": "field_mouse",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9789385092793607,
+        "digestion": 1.08342135829158,
+        "locomotion": 1.063322913934115,
+        "endurance": 1.0042633926805382,
+        "sense": 0.9890961727366444,
+        "intake": 1.1381493745003026,
+        "vigilance": 1.117796551402342,
+        "reproductive": 1.1367562729763738
+      },
+      "alive": true,
+      "age": 91,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000003",
+      "species": "field_mouse",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9622076083733827,
+        "digestion": 1.0152615149601742,
+        "locomotion": 0.993670306105518,
+        "endurance": 1.0332669003210706,
+        "sense": 1.0315367370778898,
+        "intake": 1.1351661325990658,
+        "vigilance": 1.1235297296722835,
+        "reproductive": 1.0534123672723883
+      },
+      "alive": true,
+      "age": 109,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000004",
+      "species": "field_mouse",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.957699835598271,
+        "digestion": 1.0307713789859756,
+        "locomotion": 0.9950526437887666,
+        "endurance": 1.0650659454086222,
+        "sense": 1.0134743034928466,
+        "intake": 1.0919944450047492,
+        "vigilance": 1.12320438828272,
+        "reproductive": 1.1437064068547054
+      },
+      "alive": true,
+      "age": 85,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000005",
+      "species": "field_mouse",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.8992760306552244,
+        "digestion": 1.0244000207345407,
+        "locomotion": 1.0189640934636124,
+        "endurance": 1.0523694975402744,
+        "sense": 1.0046666707997378,
+        "intake": 1.1543787763256617,
+        "vigilance": 1.1478884799092575,
+        "reproductive": 1.1309634456148634
+      },
+      "alive": true,
+      "age": 55,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000006",
+      "species": "field_mouse",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9510928545538809,
+        "digestion": 1.056820185716616,
+        "locomotion": 1.0561804133043884,
+        "endurance": 0.976020822472363,
+        "sense": 1.0374187726263315,
+        "intake": 1.1484125399714542,
+        "vigilance": 1.139958882434218,
+        "reproductive": 1.0948241498036708
+      },
+      "alive": true,
+      "age": 127,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000007",
+      "species": "field_mouse",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.8989026851554679,
+        "digestion": 1.0435858337550568,
+        "locomotion": 1.0782775653782166,
+        "endurance": 0.9970338791063075,
+        "sense": 1.0351358598924063,
+        "intake": 1.1041118550722802,
+        "vigilance": 1.1438592754980017,
+        "reproductive": 1.092613274573906
+      },
+      "alive": true,
+      "age": 84,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000008",
+      "species": "field_mouse",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9658686291925731,
+        "digestion": 1.0331062504470758,
+        "locomotion": 1.081847346402582,
+        "endurance": 1.0632063456234075,
+        "sense": 0.9986706209205939,
+        "intake": 1.0840896273327951,
+        "vigilance": 1.1292077492685975,
+        "reproductive": 1.089939345879246
+      },
+      "alive": true,
+      "age": 96,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000009",
+      "species": "meadow_grazer",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0083764890414155,
+        "digestion": 1.1013811708525352,
+        "locomotion": 1.0650935305388716,
+        "endurance": 1.126245231901568,
+        "sense": 0.9919757470108397,
+        "intake": 1.1143675878153227,
+        "vigilance": 1.1177049886075225,
+        "reproductive": 0.966277472802908
+      },
+      "alive": true,
+      "age": 176,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000010",
+      "species": "meadow_grazer",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.970333170596079,
+        "digestion": 1.0375662415364837,
+        "locomotion": 1.0828253512425583,
+        "endurance": 1.1448167310804838,
+        "sense": 0.9493375052343467,
+        "intake": 1.140206644776471,
+        "vigilance": 1.1076140006898028,
+        "reproductive": 0.9719242924636513
+      },
+      "alive": true,
+      "age": 302,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000011",
+      "species": "meadow_grazer",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.033725699206611,
+        "digestion": 1.086807240386276,
+        "locomotion": 1.0295403071764788,
+        "endurance": 1.1487620640035394,
+        "sense": 0.9812693367487618,
+        "intake": 1.1392864026896055,
+        "vigilance": 1.0794550113418953,
+        "reproductive": 1.007241190891947
+      },
+      "alive": true,
+      "age": 242,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000012",
+      "species": "meadow_grazer",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.009548092412882,
+        "digestion": 1.0683934486004822,
+        "locomotion": 1.0299500355102413,
+        "endurance": 1.156214903070711,
+        "sense": 0.9475423513549993,
+        "intake": 1.058602779565738,
+        "vigilance": 1.121680631810715,
+        "reproductive": 0.9511706771146171
+      },
+      "alive": true,
+      "age": 223,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000013",
+      "species": "meadow_grazer",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9777862258669562,
+        "digestion": 1.1178461216977709,
+        "locomotion": 1.0195237902305556,
+        "endurance": 1.1725063839166114,
+        "sense": 0.9244030061910798,
+        "intake": 1.0748642370751695,
+        "vigilance": 1.0681522190616126,
+        "reproductive": 0.9468326782581482
+      },
+      "alive": true,
+      "age": 186,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000014",
+      "species": "meadow_grazer",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9757410103670865,
+        "digestion": 1.1022955627988293,
+        "locomotion": 1.035315278274744,
+        "endurance": 1.1381752290539122,
+        "sense": 0.9133862199053481,
+        "intake": 1.1030477235343177,
+        "vigilance": 1.123336690167496,
+        "reproductive": 1.0099719994086673
+      },
+      "alive": true,
+      "age": 402,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000015",
+      "species": "meadow_grazer",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.02735696338581,
+        "digestion": 1.1282718568818497,
+        "locomotion": 1.034165920445034,
+        "endurance": 1.1099959057847146,
+        "sense": 0.9844812220170912,
+        "intake": 1.0534870647907335,
+        "vigilance": 1.0619343707961582,
+        "reproductive": 1.0072058106876232
+      },
+      "alive": true,
+      "age": 393,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000016",
+      "species": "meadow_grazer",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9798579227575552,
+        "digestion": 1.0322589412701233,
+        "locomotion": 1.0563171493010197,
+        "endurance": 1.1340107334164484,
+        "sense": 0.964579578371925,
+        "intake": 1.0818083199414568,
+        "vigilance": 1.0537193160685852,
+        "reproductive": 0.9484729251724614
+      },
+      "alive": true,
+      "age": 324,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000017",
+      "species": "forest_browser",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0312524952167108,
+        "digestion": 1.0519355468438525,
+        "locomotion": 1.007254763386353,
+        "endurance": 1.1032814624593856,
+        "sense": 1.0723565833757716,
+        "intake": 1.1380867798466536,
+        "vigilance": 1.0266154988137073,
+        "reproductive": 0.9918252286960648
+      },
+      "alive": true,
+      "age": 428,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000018",
+      "species": "forest_browser",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0649186498645724,
+        "digestion": 1.1064112601943525,
+        "locomotion": 0.9953499116287169,
+        "endurance": 1.1427902729867276,
+        "sense": 1.0195597075411822,
+        "intake": 1.1078540790591211,
+        "vigilance": 1.028812748225529,
+        "reproductive": 0.9619065128335428
+      },
+      "alive": true,
+      "age": 478,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000019",
+      "species": "forest_browser",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0595381444098535,
+        "digestion": 1.0714405718316173,
+        "locomotion": 0.9617541799876725,
+        "endurance": 1.1780639827155064,
+        "sense": 1.0376614247955414,
+        "intake": 1.042444604885703,
+        "vigilance": 1.0346481480632777,
+        "reproductive": 0.9650553241791358
+      },
+      "alive": true,
+      "age": 508,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000020",
+      "species": "forest_browser",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0239694378231508,
+        "digestion": 1.1031888173905735,
+        "locomotion": 0.9746612887006192,
+        "endurance": 1.1381174603168733,
+        "sense": 1.094076522256403,
+        "intake": 1.114303103139878,
+        "vigilance": 1.0053097803246291,
+        "reproductive": 0.9338440414006136
+      },
+      "alive": true,
+      "age": 317,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000021",
+      "species": "forest_browser",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9994413310010835,
+        "digestion": 1.079467737572126,
+        "locomotion": 1.0081225350467453,
+        "endurance": 1.1361724907251842,
+        "sense": 1.0440546573070086,
+        "intake": 1.0652822988119324,
+        "vigilance": 0.9810167256432086,
+        "reproductive": 0.9963772096339369
+      },
+      "alive": true,
+      "age": 396,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000022",
+      "species": "forest_browser",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0596127284331687,
+        "digestion": 1.031045381976997,
+        "locomotion": 0.9307624155099486,
+        "endurance": 1.1256397367169686,
+        "sense": 1.0125768852633805,
+        "intake": 1.0892774058194596,
+        "vigilance": 1.0272190736711442,
+        "reproductive": 1.0061314328117832
+      },
+      "alive": true,
+      "age": 290,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000023",
+      "species": "forest_browser",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9993553949586038,
+        "digestion": 1.1081009959468007,
+        "locomotion": 0.9516323474588378,
+        "endurance": 1.1701716440070016,
+        "sense": 1.0746707738303847,
+        "intake": 1.1329500504694985,
+        "vigilance": 0.9905089010521784,
+        "reproductive": 0.9365266171660304
+      },
+      "alive": true,
+      "age": 287,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000024",
+      "species": "forest_browser",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0678536214942196,
+        "digestion": 1.102365792472025,
+        "locomotion": 0.949263162414691,
+        "endurance": 1.0904728024623294,
+        "sense": 1.0139917037156547,
+        "intake": 1.0617327205115479,
+        "vigilance": 1.0440002219055804,
+        "reproductive": 0.9765272804906826
+      },
+      "alive": true,
+      "age": 185,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000025",
+      "species": "ridge_hound",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0912944153351518,
+        "digestion": 1.1005211179550782,
+        "locomotion": 1.1179211314240378,
+        "endurance": 1.146916287917967,
+        "sense": 1.153178354506674,
+        "intake": 1.0578959246983517,
+        "vigilance": 0.9527882741129184,
+        "reproductive": 0.855873546035567
+      },
+      "alive": true,
+      "age": 636,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000026",
+      "species": "ridge_hound",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.1086792428737062,
+        "digestion": 1.1179473025271156,
+        "locomotion": 1.1941163961572483,
+        "endurance": 1.1966180862403526,
+        "sense": 1.1154384624038318,
+        "intake": 1.116070910104657,
+        "vigilance": 0.9113915503768557,
+        "reproductive": 0.8516808713641739
+      },
+      "alive": true,
+      "age": 343,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000027",
+      "species": "ridge_hound",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.099626678831618,
+        "digestion": 1.1136328991881363,
+        "locomotion": 1.1091140772241026,
+        "endurance": 1.2425625769214483,
+        "sense": 1.1228133486166403,
+        "intake": 1.1078765350759743,
+        "vigilance": 0.9880562264915076,
+        "reproductive": 0.8963911658580003
+      },
+      "alive": true,
+      "age": 479,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000028",
+      "species": "ridge_hound",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0962441145590989,
+        "digestion": 1.1462014867388282,
+        "locomotion": 1.1494422434664067,
+        "endurance": 1.1994068845402803,
+        "sense": 1.1031761335097525,
+        "intake": 1.1226026932320212,
+        "vigilance": 0.9785823043198558,
+        "reproductive": 0.9167444650957114
+      },
+      "alive": true,
+      "age": 505,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000029",
+      "species": "ridge_hound",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0827496768249547,
+        "digestion": 1.0745183988439915,
+        "locomotion": 1.140756189119141,
+        "endurance": 1.2100963339556816,
+        "sense": 1.1733027995960554,
+        "intake": 1.0544211201773113,
+        "vigilance": 0.9817257387985893,
+        "reproductive": 0.8919754623690266
+      },
+      "alive": true,
+      "age": 486,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000030",
+      "species": "ridge_hound",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.095009855490015,
+        "digestion": 1.1121742397131815,
+        "locomotion": 1.1548761355363262,
+        "endurance": 1.1396182801380972,
+        "sense": 1.1368012166171404,
+        "intake": 1.0942852569019115,
+        "vigilance": 0.9650239642519736,
+        "reproductive": 0.9201921491782116
+      },
+      "alive": true,
+      "age": 431,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000031",
+      "species": "ridge_hound",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0431289565966266,
+        "digestion": 1.1089578225496852,
+        "locomotion": 1.1375613780404008,
+        "endurance": 1.2148972477753888,
+        "sense": 1.160042863764161,
+        "intake": 1.0972606722601739,
+        "vigilance": 0.989292328182693,
+        "reproductive": 0.9179922709052085
+      },
+      "alive": true,
+      "age": 413,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000032",
+      "species": "ridge_hound",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0958426486491133,
+        "digestion": 1.1199996691777963,
+        "locomotion": 1.1586651933051528,
+        "endurance": 1.1477382739072595,
+        "sense": 1.1448735545203355,
+        "intake": 1.060629937682283,
+        "vigilance": 0.981367264665311,
+        "reproductive": 0.9094174243204833
+      },
+      "alive": true,
+      "age": 451,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000033",
+      "species": "carrion_bird",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0123433463468867,
+        "digestion": 1.1307926132019042,
+        "locomotion": 1.1582814518448632,
+        "endurance": 0.9910200529427712,
+        "sense": 1.2084129629031508,
+        "intake": 1.0255205520462285,
+        "vigilance": 0.9644371847090769,
+        "reproductive": 0.9543100563072731
+      },
+      "alive": true,
+      "age": 124,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000034",
+      "species": "carrion_bird",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9650614645354784,
+        "digestion": 1.0859358358075126,
+        "locomotion": 1.108727172606895,
+        "endurance": 1.018108602016746,
+        "sense": 1.1968454947502802,
+        "intake": 1.0570992166891497,
+        "vigilance": 0.9295293299196585,
+        "reproductive": 0.9887804679336046
+      },
+      "alive": true,
+      "age": 307,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000035",
+      "species": "carrion_bird",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0252112589789515,
+        "digestion": 1.1768173072504333,
+        "locomotion": 1.1544681878892553,
+        "endurance": 1.047869329504807,
+        "sense": 1.2439661824658816,
+        "intake": 1.0201731434429446,
+        "vigilance": 0.9072374510420672,
+        "reproductive": 0.9114501414021975
+      },
+      "alive": true,
+      "age": 214,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000036",
+      "species": "carrion_bird",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0071984271889662,
+        "digestion": 1.1602437326406814,
+        "locomotion": 1.0977774168871033,
+        "endurance": 1.0395495161149453,
+        "sense": 1.190668627554894,
+        "intake": 0.98486421504393,
+        "vigilance": 0.9636463939857812,
+        "reproductive": 0.9429421582111509
+      },
+      "alive": true,
+      "age": 361,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000037",
+      "species": "carrion_bird",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0158961089871374,
+        "digestion": 1.1565016549725988,
+        "locomotion": 1.1576867042862802,
+        "endurance": 1.0647497351700885,
+        "sense": 1.2072344833418893,
+        "intake": 0.9891251338658987,
+        "vigilance": 0.9361307847917169,
+        "reproductive": 0.9842493026422984
+      },
+      "alive": true,
+      "age": 340,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000038",
+      "species": "carrion_bird",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9690686118934327,
+        "digestion": 1.1648586209924685,
+        "locomotion": 1.0976995008235753,
+        "endurance": 1.0070424443417187,
+        "sense": 1.152576230287088,
+        "intake": 1.0086170648098531,
+        "vigilance": 0.9179363055738518,
+        "reproductive": 0.977675192607686
+      },
+      "alive": true,
+      "age": 201,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000039",
+      "species": "carrion_bird",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0187399386887368,
+        "digestion": 1.0902404884039267,
+        "locomotion": 1.1879859785397884,
+        "endurance": 1.0512854215674459,
+        "sense": 1.1943451565340841,
+        "intake": 1.030731308975467,
+        "vigilance": 0.9484751728604001,
+        "reproductive": 0.9085791288797211
+      },
+      "alive": true,
+      "age": 219,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000040",
+      "species": "carrion_bird",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.028284224910069,
+        "digestion": 1.1312432197480473,
+        "locomotion": 1.1706746588948354,
+        "endurance": 1.0688680499208918,
+        "sense": 1.234081156320607,
+        "intake": 1.0595505221512,
+        "vigilance": 0.9041131704379796,
+        "reproductive": 0.9314387954782485
+      },
+      "alive": true,
+      "age": 430,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000041",
+      "species": "burrow_rabbit",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9518681379822634,
+        "digestion": 1.110485135843354,
+        "locomotion": 1.1121004548734799,
+        "endurance": 1.1262832427047458,
+        "sense": 1.0920178787262849,
+        "intake": 1.200582769963799,
+        "vigilance": 1.2707451001801655,
+        "reproductive": 1.110333333011746
+      },
+      "alive": true,
+      "age": 346,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000042",
+      "species": "burrow_rabbit",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9492876687522351,
+        "digestion": 1.1086828244364149,
+        "locomotion": 1.1100844216473174,
+        "endurance": 1.111926918394292,
+        "sense": 1.1419902777253517,
+        "intake": 1.151790976715375,
+        "vigilance": 1.2282368188439934,
+        "reproductive": 1.130305248571737
+      },
+      "alive": true,
+      "age": 349,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000043",
+      "species": "burrow_rabbit",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9049142393509448,
+        "digestion": 1.1011451394501848,
+        "locomotion": 1.153033387754955,
+        "endurance": 1.0946476259556075,
+        "sense": 1.1776202686215056,
+        "intake": 1.1446851680420334,
+        "vigilance": 1.2220092085787813,
+        "reproductive": 1.157338114130054
+      },
+      "alive": true,
+      "age": 352,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000044",
+      "species": "burrow_rabbit",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.950290918967172,
+        "digestion": 1.0672374753804565,
+        "locomotion": 1.1509906776211716,
+        "endurance": 1.0914251155215058,
+        "sense": 1.1736274256397121,
+        "intake": 1.171302721551485,
+        "vigilance": 1.191363699740766,
+        "reproductive": 1.111196308092138
+      },
+      "alive": true,
+      "age": 355,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000045",
+      "species": "burrow_rabbit",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9222848571263725,
+        "digestion": 1.0923990246346673,
+        "locomotion": 1.1082847795374569,
+        "endurance": 1.05664733536776,
+        "sense": 1.1359238620836125,
+        "intake": 1.18474570022905,
+        "vigilance": 1.186106678706447,
+        "reproductive": 1.1362279961380424
+      },
+      "alive": true,
+      "age": 346,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000046",
+      "species": "burrow_rabbit",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9680500568340403,
+        "digestion": 1.1179349242511223,
+        "locomotion": 1.1261236247150612,
+        "endurance": 1.0619966777229628,
+        "sense": 1.1312892048294103,
+        "intake": 1.1187731052892766,
+        "vigilance": 1.2151301041411289,
+        "reproductive": 1.1755527013940137
+      },
+      "alive": true,
+      "age": 349,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000047",
+      "species": "burrow_rabbit",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9480621814287222,
+        "digestion": 1.054496570776483,
+        "locomotion": 1.103171378196901,
+        "endurance": 1.1111445417764632,
+        "sense": 1.1224260409803806,
+        "intake": 1.1267095740447397,
+        "vigilance": 1.2348222266522892,
+        "reproductive": 1.1147906403881211
+      },
+      "alive": true,
+      "age": 352,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000048",
+      "species": "burrow_rabbit",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9437997342484907,
+        "digestion": 1.0981344504765913,
+        "locomotion": 1.1577040760932293,
+        "endurance": 1.0742163424362279,
+        "sense": 1.0964256161363266,
+        "intake": 1.1684211556202766,
+        "vigilance": 1.1762773009337324,
+        "reproductive": 1.2088878295948093
+      },
+      "alive": true,
+      "age": 355,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000049",
+      "species": "field_vole",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.903393385268197,
+        "digestion": 1.0857166420738809,
+        "locomotion": 1.037713638065397,
+        "endurance": 0.9860736818062537,
+        "sense": 0.9974756015011971,
+        "intake": 1.1653164026153604,
+        "vigilance": 1.1392233846075166,
+        "reproductive": 1.2401548660135806
+      },
+      "alive": true,
+      "age": 96,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000050",
+      "species": "field_vole",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.8925584803301753,
+        "digestion": 1.0769282581328805,
+        "locomotion": 1.065348081995633,
+        "endurance": 1.0416631854282765,
+        "sense": 1.0715505556513805,
+        "intake": 1.1092613706704497,
+        "vigilance": 1.1670741293797897,
+        "reproductive": 1.2651914347827016
+      },
+      "alive": true,
+      "age": 99,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000051",
+      "species": "field_vole",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9612058503130185,
+        "digestion": 1.0161760296151974,
+        "locomotion": 1.0325121331509268,
+        "endurance": 0.975810574455411,
+        "sense": 1.033096977992703,
+        "intake": 1.115077009877896,
+        "vigilance": 1.133284119003479,
+        "reproductive": 1.2522025488017117
+      },
+      "alive": true,
+      "age": 102,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000052",
+      "species": "field_vole",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.8995642498665812,
+        "digestion": 1.0041020252675632,
+        "locomotion": 1.0934556896359504,
+        "endurance": 0.998935838453621,
+        "sense": 1.0100445572250876,
+        "intake": 1.1720010697460173,
+        "vigilance": 1.1829595558076793,
+        "reproductive": 1.2409637260275161
+      },
+      "alive": true,
+      "age": 105,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000053",
+      "species": "field_vole",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.8874169087666895,
+        "digestion": 0.998447391409884,
+        "locomotion": 1.066767206878951,
+        "endurance": 0.9958667718432951,
+        "sense": 1.0471551340071446,
+        "intake": 1.178924593423905,
+        "vigilance": 1.1334092471026667,
+        "reproductive": 1.2194015075859916
+      },
+      "alive": true,
+      "age": 96,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000054",
+      "species": "field_vole",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.8788442905337078,
+        "digestion": 1.0075866830511448,
+        "locomotion": 1.0262437785617273,
+        "endurance": 0.9899509127000522,
+        "sense": 1.032865042412041,
+        "intake": 1.1563714780679228,
+        "vigilance": 1.1126194819483246,
+        "reproductive": 1.1806969289744582
+      },
+      "alive": true,
+      "age": 99,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000055",
+      "species": "field_vole",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9052319694531394,
+        "digestion": 1.027188025190084,
+        "locomotion": 1.0708568923037471,
+        "endurance": 0.9802977616737897,
+        "sense": 0.9928893721774853,
+        "intake": 1.0881416949693372,
+        "vigilance": 1.11350238581176,
+        "reproductive": 1.1970601461268031
+      },
+      "alive": true,
+      "age": 102,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000056",
+      "species": "field_vole",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9500699169745133,
+        "digestion": 1.068783558925764,
+        "locomotion": 1.082329410101538,
+        "endurance": 1.0177100850166032,
+        "sense": 1.0027133522976173,
+        "intake": 1.082794309822885,
+        "vigilance": 1.1111640858531737,
+        "reproductive": 1.2343922345508564
+      },
+      "alive": true,
+      "age": 105,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000057",
+      "species": "ant_colony",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.8910797685035945,
+        "digestion": 1.1669657735669714,
+        "locomotion": 0.8445434234956231,
+        "endurance": 1.1611063738925458,
+        "sense": 1.114577332313444,
+        "intake": 1.1547395161601839,
+        "vigilance": 1.128610903771438,
+        "reproductive": 1.1405154928792827
+      },
+      "alive": true,
+      "age": 220,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000058",
+      "species": "ant_colony",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.8608171496699858,
+        "digestion": 1.1197630489820292,
+        "locomotion": 0.822128357654483,
+        "endurance": 1.152156697879817,
+        "sense": 1.1586163753979049,
+        "intake": 1.154600188188786,
+        "vigilance": 1.1703956217827114,
+        "reproductive": 1.1327081636420149
+      },
+      "alive": true,
+      "age": 223,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000059",
+      "species": "insectivore_shrew",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.127570466649515,
+        "digestion": 1.15076206229502,
+        "locomotion": 1.2081919232288045,
+        "endurance": 1.0459928400001712,
+        "sense": 1.142639150270045,
+        "intake": 1.261922197478909,
+        "vigilance": 1.0987584269745871,
+        "reproductive": 1.0804641903601413
+      },
+      "alive": true,
+      "age": 112,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000060",
+      "species": "insectivore_shrew",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.049496314397766,
+        "digestion": 1.2006570206893035,
+        "locomotion": 1.1730151419271675,
+        "endurance": 0.9970009113177847,
+        "sense": 1.141811875433942,
+        "intake": 1.2515749412487842,
+        "vigilance": 1.1518149728166187,
+        "reproductive": 1.0320569014861716
+      },
+      "alive": true,
+      "age": 115,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000061",
+      "species": "insectivore_shrew",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.050643816783919,
+        "digestion": 1.230114224830227,
+        "locomotion": 1.1617302486572834,
+        "endurance": 1.075126620640133,
+        "sense": 1.1713846050524788,
+        "intake": 1.2538024552684537,
+        "vigilance": 1.16094045735607,
+        "reproductive": 1.0599430095274975
+      },
+      "alive": true,
+      "age": 118,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000062",
+      "species": "insectivore_shrew",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.1059330319547915,
+        "digestion": 1.1824775345644543,
+        "locomotion": 1.1697300182219583,
+        "endurance": 1.0617479904931524,
+        "sense": 1.1056801900028632,
+        "intake": 1.2680903324028194,
+        "vigilance": 1.1802436605000521,
+        "reproductive": 1.0754774930999655
+      },
+      "alive": true,
+      "age": 121,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000063",
+      "species": "red_fox",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0401764918135767,
+        "digestion": 1.1807361158148426,
+        "locomotion": 1.1538082077566598,
+        "endurance": 1.165220518979129,
+        "sense": 1.2014461433798984,
+        "intake": 1.1215397171771015,
+        "vigilance": 1.0740264185254131,
+        "reproductive": 0.9432317081454061
+      },
+      "alive": true,
+      "age": 456,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000064",
+      "species": "red_fox",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9714956259845939,
+        "digestion": 1.1778405584524017,
+        "locomotion": 1.1082243263739708,
+        "endurance": 1.1699036959956612,
+        "sense": 1.150668115215509,
+        "intake": 1.075730916780904,
+        "vigilance": 1.1037366662882844,
+        "reproductive": 0.9698008130162428
+      },
+      "alive": true,
+      "age": 459,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000065",
+      "species": "golden_jackal",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9846856990868584,
+        "digestion": 1.0994651383073277,
+        "locomotion": 1.1093184174311086,
+        "endurance": 1.2338305641420577,
+        "sense": 1.210088079092392,
+        "intake": 1.1402916094386024,
+        "vigilance": 1.0973788679903287,
+        "reproductive": 0.9592613472338034
+      },
+      "alive": true,
+      "age": 512,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000066",
+      "species": "golden_jackal",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 0.9983735887954788,
+        "digestion": 1.191253140551023,
+        "locomotion": 1.2003525972879205,
+        "endurance": 1.1758127989119656,
+        "sense": 1.223401773678929,
+        "intake": 1.071452536191221,
+        "vigilance": 1.0744937659743214,
+        "reproductive": 0.9908817167124581
+      },
+      "alive": true,
+      "age": 515,
+      "sex": "M"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000067",
+      "species": "forest_elephant",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0677748502860764,
+        "digestion": 1.1231459418401735,
+        "locomotion": 0.7758004725894352,
+        "endurance": 1.195158974448921,
+        "sense": 0.9197150231388036,
+        "intake": 1.3080132328606775,
+        "vigilance": 1.0960218415812932,
+        "reproductive": 0.771389948883074
+      },
+      "alive": true,
+      "age": 4000,
+      "sex": "F"
+    },
+    {
+      "civ_actor_id": "WTBIO-0000068",
+      "species": "woolly_mammoth",
+      "generation": 0,
+      "parent_ids": [],
+      "traits": {
+        "basal": 1.0816636359793208,
+        "digestion": 1.1169053040570638,
+        "locomotion": 0.7586985286292728,
+        "endurance": 1.3074683955138588,
+        "sense": 0.9530769676930317,
+        "intake": 1.2970725592408852,
+        "vigilance": 1.0915797079186091,
+        "reproductive": 0.7574849216423953
+      },
+      "alive": true,
+      "age": 4000,
+      "sex": "F"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "assembly_name": "Assembly-CSharp.dll",
+  "assembly_sha256": "51d275f0168be2f6ca26341ab292406714e694e0270eafcb25b999d5df6dd69f",
+  "metadata_types": 2906,
+  "metadata_methods": 21566,
+  "all_targets_verified": true,
+  "targets": [
+    {
+      "target": "Actor.addNutritionFromEating",
+      "verified": true,
+      "rva_hex": "0xc5f5c",
+      "method_rid": 3901,
+      "return_type": "void",
+      "parameter_types": [
+        "int32",
+        "bool",
+        "bool"
+      ]
+    },
+    {
+      "target": "ai.behaviours.BehConsumeActorTarget.consume",
+      "verified": true,
+      "rva_hex": "0x1cede4",
+      "method_rid": 17591,
+      "return_type": "void",
+      "parameter_types": [
+        "Actor",
+        "Actor"
+      ]
+    },
+    {
+      "target": "Actor.consumeFoodResource",
+      "verified": true,
+      "rva_hex": "0xcb1b0",
+      "method_rid": 4283,
+      "return_type": "void",
+      "parameter_types": [
+        "ResourceAsset"
+      ]
+    },
+    {
+      "target": "Actor.newKillAction",
+      "verified": true,
+      "rva_hex": "0xccc08",
+      "method_rid": 4325,
+      "return_type": "void",
+      "parameter_types": [
+        "Actor",
+        "Kingdom",
+        "AttackType"
+      ]
+    },
+    {
+      "target": "Actor.die",
+      "verified": true,
+      "rva_hex": "0xcd6ec",
+      "method_rid": 4349,
+      "return_type": "void",
+      "parameter_types": [
+        "bool",
+        "AttackType",
+        "bool",
+        "bool"
+      ]
+    },
+    {
+      "target": "ActorManager.createBabyActorFromData",
+      "verified": true,
+      "rva_hex": "0xd2a5c",
+      "method_rid": 4562,
+      "return_type": "Actor",
+      "parameter_types": [
+        "ActorData",
+        "WorldTile",
+        "City"
+      ]
+    },
+    {
+      "target": "Actor.birthEvent",
+      "verified": true,
+      "rva_hex": "0xcb0e4",
+      "method_rid": 4280,
+      "return_type": "void",
+      "parameter_types": [
+        "string",
+        "string"
+      ]
+    },
+    {
+      "target": "Actor.getNutrition",
+      "verified": true,
+      "rva_hex": "0xc8584",
+      "method_rid": 4041,
+      "return_type": "int32",
+      "parameter_types": []
+    },
+    {
+      "target": "Actor.hasDied",
+      "verified": true,
+      "rva_hex": "0xc8116",
+      "method_rid": 3997,
+      "return_type": "bool",
+      "parameter_types": []
+    },
+    {
+      "target": "BaseSimObject.getID",
+      "verified": true,
+      "rva_hex": "0xbafc0",
+      "method_rid": 3374,
+      "return_type": "int64",
+      "parameter_types": []
+    }
+  ],
+  "scope": "metadata signature check only; not a C# compile or runtime Harmony attachment test"
+}

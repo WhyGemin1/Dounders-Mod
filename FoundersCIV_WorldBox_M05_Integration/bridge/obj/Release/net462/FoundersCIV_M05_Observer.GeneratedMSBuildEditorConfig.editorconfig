@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = FoundersCIV_M05_Observer
+build_property.ProjectDir = C:\Dev\FoundersCIV_WorldBox_M05_Integration\bridge\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 

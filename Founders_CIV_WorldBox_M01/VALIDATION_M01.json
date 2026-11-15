@@ -1,0 +1,41 @@
+{
+  "cycle": "M01",
+  "status": "experimental_read_only",
+  "date": "2026-11-13",
+  "verified": {
+    "python_tests_passed": 37,
+    "python_tests_total": 37,
+    "real_core151_initial_agents": 68,
+    "real_core151_species": 13,
+    "real_core151_founders": 100,
+    "shared_book": true,
+    "book_rejections": 0,
+    "offline_20_reload_epochs": "simulated_registry_only",
+    "sqlite_persistent_identity": "passed",
+    "synthetic_native_shadow_demo": "passed",
+    "local_patch_installer_idempotent": "passed",
+    "user_game_assembly_matches_bridge_reference": "confirmed_by_sha256"
+  },
+  "not_verified": {
+    "CSharp_compiled": false,
+    "WorldBox_game_executed": false,
+    "live_actor_ID_query": false,
+    "20_real_game_save_load_cycles": false,
+    "gameplay_state_replacement": false,
+    "Book_feeding_authority": false,
+    "GitHub_commit": false
+  },
+  "input_fingerprints": {
+    "WorldBox_Assembly-CSharp.dll": "51d275f0168be2f6ca26341ab292406714e694e0270eafcb25b999d5df6dd69f",
+    "Core151_archive": "f915e2cacb61dfd5611efc0a0cc726231190116d0b849fa86257fa18a1f604b8"
+  },
+  "source_fingerprints": {
+    "founders_worldbox/registry.py": "89593d690cea0b5ae6ae1df2bde250bffecf611b7498a5a6983d34b1f63e8dbb",
+    "founders_worldbox/client.py": "e9d816f24266b38bf70816ce56deffa47efda9b734ce4838b1a9055303d752fd",
+    "founders_worldbox/core151_adapter.py": "2f05cf863e00ad2cc54723fa773eeabeb888d7a366aad810a41a9f1b7591d17d",
+    "worldbox_patch/QueryActorIdentitiesCommand.cs": "2178b3ca42b68a871eeefc6647c0be959953c0815efeda34e4b18cf6ef118490",
+    "apply_to_worldbox_bridge.py": "dc110eeacd1a2b7ead5d407e176e2fdc47b5daaec50bb5ea4c6a24de786b7e21",
+    "m01.py": "60f51a2b56b3480a2fe42afd59e5821bc54a7da3e7205548c92fa0f5fb008f1f"
+  },
+  "privacy": "No proprietary WorldBox DLL, decompiled code, PDB or original user files included in release."
+}

@@ -1,0 +1,7 @@
+{"schema": 1, "session_id": "s1", "world_key": "world-abc", "seq": 1, "kind": "session_open", "active_hooks": ["Actor.addNutritionFromEating", "ai.behaviours.BehConsumeActorTarget.consume"]}
+{"schema": 1, "session_id": "s1", "world_key": "world-abc", "seq": 2, "kind": "prey_consume_attempt", "actor_id": 25, "target_id": 31, "context_id": "s1:1"}
+{"schema": 1, "session_id": "s1", "world_key": "world-abc", "seq": 3, "kind": "nutrition_call", "actor_id": 25, "context_id": "s1:1", "nutrition_before": 10, "nutrition_after": 14, "native_delta": 4}
+{"schema": 1, "session_id": "s1", "world_key": "world-abc", "seq": 4, "kind": "prey_consume_end", "actor_id": 25, "target_id": 31, "context_id": "s1:1", "native_success": true}
+{"schema": 1, "session_id": "s1", "world_key": "world-abc", "seq": 5, "kind": "death_callback", "actor_id": 31, "native_success": true}
+{"schema": 1, "session_id": "s1", "world_key": "world-abc", "seq": 6, "kind": "baby_factory_call", "actor_id": 100, "native_success": true}
+{"schema": 1, "session_id": "s1", "world_key": "world-abc", "seq": 7, "kind": "session_close"}
