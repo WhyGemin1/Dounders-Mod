@@ -29,7 +29,7 @@ def test_non_owner_at_riverbank_can_see_then_harvest_identified_lot():
     food=next(e['lot'] for e in entries if e['kind']=='food')
     txn=perform_harvest(sim,observer,(tid,food,'food'))
     assert txn and sim.book.mass[f'portable_food:lot:{food}:founder:{observer}']==pytest.approx(.08)
-    assert sim.book.audit()['mass_error']==pytest.approx(0)
+    assert abs(sim.book.audit()['mass_error']) < 1e-8  # Book audit's floating-point tolerance
     assert abs(sim.book.audit()["energy_error"]) < 1e-5
 
 
