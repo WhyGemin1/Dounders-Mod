@@ -11,7 +11,7 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Core151 tracked; M01 native read-only boundary now rejects conflicting request replay and ACK token collisions within a single observation batch; no native connector or writable protocol",
+  "source_status": "Core151 tracked; native read-only boundary now compares caller-supplied historical and incoming batches, rejects request conflicts and ACK collisions, and refuses absent history; no native connector or writable protocol",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "PASS GitHub Actions run 43749735043 at c1651228ac6547ad6aa2949cf264f19de79aed81; includes new native read-only batch tests and earlier Core151 suites",
@@ -19,7 +19,7 @@
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "PASS GitHub Actions checkout and Python 3.11 unittest at f3a5179, run 43738903675",
-    "book_audit_this_cycle": "PASS 4 child-process recovery cases in GitHub Actions, each calling final.audit(); numeric residuals not separately captured",
+    "book_audit_this_cycle": "NOT RUN for read-only native claim change; no Book modified",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "NOT RUN",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -34,19 +34,19 @@
     "m01_disk_faults": "PASS GitHub Actions job step at 94c9e2b: file fsync failure, atomic replace failure, directory fsync failure after replacement; each tests poisoned session and recovery replay with one Book",
     "m01_subprocess_termination": "PASS 2/2 in GitHub Actions run 43733194584 on 1b853df19b858ad57d5a0114eb7ea74985111126: os._exit before/after os.replace, Book receipt replay, 100 Founders and mass/energy audits",
     "m01_subprocess_fsync": "PASS 4/4 in GitHub Actions run 43738903675 at f3a517942d647845d97a6febc9b55128c9aaef53; child os._exit at before/after temporary-file and directory fsync",
-    "native_claim_boundary": "PASS new 4 tests plus prior 3 in GitHub Actions run 43749735043"
+    "native_claim_boundary": "Previous 7/7 GitHub CI verified at 43749781470; four additional cross-batch tests committed at e3f8b26, awaiting new CI"
   },
-  "book_audit": "NOT RUN for current read-only claim boundary change; no Book touched",
+  "book_audit": "NOT RUN this cycle; cross-batch inspection does not touch world.book",
   "open_gates": [
     "Native WorldBox IDs/units/version and exactly-once external ACK remain unverified; no writes",
     "Power-loss and filesystem persistence not established by process-exit tests",
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Confirm current GitHub CI; validate cross-batch durable claim correlation with native identity/unit/version fixtures, without enabling external settlement",
-  "last_cycle": "2026-11-15 M01 read-only batch replay and ACK collision rejection",
+  "next_cycle": "Verify CI for cross-batch read-only correlation, then obtain reviewed native identity/version/unit fixtures and test their provenance without enabling settlement",
+  "last_cycle": "2026-11-15 M01 cross-batch read-only native claim correlation",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "c1651228ac6547ad6aa2949cf264f19de79aed81",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43749735043"
+  "last_verified_code_commit": "08ae74134779b835622e943a09c4d0286d2c0bda",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43749781470"
 }
