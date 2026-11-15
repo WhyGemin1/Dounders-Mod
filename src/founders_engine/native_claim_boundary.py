@@ -6,6 +6,7 @@ Native version, identity and unit mappings must be independently verified.
 """
 from dataclasses import dataclass
 from math import isfinite
+import unicodedata
 
 @dataclass(frozen=True)
 class NativeClaim:
@@ -36,6 +37,15 @@ class NativeClaimBoundary:
                   claim.resource_kind, claim.resource_unit, claim.ack_token)
         if any(not isinstance(x, str) or not x.strip() for x in fields):
             raise ValueError('all native identity/version/unit/ACK fields required')
+        # Native identifiers are opaque: never silently trim or normalize them.
+        # Reject ambiguous aliases, embedded separators/control characters and
+        # oversized fields before matching request IDs across batches.
+        for value in fields:
+            if (value != value.strip() or len(value) > 256
+                    or unicodedata.normalize('NFC', value) != value
+                    or any(unicodedata.category(char) in ('Cc', 'Cf')
+                           for char in value)):
+                raise ValueError('noncanonical native identity/version/unit/ACK field')
         if isinstance(claim.quantity, bool) or not isinstance(claim.quantity, (int, float)):
             raise ValueError('numeric quantity required')
         if not isfinite(claim.quantity) or claim.quantity <= 0:
