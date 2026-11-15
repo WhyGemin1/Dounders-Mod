@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Core151 source tracked; added real Core151 native observation isolation tests for read-only cross-batch boundary (no new engine, no native settlement)",
+  "source_status": "Core151 tracked source; native claim boundary now rejects noncanonical opaque IDs (Unicode NFC aliases, control/format chars, leading/trailing whitespace, >256 chars) before read-only replay correlation",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS GitHub Actions 43761534283 at 0671863f3309570ceee7eac87faeaea0304c8ad7 (includes new real Core151 native isolation step)",
+    "github_ci": "Most recent observed PASS GitHub Actions run 43761600032 at 799c1cd85da49834a8aa82f1bb2fb70521e73a13 (before current changes); new CI pending",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "PASS GitHub Actions checkout and Python 3.11 unittest at f3a5179, run 43738903675",
-    "book_audit_this_cycle": "PASS in actual Core151 native isolation CI tests before/after observation, rejection and deny; no native writes",
+    "book_audit_this_cycle": "NOT RUN against new code; previous real Core151 isolation suite passed at 799c1cd",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "NOT RUN",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -35,19 +35,21 @@
     "m01_subprocess_termination": "PASS 2/2 in GitHub Actions run 43733194584 on 1b853df19b858ad57d5a0114eb7ea74985111126: os._exit before/after os.replace, Book receipt replay, 100 Founders and mass/energy audits",
     "m01_subprocess_fsync": "PASS 4/4 in GitHub Actions run 43738903675 at f3a517942d647845d97a6febc9b55128c9aaef53; child os._exit at before/after temporary-file and directory fsync",
     "native_claim_boundary": "11/11 cross-batch native claim tests PASS at GitHub Actions 43755590950, commit 248a36dfe78eae3be7cc1f33d9e3b1f41aec0e17",
-    "native_core151_isolation": "PASS 3/3 GitHub Actions run 43761534283 on code commit 0671863f3309570ceee7eac87faeaea0304c8ad7; real Core151 native observation/deny tests"
+    "native_core151_isolation": "PASS 3/3 GitHub Actions run 43761534283 on code commit 0671863f3309570ceee7eac87faeaea0304c8ad7; real Core151 native observation/deny tests",
+    "native_claim_identifier_hardening": "2 new tests authored; GitHub CI not yet observed at new source commit; no claim of passing"
   },
-  "book_audit": "PASS real Core151 Book audit invoked before/after each native isolation test at 0671863f, no native settlement",
+  "book_audit": "NOT RUN this invocation; native validation source has no Book reference or write path",
   "open_gates": [
     "Native WorldBox IDs/units/version and exactly-once external ACK remain unverified; no writes",
     "Power-loss and filesystem persistence not established by process-exit tests",
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Review real Core151 native isolation CI, then obtain authenticated native identity/unit/version fixtures and design no-write provenance verification",
-  "last_cycle": "2026-11-15 M01 native claim isolation against actual Core151 Book and Founder registry",
+  "next_cycle": "Verify CI for native identifier hardening, then collect provenance-verified native identity/version/unit fixtures before any settlement or ACK",
+  "last_cycle": "2026-11-15 M01 native identifier canonicalization and ambiguity rejection",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "0671863f3309570ceee7eac87faeaea0304c8ad7",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43761534283"
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43761534283",
+  "last_unverified_code_commit": "d7c7ee4a4625604f20f2a3d7572593992408ffe4"
 }
