@@ -1,5 +1,7 @@
 """Real Core151 headless gateway tests, seed 400. No WorldBox gameplay."""
 import unittest
+import pickle
+from copy import deepcopy
 from run_world_tree_pilot import bootstrap
 from founders_civ.experimental.worldbox_gateway_m01 import WorldBoxGatewayM01
 
@@ -32,14 +34,50 @@ class M01GatewayTests(unittest.TestCase):
         self.assertAlmostEqual(self.world.book.energy['chem:founder:F001'], 0.001)
         self.world.book.audit()
 
-    def test_duplicate_rejected_without_transaction(self):
-        self.gateway.founder_harvest(
+    def test_duplicate_returns_same_receipt_without_transaction(self):
+        first = self.gateway.founder_harvest(
             'F001', 'synthetic-request', '1', 'forest', 'plant', 0.01, 0.001)
         seq = self.world.book.seq
-        with self.assertRaisesRegex(ValueError, 'duplicate'):
-            self.gateway.founder_harvest(
-                'F001', 'synthetic-request', '1', 'forest', 'plant', 0.01, 0.001)
+        second = self.gateway.founder_harvest(
+            'F001', 'synthetic-request', '1', 'forest', 'plant', 0.01, 0.001)
+        self.assertEqual(first, second)
         self.assertEqual(seq, self.world.book.seq)
+        self.assertEqual(sum(e.get('action') == 'm01_harvest' and
+                             e.get('request_id') == first.request_id
+                             for e in self.world.events), 1)
+
+    def test_replay_after_book_pickle_preserves_receipt(self):
+        first = self.gateway.founder_harvest(
+            'F001', 'replay', 'r1', 'forest', 'plant', .01, .001)
+        restored_book = pickle.loads(pickle.dumps(self.world.book))
+        seq = restored_book.seq
+        legs_m = ((self.tree.acct('plant','forest'), 'plant:founder:F001', .01),)
+        legs_e = ((self.tree.acct('chem','forest'), 'chem:founder:F001', .001),)
+        tx, new = restored_book.move_once(first.request_id, legs_m, legs_e)
+        self.assertFalse(new)
+        self.assertEqual(tx.seq, first.transaction_seq)
+        self.assertEqual(restored_book.seq, seq)
+        restored_book.audit()
+
+    def test_replay_with_changed_quantity_is_rejected(self):
+        self.gateway.founder_harvest(
+            'F001', 'replay', 'r1', 'forest', 'plant', .01, .001)
+        seq = self.world.book.seq
+        with self.assertRaisesRegex(ValueError, 'different transfer'):
+            self.gateway.founder_harvest(
+                'F001', 'replay', 'r1', 'forest', 'plant', .02, .001)
+        self.assertEqual(self.world.book.seq, seq)
+
+    def test_rejected_overdraw_does_not_reserve_id(self):
+        with self.assertRaises(ValueError):
+            self.gateway.founder_harvest(
+                'F001', 'retry', 'r1', 'forest', 'plant', 1e9)
+        self.assertNotIn(f'm01:{self.tree_id}:retry:r1',
+                         self.world.book.request_receipts)
+        receipt = self.gateway.founder_harvest(
+            'F001', 'retry', 'r1', 'forest', 'plant', .01)
+        self.assertEqual(receipt.quantity, .01)
+        self.world.book.audit()
 
     def test_overdraw_atomic(self):
         seq = self.world.book.seq
