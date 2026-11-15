@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Core151 source tracked; two actual child-process termination/recovery tests committed to experimental branch, GitHub CI pending",
+  "source_status": "Core151 single-engine source tracked; 2 real child-process termination tests committed and GitHub Actions clean checkout passed at 1b853df",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "Last observed completed PASS run 43727171709 at c01baecc; new subprocess tests at 1b853df pending",
+    "github_ci": "PASS run 43733194584 on 1b853df19b858ad57d5a0114eb7ea74985111126: all 7 unittest steps passed, 34 tests total (6+9+9+2+3+3+2)",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
-    "clean_checkout": "PASS GitHub Actions checkout and all test steps at 94c9e2b; final workflow status to be checked",
-    "book_audit_this_cycle": "NOT EXECUTED for new subprocess cases; existing prior 32-test GitHub CI Book audits remain verified",
+    "clean_checkout": "PASS GitHub Actions checkout on run 43733194584; no local clone claimed",
+    "book_audit_this_cycle": "PASS inside both new subprocess recovery tests in GitHub Actions; no separate numeric residual output",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "NOT RUN",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -32,20 +32,19 @@
     "m01_multitick_restart": "PASS 2/2 tests at seed400: 3 live days vs 3 per-day restarted days; synthetic Book harvest before and after checkpoint; daily exact Book balances/receipts, Founder IDs, Tree residents, creation state and clock comparison",
     "m01_durable_harvest": "PASS 3/3 tests in GitHub Actions run 43722361460 at bc5e0c9: durable replay, interrupted save quarantine/recovery, invalid request without mutation",
     "m01_disk_faults": "PASS GitHub Actions job step at 94c9e2b: file fsync failure, atomic replace failure, directory fsync failure after replacement; each tests poisoned session and recovery replay with one Book",
-    "m01_subprocess_termination": "AUTHORED, NOT YET VERIFIED: two subprocess os._exit(73) cases before/after os.replace; no clean-checkout result observed at time of update"
+    "m01_subprocess_termination": "PASS 2/2 in GitHub Actions run 43733194584 on 1b853df19b858ad57d5a0114eb7ea74985111126: os._exit before/after os.replace, Book receipt replay, 100 Founders and mass/energy audits"
   },
-  "book_audit": "PASS via real Core151 headless Book.audit() in three new recovery tests; no native WorldBox or power loss",
+  "book_audit": "PASS after child termination and replay in both subprocess cases; source test calls final.audit() and CI run passed; numeric residuals not captured",
   "open_gates": [
-    "New subprocess termination tests require actual GitHub Actions execution",
     "Native WorldBox IDs/units/version and exactly-once external ACK remain unverified; no writes",
     "Power-loss and filesystem persistence not established by process-exit tests",
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Inspect subprocess termination CI result, repair any failures; then verify checkpoint directory-fsync power-loss limitations and design native ACK protocol without enabling WorldBox writes",
+  "next_cycle": "Implement tests for process termination during temporary-file fsync and directory fsync, and distinguish POSIX process-exit behavior from power-loss guarantees; native WorldBox writes remain disabled",
   "last_cycle": "2026-11-15 M01 real subprocess exit before/after checkpoint atomic replace, CI pending",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "94c9e2bc648a6a6a34b732282fab066a0ec65f1a",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43727116268"
+  "last_verified_code_commit": "1b853df19b858ad57d5a0114eb7ea74985111126",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43733194584"
 }
