@@ -145,3 +145,12 @@
 - Next: verify CI; design persistent read-only cross-batch observation correlation with reviewed native fixtures and no external writes.
 
 - **Post-implementation verification:** GitHub Actions [run 43749735043](https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43749735043) completed SUCCESS on source commit `c1651228ac6547ad6aa2949cf264f19de79aed81`. This covers all four new read-only native batch regression tests plus prior workflow suites. No new independent Book audit metrics, in-game native protocol, or ecological long-horizon results are implied.
+
+## 2026-11-15 — M01 iteration 3: read-only cross-batch native claim correlation
+
+- Grounded in live GitHub: main `26a02ba50a53770b14eae0368315ea01036d0b3c`; PR #1/#2 both open drafts; branch baseline `08ae74134779b835622e943a09c4d0286d2c0bda`. Prior CI run `43749781470` succeeded.
+- Implementation: added `NativeClaimBoundary.inspect_against_history(historical_claims, incoming_claims)` to the existing read-only boundary (`5855dc8b4b4517d9a8e26127eace7f84312579e2`). It applies the already-verified request-payload and ACK collision rules to the union of caller-supplied history and current claims. Missing history is rejected. It neither writes WorldBox nor settles Core151 Book.
+- Tests: added four test cases in `tests/test_m01_native_claim_boundary.py` (`e3f8b26b1da860861bd1d0b079d910766b3ceac1`): identical replay remains observational, changed identity/quantity/unit/version is rejected, ACK collisions rejected, missing history fails closed.
+- Execution command configured in existing GitHub CI: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_native_claim_boundary.py'`. At this ledger entry the new CI result is pending; do not count these four tests as passed until confirmed. No new Book audit or ecological run was performed.
+- Limitations: history is caller-supplied and **not durable, authenticated, or independently verified**; it cannot establish cross-process exactly-once delivery, genuine WorldBox IDs/units/versions, or external ACK. No additional ledger, Book, clock, or engine was created. No native WorldBox writes enabled.
+- Next task: verify the new CI and obtain trusted native identity/unit/version fixtures with explicit provenance before considering any durable native transaction boundary. M01 iteration 3 remains locked; no merge or main modification.
