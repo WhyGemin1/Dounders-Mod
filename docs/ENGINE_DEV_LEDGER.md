@@ -19,3 +19,12 @@
 - **NOT RUN:** Book audit, Founder tick, full regression, GitHub CI, WorldBox in-game, clean-checkout authority tests. No additional energy/resource mechanics implemented.
 - **BLOCKER:** GitHub now has the importer but does NOT yet contain the 27 extracted engine source files as separately tracked Python modules. The local staging directory is not GitHub; do not report source migration as complete. No canonical/main changes or merges.
 - **NEXT:** Commit the 27 verified source text modules and manifest to `src/` on this same branch, then execute clean-checkout tests and checkpoint/Book audits.
+
+## 2026-11-15 — unified engine cycle 3: source-import hardening
+- Working branch: `feat/single-core151-authority`, main baseline remains `26a02ba50a53770b14eae0368315ea01036d0b3c`; PR #2 remains draft.
+- Verified Google Drive metadata for the Cycle152 archive: ID `1qHrQpL41J9v-mNxP-uPNS0ZtTzal3bUE`, 956121 bytes. **Archive bytes could not be materialized in this invocation**, so prior SHA-256 is historical, not freshly recomputed.
+- Source change: `tools/import_core151.py` rejects duplicate ZIP members, path traversal, symlink source members, oversized/overcounted source trees, symlink destination paths, and mismatched existing manifests before writing; `tools/test_import_security.py` adds nine synthetic fixture tests. No second simulation engine.
+- **Executed locally** using an equivalent import implementation and synthetic ZIP fixtures: `python -m unittest -v test_import_security` => 9/9 PASS (0.021s). This was not executed against a clean GitHub checkout; committed version still needs CI validation.
+- **NOT RUN:** real Cycle152 import, 27-source-file GitHub commit, Book conservation audit, Founders step/checkpoint, WorldBox in-game, ecological simulation, GitHub CI.
+- **BLOCKED:** exact Drive ZIP is visible as metadata but its bytes are not exposed by the available connector; Library search and local runtime did not contain it. Importer and source tree are still separate. No canonical/main change.
+- **NEXT:** acquire the actual archive bytes through an authorized file-materialization route, verify archive hash, commit 27 .py modules and manifest to `src/`, then run clean-checkout authority and checkpoint tests.
