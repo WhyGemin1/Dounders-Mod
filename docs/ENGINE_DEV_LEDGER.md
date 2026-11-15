@@ -45,3 +45,15 @@
 - Verified 100 Founder identities, one clock advances by one, one Book authority; mass/energy move audit passed and failed/duplicate request leaves Book sequence unchanged. Does not establish digestion, biological usefulness, WorldBox transfer, or native actor behavior.
 - Critical blocker: request replay guard uses in-memory authoritative world events; checkpoint persistence and exactly-once recovery after process restart NOT VERIFIED. The logging-after-Book-commit crash boundary also requires durable atomicity design. Do not enable native WorldBox transfers or claim production-ready gateway.
 - Next: run clean-checkout tests from the GitHub branch and implement/test checkpoint-persistent idempotency/atomicity without a second ledger.
+
+
+## 2026-11-15 — M01 replay repair: Book-owned request receipts
+
+- Inspected PR #2 branch at `738ba4887b173bc1402283dab29ff44bd0090477` before changes, `src/founders_civ/core/ledger.py`, `src/founders_civ/experimental/worldbox_gateway_m01.py`, existing six gateway tests and world checkpoint API surface.
+- Functional change: `Book.move_once(request_id, material, energy)` now stores settlement receipt and exact transfer legs in the **same authoritative Book instance**. Exact replay returns original transaction without a second resource transfer; conflicting same-ID payload raises. Rejected overdraw does not reserve a receipt.
+- Gateway now uses Book-owned receipt instead of event-only duplicate detection; emits `m01_harvest` only for initial settlement. Existing duplicate-rejection test updated to idempotent-return semantics; three replay/pickle/overdraw tests added.
+- Added `.github/workflows/core151-m01-tests.yml` for clean-checkout compile, authority and gateway regression tests. Checked GitHub Actions API after commit: **zero workflow runs observed**.
+- Local container Git clone failed: `Could not resolve host: github.com`. GitHub API file edits succeeded. No fresh unit tests, Book audit, whole-world checkpoint test, native WorldBox test or ecological horizon simulation executed this cycle. Test changes are AUTHORED / NOT RUN.
+- Important limitation: Book receipt survives Python pickle of the Book by design, but full `IntegratedWorld` checkpoint restore and durable atomic disk writes are **NOT VERIFIED**. If event logging fails after Book settlement, the Book receipt prevents duplicate transfer but event history can be missing. Native WorldBox transfer must remain disabled.
+- Exact GitHub source commits: ledger `cd3ca3858b1cf9cd524c6c6a273f78c351068cac`, gateway `349d5d291f8287b7c2d2eb0551c87624a068571b`, tests `5bf74669e24e1737b3746db4c0ef022c7de5e929`, CI workflow `c14b43ae63668d3d4f429f00e758e34e11f4ea0b`.
+- Decision: retain experimental, M01 iteration 3 repair locked; no canonical promotion. Next: run CI and implement/verify whole-world checkpoint with durable Book receipts.
