@@ -31,7 +31,7 @@ jobs:
           import hashlib, json
           from pathlib import Path
           manifest = json.loads(Path('docs/U026_C018_SOURCE_FINGERPRINT.json').read_text())
-          assert manifest['files'] == 494
+          assert manifest['files'] == 496
           for rel, expected in manifest['sha256'].items():
               actual = hashlib.sha256(Path(rel).read_bytes()).hexdigest()
               assert actual == expected, f'Core source drift: {rel}'
@@ -39,7 +39,7 @@ jobs:
               (p.suffix.lower() in {'.dll','.pdb','.pyc','.sqlite','.db','.exe','.log'} or
               any(part in {'__pycache__','obj','bin','.pytest_cache'} for part in p.parts))]
           assert not prohibited, f'Generated artifacts present: {prohibited[:5]}'
-          print('G0 exact source: 494/494 SHA-256 matches, no prohibited artifacts')
+          print('G0 exact source: 496/496 SHA-256 matches, no prohibited artifacts')
           PY
       - name: Install test runner
         run: python -m pip install --disable-pip-version-check pytest==8.4.1

@@ -264,6 +264,7 @@ class IntegratedWorld(SocialSimulation):
         self.founder_harvest_enabled=False  # C004 experimental arm; C003 control unchanged
         self.founder_community_foraging_enabled=False  # C017 opt-in local food perception
         self.founder_tree_independence_enabled=False  # C017 opt-in independent fruit-funded World Trees
+        self.founder_parent_stewardship_enabled=False  # C018 voluntary funded Realm maintenance
         self.founder_nutrition_enabled=False  # C015 opt-in ingestion/digestion; control unchanged
         # C016 opt-in: Book-funded food-to-work recovery, no legacy river recharge.
         self.founder_recovery_enabled=False
@@ -333,6 +334,9 @@ class IntegratedWorld(SocialSimulation):
             # A single productive Tree cannot finance everyone planning one.
             props=prioritize_propagation(self,a,props)
             props.extend(own_tree_plan)
+        if self.founder_parent_stewardship_enabled:
+            from founders_civ.core.founder_parent_stewardship import propose_parent_stewardship
+            props.extend(propose_parent_stewardship(self,a))
         if self._energy(a)<.19:return props
         mine=[b for b in self.seeds.blueprints.values() if b.author==a and b.stage!='planted']
         agenda=state.main_goal
@@ -407,6 +411,12 @@ class IntegratedWorld(SocialSimulation):
             return self.log('legacy_recharge_blocked',a,parent,
                             reason='Founder work cannot be minted from river/House energy')
         try:
+            if action=='parent_inspect':
+                from founders_civ.core.founder_parent_stewardship import inspect_parent
+                return inspect_parent(self,a,meta)
+            if action=='parent_steward':
+                from founders_civ.core.founder_parent_stewardship import tend_parent
+                return tend_parent(self,a,meta,parent)
             if action=='creation_steward':
                 result=self.seeds.tend(a,meta,.67)
                 self.log('creation_autonomous_stewardship',a,parent,creation=meta,amount=.67)

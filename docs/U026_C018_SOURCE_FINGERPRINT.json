@@ -1,6 +1,6 @@
 {
   "source": "U026-C017 verified canonical source",
-  "files": 494,
+  "files": 496,
   "sha256": {
     "Founders_CIV_CoreCompletion151/source/capacity_dose_021131.py": "fc9800b1846604edfd1bee305bc866030748f109929825b4422671127808e036",
     "Founders_CIV_CoreCompletion151/source/check_cycle136_crossprocess.py": "98ba465a0114ee85335150cc9d955b889eccade366cd5318b51ae82a6ddfa694",
@@ -428,7 +428,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/social_agents.py": "f12d5a9af1b09522f947c1a33c9148d198bba18cb1308156e2dd6c63e1239d79",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/soul.py": "aba416742da915286bafb8c4483b1692b8d85116ad287c80f1b2a32fd65d09cc",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world024.py": "d1856f9eaf8bc3ebbde41aed614253d07ac07beb7c6da55abd715f896341df39",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_integration.py": "5a72a95eb4876ca38fce37798448806ead33c9143d4a24bb64801bc73db9d48d",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_integration.py": "3632587ca0086fda6211c3a98ed87a923c9bec408265d09e0234120d0e0bc660",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_trees.py": "20f00140ba0b0809d926af142bbaa6b6ea0cef68a172ee0196d11bbf05e02dfb",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/integration/__init__.py": "c752ac2fd07e5ddbf7f75e34ae4b5b0fdda380c9d48404f908018f7cf3be494f",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/integration/branches.py": "02c5bb7b76310eb1a72b631f1326027e3ec7d35d7ff8450d3851337bebcaccb6",
@@ -495,7 +495,9 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/app.js": "a4fba11e45c9473bb14a1e6a76cdcacdc6bafdbbbcb4c9b483b64131ea0728b8",
     "Founders_CIV_CoreCompletion151/source/world023024/web/index.html": "a615127cf352deba14e8bfc66d106f03482da7ffd394b39d6edd02ae27ba59c8",
     "Founders_CIV_CoreCompletion151/source/world023024/web/styles.css": "599cbc94b42122a2b5d5676d99c6cca4c43d185f3dc1aedaa4e4ab497ca51157",
-    "Founders_CIV_CoreCompletion151/source/world_funding_141_results.csv": "24f6b734926f13fcb6f874f5c97337cefe46edd43c6841dbc1b735234b1fa38f"
+    "Founders_CIV_CoreCompletion151/source/world_funding_141_results.csv": "24f6b734926f13fcb6f874f5c97337cefe46edd43c6841dbc1b735234b1fa38f",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "ac92d141ff5535147d6ff33f88f7e984055aef956ef958521e94cdc057fbf50a",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "e004009859edc3fd48a7c07db8b22c276d10a01be52588a78dddee398999123d"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
