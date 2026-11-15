@@ -1,0 +1,82 @@
+"""Atomic trusted-local checkpoints for ONE Core151 IntegratedWorld.
+
+Do not load untrusted pickle files. Not a WorldBox save or a second Book.
+"""
+from __future__ import annotations
+import hashlib
+import os
+import pickle
+import struct
+import tempfile
+from pathlib import Path
+
+MAGIC = b'FOUNDERS-CIV-CORE151-CP1\n'
+MAX_BYTES = 512 * 1024 * 1024
+
+def _encode(payload: bytes) -> bytes:
+    if len(payload) > MAX_BYTES:
+        raise ValueError('checkpoint exceeds size limit')
+    return MAGIC + struct.pack('>Q', len(payload)) + hashlib.sha256(payload).digest() + payload
+
+def _decode(data: bytes) -> bytes:
+    offset = len(MAGIC)
+    if not data.startswith(MAGIC) or len(data) < offset + 40:
+        raise ValueError('checkpoint format mismatch')
+    size = struct.unpack('>Q', data[offset:offset + 8])[0]
+    if size > MAX_BYTES or len(data) != offset + 40 + size:
+        raise ValueError('checkpoint length mismatch')
+    digest = data[offset + 8:offset + 40]
+    payload = data[offset + 40:]
+    if hashlib.sha256(payload).digest() != digest:
+        raise ValueError('checkpoint digest mismatch')
+    return payload
+
+def _validate_world(world, tree_id):
+    from founders_engine.authority import SingleEngineSession
+    session = SingleEngineSession(world, tree_id)
+    if world.tick != world.ecology.day:
+        raise ValueError('ecology and Founder clocks disagree')
+    session.audit()
+    return session
+
+def save_checkpoint(world, tree_id, path):
+    """Save complete object graph and Book receipts, replacing one trusted local file."""
+    _validate_world(world, tree_id)
+    payload = pickle.dumps((tree_id, world), protocol=pickle.HIGHEST_PROTOCOL)
+    data = _encode(payload)
+    dest = Path(path)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    temp_path = None
+    try:
+        with tempfile.NamedTemporaryFile(dir=dest.parent, prefix='.checkpoint-',
+                                         suffix='.tmp', delete=False) as f:
+            temp_path = f.name
+            f.write(data)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(temp_path, dest)
+        temp_path = None
+        if hasattr(os, 'O_DIRECTORY'):
+            fd = os.open(dest.parent, os.O_RDONLY | os.O_DIRECTORY)
+            try:
+                os.fsync(fd)
+            finally:
+                os.close(fd)
+    finally:
+        if temp_path is not None:
+            try:
+                os.unlink(temp_path)
+            except FileNotFoundError:
+                pass
+    return hashlib.sha256(data).hexdigest()
+
+def load_checkpoint(path, expected_tree_id=None):
+    """Only read a trusted local file: pickle can execute code on deserialization."""
+    dest = Path(path)
+    if dest.stat().st_size > MAX_BYTES + len(MAGIC) + 40:
+        raise ValueError('checkpoint exceeds size limit')
+    payload = _decode(dest.read_bytes())
+    tree_id, world = pickle.loads(payload)
+    if expected_tree_id is not None and tree_id != expected_tree_id:
+        raise ValueError('unexpected World Tree ID')
+    return _validate_world(world, tree_id)
