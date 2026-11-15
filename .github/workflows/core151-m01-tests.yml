@@ -25,3 +25,7 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m unittest discover -v -s tests -p 'test_m01_gateway_integration.py'
+      - name: M01 trusted checkpoint and restart regression
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_checkpoint.py'
