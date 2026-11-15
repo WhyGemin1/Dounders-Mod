@@ -35,8 +35,13 @@ class SingleEngineSession:
         self.book = world.book
         self.tree_id = tree_id
         self.gateway = WorldBoxGatewayM01(tree)
+        # If persistence fails after settlement, callers must discard this
+        # in-memory session and recover from the last durable checkpoint.
+        self._checkpoint_uncertain = False
 
     def _assert_authority(self):
+        if self._checkpoint_uncertain:
+            raise RuntimeError('checkpoint outcome uncertain: reload durable world')
         if self.world.book is not self.book:
             raise RuntimeError('Book authority changed')
         tree = self.world.world_trees.worlds[self.tree_id]
@@ -72,6 +77,30 @@ class SingleEngineSession:
             founder_id, source_id, revision, habitat, material,
             quantity, chemical_energy)
         self.audit()
+        return receipt
+
+    def checkpointed_harvest(self, checkpoint_path, founder_id, source_id,
+                             revision, habitat, material, quantity,
+                             chemical_energy=0.0):
+        """Settle synthetic M01 claim and durably checkpoint before returning.
+
+        The returned receipt is only a LOCAL durable-settlement signal, never
+        native WorldBox ACK. A failed checkpoint poisons this in-memory session:
+        reload from the previous durable checkpoint and replay the same request
+        ID. External WorldBox writes are prohibited. The Book remains sole
+        resource authority; the checkpoint is its persisted representation.
+        """
+        from founders_engine.checkpoint import save_checkpoint
+        self._assert_authority()
+        receipt = self.harvest(founder_id, source_id, revision, habitat,
+                               material, quantity, chemical_energy)
+        try:
+            save_checkpoint(self.world, self.tree_id, checkpoint_path)
+        except Exception:
+            # Settlement might exist only in RAM; do not permit further
+            # mutations or a false durable ACK on this session.
+            self._checkpoint_uncertain = True
+            raise
         return receipt
 
     def attach_observer(self, observer):
