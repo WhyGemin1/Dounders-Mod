@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-15",
+  "repository": "WhyGemin1/Dounders-Mod",
+  "base_ref": "main",
+  "audited_base_sha": "26a02ba50a53770b14eae0368315ea01036d0b3c",
+  "active_workstream": "ORG01",
+  "priority": "classify and organize data on GitHub before further source integration",
+  "organization_iteration": 1,
+  "organization_status": "catalogued in five committed files; draft PR #1 open, unmerged",
+  "prior_mechanic": {
+    "id": "M01",
+    "iteration": 3,
+    "repair_cycle_last_reported": 23,
+    "status": "experimental; canonical promotion blocked",
+    "caveat": "cycle22/23 summaries and prior work require actual source/checkpoints to revalidate"
+  },
+  "next_action": "Extract and pin a validated source snapshot (Core151/Cycle152) into an experimental source directory with manifest and runnable tests; keep old paths untouched; audit existing DLL/SQLite/snapshots for public-repo privacy and licensing.",
+  "validation": {
+    "github_tree_inspected": true,
+    "files_in_base_tree": 147,
+    "source_build_executed": false,
+    "worldbox_in_game_tested": false,
+    "book_audit_executed": false
+  },
+  "notes": "This metadata records inspection and organization only; it is not a test run or promotion.",
+  "organization_pr": "https://github.com/WhyGemin1/Dounders-Mod/pull/1",
+  "organization_head_before_state_commit": "bdc77fe8721af07b8d849162a66cdde0c2a77aa3"
+}
