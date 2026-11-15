@@ -143,3 +143,5 @@
 - Book audits: NOT RUN in this read-only boundary cycle; no Book or ecology behavior modified. Earlier CI passed on previous branch commit, but it does not prove new tests.
 - Status: VERIFIED source/test commits; PROVISIONAL batch-only replay consistency; BLOCKED native identity, version, unit conversion, durable cross-batch replay/ACK and WorldBox game integration. Main untouched; M01 iteration 3 locked; M02–M07 deferred.
 - Next: verify CI; design persistent read-only cross-batch observation correlation with reviewed native fixtures and no external writes.
+
+- **Post-implementation verification:** GitHub Actions [run 43749735043](https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43749735043) completed SUCCESS on source commit `c1651228ac6547ad6aa2949cf264f19de79aed81`. This covers all four new read-only native batch regression tests plus prior workflow suites. No new independent Book audit metrics, in-game native protocol, or ecological long-horizon results are implied.
