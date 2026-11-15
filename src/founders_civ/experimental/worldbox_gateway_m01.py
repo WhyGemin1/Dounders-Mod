@@ -34,9 +34,6 @@ class WorldBoxGatewayM01:
         if not isinstance(revision, str) or not revision.strip():
             raise ValueError('request revision required')
         request_id = f'm01:{self.tree.id}:{source_id}:{revision}'
-        if any(e.get('action') == 'm01_harvest' and e.get('request_id') == request_id
-               for e in self.sim.events):
-            raise ValueError('duplicate harvest request')
         founder = self.sim.founders.people.get(founder_id)
         if founder is None or not founder.alive:
             raise ValueError('active Founder required')
@@ -55,9 +52,11 @@ class WorldBoxGatewayM01:
         if chemical_energy:
             energy_legs = ((self.tree.acct('chem', habitat),
                             f'chem:founder:{founder_id}', chemical_energy),)
-        tx = self.book.move(material=((msrc, mdst, quantity),), energy=energy_legs)
-        self.sim.log('m01_harvest', founder_id, txn=tx, request_id=request_id,
-                     tree_id=self.tree.id, habitat=habitat, material=material,
-                     quantity=quantity, chemical_energy=chemical_energy)
+        tx, first_settlement = self.book.move_once(
+            request_id, material=((msrc, mdst, quantity),), energy=energy_legs)
+        if first_settlement:
+            self.sim.log('m01_harvest', founder_id, txn=tx, request_id=request_id,
+                         tree_id=self.tree.id, habitat=habitat, material=material,
+                         quantity=quantity, chemical_energy=chemical_energy)
         return HarvestReceipt(request_id, tx.seq, founder_id, self.tree.id,
                               habitat, material, quantity, chemical_energy)
