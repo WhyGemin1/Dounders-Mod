@@ -47,3 +47,24 @@ jobs:
         run: python -c "import json; from pathlib import Path; from founders_civ.runner import run; Path('web/sample_run.json').write_text(json.dumps(run(42,30,'1111')))"
       - name: Run full Core151 WORLD-024 regression
         run: python -m pytest -q tests
+
+  worldbox-source-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: M05 virtual observer sidecar tests (not the Core151 Book)
+        working-directory: FoundersCIV_WorldBox_M05_Integration
+        env:
+          PYTHONPATH: .
+        run: python -m unittest discover -s tests -v
+      - name: M01 snapshot/identity bridge tests
+        working-directory: Founders_CIV_WorldBox_M01
+        env:
+          PYTHONPATH: .
+        run: python -m unittest discover -s tests -v
