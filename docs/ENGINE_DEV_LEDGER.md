@@ -76,3 +76,5 @@
 - Book audit: prior GitHub checkpoint suite passed through the existing `SingleEngineSession.audit()`; no long-horizon ecology or native WorldBox tests were run.
 - Failure limitations: receipt structure validation is not cryptographic authorization, cannot detect a fully forged internally consistent pickle, and does not provide a crash-safe external ACK or solve the interval between Book settlement and disk checkpoint. Trusted-local pickle only. No canonical promotion.
 - Next task: verify the new CI run, fix any failing receipt tests, then extend deterministic uninterrupted/restarted comparison across multiple ticks and external transaction crash boundaries.
+
+- **Post-implementation CI verification:** [GitHub Actions run 43716911154](https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43716911154), commit `a4e947b29c2905ac16a41ca1a15378e34590278e`, completed SUCCESS on clean checkout: 6 authority, 9 gateway, 9 checkpoint tests = **24/24 passing**. All three new forged-receipt tests passed in the real Core151 test suite. This supersedes the earlier 'pending' note for the new tests; no WorldBox gameplay or longer ecological simulation is implied.
