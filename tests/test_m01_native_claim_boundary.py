@@ -63,6 +63,31 @@ class NativeBoundaryTests(unittest.TestCase):
             self.boundary.inspect_batch(iter((self.claim,)))
 
 
+    def test_reject_noncanonical_native_identifiers(self):
+        # Do not treat visually equivalent or control-bearing IDs as a
+        # trustworthy source for cross-batch replay or external ACK.
+        for field, value in (
+            ('request_id', ' request-1'),
+            ('request_id', 'request-1 '),
+            ('request_id', 'request-1\\n'),
+            ('request_id', 'request-1\\u200b'),
+            ('request_id', 'request-' + 'x' * 257),
+            ('world_id', 'world\\x00one'),
+            ('object_id', 'object-\\u0065\\u0301'),
+            ('resource_unit', 'kg\\t'),
+            ('ack_token', 'ack-1\\r'),
+        ):
+            with self.subTest(field=field, value=repr(value)):
+                with self.assertRaisesRegex(ValueError, 'noncanonical'):
+                    self.boundary.inspect(replace(self.claim, **{field: value}))
+
+    def test_noncanonical_history_rejected_before_replay_result(self):
+        invalid = replace(self.claim, request_id='request-1\\u200b')
+        with self.assertRaisesRegex(ValueError, 'noncanonical'):
+            self.boundary.inspect_against_history([invalid], [self.claim])
+        with self.assertRaisesRegex(ValueError, 'noncanonical'):
+            self.boundary.inspect_against_history([self.claim], [invalid])
+
     def test_cross_batch_replay_is_read_only(self):
         observations = self.boundary.inspect_against_history(
             [self.claim], [self.claim])
