@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-15",
+  "repository": "WhyGemin1/Dounders-Mod",
+  "active_engine": "Core151 IntegratedWorld (recovered Cycle152 source)",
+  "authoritative_book": "IntegratedWorld.book (founders_civ.core.ledger.Book)",
+  "authoritative_clock": "IntegratedWorld.tick",
+  "active_workstream": "SINGLE_ENGINE_INTEGRATION",
+  "iteration": 1,
+  "working_branch": "feat/single-core151-authority",
+  "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
+  "overlay": "M01 Cycle14 on Core151; local reconstruction of historical M01 modules",
+  "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
+  "source_status": "experimental glue on GitHub; Core151 full source NOT yet imported as git-tracked text",
+  "tests": {
+    "local_targeted": "6/6 passed headless",
+    "github_ci": "NOT RUN",
+    "worldbox_game": "NOT RUN",
+    "ecology_long_horizon": "NOT RUN"
+  },
+  "book_audit": "initial+one-step pass on locally recovered engine",
+  "open_gates": [
+    "core import",
+    "clean checkout tests",
+    "M05 Book migration/removal",
+    "native WorldBox source identity & exactly-once ACK",
+    "checkpoint and ecological regression"
+  ],
+  "next_cycle": "Import a provenance-checked Core151/Cycle152 package as text source under src/founders_civ and run same tests from clean checkout, no alternative engine."
+}
