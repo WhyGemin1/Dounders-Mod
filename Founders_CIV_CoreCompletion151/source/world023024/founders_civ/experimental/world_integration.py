@@ -337,6 +337,16 @@ class IntegratedWorld(SocialSimulation):
         if self.founder_parent_stewardship_enabled:
             from founders_civ.core.founder_parent_stewardship import propose_parent_stewardship
             props.extend(propose_parent_stewardship(self,a))
+        # C027: affordable observations are not prohibited by the work threshold.
+        # Tree.observe itself pays .025 energy through the authoritative Book.
+        if .025 <= self._energy(a) < .19 and founder.location in ('house','riverbank'):
+            for cid,tree in sorted(self.world_trees.worlds.items()):
+                if tree.state!='active' or tree.owner!=a:continue
+                plant=self.seeds.plants.get(cid)
+                if not plant or plant['status']!='stable':continue
+                intel=tree.observations.get(a)
+                if intel is None or self.tick-intel['seen_tick']>=5:
+                    props.append((2.2,'tree_observe',None,cid))
         if self._energy(a)<.19:return props
         mine=[b for b in self.seeds.blueprints.values() if b.author==a and b.stage!='planted']
         agenda=state.main_goal
