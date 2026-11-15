@@ -49,3 +49,7 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m unittest discover -v -s tests -p 'test_m01_subprocess_fsync.py'
+      - name: M01 native claim fail-closed read-only contract
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_native_claim_boundary.py'
