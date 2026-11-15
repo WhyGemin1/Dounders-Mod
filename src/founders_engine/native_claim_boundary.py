@@ -52,3 +52,30 @@ class NativeClaimBoundary:
     def acknowledge(self, claim, *args, **kwargs):
         self.inspect(claim)
         raise PermissionError('native WorldBox ACK disabled: no verified exactly-once protocol')
+
+    def inspect_batch(self, claims):
+        """Validate one read-only observation batch and reject ambiguous replays.
+
+        This is deliberately stateless: the Core151 Book remains the only
+        transaction authority. Cross-batch replay safety still requires a
+        verified native transaction protocol and durable checkpoint receipts.
+        """
+        if not isinstance(claims, (tuple, list)):
+            raise TypeError('ordered claim batch required')
+        by_request = {}
+        by_ack = {}
+        observations = []
+        for claim in claims:
+            observed = self.inspect(claim)
+            # A request identifier is not permission to settle. It must not
+            # be reused for a different native object, revision or quantity.
+            prior = by_request.get(claim.request_id)
+            if prior is not None and prior != claim:
+                raise ValueError('conflicting native request replay')
+            prior_ack = by_ack.get(claim.ack_token)
+            if prior_ack is not None and prior_ack != claim.request_id:
+                raise ValueError('native ACK token reused across requests')
+            by_request[claim.request_id] = claim
+            by_ack[claim.ack_token] = claim.request_id
+            observations.append(observed)
+        return tuple(observations)
