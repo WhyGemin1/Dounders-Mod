@@ -163,3 +163,5 @@
 - Command added to clean-checkout CI: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_native_core151_isolation.py'`. **At ledger authoring, execution pending**; do not count new 3 tests as verified until the corresponding CI run succeeds.
 - No new production ecology behavior or long-horizon run. No in-game WorldBox plugin test, native identity/unit/version verification, external exactly-once ACK, or M05 SQLite migration. M01 remains iteration3 repair; main unchanged, no merge.
 - Next: inspect the new CI run; then source reviewed native game-version, identity and unit fixtures with provenance before any writable adapter.
+
+- **Post-run CI verification addendum:** [GitHub Actions 43761534283](https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43761534283) completed SUCCESS on exact source/workflow commit `0671863f3309570ceee7eac87faeaea0304c8ad7`. The new real Core151 isolation step (3 tests) and existing CI steps passed. Book audit was called on the real world in each new test. This supersedes the pending status above; no game test or native ACK was performed.
