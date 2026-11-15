@@ -67,11 +67,15 @@ def perform_harvest(sim,founder,target):
     record=tree.provisioning.lots.get(lot)
     if record is None or record.kind!=kind:raise ValueError('unavailable identified resource lot')
     if record.state not in ('stored','mature') or (kind=='fruit' and record.state!='mature'):
+        # Learning from an actual failed attempt is permitted; a stale memory
+        # must not induce the same Founder to chase the same lot indefinitely.
+        evidence['known_lots']=[x for x in evidence['known_lots'] if x.get('lot')!=lot]
         raise ValueError('resource no longer available')
     # No arbitrary decision/transfer cost; real labor physiology is separate.
     if kind=='fruit':txn=tree.resources.harvest_fruit(lot,founder)
     else:txn=tree.resources.harvest_food(lot,founder)
     record.state='transferred'
+    evidence['known_lots']=[x for x in evidence['known_lots'] if x.get('lot')!=lot]
     sim.log('tree_founder_harvest',founder,parent=getattr(sim,'_current_parent',None),
             txn=txn,creation=tid,lot=lot,resource_kind=kind,
             observed_at_tick=evidence['seen_tick'])
