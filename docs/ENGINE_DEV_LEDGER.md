@@ -28,3 +28,11 @@
 - **NOT RUN:** real Cycle152 import, 27-source-file GitHub commit, Book conservation audit, Founders step/checkpoint, WorldBox in-game, ecological simulation, GitHub CI.
 - **BLOCKED:** exact Drive ZIP is visible as metadata but its bytes are not exposed by the available connector; Library search and local runtime did not contain it. Importer and source tree are still separate. No canonical/main change.
 - **NEXT:** acquire the actual archive bytes through an authorized file-materialization route, verify archive hash, commit 27 .py modules and manifest to `src/`, then run clean-checkout authority and checkpoint tests.
+
+## 2026-11-15 — Cycle4: actual source import
+
+- Verified Google Drive archive bytes and SHA256 `29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8` (956,121 bytes).
+- Imported 27 original Core151 Python modules as individually tracked text files under `src/founders_civ/` plus `src/knowledge_architecture.py` and `src/run_world_tree_pilot.py`; commit `7f96cba5cb283688e0c30a40e75a049d05c7e772`. No alternate engine created or historical source overwritten.
+- Tests executed locally from exact recovered source: 6/6 knowledge architecture unittest PASS; 1/1 Book/clock/100-Founder smoke PASS; seed400 1-day pilot PASS, 16 World Tree residents, Book mass error -2.7284841053187847e-12, energy error -1.1175870895385742e-08. These are headless, not game tests.
+- Git clone from container failed DNS resolution (`Could not resolve host: github.com`); no clean GitHub checkout or CI run claimed. M01 gateway overlay still missing from GitHub, so preexisting `tests/test_authority.py` cannot run from clean checkout. WorldBox in-game NOT RUN.
+- Next: recover and import M01 Book gateway overlay; execute clean-checkout tests and checkpoint/rollback verification; preserve single Book and clock.
