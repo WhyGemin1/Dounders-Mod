@@ -131,8 +131,10 @@ class Book:
                 de[s]-=q;de[t]+=q
             if kind=='wellspring':de['house']+=external
             if abs(sum(dm.values()))>EPS or abs(sum(de.values())-external)>EPS:raise ValueError('unbalanced transaction')
-            if any(self.mass.get(k,0.)+v < -EPS for k,v in dm.items()):raise ValueError('material overdraw')
-            if any(self.energy.get(k,0.)+v < -EPS for k,v in de.items()):raise ValueError('energy overdraw')
+            # EPS is an audit tolerance, never permission to create stock.
+            # Reject even sub-EPS overdrafts before any mutation.
+            if any(self.mass.get(k,0.)+v < 0 for k,v in dm.items()):raise ValueError('material overdraw')
+            if any(self.energy.get(k,0.)+v < 0 for k,v in de.items()):raise ValueError('energy overdraw')
             if kind=='transform':
                 # One toll may have multiple destination legs, but only 3 canonical sinks.
                 splits=(sum(q for s,t,q in energy if t=='world_toll'),
