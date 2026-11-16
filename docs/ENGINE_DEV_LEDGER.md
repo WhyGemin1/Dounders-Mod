@@ -294,3 +294,7 @@
 - Execution: actual archive comparison completed using local Python SHA-256/Git blob SHA-1 and GitHub fetched blob IDs. Regression GitHub CI pending at entry. No fresh independent numerical Book conservation audit, native WorldBox gameplay, or ecological long-horizon run performed.
 - VERIFIED: source archive fingerprint, all 27 path comparisons, source/test commit. PROVISIONAL: pinned regression until CI and unreviewed ledger overlay. BLOCKED: native identity/units/version/exactly-once ACK, M05 migration, ecological stability.
 - Next: inspect and justify the exact ledger.py delta, test M01 receipts/Book atomicity on the authoritative source, and review G1/G2 work without introducing a second Book or engine. M01 iteration 3 lock and M02-M07 backlog preserved; no merge/main modification.
+
+### CI failure and corrective commit — real-checkout fingerprint regression
+- Initial GitHub Actions run 43836902048 FAILED at source provenance step: 8 tests, 1 error, 2 skipped. Exact log: archive-only skip decorator was accidentally attached to the new checkout fingerprint test, so the old archive-required test executed without CORE151_ARCHIVE and raised TypeError from Path(None). This is a test fixture/decorator defect, not evidence of source mismatch.
+- Fixed decorator placement in commit b0e042fe38d6eebbaf3af1f6304ee54718801460 so real-checkout fingerprint regression always runs and archive-required test skips when authorized ZIP is absent. Follow-up CI result pending at ledger update. No source or Book semantics changed.
