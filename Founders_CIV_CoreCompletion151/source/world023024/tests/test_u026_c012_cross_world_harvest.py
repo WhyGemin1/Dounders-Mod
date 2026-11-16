@@ -23,6 +23,9 @@ class CrossWorldHarvestIdentityTests(unittest.TestCase):
             operations={}, mass=defaultdict(float),
             energy=defaultdict(float), seq=0)
         book.mass["portable_food:lot:LOCAL-7:tree:W1"] = .08
+        # Trees must share the authoritative Book, including in test fixtures.
+        for world in worlds.values():
+            world.book = book
         logs = []
         sim = SimpleNamespace(
             founder_harvest_enabled=True, tick=4, book=book,
