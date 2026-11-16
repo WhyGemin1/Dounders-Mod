@@ -14,11 +14,11 @@
   "source_status": "27 tracked Core151 modules: 26 historical exact matches, 1 ledger.py M01 overlay; canonical Book transaction_history now records committed transactions and checkpoint validates every historical receipt",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "FAIL run 43893779619 at dc500c0 parent: 6 durable tests passed, 1 assertion regex mismatch; corrected test assertion at dc500c0ef77cc9eb55db54f43c476363d8fcd54d; new CI pending",
+    "github_ci": "PASS GitHub Actions run 43903727393 (#148) on prior corrected head; new legacy-checkpoint source/test commits f6a795f and e81dbfa pending CI",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
-    "clean_checkout": "FAIL on run 43893779619 solely durable test error-message regex; corrected assertion committed, clean-checkout retest pending",
+    "clean_checkout": "PASS GitHub Actions run 43903727393 on prior corrected head; new legacy fail-closed test pending",
     "book_audit_this_cycle": "CI 43893779619 before mass=-2.9103830456733704e-11 energy=-7.799826562404633e-09; settled mass=-2.8194335754960775e-11 energy=-7.799826562404633e-09; restored same; stepped mass=-9.00399754755199e-11 energy=-1.0302755981683731e-08; all within 1e-6",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
@@ -54,7 +54,8 @@
     "p0_corrupt_checkpoint_receipt": "PASS GitHub Actions run 43857105676 on regression commit 00bdb673ed38ca419eb262ae1faa7f34e8c37f71",
     "p0_numeric_restored_book_audit": "PASS GitHub Actions run 43864971835 on code commit d3d8cb7c06393147fed9803e0d8b89a2543c031a; numerical residual lines emitted but exact numbers not extracted from logs",
     "p0_latest_receipt_authenticity": "PASS GitHub Actions run 43874364593 on test commit 3e4bb980f1cfd7283db47e70bb2b5926e910e7a7; full clean-checkout job steps SUCCESS",
-    "p0_historical_receipt_linkage": "SOURCE/TEST COMMITTED at ac5df462437adf570fbd6a41248f9507b379caf7; GitHub CI not yet confirmed; legacy checkpoints without history fail closed and require reviewed migration"
+    "p0_historical_receipt_linkage": "SOURCE/TEST COMMITTED at ac5df462437adf570fbd6a41248f9507b379caf7; GitHub CI not yet confirmed; legacy checkpoints without history fail closed and require reviewed migration",
+    "p0_legacy_checkpoint_fail_closed": "SOURCE+TEST COMMITTED e81dbfaad80555ab4338d2b2827951606343bd31; explicitly reject absent Book transaction_history; clean-checkout CI pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -63,11 +64,11 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Verify current CI; repair any regressions; review historical checkpoint migration and bounded Book history growth; capture numeric audit output",
-  "last_cycle": "2026-11-16 P0 Book-owned historical transaction history and checkpoint receipt verification",
+  "next_cycle": "Confirm CI for legacy fail-closed regression; design separately reviewed read-only legacy recovery, never infer missing historical transactions; evaluate history growth",
+  "last_cycle": "2026-11-16 P0 explicit legacy checkpoint fail-closed and real Core151 regression",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "3e4bb980f1cfd7283db47e70bb2b5926e910e7a7",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43874364593",
-  "last_unverified_code_commit": "ac5df462437adf570fbd6a41248f9507b379caf7"
+  "last_verified_code_commit": "dc500c0ef77cc9eb55db54f43c476363d8fcd54d",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43903727393",
+  "last_unverified_code_commit": "e81dbfaad80555ab4338d2b2827951606343bd31"
 }
