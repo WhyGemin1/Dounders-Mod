@@ -270,9 +270,18 @@ class C002HardeningTests(unittest.TestCase):
         self.book.reserve_creation_charge(1,'reserve:checkpoint')
         original=self.tree.grow_creation_fruit('forest','FR-CP')
         restored=pickle.loads(pickle.dumps(self.book))
+        # Binary-exact replay must use the same computed energy quantity.
+        # Literal .009 differs by one ULP from .90 * .01 and is not an
+        # identical transaction under the fail-closed Book signature.
+        with self.assertRaisesRegex(ValueError,'conflicting operation ID replay'):
+            restored.transform(original.material,
+                source=self.tree.acct('sun','forest'),work=.01,
+                energy_outputs=[(self.tree.acct('sun','forest'),self.tree.acct('heat','forest'),.009),
+                    ('ce:river',f'ce:fruit:lot:FR-CP:tree:{self.tid}',1.0)],
+                operation_id=f'fruit:grow:{self.tid}:FR-CP',asset_id='fruit:FR-CP')
         replay=restored.transform(original.material,
             source=self.tree.acct('sun','forest'),work=.01,
-            energy_outputs=[(self.tree.acct('sun','forest'),self.tree.acct('heat','forest'),.009),
+            energy_outputs=[(self.tree.acct('sun','forest'),self.tree.acct('heat','forest'),.90*.01),
                 ('ce:river',f'ce:fruit:lot:FR-CP:tree:{self.tid}',1.0)],
             operation_id=f'fruit:grow:{self.tid}:FR-CP',asset_id='fruit:FR-CP')
         self.assertEqual(replay,original)
