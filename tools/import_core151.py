@@ -98,7 +98,7 @@ def install(archive, destination, dry_run=False):
 
 
 
-def verify_checkout(archive, checkout, allowed_overlays=()):
+def verify_checkout(archive, checkout, allowed_overlays=(), overlay_hashes=None):
     """Compare tracked Python bytes to the authorized archive, without writes.
 
     Every changed module must be explicitly allowlisted; unknown drift and
@@ -107,6 +107,14 @@ def verify_checkout(archive, checkout, allowed_overlays=()):
     entries = plan(archive)
     root = Path(checkout)
     overlays = set(allowed_overlays)
+    overlay_hashes = {} if overlay_hashes is None else dict(overlay_hashes)
+    if set(overlay_hashes) - overlays:
+        raise ValueError("overlay fingerprint without allowlist: " +
+                         repr(sorted(set(overlay_hashes) - overlays)))
+    for name, fingerprint in overlay_hashes.items():
+        if (not isinstance(fingerprint, str) or len(fingerprint) != 64 or
+                any(char not in "0123456789abcdef" for char in fingerprint)):
+            raise ValueError("invalid overlay SHA-256: " + name)
     unknown = overlays - set(entries)
     if unknown:
         raise ValueError("overlay not present in archive: " + repr(sorted(unknown)))
@@ -123,6 +131,13 @@ def verify_checkout(archive, checkout, allowed_overlays=()):
         if actual == expected:
             report["matched"].append(name)
         elif name in overlays:
+            if name in overlay_hashes and digest(actual) != overlay_hashes[name]:
+                report["drift"][name] = {
+                    "archive_sha256": digest(expected),
+                    "checkout_sha256": digest(actual),
+                    "expected_overlay_sha256": overlay_hashes[name],
+                }
+                continue
             report["overlays"][name] = {
                 "archive_sha256": digest(expected),
                 "checkout_sha256": digest(actual),
