@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace FoundersCIV.WorldBoxM05
 {
-    [BepInPlugin("org.foundersciv.worldbox.m05.events", "FoundersCIV M05 Native Event Observer", "0.5.3")]
+    [BepInPlugin("org.foundersciv.worldbox.m05.events", "FoundersCIV M05 Native Event Observer", "0.5.4")]
     public sealed class M05EventBridge : BaseUnityPlugin
     {
         internal static M05EventBridge Current;
@@ -29,6 +29,10 @@ namespace FoundersCIV.WorldBoxM05
         private string _output;
         private string _projectionPath;
         private float _nextProjectionRead;
+        private float _nextDiagnosticRead;
+        private long _updateFrames;
+        private static long _hitNutrition, _hitPrey, _hitFood, _hitKill, _hitDeath, _hitBaby, _hitBirth;
+        private static long _callbackErrors, _emitErrors;
         private LiveState _live;
         [Serializable] private sealed class LiveTree {
             public string tree_id = "";
@@ -196,7 +200,9 @@ namespace FoundersCIV.WorldBoxM05
                     }
                     EnqueueLocked(ev);
                 }
-            } catch { // Observer MUST NOT change the native game's outcome.
+            } catch (Exception ex) {
+                var n = System.Threading.Interlocked.Increment(ref _emitErrors);
+                if (n <= 5) Logger.LogError("M05 event emission failed: " + ex);
             }
         }
         private void EnqueueLocked(Event ev)
@@ -207,9 +213,33 @@ namespace FoundersCIV.WorldBoxM05
             ev.observed_utc = DateTime.UtcNow.ToString("o");
             _pending.Enqueue(JsonUtility.ToJson(ev));
         }
+        private static void ReportCallbackFailure(string origin, Exception ex)
+        {
+            var n = System.Threading.Interlocked.Increment(ref _callbackErrors);
+            if (n <= 10) {
+                try { if (Current != null) Current.Logger.LogError("M05 callback " + origin +
+                    " failed (gameplay unchanged): " + ex); } catch { }
+            }
+        }
+        private static void Hit(ref long counter, string method)
+        {
+            if (System.Threading.Interlocked.Increment(ref counter) == 1)
+                Send(new Event {kind="hook_probe", source_method=method,
+                    notes="target_entered; outcome_unverified"});
+        }
+        private static string HookCounts()
+        {
+            return "nutrition=" + System.Threading.Interlocked.Read(ref _hitNutrition) +
+                ";prey=" + System.Threading.Interlocked.Read(ref _hitPrey) +
+                ";food=" + System.Threading.Interlocked.Read(ref _hitFood) +
+                ";kill=" + System.Threading.Interlocked.Read(ref _hitKill) +
+                ";death=" + System.Threading.Interlocked.Read(ref _hitDeath) +
+                ";baby=" + System.Threading.Interlocked.Read(ref _hitBaby) +
+                ";birth=" + System.Threading.Interlocked.Read(ref _hitBirth);
+        }
         private static void Send(Event ev)
         {
-            try { if (Current != null) Current.Emit(ev); } catch { }
+            try { if (Current != null) Current.Emit(ev); } catch (Exception ex) { ReportCallbackFailure("Send", ex); }
         }
         private static string CurrentContext()
         {
@@ -328,6 +358,15 @@ namespace FoundersCIV.WorldBoxM05
 
         private void Update()
         {
+            ++_updateFrames;
+            if (Time.unscaledTime >= _nextDiagnosticRead) {
+                _nextDiagnosticRead = Time.unscaledTime + 15f;
+                Emit(new Event {kind="observer_heartbeat",
+                    active_hooks=_activeHooks.ToArray(),
+                    notes="update_frames=" + _updateFrames + ";hook_hits=" + HookCounts() +
+                        ";callback_errors=" + System.Threading.Interlocked.Read(ref _callbackErrors) +
+                        ";emit_errors=" + System.Threading.Interlocked.Read(ref _emitErrors)});
+            }
             if (Time.unscaledTime >= _nextProjectionRead) {
                 _nextProjectionRead = Time.unscaledTime + 3f;
                 try {
@@ -383,7 +422,11 @@ namespace FoundersCIV.WorldBoxM05
         private void OnDestroy()
         {
             try {
-                Emit(new Event{kind="session_close",notes="best_effort_graceful_plugin_shutdown"});
+                Emit(new Event{kind="session_close",
+                    notes="best_effort_graceful_plugin_shutdown;update_frames=" + _updateFrames +
+                        ";hook_hits=" + HookCounts() +
+                        ";callback_errors=" + System.Threading.Interlocked.Read(ref _callbackErrors) +
+                        ";emit_errors=" + System.Threading.Interlocked.Read(ref _emitErrors)});
                 Drain(true);
                 if(_harmony!=null) _harmony.UnpatchSelf();
                 if(_writer!=null) {_writer.Dispose();_writer=null;}
