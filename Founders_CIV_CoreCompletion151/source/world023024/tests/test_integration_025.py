@@ -38,7 +38,7 @@ class AdapterCompatibilityTests(unittest.TestCase):
         # This branch deliberately modifies world_trees.py; never silently
         # bless the changed hash by regenerating the canonical manifest.
         self.assertEqual(x['status'],'drift_requires_review')
-        self.assertEqual(set(x['changed_files']),{'founders_civ/experimental/world_trees.py','founders_civ/core/ledger.py','founders_civ/core/engine.py','founders_civ/experimental/world_integration.py'})
+        self.assertEqual(set(x['changed_files']),{'founders_civ/experimental/world_trees.py','founders_civ/core/ledger.py','founders_civ/core/engine.py','founders_civ/experimental/social_agents.py','founders_civ/experimental/world_integration.py'})
         # Retain the historical C004 declaration unchanged: it must reject the
         # genuinely modified C015 scheduler instead of silently blessing drift.
         old=reviewed_check(root,root/'docs/INTEGRATION_025/BASELINE_HASHES.json',
@@ -49,6 +49,7 @@ class AdapterCompatibilityTests(unittest.TestCase):
         self.assertEqual(set(old['unapproved_files']),
                          {'founders_civ/core/ledger.py',
                           'founders_civ/core/engine.py',
+                          'founders_civ/experimental/social_agents.py',
                           'founders_civ/experimental/world_integration.py'})
         historical=reviewed_check(root,root/'docs/INTEGRATION_025/BASELINE_HASHES.json',
                                   root/'docs/INTEGRATION_025/APPROVED_DRIFT_C015.json')
