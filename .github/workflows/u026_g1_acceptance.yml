@@ -1,6 +1,8 @@
 name: U026 G1 standalone acceptance
 
 on:
+  push:
+    branches: [G1-acceptance-u026-c040]
   pull_request:
     branches: [Development]
   workflow_dispatch:
