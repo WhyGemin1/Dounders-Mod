@@ -396,7 +396,11 @@ class Simulation:
         b=self.book;stock=f'food:{a.id}'
         if b.mass[stock]<.03:return False
         q=min(.07,b.mass[stock]);chem=f'foodchem:{a.id}'
-        avail=b.energy[chem]*q/max(1e-9,b.mass[stock]);cap=SPECIES[a.species]['capacity']-b.energy[f'reserve:{a.id}']
+        # A full-lot fractional calculation can round one ULP above the
+        # actual Book chemical balance (e.g. 0.10999999999999999 -> .11).
+        # Cap work by the *existing* stock, never relax Book overdraw checks.
+        avail=min(b.energy[chem],b.energy[chem]*q/max(1e-9,b.mass[stock]))
+        cap=SPECIES[a.species]['capacity']-b.energy[f'reserve:{a.id}']
         if avail<.001:return False
         reward=min(avail*.65,max(0.,cap))
         eid=self._phys('eat_food',a,material=[(stock,f'fuel:{a.id}',q)],
