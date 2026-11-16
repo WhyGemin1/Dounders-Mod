@@ -286,7 +286,9 @@ class Simulation:
                 soil=b.mass[f'soil:{place}'];sun=b.energy[f'sun:{place}']
                 growth=min(soil*.015,sun/3.,1.1)
                 if growth>.001:
-                    work=growth*3.
+                    # Bound transformation work by the actually held sunlight.
+                    # (sun / 3) * 3 may round one ULP above sun when fully used.
+                    work=min(sun,growth*3.)
                     self._phys('photosynthesis',world=world,patch=place,
                         material=[(f'soil:{place}',f'plant:{place}',growth)],
                         energy=[(f'sun:{place}',f'chem:{place}',work*.74),
