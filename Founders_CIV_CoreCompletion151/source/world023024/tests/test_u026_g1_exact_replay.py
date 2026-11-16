@@ -39,6 +39,38 @@ class G1ExactReplayTests(unittest.TestCase):
         self.assertEqual(before, (dict(self.book.energy), self.book.seq))
         self.book.audit()
 
+    def test_sub_epsilon_empty_material_source_cannot_mint_stock(self):
+        before = (dict(self.book.mass), self.book.seq)
+        with self.assertRaisesRegex(ValueError, "material overdraw"):
+            self.book.move(material=[("plant:empty", "plant:founder", 5e-8)],
+                           operation_id="g1:tiny:mass")
+        self.assertEqual(before, (dict(self.book.mass), self.book.seq))
+        self.assertNotIn("g1:tiny:mass", self.book.operations)
+        self.book.audit()
+
+    def test_sub_epsilon_empty_energy_source_cannot_mint_fuel(self):
+        before = (dict(self.book.energy), self.book.seq)
+        with self.assertRaisesRegex(ValueError, "energy overdraw"):
+            self.book.move(energy=[("body_chemical:empty", "body_chemical:founder", 5e-8)],
+                           operation_id="g1:tiny:energy")
+        self.assertEqual(before, (dict(self.book.energy), self.book.seq))
+        self.assertNotIn("g1:tiny:energy", self.book.operations)
+        self.book.audit()
+
+    def test_sub_epsilon_river_ce_overdraw_is_rejected(self):
+        self.book.reserve_creation_charge(2.0, "g1:reserve:all")
+        before = (dict(self.book.energy), self.book.seq)
+        with self.assertRaisesRegex(ValueError, "energy overdraw"):
+            self.book.reserve_creation_charge(5e-8, "g1:reserve:extra")
+        self.assertEqual(before, (dict(self.book.energy), self.book.seq))
+        self.book.audit()
+
+    def test_small_funded_transfer_remains_allowed(self):
+        self.book.move(material=[("plant:tree", "plant:founder", 5e-8)],
+                       operation_id="g1:tiny:funded")
+        self.assertEqual(self.book.mass["plant:founder"], 5e-8)
+        self.book.audit()
+
     def test_failed_transfer_does_not_claim_operation_identity(self):
         with self.assertRaisesRegex(ValueError, "material overdraw"):
             self.book.move(material=[("plant:tree", "plant:founder", 3.0)],
