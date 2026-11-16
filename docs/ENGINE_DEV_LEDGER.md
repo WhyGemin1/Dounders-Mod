@@ -355,3 +355,12 @@
 - Compatibility caution: historical checkpoints without transaction_history now fail closed. History grows with every transaction and may need a carefully reviewed compacting/migration strategy. No silent migration or second authority was introduced.
 - VERIFIED: GitHub source and test commits; previous CI success. PROVISIONAL: new historical linkage pending clean-checkout CI and legacy-checkpoint compatibility review. BLOCKED: native IDs/units/version/ACK, M05 SQLite writer migration, in-game WorldBox tests, ecological long horizons.
 - Next: verify CI, fix failures, then design safe legacy checkpoint migration and bounded historical retention with replay proofs; collect exact BOOK_AUDIT stdout if accessible. Preserve M01 iteration 3 lock and M02–M07 backlog; no merge or main changes.
+
+## 2026-11-16 — unified engine cycle 11: CI repair for historical receipt validation
+- Ground: GitHub Actions run 43893779619 (run #146) failed in `test_m01_durable_harvest.py`, while preceding compile, provenance, authority, harvest, checkpoint and multitick steps passed. PR #1/#2 remain open drafts; main not modified.
+- Root cause: test expected `latest Book transaction` but new canonical history validation correctly rejected the forged latest receipt with `receipt does not match canonical Book transaction history`. This was an assertion-message mismatch, not evidence that the forged receipt was accepted.
+- Implementation: changed only the existing regression expectation on `feat/single-core151-authority`; commit `dc500c0ef77cc9eb55db54f43c476363d8fcd54d`. No alternate engine, Book, clock, migration or native write.
+- Executed: inspected GitHub Actions job 133391686936 logs; durable suite ran 7 tests, 6 passed, 1 failed; full job failed and downstream isolation steps skipped. Corrected commit CI status not yet verified.
+- Actual CI Book audit printed: before mass -2.9103830456733704e-11, energy -7.799826562404633e-09, seq 2213; settled/restored mass -2.8194335754960775e-11, energy -7.799826562404633e-09, seq 2214; stepped mass -9.00399754755199e-11, energy -1.0302755981683731e-08, seq 2952. All absolute residuals <1e-6; this is short-horizon evidence only.
+- PROVISIONAL: historical receipt compatibility and checkpoint migration. BLOCKED: old checkpoints lacking transaction history; WorldBox writes and long-horizon ecology remain unverified. M01 iteration3 repair lock and M02–M07 backlog preserved.
+- NEXT: confirm CI on corrected commit, then design explicit fail-closed historical checkpoint migration tests without creating a second Book.
