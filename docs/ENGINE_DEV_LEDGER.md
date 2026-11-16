@@ -306,3 +306,7 @@
 - Execution: GitHub Actions run 43849277385 triggered, result pending at ledger write. Test step command in workflow: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_authority.py' (verify actual workflow before treating as exact invocation). No fresh numerical Book residuals or in-game WorldBox/ecology tests.
 - VERIFIED: previous CI, exact historical/current source blob comparison, commits. PROVISIONAL: new replay guard until CI; overlay full compatibility remains unapproved. BLOCKED: native IDs/units/version/exactly-once ACK, independent M05 writer migration, ecological long horizons.
 - Next: inspect CI; add checkpoint replay corruption test and audit original Book conservation invariants under M01 overlay; keep PR #2 draft and main untouched.
+
+### CI correction — pinned source fingerprint
+- GitHub Actions run 43849277385 FAILED at the source provenance drift verifier step because the 27-file fingerprint test still pinned the pre-change ledger.py blob 2d4881bcef9d4bd77ab553d66080fc5d28526ae0. All subsequent tests were skipped; no authority test pass can be claimed for that run.
+- Corrected the ledger.py pin to actual committed blob b86f9eb0c8a21f0ae677fb3a9de5536c1d495664 in tools/test_import_core151.py, commit 7be64b7b89505894ef09f55dfbdf5c4a98514fc0. The original 26 source file pins remain unchanged. New CI pending at entry; no new Book residuals extracted.
