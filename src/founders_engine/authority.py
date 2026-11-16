@@ -4,6 +4,7 @@ Not a second simulation engine; WorldBox adapters are observational only until
 the material-identity and native-ACK protocol is independently validated.
 """
 from dataclasses import dataclass
+from math import isfinite
 
 @dataclass(frozen=True)
 class AuthoritySnapshot:
@@ -60,6 +61,9 @@ class SingleEngineSession:
     def audit(self):
         self._assert_authority()
         proof = self.book.audit()
+        # An undefined conservation audit must never be reported as healthy.
+        if not all(isfinite(proof[key]) for key in ('mass_error', 'energy_error')):
+            raise RuntimeError('non-finite canonical Book conservation audit')
         return AuthoritySnapshot(
             tick=self.world.tick,
             founder_count=len(self.world.founders.people),
