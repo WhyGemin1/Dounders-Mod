@@ -154,7 +154,7 @@ class RealWorldTreeTests(unittest.TestCase):
             b.transform([(self.tree.acct('plant','forest'),
                          f'fruit:lot:FR1:tree:{self.tid}',.1)],
                         self.tree.acct('sun','forest'),.01,
-                        [(self.tree.acct('sun','forest'),self.tree.acct('heat','forest'),.009),
+                        [(self.tree.acct('sun','forest'),self.tree.acct('heat','forest'),.9*.01),
                          ('ce:river',f'ce:fruit:lot:FR1:tree:{self.tid}',1)],
                         operation_id='fruit:grow:second_attempt',asset_id='fruit:FR1')
 
