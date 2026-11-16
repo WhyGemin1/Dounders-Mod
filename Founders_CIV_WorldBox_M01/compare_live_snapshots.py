@@ -50,6 +50,8 @@ def compare(before: Path, after: Path, minimum=20):
     later, a = load_snapshot(after)
     if earlier.get("world_seed") != later.get("world_seed"):
         raise ValueError("Different WorldBox seeds; cannot compare as one saved world")
+    if earlier.get("capture_asset_id") != later.get("capture_asset_id"):
+        raise ValueError("Different M01 native species cohort filters; repeat both snapshots with the same -AssetId")
     if len(b) < minimum:
         raise ValueError(f"Only {len(b)} before-actors; minimum is {minimum}")
     mismatches = []
@@ -68,6 +70,7 @@ def compare(before: Path, after: Path, minimum=20):
         "phase": "M01_live_identity_trial",
         "before": str(before), "after": str(after),
         "world_seed_match": True,
+        "native_species_cohort": earlier.get("capture_asset_id"),
         "before_actor_count": len(b), "after_actor_count": len(a),
         "matched_actor_count": len(set(a) & set(b)),
         "missing_or_changed": mismatches,
