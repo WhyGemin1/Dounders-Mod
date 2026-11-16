@@ -45,7 +45,7 @@
     "p0_source_provenance": "PASS GitHub Actions 43795939367 (synthetic provenance tests)",
     "p0_provenance_symlink_ancestor": "PASS GitHub Actions run 43801654177 on d44afc74797776331ab37bccacbfdb09ac128d37",
     "p0_pinned_overlay": "PASS GitHub Actions run 43807851784 on 98519d5cb3633119c0a53aab8c1445973c000540",
-    "p0_provenance_cli": "Committed CLI and synthetic CLI regression; GitHub CI pending"
+    "p0_provenance_cli": "PASS GitHub Actions run 43813656249 on code/test commit 68bd4f6ddd0e53cbd09bdf1abbff6d57d6aa4939"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -58,7 +58,6 @@
   "last_cycle": "2026-11-15 P0 read-only provenance CLI",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "98519d5cb3633119c0a53aab8c1445973c000540",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43807851784",
-  "last_unverified_code_commit": "68bd4f6ddd0e53cbd09bdf1abbff6d57d6aa4939"
+  "last_verified_code_commit": "68bd4f6ddd0e53cbd09bdf1abbff6d57d6aa4939",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43813656249"
 }
