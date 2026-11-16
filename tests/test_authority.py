@@ -91,5 +91,19 @@ class SingleAuthorityTests(unittest.TestCase):
         finally:
             world.founders.people[founder_id] = original
 
+    def test_original_founder_reference_is_retained(self):
+        world, _, tree_id = bootstrap(404)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        original = world.founders.people[founder_id]
+        self.assertIs(session._founder_objects[founder_id], original)
+        try:
+            del world.founders.people[founder_id]
+            with self.assertRaisesRegex(RuntimeError, 'Founder identities changed'):
+                session.audit()
+            self.assertIs(session._founder_objects[founder_id], original)
+        finally:
+            world.founders.people[founder_id] = original
+
 if __name__ == '__main__':
     unittest.main()
