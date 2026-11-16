@@ -1,0 +1,55 @@
+name: U026 G1 standalone acceptance
+
+on:
+  pull_request:
+    branches: [Development]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  g1-python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PYTHONPATH: .
+      PYTHONDONTWRITEBYTECODE: '1'
+    defaults:
+      run:
+        working-directory: Founders_CIV_CoreCompletion151/source/world023024
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pytest
+        run: python -m pip install --disable-pip-version-check pytest==8.4.1
+      - name: G1 atomic composite failure-injection and exact replay tests
+        run: python -m pytest -q tests/test_u026_g1_exact_replay.py
+      - name: Complete Core151 regression suite
+        run: python -m pytest -q tests
+      - name: Verify single-authority candidate G1 fingerprint
+        working-directory: .
+        run: python tools/u026_g1_exact_source_audit.py
+
+  worldbox-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: M05 offline observer sidecar
+        working-directory: FoundersCIV_WorldBox_M05_Integration
+        env:
+          PYTHONPATH: .
+        run: python -m unittest discover -s tests -v
+      - name: M01 offline identity bridge
+        working-directory: Founders_CIV_WorldBox_M01
+        env:
+          PYTHONPATH: .
+        run: python -m unittest discover -s tests -v
