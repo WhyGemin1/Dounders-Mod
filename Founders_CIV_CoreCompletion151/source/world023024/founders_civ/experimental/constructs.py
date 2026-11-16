@@ -80,13 +80,23 @@ class ConstructRegistry:
             # Defers rather than violating funded transform rule. This should not
             # happen when bound energy is reserved correctly at build time.
             raise ValueError('binding energy exhausted; cannot fund collapse')
-        self.book.transform([(f'construct:{id}',f'{c.collapse_to}:{id}',c.mass)],
-                            source=source,work=.25,
-                            energy_outputs=[(source,'environment:heat',.225)])
-        for acct in (f'reserve:{id}',f'binding:{id}'):
-            rem=self.book.energy[acct]
-            if rem>0:self.book.move(energy=[(acct,'environment:heat',rem)])
-        c.status='collapsed'; c.integrity=0
-        self.events.append(dict(event='collapse',id=id,remaining_hazard=list(sorted(c.inhabitants)),
-                                resultant_material=f'{c.collapse_to}:{id}'))
+        old_status,old_integrity=c.status,c.integrity
+        events_before=len(self.events)
+        # A collapse transforms the construct and drains TWO physical energy
+        # accounts. If a later leg rejects, no partial remnant or heat is real.
+        with self.book.atomic_batch():
+            try:
+                self.book.transform([(f'construct:{id}',f'{c.collapse_to}:{id}',c.mass)],
+                                    source=source,work=.25,
+                                    energy_outputs=[(source,'environment:heat',.225)])
+                for acct in (f'reserve:{id}',f'binding:{id}'):
+                    rem=self.book.energy[acct]
+                    if rem>0:self.book.move(energy=[(acct,'environment:heat',rem)])
+                c.status='collapsed'; c.integrity=0
+                self.events.append(dict(event='collapse',id=id,remaining_hazard=list(sorted(c.inhabitants)),
+                                        resultant_material=f'{c.collapse_to}:{id}'))
+            except Exception:
+                c.status,c.integrity=old_status,old_integrity
+                del self.events[events_before:]
+                raise
         return True
