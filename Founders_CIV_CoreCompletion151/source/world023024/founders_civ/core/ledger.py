@@ -141,7 +141,11 @@ class Book:
             # EPS is an audit tolerance, never permission to create stock.
             # Reject even sub-EPS overdrafts before any mutation.
             if any(self.mass.get(k,0.)+v < 0 for k,v in dm.items()):raise ValueError('material overdraw')
-            if any(self.energy.get(k,0.)+v < 0 for k,v in de.items()):raise ValueError('energy overdraw')
+            for key, delta in de.items():
+                prior = self.energy.get(key, 0.)
+                if prior + delta < 0:
+                    raise ValueError(f'energy overdraw {key}: balance={prior!r} '
+                                     f'delta={delta!r} deficit={-(prior+delta)!r}')
             if kind=='transform':
                 # One toll may have multiple destination legs, but only 3 canonical sinks.
                 splits=(sum(q for s,t,q in energy if t=='world_toll'),
