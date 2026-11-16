@@ -132,6 +132,10 @@ class Book:
         previous = self.request_receipts.get(request_id)
         if previous is not None:
             prior_legs, receipt = previous
+            # A receipt cannot refer to a transaction beyond this Book's
+            # current history (for example after a partial/corrupt restore).
+            if not isinstance(receipt, Transaction) or not 1 <= receipt.seq <= self.seq or receipt.kind != 'move':
+                raise ValueError('invalid canonical Book replay receipt')
             if prior_legs != legs:
                 raise ValueError('request id reused with different transfer')
             return receipt, False
