@@ -1,0 +1,37 @@
+{
+  "schema": "u026-gate-decision-v1",
+  "gate": "G0",
+  "decision": "PROMOTE",
+  "scope": "Development exact-source provenance gate only; not a Core/Integration/Outer/main branch promotion",
+  "accepted_source_commit": "f604b9d42b5c1547924d9c1346a4ea8668ded208",
+  "evidence": {
+    "github_actions_run_id": 43784994919,
+    "github_actions_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43784994919",
+    "workflow_conclusion": "success",
+    "source_fingerprint_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
+    "source_fingerprint_expected": 497,
+    "source_fingerprint_matched": 497,
+    "missing": 0,
+    "changed": 0,
+    "prohibited": 0,
+    "core151_pytest_passed": 241,
+    "core151_pytest_failed": 0,
+    "worldbox_source_offline": "success",
+    "provenance_release_enforcement": "success",
+    "candidate_exact_source_attestation": "Founders_CIV_CoreCompletion151/source/world023024/docs/INTEGRATION_025/APPROVED_DRIFT_C036.json",
+    "historical_attestations_retained": true
+  },
+  "source_scope_review": {
+    "founders_civ/core/founder_harvesting.py": "Observed rather than omniscient lot discovery, physical riverbank access, Book-owned atomic food/fruit transfer, no per-decision energy charge, negative-case errors tested; experimental opt-in.",
+    "founders_civ/experimental/world_integration.py": "One integrated Book/tick, opt-in Founder harvesting, food acquisition, nutrition and stewardship dispatch; canonical defaults remain disabled; broader ecology/energy and WorldBox integrations are not certified by G0."
+  },
+  "nonclaims": [
+    "No claim that G1 Book/Tree integration is promoted",
+    "No claim that G2 or G3 behavioral/ecological mechanisms are accepted",
+    "No claim that G4 multigeneration ecology is stable",
+    "No claim of live WorldBox integration or Windows build acceptance",
+    "No merge of Development to Core, Integration, Outer, or main"
+  ],
+  "invalidation_rule": "Any edit to a tracked 497-file source path requires new reviewed exact SHA-256 fingerprint, full rerun, and separate gate decision; historical attestations must remain immutable.",
+  "next_gate": "G1 atomic Book and real resource behavior, with separately reviewed matched acceptance"
+}
