@@ -11,7 +11,7 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Tracked Core151 source with M01 overlay; non-finite Book audit rejection committed; CI pending",
+  "source_status": "Tracked Core151 source; non-finite canonical Book audit guard passed GitHub clean-checkout CI",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "PASS GitHub Actions run 43772637029 on exact repaired test source commit 24692b7abf5fba4195d1d74f6fa7b90046a09cb6; previous failure 43767189062 fixed",
@@ -41,7 +41,7 @@
     "p0_founder_authority": "PASS GitHub Actions run 43782881469 on 8164da99b457305336b19e3091db3ec28d99aa1b",
     "p0_founder_object_substitution": "PASS GitHub Actions run 43784232338 on a7e43e0cf2a9971309fb05f387e6b56a1f98612e",
     "p0_founder_strong_reference": "PASS GitHub Actions run 43784451806 on 871c11171939e291226bd5633f2d39de647e3711",
-    "p0_nonfinite_book_audit": "NaN/Infinity negative regression committed; CI pending"
+    "p0_nonfinite_book_audit": "PASS GitHub Actions run 43789231933 on test source commit 60c3a20a1dc028fd845afd2f7633a17dc286a7d5"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -54,7 +54,7 @@
   "last_cycle": "2026-11-15 P0 non-finite Book audit fail-closed correction",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "871c11171939e291226bd5633f2d39de647e3711",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43784451806",
-  "last_unverified_code_commit": "60c3a20a1dc028fd845afd2f7633a17dc286a7d5"
+  "last_verified_code_commit": "60c3a20a1dc028fd845afd2f7633a17dc286a7d5",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43789231933",
+  "last_unverified_code_commit": null
 }
