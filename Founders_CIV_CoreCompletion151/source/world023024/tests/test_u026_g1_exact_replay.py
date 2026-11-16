@@ -175,6 +175,21 @@ class G1ExactReplayTests(unittest.TestCase):
         self.assertEqual(book.energy["sun:patch"], 0.0)
         book.audit()
 
+    def test_legacy_founder_work_rejects_roundoff_shortfall_before_book(self):
+        # Reproduces the 180-day matched-seed failure at F032:
+        # 0.08499999999999786 must not pay a 0.085 exploration cost.
+        from types import SimpleNamespace
+        from founders_civ.experimental.social_agents import SocialSimulation
+        book=Book()
+        book.seed_energy('founder:F032',0.08499999999999786)
+        book.freeze()
+        sim=SimpleNamespace(book=book,
+                            _energy=lambda actor:book.energy[f'founder:{actor}'])
+        before=(dict(book.energy),book.seq)
+        self.assertIs(SocialSimulation._pay(sim,'F032','explore'),False)
+        self.assertEqual(before,(dict(book.energy),book.seq))
+        book.audit()
+
     def test_failed_transfer_does_not_claim_operation_identity(self):
         with self.assertRaisesRegex(ValueError, "material overdraw"):
             self.book.move(material=[("plant:tree", "plant:founder", 3.0)],
