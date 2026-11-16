@@ -11,7 +11,7 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Core151 tracked source; native ID fixture repair PASS on clean GitHub Actions at 24692b7; no production native protocol verified",
+  "source_status": "Tracked Core151 source; M01 integer quantity precision hardening committed on experimental branch, CI pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "PASS GitHub Actions run 43772637029 on exact repaired test source commit 24692b7abf5fba4195d1d74f6fa7b90046a09cb6; previous failure 43767189062 fixed",
@@ -36,7 +36,8 @@
     "m01_subprocess_fsync": "PASS 4/4 in GitHub Actions run 43738903675 at f3a517942d647845d97a6febc9b55128c9aaef53; child os._exit at before/after temporary-file and directory fsync",
     "native_claim_boundary": "11/11 cross-batch native claim tests PASS at GitHub Actions 43755590950, commit 248a36dfe78eae3be7cc1f33d9e3b1f41aec0e17",
     "native_core151_isolation": "PASS 3/3 GitHub Actions run 43761534283 on code commit 0671863f3309570ceee7eac87faeaea0304c8ad7; real Core151 native observation/deny tests",
-    "native_claim_identifier_hardening": "PASS on GitHub Actions run 43772637029 after replacing literal escaped sequences with actual Unicode/control-character test fixtures"
+    "native_claim_identifier_hardening": "PASS on GitHub Actions run 43772637029 after replacing literal escaped sequences with actual Unicode/control-character test fixtures",
+    "native_quantity_precision": "New regression committed at 88375ba3; CI not yet confirmed"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -45,11 +46,11 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Review later state/docs-only CI then obtain independently sourced native WorldBox identity/version/unit fixtures; keep external writes/ACK disabled",
-  "last_cycle": "2026-11-15 M01 repair invalid native identifier test fixtures after failed CI",
+  "next_cycle": "Confirm new CI for integer quantity guard; review real native units/version/identity fixtures before enabling any external writes",
+  "last_cycle": "2026-11-15 M01 native claim quantity integer overflow and precision guard",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "24692b7abf5fba4195d1d74f6fa7b90046a09cb6",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43772637029",
-  "last_unverified_code_commit": "24692b7abf5fba4195d1d74f6fa7b90046a09cb6"
+  "last_unverified_code_commit": "88375ba322e2e87deb3aa08865e6afc038e99100"
 }
