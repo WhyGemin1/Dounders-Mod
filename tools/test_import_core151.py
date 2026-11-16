@@ -50,6 +50,18 @@ class ImportTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "provenance mismatch"):
                 verify_checkout("synthetic.zip", d, ["founders_civ/core/ledger.py"])
 
+    def test_checkout_rejects_symlinked_parent_directory(self):
+        entries = {"founders_civ/core/ledger.py": b"original"}
+        with tempfile.TemporaryDirectory() as d, patch("import_core151.plan", return_value=entries):
+            root = Path(d)
+            external = root / "external"
+            external.mkdir()
+            (external / "ledger.py").write_bytes(b"original")
+            (root / "founders_civ").mkdir()
+            (root / "founders_civ/core").symlink_to(external, target_is_directory=True)
+            with self.assertRaisesRegex(ValueError, "provenance mismatch"):
+                verify_checkout("synthetic.zip", root)
+
     def test_wrong_archive_rejected(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / "wrong.zip"
