@@ -325,5 +325,41 @@ class DurableHarvestTests(unittest.TestCase):
                 book.transaction_history[0] = original
         book.audit()
 
+
+    def test_nonfinite_historical_book_leg_fails_checkpoint_closed(self):
+        """An older, non-receipted transaction with NaN must fail closed."""
+        import pickle
+        from dataclasses import replace
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'nonfinite-history.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'nonfinite-history', 'v1',
+                'forest', 'plant', .01, .001)
+            book = self.session.book
+            original = book.transaction_history[0]
+            original_seq = book.seq
+            original_mass, original_energy = dict(book.mass), dict(book.energy)
+            try:
+                # Keep the transaction type and tuple containers valid.
+                # This exercises the individual leg validation, not the
+                # already-tested kind/container rejection.
+                book.transaction_history[0] = replace(
+                    original, material=(('plant:a', 'plant:b', float('nan')),))
+                path.write_bytes(_encode(pickle.dumps(
+                    (self.tree_id, self.world), protocol=pickle.HIGHEST_PROTOCOL)))
+                corrupt_bytes = path.read_bytes()
+                with self.assertRaisesRegex(ValueError, 'malformed canonical Book transaction leg'):
+                    load_checkpoint(path, self.tree_id)
+                with self.assertRaisesRegex(ValueError, 'malformed canonical Book transaction leg'):
+                    save_checkpoint(self.world, self.tree_id, path)
+                self.assertEqual(path.read_bytes(), corrupt_bytes)
+                self.assertEqual(book.seq, original_seq)
+                self.assertEqual(dict(book.mass), original_mass)
+                self.assertEqual(dict(book.energy), original_energy)
+            finally:
+                book.transaction_history[0] = original
+        book.audit()
+
 if __name__ == '__main__':
     unittest.main()
