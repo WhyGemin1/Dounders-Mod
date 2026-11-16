@@ -86,12 +86,19 @@ def perform_nutrition(sim, founder, action, target):
         raise ValueError('Founder never harvested or received this food lot')
     if action == 'food_digest' and f'food:ingest:{lot}:{founder}' not in sim.book.operations:
         raise ValueError('Founder has not ingested identified food lot')
+    # The Book commits both physical transfers and their permanent operation IDs.
+    # A retried call may return the original transaction, but it must not
+    # manufacture a second social event or second learning experience.
+    receipt = (f'food:ingest:{lot}:{founder}' if action == 'food_ingest'
+               else f'food:digest:{lot}:{founder}')
+    was_committed = receipt in sim.book.operations
     if action == 'food_ingest':
         txn = tree.resources.eat_food(lot, founder)
         event_name = 'founder_food_ingested'
     else:
         txn = tree.resources.digest_food(lot, founder)
         event_name = 'founder_food_digested'
-    sim.log(event_name, founder, parent=getattr(sim, '_current_parent', None),
-            txn=txn, creation=tree_id, lot=lot)
+    if not was_committed:
+        sim.log(event_name, founder, parent=getattr(sim, '_current_parent', None),
+                txn=txn, creation=tree_id, lot=lot)
     return txn
