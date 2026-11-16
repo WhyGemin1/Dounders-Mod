@@ -25,6 +25,8 @@ jobs:
         with:
           python-version: '3.11'
       - name: Verify exact source fingerprints and no generated artifacts
+        id: provenance
+        continue-on-error: true  # run regressions despite drift; fail gate below
         working-directory: .
         run: |
           python - <<'PY'
@@ -47,6 +49,15 @@ jobs:
         run: python -c "import json; from pathlib import Path; from founders_civ.runner import run; Path('web/sample_run.json').write_text(json.dumps(run(42,30,'1111')))"
       - name: Run full Core151 WORLD-024 regression
         run: python -m pytest -q tests
+      - name: Enforce provenance gate after regressions
+        if: always()
+        env:
+          PROVENANCE_OUTCOME: ${{ steps.provenance.outcome }}
+        run: |
+          if [ "$PROVENANCE_OUTCOME" != success ]; then
+            echo 'G0 provenance FAILED; regression evidence retained, promotion blocked.'
+            exit 1
+          fi
 
   worldbox-source-offline:
     runs-on: ubuntu-latest
