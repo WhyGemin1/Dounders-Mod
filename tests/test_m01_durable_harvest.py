@@ -361,5 +361,37 @@ class DurableHarvestTests(unittest.TestCase):
                 book.transaction_history[0] = original
         book.audit()
 
+    def test_whitespace_alias_of_book_receipt_key_fails_closed(self):
+        """A persisted replay ID must not admit whitespace aliases."""
+        import pickle
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'whitespace-receipt.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'whitespace-receipt', 'v1',
+                'forest', 'plant', .01, .001)
+            book = self.session.book
+            original_seq = book.seq
+            mass, energy = dict(book.mass), dict(book.energy)
+            original_key = f'm01:{self.tree_id}:whitespace-receipt:v1'
+            record = book.request_receipts.pop(original_key)
+            try:
+                book.request_receipts[' ' + original_key] = record
+                path.write_bytes(_encode(pickle.dumps(
+                    (self.tree_id, self.world), protocol=pickle.HIGHEST_PROTOCOL)))
+                corrupted = path.read_bytes()
+                with self.assertRaisesRegex(ValueError, 'invalid Book replay request id'):
+                    load_checkpoint(path, self.tree_id)
+                with self.assertRaisesRegex(ValueError, 'invalid Book replay request id'):
+                    save_checkpoint(self.world, self.tree_id, path)
+                self.assertEqual(path.read_bytes(), corrupted)
+                self.assertEqual(book.seq, original_seq)
+                self.assertEqual(dict(book.mass), mass)
+                self.assertEqual(dict(book.energy), energy)
+            finally:
+                book.request_receipts.pop(' ' + original_key, None)
+                book.request_receipts[original_key] = record
+        book.audit()
+
 if __name__ == '__main__':
     unittest.main()
