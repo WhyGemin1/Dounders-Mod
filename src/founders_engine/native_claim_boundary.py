@@ -48,6 +48,11 @@ class NativeClaimBoundary:
                 raise ValueError('noncanonical native identity/version/unit/ACK field')
         if isinstance(claim.quantity, bool) or not isinstance(claim.quantity, (int, float)):
             raise ValueError('numeric quantity required')
+        # Avoid lossy integer-to-float conversion and overflow in isfinite().
+        # Until native units are verified, quantities above IEEE-754's exact
+        # integer range cannot be safely correlated across transports.
+        if isinstance(claim.quantity, int) and claim.quantity > 2**53:
+            raise ValueError('native quantity exceeds exact integer range')
         if not isfinite(claim.quantity) or claim.quantity <= 0:
             raise ValueError('finite positive quantity required')
         # Never interpret an unverified native unit as a synthetic Book unit.
