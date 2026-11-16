@@ -11,7 +11,7 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "REAL archive-to-GitHub 27-module Git blob comparison: 26 exact matches; src/founders_civ/core/ledger.py differs (historical blob 2899f8eba59ded15ea5e7ce64fea2e6044f98398; checkout blob 2d4881bcef9d4bd77ab553d66080fc5d28526ae0); overlay NOT YET REVIEWED",
+  "source_status": "27 tracked Core151 modules: 26 exact archive matches; ledger.py intentionally extended with M01 Book-owned request_receipts/move_once; receipt history guard newly committed and CI pending; overlay compatibility not fully approved",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "PASS GitHub Actions run 43772637029 on exact repaired test source commit 24692b7abf5fba4195d1d74f6fa7b90046a09cb6; previous failure 43767189062 fixed",
@@ -49,7 +49,8 @@
     "p0_external_clock_mutation": "PASS GitHub Actions run 43821123440 on 517c95bd1541721998c7e5ebee75cc70829aecbe",
     "p0_out_of_session_book_sequence": "PASS GitHub Actions run 43830307794 on code/test commit 267eb6dfeb67277cb4b969f5aca4a1617e31364f",
     "p0_real_archive_comparison": "27/27 GitHub source blobs fetched and compared with independently calculated Git blob SHA-1 from authorized ZIP SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8; 26 matches, 1 ledger divergence",
-    "p0_checkout_fingerprint_regression": "Initial CI run 43836902048 FAILED due to misplaced skip decorator; fixed in b0e042fe38d6eebbaf3af1f6304ee54718801460; rerun pending"
+    "p0_checkout_fingerprint_regression": "PASS GitHub Actions run 43836994575 at b0e042fe38d6eebbaf3af1f6304ee54718801460",
+    "p0_book_receipt_history": "New test committed at bc3341c9b772ed11d3e0880be3aadf70f2695f33; GitHub Actions run 43849277385 pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -58,11 +59,11 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Inspect diff for sole ledger.py divergence and review M01 receipt ownership compatibility; do not approve overlay by fingerprint alone",
-  "last_cycle": "2026-11-16 P0 actual 27-module archive-to-checkout comparison and pinned regression",
+  "next_cycle": "Verify run 43849277385; test ledger overlay against original Book invariants and checkpoint corruption/replay; approve overlay only after regression evidence",
+  "last_cycle": "2026-11-16 P0 ledger.py provenance delta review and fail-closed replay receipt history",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "267eb6dfeb67277cb4b969f5aca4a1617e31364f",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43830307794",
-  "last_unverified_code_commit": "b0e042fe38d6eebbaf3af1f6304ee54718801460"
+  "last_verified_code_commit": "b0e042fe38d6eebbaf3af1f6304ee54718801460",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43836994575",
+  "last_unverified_code_commit": "bc3341c9b772ed11d3e0880be3aadf70f2695f33"
 }
