@@ -420,3 +420,5 @@
 - EXECUTE: new regression NOT YET RUN/VERIFIED; target PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_durable_harvest.py'. Previous CI run 43966274146 success is historical evidence only. No fresh numerical conservation residuals. Source fingerprint requires refresh after ledger.py edit.
 - AUDIT: VERIFIED source/test commits and preceding CI. PROVISIONAL new Book guard until regression and provenance CI pass. BLOCKED legacy checkpoint migration, native WorldBox identity/units/version/exactly-once ACK, ecological long horizons. No second Book/clock/engine; M01 iteration-3 lock and M02–M07 backlog preserved. No main merge or change.
 - NEXT: refresh tracked ledger.py overlay fingerprint and run full clean-checkout CI; fix any failures before history-growth work.
+
+- PROVENANCE FOLLOW-UP: updated exact tracked Git blob pin for ledger.py to 23b9e5d48f35a24abc53810b915ab11bf697e877 in tools/test_import_core151.py, commit 60ca55c1e38bc25148ae168cb51c6037fe4e37bd. New full CI remains unverified; no behavioral acceptance claimed.
