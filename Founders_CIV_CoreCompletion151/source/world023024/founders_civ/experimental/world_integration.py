@@ -169,6 +169,19 @@ class SeedRegistry:
         sim_counter=self.sim.counter.copy()
         next_event=self.sim.next_event
         stage,planted=blueprint.stage,blueprint.planted_id
+        # Species admission populates an EXISTING Tree and its construct.
+        # Snapshot only the mutable state it actually touches, rather than
+        # copying the whole simulation or introducing a second ledger.
+        species_tree=(self.sim.world_trees.worlds.get(blueprint.parent_id)
+                      if blueprint.kind=='species' else None)
+        species_state=None
+        if species_tree is not None:
+            t=species_tree
+            species_state=(deepcopy(t.species_rules),list(t.species_seed_ids),
+                           t.residents.copy(),t.serial,t.state,t.counters.copy(),
+                           list(t.timeline),
+                           set(self.constructs.items[t.id].inhabitants),
+                           self.plants[t.id]['inhabitants'])
         try:
             with self.sim.book.atomic_batch():
                 yield
@@ -185,6 +198,19 @@ class SeedRegistry:
             self.sim.counter.clear();self.sim.counter.update(sim_counter)
             self.sim.next_event=next_event
             blueprint.stage,blueprint.planted_id=stage,planted
+            if species_state is not None:
+                t=species_tree
+                (rules,seeds,residents,serial,state,counters,timeline,
+                 inhabitants,plant_inhabitants)=species_state
+                t.species_rules=rules
+                t.species_seed_ids[:]=seeds
+                t.residents.clear();t.residents.update(residents)
+                t.serial=serial;t.state=state
+                t.counters.clear();t.counters.update(counters)
+                t.timeline[:]=timeline
+                self.constructs.items[t.id].inhabitants.clear()
+                self.constructs.items[t.id].inhabitants.update(inhabitants)
+                self.plants[t.id]['inhabitants']=plant_inhabitants
             raise
 
     def plant(self,actor,seed_id):
