@@ -201,3 +201,12 @@
 - Tests: new tests committed, CI result not yet confirmed at ledger write. Previous quantity CI verified; no local clean-checkout tests or new numerical Book audits performed in this invocation. WorldBox and long-horizon ecology NOT RUN.
 - Status: VERIFIED source commit and previous quantity CI; PROVISIONAL new authority guard until CI; BLOCKED external native writes/ACK and long-horizon ecology.
 - Next: inspect GitHub CI for these commits, fix any regression, then continue clean-checkout provenance/authority verification. No merge or main change.
+
+## 2026-11-15 — P0 same-ID Founder object authority guard
+- Ground: main remains 26a02ba50a53770b14eae0368315ea01036d0b3c; PRs #1/#2/#3 open drafts. Previous P0 CI run 43782881469 on 8164da99b457305336b19e3091db3ec28d99aa1b completed SUCCESS, including authority, gateway, restart and checkpoint steps.
+- Provenance: fetched authorized Drive Cycle152 archive and independently verified 956121-byte ZIP SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8; historical baseline, not a claim active overlays are byte-identical.
+- Implementation: existing SingleEngineSession now snapshots identity of each original Founder actor object and rejects replacement under an unchanged Founder ID; one negative test boots real Core151 seed403 and substitutes a shallow-copy actor, then restores it. No new engine, clock, Book, or external settlement.
+- Source commits: c777f906234845527dc1f954e3ca66804e1221b1; e5bf9fba5f36a1c7d841733b02d9881ad8567783.
+- Execute/test: new test committed; CI result pending at ledger write. No local clean-checkout test or new numerical Book mass/energy audit in this run. Prior GitHub authority regression suite passed. Native WorldBox and ecological long horizons NOT RUN.
+- VERIFIED: prior CI and archive hash, source commits. PROVISIONAL: new guard until CI. BLOCKED: native identity/unit/version and exactly-once ACK; M05 separate writer and long-horizon stability.
+- Next: inspect CI, then reconcile tracked active Core151 source with original archive hashes without overwriting intentional M01 overlays. No merges or main changes.
