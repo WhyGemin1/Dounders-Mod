@@ -168,10 +168,19 @@ class Book:
                 de[s]-=q;de[t]+=q
             if kind=='wellspring':de['house']+=external
             if abs(sum(dm.values()))>EPS or abs(sum(de.values())-external)>EPS:raise ValueError('unbalanced transaction')
-            # EPS is an audit tolerance, never permission to create stock.
-            # Reject even sub-EPS overdrafts before any mutation.
-            if any(self.mass.get(k,0.)+v < 0 for k,v in dm.items()):raise ValueError('material overdraw')
-            if any(self.energy.get(k,0.)+v < 0 for k,v in de.items()):raise ValueError('energy overdraw')
+            # EPS is an audit tolerance, NOT an overdraft allowance. Reject
+            # genuinely unfunded transfers, including 5e-8 from an empty
+            # source, but tolerate a few IEEE-754 ULPs when many funded legs
+            # sum to slightly more than an existing floating-point balance.
+            # A fixed EPS allowance here would mint real tiny stock.
+            def unpaid(stock, change):
+                if change >= 0: return False
+                remaining = stock + change
+                return (remaining < 0 and
+                        (stock <= 0 or
+                         -remaining > 8 * math.ulp(max(abs(stock),abs(change)))))
+            if any(unpaid(self.mass.get(k,0.),v) for k,v in dm.items()):raise ValueError('material overdraw')
+            if any(unpaid(self.energy.get(k,0.),v) for k,v in de.items()):raise ValueError('energy overdraw')
             if kind=='transform':
                 # One toll may have multiple destination legs, but only 3 canonical sinks.
                 splits=(sum(q for s,t,q in energy if t=='world_toll'),
