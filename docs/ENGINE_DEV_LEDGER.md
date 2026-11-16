@@ -210,3 +210,11 @@
 - Execute/test: new test committed; CI result pending at ledger write. No local clean-checkout test or new numerical Book mass/energy audit in this run. Prior GitHub authority regression suite passed. Native WorldBox and ecological long horizons NOT RUN.
 - VERIFIED: prior CI and archive hash, source commits. PROVISIONAL: new guard until CI. BLOCKED: native identity/unit/version and exactly-once ACK; M05 separate writer and long-horizon stability.
 - Next: inspect CI, then reconcile tracked active Core151 source with original archive hashes without overwriting intentional M01 overlays. No merges or main changes.
+
+## 2026-11-15 — P0 strong-reference Founder identity guard
+- Ground: previous same-ID Founder substitution guard CI PASS, GitHub Actions 43784232338, source handoff a7e43e0cf2a9971309fb05f387e6b56a1f98612e. Existing experimental branch and PR #2 retained; main not intentionally modified.
+- Implementation: replaced cached numeric `id(actor)` values with strong original Founder object references, comparing `actor is original`. This prevents numeric object-ID reuse after garbage collection from undermining identity verification. Added seed-404 real Core151 regression for original object retention and missing registry member rejection.
+- Source commits: fc7af46f25a3fb80aaf5d77ed5168126a0d7238a, 871c11171939e291226bd5633f2d39de647e3711.
+- Test status: prior CI VERIFIED; new regression committed and awaiting GitHub CI outcome at ledger write. No new independent Book numerical audit, native WorldBox gameplay, or ecological long-horizon test was performed.
+- Status: VERIFIED commits and prior CI; PROVISIONAL new guard until CI; BLOCKED native WorldBox identity/unit/version/ACK, external writes and ecological stability.
+- Next: confirm new CI, then compare tracked Core151 modules with verified Cycle152 archive provenance; do not merge or overwrite historical source.
