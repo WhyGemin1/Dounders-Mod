@@ -190,6 +190,29 @@ class G1ExactReplayTests(unittest.TestCase):
         self.assertEqual(before,(dict(book.energy),book.seq))
         book.audit()
 
+    def test_interrupted_construct_collapse_rolls_back_all_book_legs(self):
+        from unittest.mock import patch
+        from founders_civ.experimental.constructs import Construct, ConstructRegistry
+        book=Book()
+        book.seed_mass('construct:X',1.0)
+        book.seed_energy('binding:X',0.5)
+        book.seed_energy('reserve:X',0.2)
+        book.freeze()
+        registry=ConstructRegistry(book)
+        registry.items['X']=Construct('X','construct','sea',1.0,0.1)
+        before=(dict(book.mass),dict(book.energy),book.seq,
+                registry.items['X'].status,registry.items['X'].integrity,
+                len(registry.events))
+        # Transform succeeds first; the reserve drain then throws.
+        with patch.object(book,'move',side_effect=RuntimeError('injected drain failure')):
+            with self.assertRaisesRegex(RuntimeError,'injected drain failure'):
+                registry.collapse('X')
+        after=(dict(book.mass),dict(book.energy),book.seq,
+               registry.items['X'].status,registry.items['X'].integrity,
+               len(registry.events))
+        self.assertEqual(before,after)
+        book.audit()
+
     def test_failed_transfer_does_not_claim_operation_identity(self):
         with self.assertRaisesRegex(ValueError, "material overdraw"):
             self.book.move(material=[("plant:tree", "plant:founder", 3.0)],
