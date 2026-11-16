@@ -25,13 +25,12 @@ class C002ProvenanceTests(unittest.TestCase):
         self.assertEqual(r['status'],'drift_requires_review')
         self.assertIn('founders_civ/experimental/world_integration.py',r['unapproved_files'])
 
-    def test_c018_candidate_exact_attestation_passes(self):
+    def test_c018_candidate_rejects_later_scheduler_drift(self):
         r=reviewed_check(ROOT,BASE,C018)
-        self.assertEqual(r['status'],'approved_drift')
-        self.assertEqual(set(r['approved_files']),{
-            'founders_civ/core/ledger.py','founders_civ/experimental/world_trees.py',
-            'founders_civ/experimental/world_integration.py'})
-        self.assertEqual(r['unapproved_files'],[])
+        self.assertEqual(r['status'],'drift_requires_review')
+        self.assertIn('founders_civ/experimental/world_integration.py',r['unapproved_files'])
+        self.assertIn('founders_civ/core/ledger.py',r['approved_files'])
+        self.assertIn('founders_civ/experimental/world_trees.py',r['approved_files'])
 
     def test_c015_attestation_rejects_updated_scheduler(self):
         r=reviewed_check(ROOT,BASE,C015)
