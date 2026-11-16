@@ -221,6 +221,24 @@ class AutonomousProvisioningTests(unittest.TestCase):
         self.assertEqual(before,after)
         self.book.audit()
 
+    def test_g1_failed_tree_maintenance_rolls_back_founder_fuel(self):
+        from unittest.mock import patch
+        rs=self.sim.seeds
+        actor=max(self.sim.founders.people,
+                  key=lambda a:(self.book.energy[f'founder:{a}'],a))
+        self.assertGreater(self.book.energy[f'founder:{actor}'],.1)
+        before=(dict(self.book.mass),dict(self.book.energy),self.book.seq,
+                copy.deepcopy(rs.owner_reserve_knowledge),
+                len(rs.constructs.events),len(self.sim.events),self.sim.next_event)
+        with patch.object(self.sim,'log',side_effect=RuntimeError('injected upkeep log')):
+            with self.assertRaisesRegex(RuntimeError,'injected upkeep log'):
+                rs.tend(actor,self.tid,.1)
+        after=(dict(self.book.mass),dict(self.book.energy),self.book.seq,
+               copy.deepcopy(rs.owner_reserve_knowledge),
+               len(rs.constructs.events),len(self.sim.events),self.sim.next_event)
+        self.assertEqual(before,after)
+        self.book.audit()
+
     def test_two_actual_trees_compete_for_one_river_charge(self):
         rs=self.sim.seeds
         founder=max(self.sim.founders.people,key=lambda a:(self.book.energy[f'founder:{a}'],a))
