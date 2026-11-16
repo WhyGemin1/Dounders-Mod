@@ -148,6 +148,36 @@ class AutonomousProvisioningTests(unittest.TestCase):
         self.assertEqual(policy.lots,{})
         self.book.audit()
 
+    def test_g1_failed_world_plant_rolls_back_book_and_registry(self):
+        # Fail after construct build and Tree registration but before the
+        # success event: no planted Tree or spent Book resources may survive.
+        from unittest.mock import patch
+        rs=self.sim.seeds
+        founder=max(self.sim.founders.people,
+                    key=lambda a:(self.book.energy[f'founder:{a}'],a))
+        bp=rs.draft(founder,'world','G1 Atomicity Tree',self.realm,x=69,y=44)
+        rs.research(founder,bp.id)
+        self.sim.step()
+        if self.sim.tick not in bp.research_ticks:rs.research(founder,bp.id)
+        reviewer=next(a for a,v in self.sim.founders.people.items()
+                      if a!=founder and v.location==self.sim.founders.people[founder].location)
+        rs.validate(reviewer,bp.id)
+        before=(dict(self.book.mass),dict(self.book.energy),self.book.seq,
+                dict(self.book.operations),set(self.book.asset_ids),
+                set(rs.plants),set(rs.constructs.items),
+                set(self.sim.world_trees.worlds),bp.stage,bp.planted_id,
+                len(self.sim.events),len(rs.constructs.events))
+        with patch.object(rs,'_event',side_effect=RuntimeError('injected plant finalization')):
+            with self.assertRaisesRegex(RuntimeError,'injected plant finalization'):
+                rs.plant(founder,bp.id)
+        after=(dict(self.book.mass),dict(self.book.energy),self.book.seq,
+               dict(self.book.operations),set(self.book.asset_ids),
+               set(rs.plants),set(rs.constructs.items),
+               set(self.sim.world_trees.worlds),bp.stage,bp.planted_id,
+               len(self.sim.events),len(rs.constructs.events))
+        self.assertEqual(before,after)
+        self.book.audit()
+
     def test_two_actual_trees_compete_for_one_river_charge(self):
         rs=self.sim.seeds
         founder=max(self.sim.founders.people,key=lambda a:(self.book.energy[f'founder:{a}'],a))
