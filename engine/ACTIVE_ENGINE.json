@@ -11,7 +11,7 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 Core151 source files previously imported; provenance comparison function and synthetic regression committed; real archive-to-checkout comparison NOT RUN",
+  "source_status": "27 tracked Core151 source modules; verifier supports optional pinned SHA-256 for reviewed overlays; actual 27-module archive comparison NOT RUN",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "PASS GitHub Actions run 43772637029 on exact repaired test source commit 24692b7abf5fba4195d1d74f6fa7b90046a09cb6; previous failure 43767189062 fixed",
@@ -43,7 +43,8 @@
     "p0_founder_strong_reference": "PASS GitHub Actions run 43784451806 on 871c11171939e291226bd5633f2d39de647e3711",
     "p0_nonfinite_book_audit": "PASS GitHub Actions run 43789231933 on test source commit 60c3a20a1dc028fd845afd2f7633a17dc286a7d5",
     "p0_source_provenance": "PASS GitHub Actions 43795939367 (synthetic provenance tests)",
-    "p0_provenance_symlink_ancestor": "New test committed; GitHub CI pending"
+    "p0_provenance_symlink_ancestor": "PASS GitHub Actions run 43801654177 on d44afc74797776331ab37bccacbfdb09ac128d37",
+    "p0_pinned_overlay": "Regression committed at 98519d5cb3633119c0a53aab8c1445973c000540; CI pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -52,11 +53,11 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Confirm symlink CI; compare actual 27 source modules to authorized ZIP and classify any M01 overlays",
-  "last_cycle": "2026-11-15 P0 symlink ancestor provenance hardening",
+  "next_cycle": "Confirm pinned-overlay CI, run actual archive-vs-checkout 27-file comparison, review exact overlay hashes",
+  "last_cycle": "2026-11-15 P0 pinned-overlay provenance drift enforcement",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "60c3a20a1dc028fd845afd2f7633a17dc286a7d5",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43795939367",
-  "last_unverified_code_commit": "d44afc74797776331ab37bccacbfdb09ac128d37"
+  "last_verified_code_commit": "d44afc74797776331ab37bccacbfdb09ac128d37",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43801654177",
+  "last_unverified_code_commit": "98519d5cb3633119c0a53aab8c1445973c000540"
 }
