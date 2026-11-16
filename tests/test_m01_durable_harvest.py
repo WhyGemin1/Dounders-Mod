@@ -225,7 +225,7 @@ class DurableHarvestTests(unittest.TestCase):
             forged_bytes = path.read_bytes()
             with self.assertRaisesRegex(ValueError, 'canonical Book transaction history'):
                 load_checkpoint(path, self.tree_id)
-            with self.assertRaisesRegex(ValueError, 'latest Book transaction'):
+            with self.assertRaisesRegex(ValueError, 'receipt does not match canonical Book transaction history'):
                 save_checkpoint(self.world, self.tree_id, path)
             self.assertEqual(path.read_bytes(), forged_bytes)
             self.assertEqual(self.session.book.seq, original_seq)
