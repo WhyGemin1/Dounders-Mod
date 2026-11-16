@@ -247,3 +247,11 @@
 - Execution: previous CI VERIFIED. New regression CI pending at ledger write. Local GitHub checkout could not be retrieved in container (network DNS unavailable); actual archive-to-checkout byte comparison NOT RUN. No new numerical Book audit, WorldBox gameplay, or ecological long-horizon run.
 - Status: VERIFIED prior CI, source/test commits, archive hash; PROVISIONAL new regression until CI; BLOCKED real archive-to-checkout comparison and external native WorldBox writes/ACK.
 - Next: confirm CI and compare all 27 imported source modules to verified ZIP with reviewed overlay allowlist. No merge, no second engine.
+
+## 2026-11-15 — P0 pinned-overlay provenance guard
+- Ground: prior symlink ancestor regression workflow 43801654177 completed SUCCESS at d44afc74797776331ab37bccacbfdb09ac128d37; authorized Drive ZIP metadata confirms file size 956121 bytes, but archive bytes and 27-file comparison not independently inspected this cycle.
+- Implementation: tools/import_core151.py verify_checkout now optionally accepts overlay_hashes (SHA-256 pins) and rejects drift of an allowlisted overlay against its reviewed fingerprint. Without pins, legacy allowlist behavior remains; this is not approval of any overlay. Added synthetic test for reviewed overlay, subsequent modification, unknown pin, and malformed SHA.
+- Code commits: d30aa6d75e16a662e650165d80f5b02fb4375130, 98519d5cb3633119c0a53aab8c1445973c000540.
+- Verification: previous CI VERIFIED; new test committed, current GitHub CI result pending. No local test run, no fresh numeric Book audit, no actual 27-file archive comparison, no WorldBox gameplay or ecological long-horizon tests.
+- Status: VERIFIED source commits and prior CI; PROVISIONAL new pinned-overlay guard until CI; BLOCKED native WorldBox IDs/units/version/exactly-once ACK and external writes.
+- Next: confirm CI; compare actual authorized archive against tracked 27 files, explicitly review hashes for intended overlays. Keep main and other engines untouched.
