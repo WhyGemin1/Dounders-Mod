@@ -1,5 +1,6 @@
 """Importer tests: set CORE151_ARCHIVE to authorized Cycle152 ZIP path."""
 import os
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -61,6 +62,24 @@ class ImportTests(unittest.TestCase):
             (root / "founders_civ/core").symlink_to(external, target_is_directory=True)
             with self.assertRaisesRegex(ValueError, "provenance mismatch"):
                 verify_checkout("synthetic.zip", root)
+
+    def test_pinned_overlay_rejects_second_unreviewed_change(self):
+        entries = {"founders_civ/core/ledger.py": b"original"}
+        name = "founders_civ/core/ledger.py"
+        with tempfile.TemporaryDirectory() as d, patch("import_core151.plan", return_value=entries):
+            path = Path(d) / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b"reviewed overlay")
+            expected = hashlib.sha256(b"reviewed overlay").hexdigest()
+            approved = verify_checkout("synthetic.zip", d, [name], {name: expected})
+            self.assertEqual(approved["overlays"][name]["checkout_sha256"], expected)
+            path.write_bytes(b"unreviewed overlay")
+            with self.assertRaisesRegex(ValueError, "provenance mismatch"):
+                verify_checkout("synthetic.zip", d, [name], {name: expected})
+            with self.assertRaisesRegex(ValueError, "fingerprint without allowlist"):
+                verify_checkout("synthetic.zip", d, (), {name: expected})
+            with self.assertRaisesRegex(ValueError, "invalid overlay SHA-256"):
+                verify_checkout("synthetic.zip", d, [name], {name: "not-a-hash"})
 
     def test_wrong_archive_rejected(self):
         with tempfile.TemporaryDirectory() as d:
