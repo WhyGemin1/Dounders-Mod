@@ -38,14 +38,18 @@ jobs:
           sha256sum Founders_CIV_CoreCompletion151/source/world023024/tests/test_integration_025.py
       - name: Install test runner
         run: python -m pip install --disable-pip-version-check pytest==8.4.1
-      - name: Generate deterministic observatory fixture only in CI workspace
-        run: python -c "import json; from pathlib import Path; from founders_civ.runner import run; Path('web/sample_run.json').write_text(json.dumps(run(42,30,'1111')))"
       - name: Run 11 focused G1 replay and conservation tests
+        if: always()
         run: python -m pytest -q tests/test_u026_g1_exact_replay.py
       - name: Run G2 voluntary parent stewardship regression
+        if: always()
         run: python -m pytest -q tests/test_u026_g2_parent_stewardship.py
       - name: Run full Core151 WORLD-024 regression
+        if: always()
         run: python -m pytest -q tests
+      - name: Generate deterministic observatory fixture only in CI workspace
+        if: always()
+        run: python -c "import json; from pathlib import Path; from founders_civ.runner import run; Path('web/sample_run.json').write_text(json.dumps(run(42,30,'1111')))"
       - name: Enforce provenance gate after regressions
         if: always()
         env:
