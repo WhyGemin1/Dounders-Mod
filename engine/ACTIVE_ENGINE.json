@@ -47,7 +47,7 @@
     "p0_pinned_overlay": "PASS GitHub Actions run 43807851784 on 98519d5cb3633119c0a53aab8c1445973c000540",
     "p0_provenance_cli": "PASS GitHub Actions run 43813656249 on code/test commit 68bd4f6ddd0e53cbd09bdf1abbff6d57d6aa4939",
     "p0_external_clock_mutation": "PASS GitHub Actions run 43821123440 on 517c95bd1541721998c7e5ebee75cc70829aecbe",
-    "p0_out_of_session_book_sequence": "Committed at 267eb6dfeb67277cb4b969f5aca4a1617e31364f; GitHub CI pending"
+    "p0_out_of_session_book_sequence": "PASS GitHub Actions run 43830307794 on code/test commit 267eb6dfeb67277cb4b969f5aca4a1617e31364f"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -60,7 +60,7 @@
   "last_cycle": "2026-11-16 P0 out-of-session canonical Book sequence guard",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "517c95bd1541721998c7e5ebee75cc70829aecbe",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43821123440",
-  "last_unverified_code_commit": "267eb6dfeb67277cb4b969f5aca4a1617e31364f"
+  "last_verified_code_commit": "267eb6dfeb67277cb4b969f5aca4a1617e31364f",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43830307794",
+  "last_unverified_code_commit": null
 }
