@@ -11,7 +11,7 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Tracked Core151 source; new identity-substitution and registry Book-swap guards committed; CI pending",
+  "source_status": "Tracked Core151 source; same-ID Founder object substitution guard committed, CI pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "PASS GitHub Actions run 43772637029 on exact repaired test source commit 24692b7abf5fba4195d1d74f6fa7b90046a09cb6; previous failure 43767189062 fixed",
@@ -21,7 +21,7 @@
     "clean_checkout": "PASS clean GitHub Actions checkout at 24692b7, run 43772637029",
     "book_audit_this_cycle": "Previous authority/gateway/checkpoint and other suites passed before failing native boundary step in run 43767189062; no fresh Book numerical audit extracted",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
-    "real_archive_this_cycle": "NOT RUN",
+    "real_archive_this_cycle": "Authorized Drive ZIP downloaded and SHA256 independently verified as 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
     "knowledge_architecture": "6/6 PASS local extracted exact SHA archive source",
     "pilot": "seed400, 1 day PASS, 100 Founders verified separately, 16 tree residents, Book mass error -2.73e-12, energy error -1.12e-8",
@@ -38,7 +38,8 @@
     "native_core151_isolation": "PASS 3/3 GitHub Actions run 43761534283 on code commit 0671863f3309570ceee7eac87faeaea0304c8ad7; real Core151 native observation/deny tests",
     "native_claim_identifier_hardening": "PASS on GitHub Actions run 43772637029 after replacing literal escaped sequences with actual Unicode/control-character test fixtures",
     "native_quantity_precision": "PASS GitHub Actions 43778025831 on 88375ba322e2e87deb3aa08865e6afc038e99100",
-    "p0_founder_authority": "Two new regression tests committed; CI pending, no passing claim"
+    "p0_founder_authority": "PASS GitHub Actions run 43782881469 on 8164da99b457305336b19e3091db3ec28d99aa1b",
+    "p0_founder_object_substitution": "One new regression committed; CI pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -47,11 +48,11 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Confirm P0 CI and repair if necessary; check fresh checkout Book/clock/identity and archive provenance",
-  "last_cycle": "2026-11-15 P0 Founder identity and registry Book authority enforcement",
+  "next_cycle": "Confirm new CI, then compare tracked Core151 source to verified archive and document intentional M01 overlays; do not overwrite them",
+  "last_cycle": "2026-11-15 P0 same-ID Founder object replacement guard",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "88375ba322e2e87deb3aa08865e6afc038e99100",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43778025831",
-  "last_unverified_code_commit": "8164da99b457305336b19e3091db3ec28d99aa1b"
+  "last_verified_code_commit": "8164da99b457305336b19e3091db3ec28d99aa1b",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43782881469",
+  "last_unverified_code_commit": "e5bf9fba5f36a1c7d841733b02d9881ad8567783"
 }
