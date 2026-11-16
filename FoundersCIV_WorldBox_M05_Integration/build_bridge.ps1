@@ -1,4 +1,4 @@
-# M05.2: fail-closed, reproducible game-local assembly build.
+# M05.3: fail-closed, reproducible game-local assembly build.
 # Uses local DLLs copied from YOUR WorldBox install, never redistributes them.
 param(
     [Parameter(Mandatory=$true)][string]$GameDir,
@@ -29,8 +29,14 @@ if (-not (Test-Path -LiteralPath $project) -or -not (Test-Path -LiteralPath $sou
 }
 $xmlText = [System.IO.File]::ReadAllText($project)
 [xml]$xml = $xmlText
-if (-not $xmlText.Contains('<Reference Include="UnityEngine">')) {
-    throw 'Incorrect M05 project: missing UnityEngine reference. Apply M05.2 repair patch first. No installation.'
+foreach ($name in @('UnityEngine','UnityEngine.CoreModule','UnityEngine.IMGUIModule','UnityEngine.JSONSerializeModule','BepInEx','0Harmony')) {
+    $expectedRef = '<Reference Include="' + $name + '">'
+    if (-not $xmlText.Contains($expectedRef)) {
+        throw "Incorrect M05.3 project: missing reference $name. Apply M05.3 repair patch first. No installation."
+    }
+}
+if (-not ([System.IO.File]::ReadAllText($source).Contains('new HarmonyMethod(finalizer), null);'))) {
+    throw 'M05.3 source not installed: obsolete Harmony overload still present. Stop before build.'
 }
 $deps = [ordered]@{
     'BepInEx.dll' = (Join-Path $core 'BepInEx.dll')
@@ -38,6 +44,7 @@ $deps = [ordered]@{
     'UnityEngine.dll' = (Join-Path $managed 'UnityEngine.dll')
     'UnityEngine.CoreModule.dll' = (Join-Path $managed 'UnityEngine.CoreModule.dll')
     'UnityEngine.IMGUIModule.dll' = (Join-Path $managed 'UnityEngine.IMGUIModule.dll')
+    'UnityEngine.JSONSerializeModule.dll' = (Join-Path $managed 'UnityEngine.JSONSerializeModule.dll')
 }
 
 $missing = @()
@@ -71,7 +78,7 @@ $manifest | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $PSScr
 foreach ($generated in @($out, $obj, $bin)) {
     if (Test-Path -LiteralPath $generated) { Remove-Item -LiteralPath $generated -Recurse -Force }
 }
-Write-Host 'M05.2: staged local Unity/BepInEx/Harmony references:' -ForegroundColor Cyan
+Write-Host 'M05.3: staged local Unity/BepInEx/Harmony references:' -ForegroundColor Cyan
 foreach ($name in $deps.Keys) { Write-Host "  $name" }
 Write-Host "Building project: $project" -ForegroundColor Cyan
 Write-Host 'Native game modifications: NONE'
@@ -79,13 +86,13 @@ Write-Host 'Native game modifications: NONE'
 # No -p:GameDir argument: paths with spaces are no longer an MSBuild input.
 & dotnet build $project --configuration Release --output $out --no-incremental --verbosity minimal
 if ($LASTEXITCODE -ne 0) {
-    throw 'M05.2 build FAILED. No installation. Read compiler errors above; dependency hashes in build\dependency_manifest.json.'
+    throw 'M05.3 build FAILED. No installation. Read compiler errors above; dependency hashes in build\dependency_manifest.json.'
 }
 $dll = Join-Path $out 'FoundersCIV_M05_Observer.dll'
 if (-not (Test-Path -LiteralPath $dll -PathType Leaf)) {
     throw 'Compiler returned success but observer DLL is absent. No installation.'
 }
-Write-Host "M05.2 build PASSED: $dll" -ForegroundColor Green
+Write-Host "M05.3 build PASSED: $dll" -ForegroundColor Green
 if (-not $Install) {
     Write-Host 'Build-only mode. Run again with -Install only after confirming the build passed.'
     return
@@ -111,5 +118,5 @@ Copy-Item -LiteralPath $dll -Destination $dest -Force
 $srcHash = (Get-FileHash -LiteralPath $dll -Algorithm SHA256).Hash
 $dstHash = (Get-FileHash -LiteralPath $dest -Algorithm SHA256).Hash
 if ($srcHash -ne $dstHash) { throw 'Installed DLL hash mismatch. Remove it; do not launch the game.' }
-Write-Host "INSTALLED M05.2 observer: $dest" -ForegroundColor Green
+Write-Host "INSTALLED M05.3 observer: $dest" -ForegroundColor Green
 Write-Host 'Keep game closed until your save-specific BepInEx\FoundersCIV_M05\world_key.txt is set.'
