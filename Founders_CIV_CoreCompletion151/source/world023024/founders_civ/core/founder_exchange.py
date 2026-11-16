@@ -43,6 +43,11 @@ def _origin(sim, kind, lot):
     """
     matches = []
     for tid, tree in sorted(sim.world_trees.worlds.items()):
+        # A detached Tree Book cannot authenticate ownership in the shared
+        # economy, even if the central Book contains an older provenance key.
+        # Legacy lightweight test doubles without a Book remain supported.
+        if getattr(tree, 'book', sim.book) is not sim.book:
+            continue
         provisioned = (tree.provisioning is not None
                        and lot in tree.provisioning.lots
                        and tree.provisioning.lots[lot].kind == kind)
