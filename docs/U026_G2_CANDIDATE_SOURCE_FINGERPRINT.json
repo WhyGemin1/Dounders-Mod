@@ -1,8 +1,8 @@
 {
-  "source": "U026 G2 proposed exact-source candidate; not an independent promotion",
-  "files": 514,
+  "source": "U026 G2 proposed exact-source candidate, including reviewed G1 energy, nutrition, provenance and matched-run CI changes; not a G2 promotion",
+  "files": 515,
   "sha256": {
-    ".github/workflows/u026_core151.yml": "ed0ca84c57ac00afa10ac5851dc99c4255f9bc0b1421f941c7ef96c645012dbe",
+    ".github/workflows/u026_core151.yml": "4ba98792c8347ebddd5416bc1d543052bec72182a39d9fb4628d87f8b18a6005",
     "Founders_CIV_CoreCompletion151/source/capacity_dose_021131.py": "fc9800b1846604edfd1bee305bc866030748f109929825b4422671127808e036",
     "Founders_CIV_CoreCompletion151/source/check_cycle136_crossprocess.py": "98ba465a0114ee85335150cc9d955b889eccade366cd5318b51ae82a6ddfa694",
     "Founders_CIV_CoreCompletion151/source/cycle024_daily_eligibility.py": "a8bebdf2730ac0e030269a4a9d55c1172985179930a96b8c13e802a4da1c2bf2",
@@ -402,11 +402,11 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "3d81dcbbccbceb28b571759362dca20ffeed3deae779a80f4da4358f33ae0d1c",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "0a06b3e88dc4fd58c5314da62111c0609f302fab7e2360fbcdff22021a503539",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "d315ece0d955fb8fbcdfcfd3f039f7946c6b9c542f7a7465cbcd2f1a98c76dd5",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "634e3665ec7a76a52fdf81405cc160b6168adc52ea1201a3804bb21fb30eeb6e",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "f49c8b045f896c0f802f5c0bb2d65ef4bebdce625113b759218f47158b4e9a08",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "8cb7b28e6f30eb31efa48356303f10bff69a901716ee99ec2b780a8551f9a754",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "f820689214e61b4d3f1b59002d56a995da26f5a7a98fd959da6c167b33bd5f4f",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "d6ad4cd2a1b1d406376ee58a9b893da2a170cf6069d825ff07cace13e3587a7b",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "8576d6e19489e8aa8a90203ba37df422b069698716f28a20d2bd7c09c04c7bb8",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "4468dae8555504aa413411929cb89eddd6f4f1099426b7365495e54f55f088c1",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "92c2994f1cf8136f700e7fc4c0fe473ca0ca07b0b6eb56cfe7f19787d1432a8c",
@@ -495,7 +495,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_drift_provenance_069.py": "e2ffa6e15b8631d39320ef31c7f3b18ca680415158df627a0829c1ad006c977b",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_founder_harvesting_c004.py": "dd31b5e2c195cc182002c0b85b041e33925d40739ab31179a415e6f7e75e66ca",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_four_systems.py": "6ea1e70f3df0716589fc97bc9717e877dba368e71dc48b0ba8fe45cdd19c65b1",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_integration_025.py": "bb1627985a585005d372170854b4338855b2ba1ad81e56b54528313b42c4da52",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_integration_025.py": "1734b1b1154ff93b4036f245455970ae41a9ce251ce9322893986d2398a99a5e",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_knowledge_architecture.py": "c4ad0208e202b906c2f0cc94eae80d00ca7d54e52ac4aa152c3cd4a11580a999",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_observatory.py": "5f0d183fdaef124171109d5bb8ff32049da04114c3a49b7d102caee905ab2442",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_release.py": "9e55fc979866a2e667038e762c2487080695fbbd9ebd1868cb371d7a5afd3b69",
@@ -515,7 +515,8 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/styles.css": "599cbc94b42122a2b5d5676d99c6cca4c43d185f3dc1aedaa4e4ab497ca51157",
     "Founders_CIV_CoreCompletion151/source/world023024/WORLD_023_MANIFEST.json": "8a1dba36d7f56792d3d9eda47225774862506408404b7d9d48698f351f428332",
     "Founders_CIV_CoreCompletion151/source/world023024/WORLD_024_MANIFEST.json": "6c41d7b2d4f3316000849dc4e7df6b5343b629f772a2020ba4aefa597c28a7c3",
-    "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29"
+    "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
+    "tools/u026_g1_matched_acceptance.py": "2f51a17d478b1a7927417eabd3bd52d44cbf0287ba9c37bbaa64a8a432911af3"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
@@ -575,7 +576,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "567107a7502be31adda2bbbde13390138bce5d68",
+  "source_commit": "ceaa5d36706d967a2c0c557ec23db81bee9cc9de",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
@@ -603,7 +604,8 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_integration_025.py",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_g1_exact_replay.py",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_g2_parent_stewardship.py",
-    "tools/u026_g2_exact_source_audit.py"
+    "tools/u026_g2_exact_source_audit.py",
+    "tools/u026_g1_matched_acceptance.py"
   ],
   "gate_decision": "PENDING_CI_AND_INDEPENDENT_REVIEW"
 }
