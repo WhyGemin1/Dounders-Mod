@@ -195,8 +195,19 @@ class Book:
         if str(source).startswith('ce:'):raise ValueError('CE cannot be used as chemical work')
         if work<=0 or not math.isfinite(work):raise ValueError('work must be positive')
         toll=TOLL*work
-        legs=list(energy_outputs)+[(source,'world_toll',toll*.2),(source,'underworld:0',toll*.1),
-                                    (source,'house',toll*.7)]
+        # Construct an exact source debit in the same accumulation order as
+        # apply(). Separately rounded 60/30/2/1/7 percent legs can exceed a
+        # fully funded work balance by one ULP (e.g. 2.64 -> 2.6400000000000006).
+        # Assign that rounding remainder to the final House toll leg, rather
+        # than allowing even a tiny unfunded overdraft or clamping a balance.
+        legs=list(energy_outputs)+[(source,'world_toll',toll*.2),
+                                   (source,'underworld:0',toll*.1)]
+        source_delta=0.
+        for leg_source, _, amount in legs:
+            if leg_source==source:
+                source_delta-=amount
+        house_toll_share=work+source_delta
+        legs.append((source,'house',house_toll_share))
         # Enforce caller's declared work output, disallow hidden work energy.
         if abs(sum(q for s,t,q in energy_outputs if s==source)-(work-toll))>EPS:
             raise ValueError('work output not funded')
@@ -214,7 +225,7 @@ class Book:
         energy_tolerance=max(EPS,1e-10*(self.start_energy+self.external))
         if abs(m)>mass_tolerance or abs(e)>energy_tolerance:
             raise AssertionError(f'ledger error mass={m}, energy={e}')
-        if min(self.mass.values()) < -EPS or min(self.energy.values()) < -EPS:
+        if min(self.mass.values(), default=0.) < -EPS or min(self.energy.values(), default=0.) < -EPS:
             raise AssertionError('negative stock')
         return {'mass_error':m,'energy_error':e,'max_abs_mass_error':self.max_abs_mass_error,
                 'max_abs_energy_error':self.max_abs_energy_error,'mass_total':sum(self.mass.values()),
