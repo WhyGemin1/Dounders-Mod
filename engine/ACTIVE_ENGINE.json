@@ -14,12 +14,12 @@
   "source_status": "27 tracked Core151 modules: 26 historical exact matches, 1 ledger.py M01 overlay; canonical Book transaction_history now records committed transactions and checkpoint validates every historical receipt",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "Previous GitHub Actions run 43935352709 (# latest inspected) headless SUCCESS; new checkpoint validation commit 4567b5c and regression e47e147 NOT YET VERIFIED",
+    "github_ci": "GitHub Actions run 43944580026 headless SUCCESS on preceding malformed-kind guard; new nonfinite historical-leg code/test NOT YET VERIFIED",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
-    "clean_checkout": "Previous run 43935352709 PASS; new commits pending CI",
-    "book_audit_this_cycle": "No new numerical residuals; historical mass max 9.004e-11 energy max 1.031e-8",
+    "clean_checkout": "Previous run 43944580026 PASS; new source/test pending CI",
+    "book_audit_this_cycle": "No new numerical residuals; prior measured max mass 9.004e-11, energy 1.031e-8",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -56,7 +56,8 @@
     "p0_latest_receipt_authenticity": "PASS GitHub Actions run 43874364593 on test commit 3e4bb980f1cfd7283db47e70bb2b5926e910e7a7; full clean-checkout job steps SUCCESS",
     "p0_historical_receipt_linkage": "SOURCE/TEST COMMITTED at ac5df462437adf570fbd6a41248f9507b379caf7; GitHub CI not yet confirmed; legacy checkpoints without history fail closed and require reviewed migration",
     "p0_legacy_checkpoint_fail_closed": "PASS GitHub Actions run 43913323628 (#150), all 15 headless job steps success",
-    "p0_replay_leg_binding": "SOURCE/TEST COMMITTED 21de73d, 76f8bb5; pinned source 8899c3b; CI not yet confirmed"
+    "p0_replay_leg_binding": "SOURCE/TEST COMMITTED 21de73d, 76f8bb5; pinned source 8899c3b; CI not yet confirmed",
+    "p0_nonfinite_historical_leg": "SOURCE/TEST COMMITTED at 110f0f4 and d9efc75; CI pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -65,12 +66,12 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Confirm clean-checkout CI for historical transaction validation; fix any failing tests; assess canonical history growth and read-only legacy checkpoint recovery",
-  "last_cycle": "2026-11-16 P0 reject malformed historical Book transactions at checkpoint boundary",
+  "next_cycle": "Verify new historical-leg regression in clean-checkout CI, repair failures, then investigate Book history storage growth",
+  "last_cycle": "2026-11-16 P0 reject nonfinite/malformed historical Book transaction legs at checkpoint boundary",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "e81dbfaad80555ab4338d2b2827951606343bd31",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43935352709",
-  "last_unverified_code_commit": "e47e147487231fa93044e2d7f3046e41a5c41d90",
-  "next_engineering_task": "Confirm clean-checkout CI for historical transaction validation; fix any failing tests; assess canonical history growth and read-only legacy checkpoint recovery"
+  "last_verified_code_commit": "e47e147487231fa93044e2d7f3046e41a5c41d90",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43944580026",
+  "last_unverified_code_commit": "d9efc75bb1771a223f52673a1941aaf06ef34b1c",
+  "next_engineering_task": "Verify new historical-leg regression in clean-checkout CI, repair failures, then investigate Book history storage growth"
 }
