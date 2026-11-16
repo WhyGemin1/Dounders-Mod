@@ -404,7 +404,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "0a06b3e88dc4fd58c5314da62111c0609f302fab7e2360fbcdff22021a503539",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "31e1e5b386b6429d6377693b2524369cf57a8142e58ac2c0f600cdc13cee56e2",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "d21de084cd0525e17f6e40eeb1213238fbb9cd17ae1b8e5b61eea4c573fca624",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "7262cdfa43313be2d44fbc0fae5263b447c54c7152499ef4c3a1b159cb53ae87",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "8cb7b28e6f30eb31efa48356303f10bff69a901716ee99ec2b780a8551f9a754",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "8caf9dfa7255045e23a2829820db45415561f1de2f496d0ea57375284f92a19e",
@@ -484,7 +484,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "870e838c492e45eed7e2d96dd2900247060568e30b27fce7fae18dcc3b943a97",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "e004009859edc3fd48a7c07db8b22c276d10a01be52588a78dddee398999123d",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c019_founder_autonomy.py": "a900f37114133ff102f447efa7c622aa980a2d9adfecc3555f575ff589277332",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c020_resource_agreements.py": "567af5b6eee5ab782693e3bfdc1410778d01eb445c78c29122a91c971a7f54fe",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c020_resource_agreements.py": "ae7d16e64026ccdb417303b2fdd82516cb2d8547db5907d044461d690c49d991",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c021_nutrition_wiring.py": "cf3d279274feda9ff70679a303d2b849e1b215eb99ae3f5cdf74e459fdb6c43e",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c022_tree_proposal_preservation.py": "d92b1075bc6daffbf14b34a96b6504dde33f58e1aa7396c657bf5d125079fedd",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c026_food_priority.py": "2839b25a9eb61f383224d87ee38bcc99c44dc98ae71c6e2d31670a036578b824",
@@ -576,7 +576,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "b95ee5225d2ed5c8653c7033c50a3c4dd1a40e92",
+  "source_commit": "d00467a22c3c1413d7f591228d5a0e9ab9e91bbe",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
@@ -609,5 +609,6 @@
     "tools/u026_g1_matched_acceptance.py",
     "tools/u026_g2_exact_source_audit.py"
   ],
-  "gate_decision": "PENDING_CI_AND_INDEPENDENT_REVIEW"
+  "gate_decision": "PENDING_CI_AND_INDEPENDENT_REVIEW",
+  "candidate_note": "C008 source/test refresh; full exact checkout audit and CI required"
 }
