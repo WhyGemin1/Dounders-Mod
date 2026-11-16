@@ -74,3 +74,24 @@ Nonnegotiable: existing Core151 engine and Book only; Development implementation
 ## Immediate engineering priority
 
 **P0 — reproduce or disprove a partial-commit failure in `SeedRegistry.plant()` and `TreeProvisioningPolicy._allocate()`, then implement the smallest Book-native structural fix, not another observation layer.** Record a failing test before the fix and passing tests afterward. G0 source fingerprints must remain historically auditable.
+
+## Mandatory G1 completion acceptance verification (release blocker)
+
+**Instruction for the next execution phase:** Do not close G1 based on code changes, plans, instrumentation, an unchanged G0 green run, or a passing partial test subset. G1 is complete only after each acceptance row below is *executed* on the exact candidate Development SHA and passes. Record the test name/command, observations, log or CI link and status. A missing test or unavailable runtime is **UNVERIFIED**, not PASS.
+
+| ID | Acceptance check | Required demonstration |
+| --- | --- | --- |
+| G1-A01 | Single physical authority | For Founder, Tree, seed, digestion, and construct paths, all spendable mass, ordinary chemical energy, heat and CE resolve to one `IntegratedWorld.book`; any read-only view is derived from that Book, with no second writeable ledger. |
+| G1-A02 | Whole-operation atomicity | Inject a failure after each substep of World Tree planting, autonomous provisioning/CE reservation, seed funding, harvest, digestion and upkeep/collapse. On rejection, no partial material/energy/CE allocation, ownership transfer, live creation/lot, or success event survives; expected rejection counters may change but conservation and spendable state must not. |
+| G1-A03 | Exact conservation and finite sources | Assert expected deltas for mass/energy/heat/CE, `Book.audit()` within its documented tolerances, and no unintended Wellspring inflow or CE minting; test multiple Trees drawing from one finite pool. |
+| G1-A04 | Identity and replay | Retrying an identical operation is idempotent; a changed payload with the same ID fails; permanent lot/asset IDs cannot be reused after transfer, digestion or collapse; checkpoint/replay preserves accounting without double spend. |
+| G1-A05 | Resource lifecycle | Demonstrate real plant/chemical → named Tree food/fruit → observed Founder harvest → ingestion → later digestion, plus fruit + CE → named seed → World Tree germination. No instant food-to-action energy and no use of CE as biological fuel. |
+| G1-A06 | Agency and negative paths | Independent Founders can refuse Tree stewardship or harvesting. Overdraw, stale observations, wrong actor/Tree, mismatched paired energy, depleted lot, broken parent and interrupted operations fail closed without emergency resources. |
+| G1-A07 | Cross-system compatibility | One shared time progression and Book across WORLD-024/social/tree interfaces; no native WorldBox double write. Existing disabled-feature control and offline WorldBox bridge regressions remain green. Live WorldBox behavior is outside G1 and must be labeled unverified. |
+| G1-A08 | Complete regressions and matched runs | Execute *all* existing Core151 tests **plus** new focused G1 tests, and at least 10 fixed matched seeds at 30 and 180 days in control and enabled arms. Keep exact run manifests and distinct pass/fail counts. |
+| G1-A09 | Fail-closed provenance | The historical G0 baseline is unchanged. A new reviewed exact-source G1 attestation covers every modified tracked path; current-source fingerprint audit rejects a deliberate unauthorized mutation and passes the candidate with no missing/changed/prohibited files. |
+| G1-A10 | Final CI and promotion record | The entire enforced GitHub Actions workflow passes on the *same immutable candidate commit*. Only then commit `docs/U026_G1_GATE_STATUS.json` with PROMOTE, the SHA, CI run IDs and acceptance matrix. Re-run if this record changes any enforced tracked path. |
+
+**Decision rule:** Every row G1-A01 through G1-A10 must be PASS and linked to actual executed evidence. Any FAIL or UNVERIFIED result sets `decision: REVISE`; name the narrowest reproducible defect and next code correction. Keep G0 promoted independently and never merge Development wholesale into Core merely because G1 is green. A G1 gate promotion is not a G2–G4 ecological-stability or native WorldBox promotion.
+
+**Required reporting:** Output one acceptance table with ID / PASS–FAIL–UNVERIFIED / exact test or run / evidence URL or artifact / reason. Include observed regression totals, reproducible failure-injection results, exact SHA, current Book conservation, source hash audit, and explicit remaining limitations. If the suite cannot execute in a given phase, do not claim completion or schedule an imaginary background test.
