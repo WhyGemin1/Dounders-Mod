@@ -255,3 +255,11 @@
 - Verification: previous CI VERIFIED; new test committed, current GitHub CI result pending. No local test run, no fresh numeric Book audit, no actual 27-file archive comparison, no WorldBox gameplay or ecological long-horizon tests.
 - Status: VERIFIED source commits and prior CI; PROVISIONAL new pinned-overlay guard until CI; BLOCKED native WorldBox IDs/units/version/exactly-once ACK and external writes.
 - Next: confirm CI; compare actual authorized archive against tracked 27 files, explicitly review hashes for intended overlays. Keep main and other engines untouched.
+
+## 2026-11-15 — P0 executable read-only provenance comparison CLI
+- Ground: pinned-overlay regression CI run 43807851784 SUCCESS on commit 98519d5cb3633119c0a53aab8c1445973c000540. Existing tracked 27-module source and one Core151 authority retained; actual ZIP-vs-checkout comparison remains outstanding.
+- Implementation: tools/import_core151.py now accepts --verify to call existing verify_checkout without writing files; --overlay-sha256 PATH=SHA256 explicitly pins reviewed overlays. Default import behavior unchanged; unknown drift fails closed. Added synthetic CLI regression for clean match, unexpected drift and pinned overlay.
+- Code commits: e59ffc524cc99a62c8784b74e64ead6b22fd5d0d, 68bd4f6ddd0e53cbd09bdf1abbff6d57d6aa4939.
+- Test command in GitHub workflow: PYTHONPATH=tools python -m unittest discover -v -s tools -p 'test_import_core151.py'. New test committed; outcome pending at ledger write. No actual 27-module comparison, numerical Book audit, ecological horizon or WorldBox gameplay executed this cycle.
+- Verified: previous CI and commits. Provisional: new CLI regression until CI. Blocked: archive-to-checkout comparison, native ACK/identity/unit/version, M05 writer migration, ecology.
+- Next: confirm CI, then run python tools/import_core151.py <authorized-zip> src --verify against real clean checkout, review drift and pin only approved overlays. No merge or second engine.
