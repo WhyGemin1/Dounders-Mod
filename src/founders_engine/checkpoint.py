@@ -71,7 +71,8 @@ def _validate_world(world, tree_id):
                     raise ValueError('malformed canonical Book transaction leg')
     seen_sequences = set()
     for request_id, record in receipts.items():
-        if not isinstance(request_id, str) or not request_id.strip():
+        if (not isinstance(request_id, str) or not request_id.strip() or
+                request_id != request_id.strip()):
             raise ValueError('invalid Book replay request id')
         if not isinstance(record, tuple) or len(record) != 2:
             raise ValueError('invalid Book replay record')
