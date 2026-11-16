@@ -73,14 +73,19 @@ class TreeProvisioningPolicy:
         tree=self.tree;book=tree.book
         amount=.08 if kind=='food' else .10
         if not self._reserve(biome,amount,kind=='food'):return False
-        if kind=='fruit' and book.energy['ce:river'] < 1.-1e-9:
-            # The one shared river_pool is the only source; reserves are not
-            # allocated per Tree. Precheck all growth inputs before reserving.
-            if book.energy['river_pool']<1.-1e-9:return False
-            book.reserve_creation_charge(1.0,f'ce:reserve:{tree.id}:{tree.age}')
         lot=f'C003-{tree.id}-{kind}-{tree.age}'
-        if kind=='food':tree.make_portable_food(biome,lot)
-        else:tree.grow_creation_fruit(biome,lot)
+        if kind=='food':
+            tree.make_portable_food(biome,lot)
+        else:
+            # CE reservation and physical fruit growth are ONE composite
+            # Book action. If fruit growth rejects after the reservation,
+            # restore the finite river pool, CE and all operation identities.
+            # No lot/event is published until the Book batch commits.
+            with book.atomic_batch():
+                if book.energy['ce:river'] < 1.-1e-9:
+                    if book.energy['river_pool']<1.-1e-9:return False
+                    book.reserve_creation_charge(1.0,f'ce:reserve:{tree.id}:{tree.age}')
+                tree.grow_creation_fruit(biome,lot)
         self.lots[lot]=ProvisionedLot(kind,biome,tree.age)
         self.events.append(('grow',lot,tree.age))
         return True
