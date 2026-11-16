@@ -95,7 +95,11 @@ def tend_parent(sim, founder, target, decision_id):
         raise ValueError('explicit valid decision identity required')
     receipt = f'parent:steward:{realm_id}:{founder}:{decision_id}'
     if receipt in sim.book.operations:
-        return sim.book.operations[receipt][1]
+        # Replay must go through the same authoritative Book identity check.
+        # Returning a cached receipt directly would accept a different amount
+        # under the same decision ID without paying or flagging the conflict.
+        return sim.book.move(energy=[(f'founder:{founder}', f'reserve:{realm_id}', amount)],
+                             operation_id=receipt)
     knowledge = sim.seeds.owner_reserve_knowledge.get(realm_id, {}).get(founder)
     if knowledge is None or sim.tick - knowledge['tick'] > 4:
         raise ValueError('fresh parent reserve observation required')
