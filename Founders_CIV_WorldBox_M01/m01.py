@@ -22,7 +22,7 @@ def main():
     q=subs.add_parser('shadow');q.add_argument('--world-id',required=True);q.add_argument('--core-source');q.add_argument('--core-state-json');q.add_argument('--seed',type=int,default=100001)
     q=subs.add_parser('export-core');q.add_argument('--core-source',required=True);q.add_argument('--seed',type=int,default=100001);q.add_argument('--output',required=True)
     q=subs.add_parser('live-probe');q.add_argument('--base-url',default='http://127.0.0.1:8723')
-    q=subs.add_parser('live-snapshot');q.add_argument('--base-url',default='http://127.0.0.1:8723');q.add_argument('--output',required=True)
+    q=subs.add_parser('live-snapshot');q.add_argument('--base-url',default='http://127.0.0.1:8723');q.add_argument('--output',required=True);q.add_argument('--asset-id',help='Exact native actor asset_id, e.g. rabbit; filter cohort in worlds with over 5000 actors')
     args=p.parse_args()
     try:
         if args.command.startswith('live-'):
@@ -43,11 +43,25 @@ def main():
                       'note':'Read-only bridge probe; no native mutations or Book writes.'})
                 if not present:raise RuntimeError('M01 command absent from live /capabilities; do not attempt identity snapshots')
                 return
-            snap=client.command('query_actor_identities')
+            cohort=args.asset_id.strip() if args.asset_id is not None else None
+            if args.asset_id is not None and not cohort:
+                raise ValueError('--asset-id must name a non-empty native asset')
+            request_args={'asset_id':cohort} if cohort else {}
+            snap=client.command('query_actor_identities',request_args)
             from founders_worldbox import normalize_snapshot
             meta,items=normalize_snapshot(snap)
+            # Explicit source-consistency gate: a filter must not silently
+            # include animals from another species; at least 20 identities
+            # are needed for our first save/reload acceptance experiment.
+            if cohort is not None:
+                if any(item.get('asset_id') != cohort for item in items):
+                    raise BridgeIntegrityError('Native bridge returned actors outside requested cohort')
+                if len(items)<20:
+                    raise ValueError(f'Only {len(items)} native actors of asset_id={cohort}; select a species with at least 20 for the identity test')
+                snap['capture_asset_id']=cohort
             Path(args.output).write_text(json.dumps(snap,indent=2))
-            show({'saved':str(Path(args.output).resolve()),**meta,'note':'Paused native observation only; no Book writes'})
+            show({'saved':str(Path(args.output).resolve()),'asset_id_filter':cohort,**meta,
+                  'note':'Paused native observation only; no Book writes; matching filter required on reload'})
             return
         if args.command=='export-core':
             core=core151_snapshot(args.core_source,seed=args.seed)
