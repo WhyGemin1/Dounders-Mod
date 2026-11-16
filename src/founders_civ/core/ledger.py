@@ -128,7 +128,8 @@ class Book:
         Request receipts survive deepcopy/pickle of this Book. They do NOT prove
         external disk checkpoint atomicity or native WorldBox acknowledgement.
         """
-        if not isinstance(request_id, str) or not request_id.strip():
+        if (not isinstance(request_id, str) or not request_id.strip() or
+                request_id != request_id.strip()):
             raise ValueError('nonempty request id required')
         legs = (tuple(tuple(x) for x in material),
                 tuple(tuple(x) for x in energy))
