@@ -132,5 +132,22 @@ class SingleAuthorityTests(unittest.TestCase):
             world.tick = original_tick
         session.audit()
 
+    def test_reject_out_of_session_book_sequence_change(self):
+        world, _, tree_id = bootstrap(407)
+        session = SingleEngineSession(world, tree_id)
+        original_seq = world.book.seq
+        try:
+            world.book.seq += 1
+            with self.assertRaisesRegex(RuntimeError, 'Book sequence changed outside session'):
+                session.audit()
+            with self.assertRaisesRegex(RuntimeError, 'Book sequence changed outside session'):
+                session.harvest('FAKE', 'invalid-source', 'r1',
+                                'forest', 'plant', .01, .001)
+        finally:
+            world.book.seq = original_seq
+        session.audit()
+        session.step()
+        self.assertEqual(session.audit().book_sequence, world.book.seq)
+
 if __name__ == '__main__':
     unittest.main()
