@@ -263,3 +263,6 @@
 - Test command in GitHub workflow: PYTHONPATH=tools python -m unittest discover -v -s tools -p 'test_import_core151.py'. New test committed; outcome pending at ledger write. No actual 27-module comparison, numerical Book audit, ecological horizon or WorldBox gameplay executed this cycle.
 - Verified: previous CI and commits. Provisional: new CLI regression until CI. Blocked: archive-to-checkout comparison, native ACK/identity/unit/version, M05 writer migration, ecology.
 - Next: confirm CI, then run python tools/import_core151.py <authorized-zip> src --verify against real clean checkout, review drift and pin only approved overlays. No merge or second engine.
+
+### CI verification addendum — read-only provenance CLI
+- GitHub Actions run 43813656249 for source/test commit 68bd4f6ddd0e53cbd09bdf1abbff6d57d6aa4939 completed SUCCESS. This establishes workflow-level clean-checkout regression execution for the synthetic CLI fixtures. It does NOT establish a real authorized 27-module archive comparison or new numerical Book audit.
