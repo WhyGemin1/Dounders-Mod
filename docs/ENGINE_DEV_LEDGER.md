@@ -314,3 +314,10 @@
 ### Verified corrected CI — Book receipt history guard
 - GitHub Actions run 43849553308 completed SUCCESS on source/test/fingerprint commit 7be64b7b89505894ef09f55dfbdf5c4a98514fc0. This supersedes failed run 43849277385. CI runs the source provenance and one-engine/M01 regression steps; this confirms the new Book replay guard regression passes on the tested source.
 - No fresh independent numerical mass/energy residuals, native gameplay, or long-horizon ecology measured. Overlay remains provisionally compatible in covered paths, not universally approved.
+
+## 2026-11-16 — P0 checksum-valid corrupt receipt checkpoint rejection
+- Ground: one tracked Core151 engine, M01 iteration 3, previous ledger receipt history regression PASS GitHub Actions 43849553308; 26 original archive source matches and one reviewed ledger.py overlay. Existing checkpoint validator already rejects receipts with impossible sequence; targeted missing case was a valid checkpoint envelope carrying an invalid future-sequence Book receipt.
+- Implementation: added real Core151 bootstrap-based negative regression to tests/test_m01_durable_harvest.py. First perform actual Book-funded harvest and checkpoint, then forge receipt sequence to seq+1 inside a correctly re-encoded checkpoint envelope; assert restore rejects, no checkpoint bytes change on failed load/save, and canonical in-memory Book balances/sequence remain unchanged. This tests fail-closed behavior, not untrusted pickle safety.
+- Test commit: 00bdb673ed38ca419eb262ae1faa7f34e8c37f71. Expected CI command: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_durable_harvest.py'. CI result pending at ledger write; no local runtime test or fresh numerical conservation residuals claimed.
+- VERIFIED: source/test commit and previous CI. PROVISIONAL: new regression until current CI completes. BLOCKED: native WorldBox identity/unit/version/ACK and in-game tests, M05 independent writer migration, long-horizon ecological stability.
+- Next: verify current CI, fix any failing test, and capture actual Book mass/energy residuals on clean-checkout restored world. No merge, second Book, or main modification.
