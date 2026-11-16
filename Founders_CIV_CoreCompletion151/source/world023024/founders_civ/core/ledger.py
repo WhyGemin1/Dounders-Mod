@@ -71,6 +71,13 @@ class Book:
                 return tuple((src,dst,float(q).hex()) for src,dst,q in legs)
             signature=(kind,stable_legs(material),stable_legs(energy),
                        float(toll).hex(),float(external).hex(),asset_id)
+            # Validate quantities even on a replay. NaN/Infinity must never
+            # bypass validation through a previously accepted operation ID.
+            if any(not math.isfinite(float(q)) or float(q) <= 0
+                   for legs in (material, energy) for _, _, q in legs):
+                raise ValueError('invalid transfer quantity')
+            if not all(math.isfinite(float(x)) for x in (toll, external)):
+                raise ValueError('invalid toll or inflow')
             if operation_id is not None and operation_id in self.operations:
                 prior_sig, prior_txn = self.operations[operation_id]
                 if prior_sig!=signature:raise ValueError('conflicting operation ID replay')
