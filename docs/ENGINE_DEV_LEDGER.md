@@ -218,3 +218,11 @@
 - Test status: prior CI VERIFIED; new regression committed and awaiting GitHub CI outcome at ledger write. No new independent Book numerical audit, native WorldBox gameplay, or ecological long-horizon test was performed.
 - Status: VERIFIED commits and prior CI; PROVISIONAL new guard until CI; BLOCKED native WorldBox identity/unit/version/ACK, external writes and ecological stability.
 - Next: confirm new CI, then compare tracked Core151 modules with verified Cycle152 archive provenance; do not merge or overwrite historical source.
+
+## 2026-11-15 — P0 non-finite canonical Book audit guard
+- Ground: live PR #1/#2 remain drafts, main baseline 26a02ba5. Prior strong-reference Founder guard CI PASS in run 43784451806 at commit 871c11171939e291226bd5633f2d39de647e3711. Authorized Drive ZIP metadata reconfirmed (956121 bytes), but bytes/hash were not recomputed in this run.
+- Implementation: SingleEngineSession.audit now rejects NaN/Infinity mass or energy conservation errors rather than returning an apparently valid AuthoritySnapshot. Added a negative regression on the real Core151 seed-405 Book, mocking its audit output with NaN mass and infinite energy while preserving the existing world, Book, clock, and Founder identities.
+- Source commits: a7ac332fc7633316757916364598032b3b8fcdd0, 60c3a20a1dc028fd845afd2f7633a17dc286a7d5. Updated engine/ACTIVE_ENGINE.json. No alternate engine or external WorldBox writes.
+- Verification: previous GitHub CI VERIFIED; new regression awaiting CI at ledger write. No new independent numerical mass/energy audit, native game test, or ecological horizon executed. No local clone/test claimed.
+- Status: VERIFIED prior CI and new commits; PROVISIONAL new guard until CI; BLOCKED native WorldBox IDs/units/version/ACK and ecological stability.
+- Next: confirm CI, then add exact-source provenance drift checks against verified archive without overwriting M01 overlays.
