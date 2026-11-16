@@ -14,7 +14,7 @@
   "source_status": "27 tracked Core151 modules: 26 historical exact matches, 1 ledger.py M01 overlay; canonical Book transaction_history now records committed transactions and checkpoint validates every historical receipt",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS GitHub Actions run 43903727393 (#148) on prior corrected head; new legacy-checkpoint source/test commits f6a795f and e81dbfa pending CI",
+    "github_ci": "PASS run 43913323628 (#150) for previous legacy fail-closed code; current replay-leg correction commits 21de73d, 76f8bb5, 8899c3b not yet CI verified",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -55,7 +55,8 @@
     "p0_numeric_restored_book_audit": "PASS GitHub Actions run 43864971835 on code commit d3d8cb7c06393147fed9803e0d8b89a2543c031a; numerical residual lines emitted but exact numbers not extracted from logs",
     "p0_latest_receipt_authenticity": "PASS GitHub Actions run 43874364593 on test commit 3e4bb980f1cfd7283db47e70bb2b5926e910e7a7; full clean-checkout job steps SUCCESS",
     "p0_historical_receipt_linkage": "SOURCE/TEST COMMITTED at ac5df462437adf570fbd6a41248f9507b379caf7; GitHub CI not yet confirmed; legacy checkpoints without history fail closed and require reviewed migration",
-    "p0_legacy_checkpoint_fail_closed": "SOURCE+TEST COMMITTED e81dbfaad80555ab4338d2b2827951606343bd31; explicitly reject absent Book transaction_history; clean-checkout CI pending"
+    "p0_legacy_checkpoint_fail_closed": "PASS GitHub Actions run 43913323628 (#150), all 15 headless job steps success",
+    "p0_replay_leg_binding": "SOURCE/TEST COMMITTED 21de73d, 76f8bb5; pinned source 8899c3b; CI not yet confirmed"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -64,11 +65,11 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Confirm CI for legacy fail-closed regression; design separately reviewed read-only legacy recovery, never infer missing historical transactions; evaluate history growth",
-  "last_cycle": "2026-11-16 P0 explicit legacy checkpoint fail-closed and real Core151 regression",
+  "next_cycle": "Confirm CI for Book replay-leg binding, inspect logs and fix failures; then evaluate bounded Book history and read-only legacy recovery",
+  "last_cycle": "2026-11-16 P0 canonical Book direct replay-leg binding",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "dc500c0ef77cc9eb55db54f43c476363d8fcd54d",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43903727393",
-  "last_unverified_code_commit": "e81dbfaad80555ab4338d2b2827951606343bd31"
+  "last_verified_code_commit": "e81dbfaad80555ab4338d2b2827951606343bd31",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43913323628",
+  "last_unverified_code_commit": "8899c3bc707c3d79ec989df035b3b68426ab87b4"
 }
