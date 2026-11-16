@@ -57,6 +57,35 @@ class IngestionTests(unittest.TestCase):
         self.ingest()
         self.assertEqual(book.seq, seq)
 
+    def test_exact_ingestion_retry_does_not_duplicate_event_or_spend(self):
+        self.harvest()
+        book = self.sim.book
+        count_before = sum(e['action'] == 'founder_food_ingested'
+                           and e['actor'] == self.f for e in self.sim.events)
+        first = self.ingest()
+        seq = book.seq
+        balances = (dict(book.mass), dict(book.energy))
+        second = self.ingest()
+        self.assertEqual(first, second)
+        self.assertEqual(book.seq, seq)
+        self.assertEqual(balances, (dict(book.mass), dict(book.energy)))
+        self.assertEqual(sum(e['action'] == 'founder_food_ingested'
+                             and e['actor'] == self.f for e in self.sim.events),
+                         count_before + 1)
+        self.sim.book.audit()
+
+    def test_other_founder_cannot_replay_ingested_food(self):
+        self.harvest()
+        self.ingest()
+        before = (self.sim.book.seq, dict(self.sim.book.mass),
+                  dict(self.sim.book.energy))
+        with self.assertRaisesRegex(ValueError, 'never harvested or received'):
+            perform_nutrition(self.sim, 'F002', 'food_ingest',
+                              (self.tid, self.lot))
+        self.assertEqual(before, (self.sim.book.seq, dict(self.sim.book.mass),
+                                  dict(self.sim.book.energy)))
+        self.sim.book.audit()
+
     def test_low_energy_does_not_block_ingestion(self):
         self.harvest()
         source = f'founder:{self.f}'
