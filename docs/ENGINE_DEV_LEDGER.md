@@ -282,3 +282,7 @@
 - Execution: GitHub Actions CI triggered for new regression; result pending at ledger write. No new independent numerical mass/energy residuals, in-game WorldBox or ecological long-horizon runs.
 - VERIFIED: previous CI and new commits. PROVISIONAL: new guard until CI completes. BLOCKED: actual archive comparison, native IDs/units/version/exactly-once ACK, M05 independent writer migration and ecological stability.
 - Next: confirm CI; perform real authorized archive-to-checkout source comparison and classify overlays. M01 iteration 3 remains locked, M02-M07 deferred. No merge/main modification.
+
+### CI verification addendum — Book sequence authority guard
+- GitHub Actions run 43830307794 on source/test commit 267eb6dfeb67277cb4b969f5aca4a1617e31364f: job completed SUCCESS. Checkout, source compilation, provenance synthetic tests, authority/M01 regression (including seed-407 negative Book-sequence test), harvest, restart/replay, fsync/process-exit fault tests, and native read-only boundary/isolation steps all SUCCESS.
+- This is clean-checkout regression evidence, not a real archive-to-checkout provenance comparison or a new independent numerical Book audit. No WorldBox gameplay or ecological long-horizon run.
