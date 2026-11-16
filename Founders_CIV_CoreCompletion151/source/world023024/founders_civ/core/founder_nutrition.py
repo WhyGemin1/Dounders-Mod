@@ -37,7 +37,13 @@ def propose_nutrition(sim, founder):
     proposals = []
     # Each Founder can identify food they actually harvested; this is not
     # omniscient visibility into another actor's holdings or Tree inventory.
-    for lot in _owned_harvests(book, founder):
+    from founders_civ.core.founder_exchange import owned_lots
+    # A lot already ingested is no longer in portable holdings, but it remains
+    # privately identifiable in this Founder's real Book ingestion receipt.
+    ingested = {key[len('food:ingest:'):-len(':'+founder)]
+                for key in book.operations
+                if key.startswith('food:ingest:') and key.endswith(':'+founder)}
+    for lot in sorted(set(owned_lots(sim, founder, 'food')) | ingested):
         tree_id, tree = _tree_for_lot(sim, lot)
         if tree is None:
             continue
@@ -70,8 +76,17 @@ def perform_nutrition(sim, founder, action, target):
     actual_id, tree = _tree_for_lot(sim, lot)
     if actual_id != tree_id or tree is None:
         raise ValueError('unknown identified food lot')
-    if f'food:harvest:{lot}:{founder}' not in sim.book.operations:
-        raise ValueError('Founder never harvested this food lot')
+    # A genuinely committed operation may be retried after its physical lot
+    # has moved out of the Founder's inventory. Replay is read-only; do not
+    # add another ingestion event or require the already-spent source balance.
+    operation = f'food:{"ingest" if action == "food_ingest" else "digest"}:{lot}:{founder}'
+    if operation in sim.book.operations:
+        return sim.book.operations[operation][1]
+    from founders_civ.core.founder_exchange import owns_lot
+    if action == 'food_ingest' and not owns_lot(sim, founder, 'food', lot):
+        raise ValueError('Founder never harvested or received this food lot')
+    if action == 'food_digest' and f'food:ingest:{lot}:{founder}' not in sim.book.operations:
+        raise ValueError('Founder has not ingested identified food lot')
     if action == 'food_ingest':
         txn = tree.resources.eat_food(lot, founder)
         event_name = 'founder_food_ingested'
