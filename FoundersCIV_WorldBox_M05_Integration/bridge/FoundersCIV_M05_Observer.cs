@@ -250,7 +250,7 @@ namespace FoundersCIV.WorldBoxM05
         // Void Harmony finalizers OBSERVE exceptions without changing them.
         // No prefix returns false, changes an argument, or changes a result.
         private static void NutritionPrefix(object __instance, out int __state)
-        { __state = Nutrition(__instance); }
+        { Hit(ref _hitNutrition, "Actor.addNutritionFromEating"); __state = Nutrition(__instance); }
         private static void NutritionFinalizer(object __instance, object[] __args,
             int __state, Exception __exception)
         {
@@ -263,11 +263,12 @@ namespace FoundersCIV.WorldBoxM05
                 context_id=CurrentContext(),native_success=__exception==null,
                 notes=__exception==null?"native_nutrition_change_not_physical_energy":"native_exception"});
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("NutritionFinalizer", ex); }
         }
 
         private static void PreyPrefix(object[] __args, out string __state)
         {
+            Hit(ref _hitPrey, "ai.behaviours.BehConsumeActorTarget.consume");
             var current = Current;
             __state = current==null ? "" : current._session+":"+ System.Threading.Interlocked.Increment(ref _nextContext);
             if (_consumptionContexts == null) _consumptionContexts=new Stack<string>();
@@ -290,11 +291,11 @@ namespace FoundersCIV.WorldBoxM05
                     _consumptionContexts.Pop();
             } catch { }
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("PreyFinalizer", ex); }
         }
 
         private static void ResourcePrefix(object __instance, out int __state)
-        { __state=Nutrition(__instance); }
+        { Hit(ref _hitFood, "Actor.consumeFoodResource"); __state=Nutrition(__instance); }
         private static void ResourceFinalizer(object __instance, object[] __args, int __state, Exception __exception)
         {
             try {
@@ -306,11 +307,12 @@ namespace FoundersCIV.WorldBoxM05
                 context_id=CurrentContext(),native_success=__exception==null,
                 notes="can_overlap_nutrition_call_do_not_sum_as_separate_intake"});
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("ResourceFinalizer", ex); }
         }
         private struct KillState { public long ActorId; public long TargetId; }
         private static void KillPrefix(object __instance, object[] __args, out KillState __state)
         {
+            Hit(ref _hitKill, "Actor.newKillAction");
             __state = new KillState {ActorId=Id(__instance),TargetId=__args.Length>0?Id(__args[0]):-1};
         }
         private static void KillFinalizer(KillState __state, Exception __exception)
@@ -321,11 +323,11 @@ namespace FoundersCIV.WorldBoxM05
                 native_success=__exception==null,context_id=CurrentContext(),
                 notes="kill_callback_not_independently_verified_predation"});
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("KillFinalizer", ex); }
         }
         private struct DeathState { public long ActorId; public bool WasDead; }
         private static void DiePrefix(object __instance, out DeathState __state)
-        { __state=new DeathState{ActorId=Id(__instance),WasDead=HasDied(__instance)}; }
+        { Hit(ref _hitDeath, "Actor.die"); __state=new DeathState{ActorId=Id(__instance),WasDead=HasDied(__instance)}; }
         private static void DieFinalizer(object __instance, DeathState __state, Exception __exception)
         {
             try {
@@ -334,26 +336,28 @@ namespace FoundersCIV.WorldBoxM05
                 actor_id=__state.ActorId,native_success=__exception==null && !__state.WasDead && after,
                 context_id=CurrentContext(),notes="success_requires_false_to_true_hasDied"});
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("DieFinalizer", ex); }
         }
         private static void BabyFinalizer(object __result, Exception __exception)
         {
+            Hit(ref _hitBaby, "ActorManager.createBabyActorFromData");
             try {
             Send(new Event {kind="baby_factory_call",source_method="ActorManager.createBabyActorFromData",
                 actor_id=__exception==null?Id(__result):-1,
                 native_success=__exception==null && __result!=null,
                 notes="factory_can_be_used_for_reload_or_creation_not_certified_birth"});
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("BabyFinalizer", ex); }
         }
         private static void BirthFinalizer(object __instance, Exception __exception)
         {
+            Hit(ref _hitBirth, "Actor.birthEvent");
             try {
             Send(new Event {kind="birth_callback",source_method="Actor.birthEvent",
                 actor_id=Id(__instance),native_success=__exception==null,
                 notes="requires validation of birthEvent meaning in live game"});
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("BirthFinalizer", ex); }
         }
 
         private void Update()
