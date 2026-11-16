@@ -71,6 +71,14 @@ def perform_harvest(sim,founder,target):
     if (evidence is None or not 0<=sim.tick-evidence.get('seen_tick',-10000)<=MAX_STALENESS or
         not any(x.get('lot')==lot and x.get('kind')==kind for x in evidence.get('known_lots',()))):
         raise ValueError('resource not known through a recent observation')
+    # A portable holding and its Book harvest receipt currently use the lot
+    # name without the World ID. Fail closed before any transfer when another
+    # World has the same local lot name; otherwise two physical origins could
+    # be conflated by nutrition or voluntary exchange.
+    from founders_civ.core.founder_exchange import _origin
+    resolved_tree, _ = _origin(sim, kind, lot)
+    if resolved_tree != tid:
+        raise ValueError('ambiguous or unauthenticated cross-World resource lot')
     record=tree.provisioning.lots.get(lot)
     if record is None or record.kind!=kind:raise ValueError('unavailable identified resource lot')
     source=f'{"portable_food" if kind=="food" else "fruit"}:lot:{lot}:tree:{tid}'
