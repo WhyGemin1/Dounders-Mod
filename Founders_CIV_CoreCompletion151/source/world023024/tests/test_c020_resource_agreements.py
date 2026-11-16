@@ -261,3 +261,33 @@ def test_offer_identity_replay_after_settlement_and_separation_is_side_effect_fr
         offer_resource(s, seller, buyer, 'food', lot,
                        decision_id='new-offer')
     audit(s)
+
+
+def test_settlement_and_decline_replay_after_recipient_death_without_new_transfer():
+    """Past Book receipts survive later actor death; new acceptance does not."""
+    s, _, _, seller, buyer, lot = setup()
+    oid = offer_resource(s, seller, buyer, 'food', lot, decision_id='death-replay')
+    receipt = decide_offer(s, buyer, oid, True)
+    before = (s.book.seq, dict(s.book.mass), dict(s.book.energy), len(s.events))
+    s.founders.people[buyer].alive = False
+    assert decide_offer(s, buyer, oid, True) == receipt
+    assert (s.book.seq, dict(s.book.mass), dict(s.book.energy), len(s.events)) == before
+    with pytest.raises(ValueError, match='conflicting'):
+        decide_offer(s, buyer, oid, False)
+    audit(s)
+
+    t, _, _, seller, buyer, lot = setup(seed=822)
+    oid = offer_resource(t, seller, buyer, 'food', lot, decision_id='decline-replay')
+    assert decide_offer(t, buyer, oid, False) is None
+    t.founders.people[buyer].alive = False
+    assert decide_offer(t, buyer, oid, False) is None
+    with pytest.raises(ValueError, match='declined'):
+        decide_offer(t, buyer, oid, True)
+    audit(t)
+
+    u, _, _, seller, buyer, lot = setup(seed=823)
+    oid = offer_resource(u, seller, buyer, 'food', lot, decision_id='unsettled')
+    u.founders.people[buyer].alive = False
+    with pytest.raises(ValueError, match='active recipient'):
+        decide_offer(u, buyer, oid, True)
+    audit(u)
