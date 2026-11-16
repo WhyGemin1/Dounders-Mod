@@ -361,6 +361,20 @@ class DurableHarvestTests(unittest.TestCase):
                 book.transaction_history[0] = original
         book.audit()
 
+    def test_book_rejects_whitespace_request_id_before_settlement(self):
+        """New Book requests cannot mint replay-key aliases."""
+        book = self.session.book
+        seq = book.seq
+        mass, energy = dict(book.mass), dict(book.energy)
+        receipts = dict(book.request_receipts)
+        with self.assertRaisesRegex(ValueError, 'nonempty request id required'):
+            book.move_once(' alias ', material=(), energy=())
+        self.assertEqual(book.seq, seq)
+        self.assertEqual(dict(book.mass), mass)
+        self.assertEqual(dict(book.energy), energy)
+        self.assertEqual(book.request_receipts, receipts)
+        book.audit()
+
     def test_whitespace_alias_of_book_receipt_key_fails_closed(self):
         """A persisted replay ID must not admit whitespace aliases."""
         import pickle
