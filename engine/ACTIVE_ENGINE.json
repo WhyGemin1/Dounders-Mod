@@ -49,7 +49,7 @@
     "p0_external_clock_mutation": "PASS GitHub Actions run 43821123440 on 517c95bd1541721998c7e5ebee75cc70829aecbe",
     "p0_out_of_session_book_sequence": "PASS GitHub Actions run 43830307794 on code/test commit 267eb6dfeb67277cb4b969f5aca4a1617e31364f",
     "p0_real_archive_comparison": "27/27 GitHub source blobs fetched and compared with independently calculated Git blob SHA-1 from authorized ZIP SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8; 26 matches, 1 ledger divergence",
-    "p0_checkout_fingerprint_regression": "Committed test at c3ac91cef8a07920cae08e5318a0584d16d297db; CI pending"
+    "p0_checkout_fingerprint_regression": "Initial CI run 43836902048 FAILED due to misplaced skip decorator; fixed in b0e042fe38d6eebbaf3af1f6304ee54718801460; rerun pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -64,5 +64,5 @@
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "267eb6dfeb67277cb4b969f5aca4a1617e31364f",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43830307794",
-  "last_unverified_code_commit": "c3ac91cef8a07920cae08e5318a0584d16d297db"
+  "last_unverified_code_commit": "b0e042fe38d6eebbaf3af1f6304ee54718801460"
 }
