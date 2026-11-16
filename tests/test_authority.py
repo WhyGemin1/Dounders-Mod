@@ -105,5 +105,18 @@ class SingleAuthorityTests(unittest.TestCase):
         finally:
             world.founders.people[founder_id] = original
 
+    def test_nonfinite_book_audit_fails_closed(self):
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(405)
+        session = SingleEngineSession(world, tree_id)
+        valid = world.book.audit()
+        for key, invalid in (('mass_error', float('nan')),
+                             ('energy_error', float('inf'))):
+            broken = dict(valid)
+            broken[key] = invalid
+            with self.subTest(key=key), patch.object(world.book, 'audit', return_value=broken):
+                with self.assertRaisesRegex(RuntimeError, 'non-finite canonical Book'):
+                    session.audit()
+
 if __name__ == '__main__':
     unittest.main()
