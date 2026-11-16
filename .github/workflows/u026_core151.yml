@@ -28,21 +28,7 @@ jobs:
         id: provenance
         continue-on-error: true  # run regressions despite drift; fail gate below
         working-directory: .
-        run: |
-          python - <<'PY'
-          import hashlib, json
-          from pathlib import Path
-          manifest = json.loads(Path('docs/U026_C018_SOURCE_FINGERPRINT.json').read_text())
-          assert manifest['files'] == 497
-          for rel, expected in manifest['sha256'].items():
-              actual = hashlib.sha256(Path(rel).read_bytes()).hexdigest()
-              assert actual == expected, f'Core source drift: {rel}'
-          prohibited = [p for p in Path('.').rglob('*') if p.is_file() and
-              (p.suffix.lower() in {'.dll','.pdb','.pyc','.sqlite','.db','.exe','.log'} or
-              any(part in {'__pycache__','obj','bin','.pytest_cache'} for part in p.parts))]
-          assert not prohibited, f'Generated artifacts present: {prohibited[:5]}'
-          print('G0 exact source: 497/497 SHA-256 matches, no prohibited artifacts')
-          PY
+        run: python tools/u026_g0_drift_audit.py
       - name: Install test runner
         run: python -m pip install --disable-pip-version-check pytest==8.4.1
       - name: Generate deterministic observatory fixture only in CI workspace
