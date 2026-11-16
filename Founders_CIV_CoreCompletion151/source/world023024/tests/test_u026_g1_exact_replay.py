@@ -151,6 +151,30 @@ class G1ExactReplayTests(unittest.TestCase):
         self.assertEqual(audit["mass_total"], 0.0)
         self.assertEqual(audit["energy_total"], .5)
 
+    def test_photosynthesis_rejects_one_ulp_overspend_and_accepts_capped_work(self):
+        sun = 1.7620248969090804
+        # In the real ecology (sun / 3) * 3 exceeds the source by one ULP.
+        inflated_work = (sun / 3.0) * 3.0
+        self.assertGreater(inflated_work, sun)
+        book = Book()
+        book.seed_mass("soil:patch", 10.0)
+        book.seed_energy("sun:patch", sun)
+        book.freeze()
+        with self.assertRaisesRegex(ValueError, "energy overdraw"):
+            book.transform([("soil:patch", "plant:patch", sun / 3.0)],
+                           "sun:patch", inflated_work,
+                           [("sun:patch", "chem:patch", inflated_work * .74),
+                            ("sun:patch", "heat:world", inflated_work * .16)])
+        self.assertEqual(book.seq, 0)
+        actual_work = min(sun, inflated_work)
+        book.transform([("soil:patch", "plant:patch", sun / 3.0)],
+                       "sun:patch", actual_work,
+                       [("sun:patch", "chem:patch", actual_work * .74),
+                        ("sun:patch", "heat:world", actual_work * .16)])
+        self.assertEqual(book.seq, 1)
+        self.assertEqual(book.energy["sun:patch"], 0.0)
+        book.audit()
+
     def test_failed_transfer_does_not_claim_operation_identity(self):
         with self.assertRaisesRegex(ValueError, "material overdraw"):
             self.book.move(material=[("plant:tree", "plant:founder", 3.0)],
