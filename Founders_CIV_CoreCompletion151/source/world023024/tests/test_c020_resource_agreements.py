@@ -241,3 +241,23 @@ def test_two_worlds_cannot_claim_same_ambiguous_physical_lot():
     assert _origin(sim, 'fruit', 'shared') == ('W1', tree_a)
     del sim.book.operations['food:make:W2:shared']
     assert _origin(sim, 'food', 'shared') == ('W1', tree_a)
+
+
+def test_offer_identity_replay_after_settlement_and_separation_is_side_effect_free():
+    s, _, _, seller, buyer, lot = setup()
+    oid = offer_resource(s, seller, buyer, 'food', lot, decision_id='stable-offer')
+    decide_offer(s, buyer, oid, True)
+    s.founders.people[buyer].location = 'ridge'
+    before = (s.book.seq, dict(s.book.mass), dict(s.book.energy),
+              len(s.events), len(s.founder_exchange_offers))
+    assert offer_resource(s, seller, buyer, 'food', lot,
+                          decision_id='stable-offer') == oid
+    assert (s.book.seq, dict(s.book.mass), dict(s.book.energy),
+            len(s.events), len(s.founder_exchange_offers)) == before
+    with pytest.raises(ValueError, match='conflicting'):
+        offer_resource(s, seller, buyer, 'fruit', lot,
+                       decision_id='stable-offer')
+    with pytest.raises(ValueError, match='meet'):
+        offer_resource(s, seller, buyer, 'food', lot,
+                       decision_id='new-offer')
+    audit(s)
