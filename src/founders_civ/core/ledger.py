@@ -149,6 +149,13 @@ class Book:
             if prior_legs != legs:
                 raise ValueError('request id reused with different transfer')
             return receipt, False
+        # Refuse new M01 settlements if the canonical Book history has been
+        # truncated or detached from its latest committed transaction.
+        # A damaged checkpoint must not silently gain new durable receipts.
+        history = getattr(self, 'transaction_history', None)
+        if (not isinstance(history, list) or len(history) != self.seq or
+                (history[-1] if history else None) != self.last):
+            raise ValueError('inconsistent canonical Book transaction history')
         # apply prevalidates and commits the complete Book move. No receipt
         # is written if it rejects; no untracked second resource authority.
         receipt = self.move(material=legs[0], energy=legs[1])
