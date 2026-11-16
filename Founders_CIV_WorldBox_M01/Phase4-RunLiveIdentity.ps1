@@ -50,9 +50,9 @@ try {
     if ($Stage -eq 'probe') {
         & py $cli live-probe
     } elseif ($Stage -eq 'before') {
-        & py $cli live-snapshot --output $before @cohortArgs
+        & py $cli live-snapshot --output $before --min-actors 20 @cohortArgs
     } else {
-        & py $cli live-snapshot --output $after @cohortArgs
+        & py $cli live-snapshot --output $after --min-actors 0 @cohortArgs
     }
     if ($LASTEXITCODE -ne 0) { throw 'Live native identity query FAILED; do not substitute names or positions.' }
     if ($Stage -eq 'before') {
