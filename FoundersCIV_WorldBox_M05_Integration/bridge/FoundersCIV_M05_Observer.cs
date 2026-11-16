@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace FoundersCIV.WorldBoxM05
 {
-    [BepInPlugin("org.foundersciv.worldbox.m05.events", "FoundersCIV M05 Native Event Observer", "0.5.2")]
+    [BepInPlugin("org.foundersciv.worldbox.m05.events", "FoundersCIV M05 Native Event Observer", "0.5.3")]
     public sealed class M05EventBridge : BaseUnityPlugin
     {
         internal static M05EventBridge Current;
@@ -142,8 +142,10 @@ namespace FoundersCIV.WorldBoxM05
                 var binding = BindingFlags.Static|BindingFlags.NonPublic;
                 var prefix = prefixName == null ? null : typeof(M05EventBridge).GetMethod(prefixName, binding);
                 var finalizer = finalizerName == null ? null : typeof(M05EventBridge).GetMethod(finalizerName, binding);
+                // HarmonyX marks the five-argument overload obsolete with error=true.
+                // Explicit sixth argument resolves to the supported overload.
                 _harmony.Patch(found[0], prefix == null ? null : new HarmonyMethod(prefix), null,
-                    null, finalizer == null ? null : new HarmonyMethod(finalizer));
+                    null, finalizer == null ? null : new HarmonyMethod(finalizer), null);
                 _activeHooks.Add(label);
             } catch (Exception ex) { Logger.LogError("Failed to attach " + label + ": " + ex); }
         }
