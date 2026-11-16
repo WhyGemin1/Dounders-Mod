@@ -4,7 +4,7 @@
 **Base branch:** Development.
 **Source of truth:** One existing Core151 Book and one existing WORLD-024 integration; never create a second engine, ledger, simulator or forced Founder controller.
 **Decision at authoring:** G0 = PROMOTE (Development exact source f604b9d42b5c1547924d9c1346a4ea8668ded208); G1 = PROMOTE (Development exact source 35af1fa5e622d311e22835bfdec9a31c3f9509a5); G2 = NOT_PROMOTED; G3 = NOT_PROMOTED.
-**Critical distinction:** G0 and G1 are accepted historical source revisions, not an all-Development merge into Core, Integration, Outer or main. The G1 source currently has two subsequent promotion-record-only documentation commits; new implementation changes will need their own exact-source acceptance. Preserve historical JSON attestations.
+**Critical distinction:** G0 and G1 are accepted historical source revisions, not an all-Development merge into Core, Integration, Outer or main. After G1 acceptance, Development acquired further G2 candidate source/test changes. The old acceptance remains valid for its exact SHA, but the new head is **not** automatically attested. Inspect the latest Development ref before each implementation or gate decision. Preserve historical JSON attestations.
 
 ## 1. Verified baseline and evidence
 
@@ -36,9 +36,9 @@ G1 20 matched runs = 10 seeds, control and opt-in arms, 30- and 180-day checkpoi
 
 ## 2. Gate contracts and dependency rules
 
-**G2: Voluntary decentralized provisioning, agency and stewardship.** Prove that 100 autonomous Founders have physically attainable alternative strategies, can observe/learn private advantages of Trees and care, voluntarily create additional independent Trees, harvest or produce food, make and refuse consent-based resource agreements, and conserve all transferred matter and chemical/Creation Energy in the *existing Book*. G2 does not mandate that everyone plants or maintains a Tree. Scarcity, disinterest, trade refusal and collapse are legal outcomes.
+**G2: Physically real autonomous WORLD-024 Trees and voluntary Founder provisioning.** Prove that Tree habitat and reserve stocks actually fund food/fruit production, maturation, accessible harvest, trade, collapse/remnants and limited CE across multiple Trees, while 100 autonomous Founders can create their *own* Tree when eligible, decline care, and choose real alternatives. One Tree does not feed everyone; no fake rations, mandatory work, omniscient inventories or global planting quota. Independent local food production and agreements are deliberate G2 extensions, not replacements for the existing Book-backed Tree.
 
-**G3: Physical productivity, fuel and ecosystem access.** Prove that the G2 opportunities are supported by viable, spatially and temporally explicit food/chemical-energy throughput, competing users and residents, habitat constraints, metabolic recovery and migration/fallback pathways. Organisms should spend energy on actual physical work and use bodily stores/rest to change efficiency; time never becomes an energy/action currency. G3 must preserve mortality and ecological failure, not secretly repair populations. Long-run population persistence is assessed here but is a distinct G4 stability gate.
+**G3: One scheduler and embodied Founder fuel, digestion and recovery.** Prove that the integrated world uses one deterministic tick and Book, with observed Founder food access, body stores, digestion, work actually funded by chemical energy, rest mobilizing existing fuel and reducing fatigue, and no cost for merely choosing or experiencing elapsed time. G3 assesses the effect on survival/food security and keeps refusal legal; second-generation ecological viability, inherited species traits, migration ecosystem-scale tuning and long-term persistence belong to G4.
 
 **Dependency:** G2 must pass a source-scoped acceptance before G3 may be promoted. G3 research can begin experimentally using G2 code, but a failing G2 contract blocks G3 promotion. G0/G1 historical attestations remain immutable throughout; no automatic Core merge.
 
@@ -52,12 +52,13 @@ G1 20 matched runs = 10 seeds, control and opt-in arms, 30- and 180-day checkpoi
 - For each fixture, enumerate *actual executable* Founder choices and valid Book lots. Separate proposed options, chosen options and successfully settled physical transactions.
 - Deliver exact-source baseline, failing characterization tests and one prioritized behavioral defect. Do not count this audit as implementation.
 
-### G2.2 — Replace hard-coded Tree bottlenecks with physically available choices
+### G2.2 — Finish physically funded Tree availability and fix real Founder eligibility
 
-- Modify founder_tree_agency.py so ownership of one stable Tree/Realm does not by itself forbid creating or collaborating on a second Tree; bound creation by finite fruit/CE, soil/water, reviewed seed, parent capacity and available labor, not by a target count of Trees.
-- Replace a blanket least-loaded-parent choice with candidate parents grounded in known local location, observed reserve, remaining ecological capacity, agreement/consent and existing physical inputs; no omniscient Book reads exposed as Founder knowledge.
-- Retain peer research/approval and transaction-funded seed/plant identity; a refused proposal is not a bug and an unfunded attempt must fail without partial changes.
-- Tests: independently funded multiple Trees, owner with existing Tree, unreachable parent rejected, parent collapse mid-creation, asset ID replay, no forced plant, no new mass/CE.
+- Validate the newly committed G2 correction in founder_tree_agency.py: owning a stable **parent Realm** must not count as already having a personal WORLD-024 food Tree. The added C017 fixture is a candidate until new exact-source CI passes.
+- Preserve the existing policy of **one stable personal World Tree per Founder** unless a separate reviewed requirement changes it; do not force everybody to plant one. The observed fruit/CE plus peer review, habitat material, existing parent Realm and chemical work must all be funded through the same Book.
+- Improve parent selection and creation capacity only when tests show a real bottleneck: use observed viable parents, local access, physical reserve and material/CE constraints rather than a global quota or omniscient convenience. Treat the current blueprint-count limit as an explicit experimental guard to evaluate, not proof of food capacity.
+- Cover source Tree production and remnant/lot continuity: reserve-first provisioning, food/fruit maturation, decay, exact ID, two Trees contesting finite river CE, collapse after observation, no invisible stock top-ups.
+- Tests: Realm-owner may propose/plant a correctly funded Tree; duplicate stable personal Tree remains blocked by policy; missing/mature/depleted fruit; stolen fruit; failed planting and rollback; shared CE exhaustion; deterministic checkpoint; voluntary refusal never coerced.
 
 ### G2.3 — Implement independent finite food alternatives
 
@@ -105,70 +106,65 @@ G1 20 matched runs = 10 seeds, control and opt-in arms, 30- and 180-day checkpoi
 
 ## 4. G3 eight-phase implementation cycle
 
-### G3.1 — Quantify ecological and energy bottlenecks from G2
+### G3.1 — Lock G2 source, trace the single scheduler and reproduce work/fuel failures
 
-- Run source-matched G2 control/treatment cohorts and compile Book-funded flows: sunlight -> photosynthetic chemistry; plants -> residents/food; digestion -> body stores; resting -> usable store and heat; death -> carcass/detritus; Realm/Tree maintenance -> reserve heat and collapse.
-- Distinguish starvation caused by no food production, unreachable food, too little time for development, unmatched partners, overcompetition, excessive metabolism, insufficient rest, reproduction gating and patch-specific bottlenecks.
-- Use only already available histories/Book records and published ecological principles where needed; do not replace implementation with instrumentation.
+- Freeze a G2-reviewed Development source SHA and rerun the G1/G2 acceptance suite. Read world_integration.step, _proposals and _do, ecological engine.step, WorldTree.step, social_agents, founder_nutrition, founder_recovery and checkpoint serializers.
+- Characterize any duplicate ticks, unconditional upkeep, arbitrary per-action fuel fees, out-of-order digestion, mismatched observable holdings or owner-reserve preflight. Keep a failing regression before each behavioral correction.
+- Trace actual Book pathways from Tree food and agreements to gut, body chemical store, usable work store and heat; do not equate energy with time.
 
-### G3.2 — Close physically coherent primary productivity and reserves
+### G3.2 — Enforce one deterministic scheduling contract
 
-- Extend core/engine.py, experimental/world_trees.py and core/autonomous_provisioning.py to account for per-patch soil nutrient, water, sunlight, temperature/season, plant maintenance, storage and finite growth.
-- Eliminate arbitrary free food/regrowth or heat-to-food conversions. A World Tree's harvestable surplus must be after living residents and reserve-first maintenance. Neither one Tree nor a single parent Realm may produce unlimited sustenance for 100 Founders.
-- Demand explicit source funding for each resource; distinguish amount produced, amount accessible, amount harvested and amount actually digested.
-- Test drought, wetland, resource-rich coast, degraded ridge and forest conditions with no independent magic supply. Keep all coefficients configurable and empirically compared rather than claiming authentic biology.
+- In experimental/world_integration.py, make the single integrated tick order explicit: physical ecosystem flux, Tree growth and resident feeding, construct upkeep/parent collapse, Founder observation and candidate choices, physical actions, digestion/recovery, event reconciliation and Book audit at safe boundaries.
+- Avoid advancing a standalone Founder or Tree clock separately inside the combined world. Do not create another resource inventory or duplicate an existing ecology engine.
+- Preserve event/decision IDs and RNG replay across multiple Worlds; no scripted override that forces stewardship or Tree creation. Tests assert clock parity, restart determinism and exactly-once effects.
 
-### G3.3 — Replace simplistic animal energy gates with embodied metabolism
+### G3.3 — Couple ingestion, chemical stores, digestion and real work
 
-- Integrate core/founder_recovery.py, founder_nutrition.py, world-tree resident feeding and ecology engine work costs. Stored food does not instantly become usable fuel; digestion transfers actual chemicals, rest preserves/reallocates fuel and improves fatigue/efficiency.
-- A Founder or animal does not purchase time with energy. Charge only modeled physical work such as travel, thermoregulation, active foraging, attack, seed processing or tissue repair; observation/social choice and mere existence are not uniformly debited.
-- Energy deficiency can reduce output, alter preferences and increase risk; it must not universally forbid doing anything. Heat, waste and matter outputs remain Book-conserved.
-- Test energy balance across active/rest/digest cycles; no rest-created fuel, CE-as-metabolism, negative stores, one-ULP overdrafts or unconditional survival rescue.
+- Extend founder_nutrition.py and living_assets.py where tests prove missing behavior: only real owned or consent-received food lots enter gut; digestion transfers physical nutrients/chemical potential to body stores, with waste/heat losses, and does not instantly refill work fuel.
+- Physical work such as gathering, traveling, processing seeds, production, repairs and active maintenance draws appropriately from existing chemical fuel through the Book. A cost is paid only if the work is executed; an unsuccessful or declined choice does not spend energy by fiat.
+- Strictly separate finite river CE from bodily chemical fuels. No WorldBox-native body-state writes.
 
-### G3.4 — Specialization, juvenile acquisition and reproduction pathways
+### G3.4 — Make voluntary recovery and self-maintenance useful, not compulsory
 
-- Give resident species explicit biologically meaningful trait ranges/phenotypes (body condition, feeding efficiency, movement range, defense, reproductive maturity and energy retention), with inheritance/variation where applicable.
-- Juveniles need physically accessible food and safe shelter; predator viability depends on prey recruitment, hunting opportunity, reserves and losses, not a hard-coded prey count multiplier.
-- Connect breeding eligibility to physical reserves, mate proximity, local conditions, dependent offspring costs and actual survival opportunities. Maintain death and failed breeding as possible.
-- Implement trait mechanics behind opt-in flags and compare them against the simpler fixed-trait baseline before declaring improvement. G4, not G3, is the gate for verified long-horizon population stability.
+- In founder_recovery.py, treat rest as a chosen activity that reduces fatigue and can reallocate existing embodied chemical stores into usable work while directing losses to heat; it never manufactures energy or purchases elapsed time.
+- Let Founder preferences compare food, rest, local search, trade, study, Tree creation, exploration, Realm care and refusal using personal valuations, locally perceived opportunities and actual body condition. Preserve private learning and heterogeneity.
+- Test low-fuel and high-fatigue trajectories, predation/accident fallback where present, no energy-per-decision, incomplete digestion, failed work preserving Book plus fatigue, repeated rest receipt idempotency and decline.
 
-### G3.5 — Local spatial alternatives, migration and fallback behavior
+### G3.5 — Repair cross-scale physical funding and resource competition
 
-- Use the existing World Tree habitat patches and authoritative Core151 ecology rather than spawning a second map engine. Expand spatial resource reachability, travel costs and local observations to support multiple niches and independent food sources.
-- Add feasible fallback: migrate to known nearby habitat, pursue alternative edible resources, retreat/rest, trade/gather with Founders, or fail if nothing is accessible. No teleportation, omniscient supply choice or scripted rescue.
-- Test resident competition, crowding, predation, seasonal food depletion and isolated refuges; ensure expanding map size increases options only where physical connectivity/resources exist.
+- Ensure Tree growth and stored fruit/food remain grounded in real source plant/sun/chemical stock, with reserve-first and resident-competition boundaries. Founder resources cannot be replenished merely by observing a tree or receiving an offer.
+- Explicitly handle food scarcity and physical inability to perform actions: try actually reachable alternatives or fail; do not force replenishment, freeze time as a substitute, or rely on universal action energy gates.
+- Juvenile food access, inherited species specialization, spatial refuge and migration mechanisms may be profiled but are **G4 candidates** unless needed to repair a demonstrated G3 integration bug.
 
-### G3.6 — Cross-scale integration, rollback and deterministic checkpoint
+### G3.6 — Checkpoint, replay and failure-injection enforcement
 
-- Tie Tree production and ecological resident survival to actual Book balances without doubling resources in Tree-resident object fields. A Tree collapse returns/retains resources in traceable remnant accounts, not vanishing or reminting stock.
-- Fault-inject birth, death, food consumption, migration, Tree growth, maintenance, world-seed funding and shared-resource agreements mid-transaction; verify failure leaves Book and world in a valid, replayable state.
-- Verify canonical Founder, resident, Tree, Realm, lot, migration, event IDs and scheduler tick across replays and resumed trajectories.
+- Checkpoint Book operations and stock, unique lot and Founder IDs, actor bodies, fatigue, private values, accepted/withdrawn offers, observations, scheduler cursor, RNG, Tree/Realm status and one authoritative tick.
+- Inject failure between paired food/chemical transfers, digestion, rest work mobilization, voluntary upkeep, planting and event emission; require exact rollback and no duplicate social effects.
+- Verify exact retry and conflicting-payload rejection, deterministic state hash after checkpoint resume and conservation with all resource types.
 
-### G3.7 — Ecology stress matrix and simple-explanation comparisons
+### G3.7 — Matched viability and physical opportunity trials
 
-- Pre-register 8 candidate arms x 30 seeds, all using identical initial Book stocks, species pools and world setup within each matched seed.
-- Three mechanism axes: revised bodily energy/rest, habitat production/access, and species specialization/movement. Keep controls with all mechanisms disabled and single-factor arms; preserve real failure.
-- Run 30/180-day checks first, then 360/720/1080-day continuations for matching successful and failing cohorts as capacity permits. Never hide truncated runs, cherry-pick seeds or claim 1080 days if only 180 ran.
-- Report real biomass and chemical conservation, species/age counts and densities, births/deaths, juvenile-to-adult recruitment, second-generation reproduction, predator/prey ratios, forage availability, starvation vs predation causes, patch use, Founder access, collapsed vs living Trees, and Book-to-reported-state consistency.
-- Explicit countertheories: space/density bottleneck, scarce physical energy, unreachable food, juvenile handling, overly expensive action costs, unrealistic reproductive gates, and actual predator-prey collapse. Test combinations and compare to simpler models; ecological stability is a separate G4 decision.
+- Pre-register an 8-arm x 30-seed matrix after passing focused tests: three binary axes are (a) embodied work/rest revision, (b) scarcity-aware food/consumption prioritization and (c) local trade/food alternative access. G2 Tree ownership and provenance contracts remain constant.
+- Run 10 seeds x 30/180-day smoke tests first; expand to 30 matched seeds and 360/720/1080-day continuations for feasible paired subsets. Every run reports an actual horizon or NOT_RUN.
+- Record Founder fuel/body stocks, fatigue and action work success, rest decisions, survival, starvation, physically acquired/ingested/digested food, Tree supply, parent reserve, resident competition, voluntary stewardship/refusal and mass/energy/CE audits. Compare with simpler scarcity-only and fixed-preference baselines.
+- This experiment can identify causes of survival differences, but **G4** alone will decide multigeneration stability, predator recruitment and ecological equilibrium.
 
-### G3.8 — Source review and promotion gate
+### G3.8 — Independent exact-source promotion decision
 
-- Implement focused executable tests in tests/test_u026_g3_energy_ecology.py, an 8-arm manifest runner in tools/u026_g3_ecology_matrix.py, and new candidate provenance and decision documents (planned paths).
-- Pass conditions: all G0/G1/G2 behavioral contracts remain intact; one Book; no energy/CE/matter mint or negative stocks; every produced food/resource path has traceable physical inputs; rest/digestion/action work semantics match the contract; migration and species specialization function without hidden rescues; deterministic restart; full suite green; pre-registered stress controls executed; exact-source CI audit clean.
-- No requirement that all ecosystems always survive. G3 must expose causal mechanisms and failure conditions, not guarantee stable multigeneration ecology (G4).
-- PROMOTE only after source-scoped independent review and an exact commit Actions success. Otherwise REVISE with one concrete failure and targeted next implementation, or REVERT the candidate change without rewriting historical approvals.
+- Add real, focused tests (planned: tests/test_u026_g3_scheduler_metabolism.py) and a matched runner (planned: tools/u026_g3_matched_acceptance.py); only label them implemented after GitHub contains executable code.
+- Promotion requires all G0/G1/G2 invariants, one Book and clock, energy charged only for actual physical work, fully conserved digestion/recovery/heat, unforced Founder choices, deterministic checkpoint and rollback, complete Core151 regressions, matched control evidence, exact-source SHA validation, all CI jobs green and independent review.
+- Do not require every Founder or ecosystem to survive; explicit starvation or collapse under real scarcity remains a valid outcome. If any correctness condition fails, REVISE or REVERT on Development. Preserve G0/G1 source approval records, and never claim native WorldBox success from an offline sidecar.
 
 ## 5. Test matrix, safeguards and release order
 
 **Invariant tests (every code change):** (a) one Book identity across ecology, Trees, Founders, constructs; (b) mass, chemical and CE conservation independently; (c) no double receipt/event; (d) correct owner/consent/proximity; (e) refusal never silently replaced with maintenance; (f) no time/action currency; (g) partial-failure rollback; (h) deterministic checkpoint; (i) no source drift accepted without review.
 
 **Proposed first implementation targets, in dependency order:**
-1. G2: reproduce and fix the _has_active_stewardship/one-Tree limitation while preserving scarce CE and source Book ownership.
+1. G2: verify the already committed parent-Realm-versus-personal-Tree eligibility correction, then correct the next proven bottleneck in real Tree supply, local access or shared finite CE; preserve the one-personal-Tree policy until separately reviewed.
 2. G2: build one real Book-funded non-Tree food alternative and demonstrate voluntary choice against existing Tree harvest/trade, with no external stock.
 3. G2: verify local, consensual cooperation and private value learning across realistic outcomes and retries; run matched scenarios and promote or revise.
-4. G3: close photosynthesis/plant reserve and transfer-to-consumer supply, then physical rest/digestion for each relevant organism, then juvenile access and movement/specialization, in tested small changes.
-5. G3: execute cross-scale stress cohorts and independent source acceptance. Hand ecological persistence hypotheses to G4.
+4. G3: integrate one scheduler, physically paid work, no instant digestion fuel, and voluntary rest/fatigue recovery in reviewed small changes. Assign broader juvenile prey, inherited specialization and migration to G4.
+5. G3: execute one-Book/one-clock physical-energy controls and independent source acceptance; hand ecological persistence, juvenile recruitment and trophic-stability hypotheses to G4.
 
 **Execution commands from the repository root:**
 
@@ -186,4 +182,4 @@ The planned G2 and G3 test runners must not be represented as existing scripts u
 
 **Branch policy:** Development implements one real, reviewable change at a time. Core accepts only scoped, regression-passing approved changes; the 121-commit Development lead is not permission to merge all history. Integration checks combined Core plus selected adapter. Outer/WorldBox remains offline-only until tested in the actual native runtime. main stays stable. Old G0/G1 attestation records must never be rewritten or interpreted as current-head approval after new source edits.
 
-**Immediate next cycle:** G2.1 characterization followed by the minimal G2.2 behavioral correction and focused/full tests. Only a verified source diff and passing CI can count as implementation progress.
+**Immediate next cycle:** Reconcile the concurrent G2 parent-Realm eligibility correction and its C017 tests against the current Development SHA, refresh exact-source audit, rerun focused/full CI, then implement the next falsified G2 physical-food/Tree supply limitation. A documentation-only roadmap is not a promoted gate. Only a verified source diff and passing CI can count as implementation progress.
