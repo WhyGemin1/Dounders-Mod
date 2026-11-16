@@ -314,3 +314,22 @@ def test_withdrawn_offer_replay_after_seller_death_is_historical_not_new_action(
         withdraw_offer(t, seller, oid)
     assert t.founder_exchange_offers[oid]['status'] == 'open'
     audit(t)
+
+
+def test_decline_cannot_carry_payment_or_change_historical_replay():
+    """A refusal never carries physical payment, including on replay."""
+    s, _, _, seller, buyer, lot = setup(seed=826)
+    oid = offer_resource(s, seller, buyer, 'food', lot, 'fruit', decision_id='refuse-no-payment')
+    before = (s.book.seq, dict(s.book.mass), dict(s.book.energy), len(s.events))
+    with pytest.raises(ValueError, match='cannot transfer payment'):
+        decide_offer(s, buyer, oid, False, 'fabricated-fruit')
+    assert s.founder_exchange_offers[oid]['status'] == 'open'
+    assert (s.book.seq, dict(s.book.mass), dict(s.book.energy), len(s.events)) == before
+    assert decide_offer(s, buyer, oid, False) is None
+    declined = (s.book.seq, dict(s.book.mass), dict(s.book.energy), len(s.events))
+    s.founders.people[buyer].alive = False
+    with pytest.raises(ValueError, match='cannot supply payment'):
+        decide_offer(s, buyer, oid, False, 'fabricated-fruit')
+    assert decide_offer(s, buyer, oid, False) is None
+    assert (s.book.seq, dict(s.book.mass), dict(s.book.energy), len(s.events)) == declined
+    audit(s)
