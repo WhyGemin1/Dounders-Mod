@@ -29,6 +29,35 @@ jobs:
         continue-on-error: true  # run regressions despite drift; fail gate below
         working-directory: .
         run: python tools/u026_g2_exact_source_audit.py
+      - name: G1 acceptance - fail-closed exact-source mutation and unlisted Python
+        working-directory: .
+        run: |
+          python - <<'PY'
+          import subprocess
+          import sys
+          from pathlib import Path
+          source = Path('Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py')
+          unlisted = Path('Founders_CIV_CoreCompletion151/source/world023024/tests/_u026_g1_unlisted_probe.py')
+          original = source.read_bytes()
+          def audit():
+              return subprocess.run([sys.executable, 'tools/u026_g2_exact_source_audit.py'],
+                                    capture_output=True, text=True)
+          try:
+              source.write_bytes(original + b'\\n# unauthorized G1 source mutation\\n')
+              result = audit()
+              assert result.returncode != 0 and 'founders_civ/core/ledger.py' in result.stdout, result.stdout
+          finally:
+              source.write_bytes(original)
+          try:
+              unlisted.write_text('# unauthorized executable test\\n')
+              result = audit()
+              assert result.returncode != 0 and '_u026_g1_unlisted_probe.py' in result.stdout, result.stdout
+          finally:
+              unlisted.unlink(missing_ok=True)
+          clean = audit()
+          assert clean.returncode == 0, clean.stdout + clean.stderr
+          print('G1 fail-closed audit: mutated source rejected, unlisted Python rejected, clean checkout accepted')
+          PY
       - name: Record exact G0 candidate source hashes
         working-directory: .
         run: |
