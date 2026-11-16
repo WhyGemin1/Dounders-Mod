@@ -266,3 +266,11 @@
 
 ### CI verification addendum — read-only provenance CLI
 - GitHub Actions run 43813656249 for source/test commit 68bd4f6ddd0e53cbd09bdf1abbff6d57d6aa4939 completed SUCCESS. This establishes workflow-level clean-checkout regression execution for the synthetic CLI fixtures. It does NOT establish a real authorized 27-module archive comparison or new numerical Book audit.
+
+## 2026-11-16 — P0 out-of-session authoritative clock mutation guard
+- Ground: live branch tracked 27 Core151 source modules and read-only provenance CLI; authorized Drive ZIP metadata exists (956121 bytes). Real 27-file archive comparison still NOT RUN; no archive bytes retrieved in this cycle. PR #2 remains draft; other G1/G2 PRs not merged.
+- Implementation: `SingleEngineSession` captures `world.tick` on construction, rejects external tick changes during audit/step/harvest and advances its expected tick only after a successful exactly-one-tick `world.step()`. Added real Core151 bootstrap seed-406 negative regression for external clock tampering and restored-state audit.
+- Code commits: 2877870df9aa7e24ce46d02c042cb860ab9fe938, 517c95bd1541721998c7e5ebee75cc70829aecbe.
+- Tests: CI triggered by test commit; result pending at ledger write. Prior provenance CLI GitHub CI 43813656249 passed. No new numerical Book conservation audit, WorldBox gameplay or ecological horizon run.
+- VERIFIED: source/test commits and previous CI; PROVISIONAL: new clock guard until current CI; BLOCKED: actual archive-to-checkout comparison, native identity/units/version/exactly-once ACK, M05 writer migration and ecological stability.
+- Next: verify new CI, then execute 27-module comparison against actual authorized ZIP without auto-approving overlays. M01 iteration 3 remains locked; no merge or alternate engine.
