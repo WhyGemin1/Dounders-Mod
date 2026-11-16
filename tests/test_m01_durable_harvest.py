@@ -407,5 +407,42 @@ class DurableHarvestTests(unittest.TestCase):
                 book.request_receipts[original_key] = record
         book.audit()
 
+    def test_nonfinite_historical_transaction_metadata_fails_closed(self):
+        """A checksum-valid checkpoint cannot hide fabricated Book inflow."""
+        import pickle
+        from dataclasses import replace
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'forged-metadata.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'metadata-check', 'v1',
+                'forest', 'plant', .01, .001)
+            book = self.session.book
+            original = book.transaction_history[0]
+            seq = book.seq
+            mass, energy = dict(book.mass), dict(book.energy)
+            try:
+                for forged in (replace(original, external=float('nan')),
+                               replace(original, toll=-1.0)):
+                    with self.subTest(forged=repr(forged)):
+                        book.transaction_history[0] = forged
+                        path.write_bytes(_encode(pickle.dumps(
+                            (self.tree_id, self.world),
+                            protocol=pickle.HIGHEST_PROTOCOL)))
+                        original_bytes = path.read_bytes()
+                        with self.assertRaisesRegex(
+                                ValueError, 'malformed canonical Book transaction metadata'):
+                            load_checkpoint(path, self.tree_id)
+                        with self.assertRaisesRegex(
+                                ValueError, 'malformed canonical Book transaction metadata'):
+                            save_checkpoint(self.world, self.tree_id, path)
+                        self.assertEqual(path.read_bytes(), original_bytes)
+                        self.assertEqual(book.seq, seq)
+                        self.assertEqual(dict(book.mass), mass)
+                        self.assertEqual(dict(book.energy), energy)
+            finally:
+                book.transaction_history[0] = original
+        book.audit()
+
 if __name__ == '__main__':
     unittest.main()
