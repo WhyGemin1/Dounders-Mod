@@ -80,3 +80,16 @@ jobs:
         env:
           PYTHONPATH: .
         run: python -m unittest discover -s tests -v
+
+  g1-matched:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: G1 acceptance - 10 matched seeds, control and opt-in, 30 and 180 days
+        run: python tools/u026_g1_matched_acceptance.py --seeds 10 --days 180
