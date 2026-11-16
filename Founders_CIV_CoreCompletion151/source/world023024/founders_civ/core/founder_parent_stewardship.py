@@ -45,6 +45,10 @@ def propose_parent_stewardship(sim, founder):
             if person.location in OBSERVATION_SITES:
                 proposals.append((5.40, 'parent_inspect', None, rid))
             continue
+        # A remembered reserve does not authorize remote physical work.
+        # Remote Founders may keep their knowledge but must return to a site.
+        if person.location not in OBSERVATION_SITES:
+            continue
         predicted = max(0., knowledge['reserve'] -
                         (sim.tick - knowledge['tick']) * realm['upkeep'])
         if predicted >= 5.0 * realm['upkeep']:
