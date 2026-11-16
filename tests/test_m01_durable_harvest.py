@@ -257,5 +257,23 @@ class DurableHarvestTests(unittest.TestCase):
             self.assertEqual(dict(self.session.book.mass), original_mass)
             self.assertEqual(dict(self.session.book.energy), original_energy)
 
+
+    def test_direct_book_replay_rejects_forged_stored_legs(self):
+        """A matching request must not replay a canonical receipt with forged stored legs."""
+        self.session.harvest('F001', 'replay-legs', 'v1', 'forest', 'plant', .01, .001)
+        book = self.session.book
+        key = f'm01:{self.tree_id}:replay-legs:v1'
+        legs, receipt = book.request_receipts[key]
+        forged_material = tuple((s, t, q * .5) for s, t, q in legs[0])
+        forged_legs = (forged_material, legs[1])
+        self.assertNotEqual(forged_legs, legs)
+        seq, mass, energy = book.seq, dict(book.mass), dict(book.energy)
+        book.request_receipts[key] = (forged_legs, receipt)
+        with self.assertRaisesRegex(ValueError, 'receipt legs do not match canonical Book transaction'):
+            book.move_once(key, material=forged_legs[0], energy=forged_legs[1])
+        self.assertEqual(book.seq, seq)
+        self.assertEqual(dict(book.mass), mass)
+        self.assertEqual(dict(book.energy), energy)
+
 if __name__ == '__main__':
     unittest.main()
