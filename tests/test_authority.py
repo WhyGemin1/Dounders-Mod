@@ -54,5 +54,29 @@ class SingleAuthorityTests(unittest.TestCase):
                                  'forest', 'plant', .01, .001)
         self.assertEqual(self.session.book.seq, before)
 
+    def test_detect_founder_identity_substitution(self):
+        world, _, tree_id = bootstrap(401)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        founder = world.founders.people.pop(founder_id)
+        try:
+            world.founders.people['F999'] = founder
+            with self.assertRaisesRegex(RuntimeError, 'Founder identities changed'):
+                session.audit()
+        finally:
+            world.founders.people.pop('F999', None)
+            world.founders.people[founder_id] = founder
+
+    def test_detect_founder_registry_book_swap(self):
+        world, _, tree_id = bootstrap(402)
+        session = SingleEngineSession(world, tree_id)
+        original = world.founders.book
+        try:
+            world.founders.book = object()
+            with self.assertRaisesRegex(RuntimeError, 'registry Book authority changed'):
+                session.audit()
+        finally:
+            world.founders.book = original
+
 if __name__ == '__main__':
     unittest.main()
