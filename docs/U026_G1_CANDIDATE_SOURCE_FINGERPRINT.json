@@ -514,7 +514,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/WORLD_023_MANIFEST.json": "8a1dba36d7f56792d3d9eda47225774862506408404b7d9d48698f351f428332",
     "Founders_CIV_CoreCompletion151/source/world023024/WORLD_024_MANIFEST.json": "6c41d7b2d4f3316000849dc4e7df6b5343b629f772a2020ba4aefa597c28a7c3",
     "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
-    ".github/workflows/u026_g1_acceptance.yml": "8757406b52f208e3b38ff766c34bd2a257cf9ef2007641460ffb4fb90aac7064",
+    ".github/workflows/u026_g1_acceptance.yml": "71240deae8c370746a230b393e4561f86cadf237ded71f2807de6eb9d30a67ae",
     "tools/u026_g1_exact_source_audit.py": "61297e9d75a1e52cc6b2f47ce8ab82f39b972d2c657a1e6596e5f7653dc80eb1"
   },
   "excluded": [
@@ -575,7 +575,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "f894f02524b3f7684fe8e41f6270520e055d603f",
+  "source_commit": "c15ca3c9c03d8c994845a0c82e69e14a27f94367",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
