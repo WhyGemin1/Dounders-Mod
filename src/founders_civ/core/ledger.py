@@ -37,6 +37,8 @@ class Book:
         self.last=None
         # Same authoritative Book owns replay receipts; no secondary SQLite ledger.
         self.request_receipts={}
+        # Canonical Book-owned transaction history, indexed by committed sequence.
+        self.transaction_history=[]
 
     def seed_mass(self,key,value):
         assert self.start_mass is None and value>=0 and math.isfinite(value)
@@ -111,6 +113,7 @@ class Book:
             self.seq+=1;self.transactions+=1
             if kind=='transform':self.toll_count+=1
             self.last=Transaction(self.seq,kind,material,energy,toll,external)
+            self.transaction_history.append(self.last)
             return self.last
         except (ValueError,AssertionError):
             self.rejected+=1
@@ -136,6 +139,10 @@ class Book:
             # current history (for example after a partial/corrupt restore).
             if not isinstance(receipt, Transaction) or not 1 <= receipt.seq <= self.seq or receipt.kind != 'move':
                 raise ValueError('invalid canonical Book replay receipt')
+            history = getattr(self, 'transaction_history', None)
+            if (not isinstance(history, list) or len(history) != self.seq or
+                    history[receipt.seq - 1] != receipt):
+                raise ValueError('receipt does not match canonical Book history')
             if prior_legs != legs:
                 raise ValueError('request id reused with different transfer')
             return receipt, False
