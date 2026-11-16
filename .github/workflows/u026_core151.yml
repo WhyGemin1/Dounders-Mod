@@ -3,7 +3,7 @@ on:
   push:
     branches: [Development]
   pull_request:
-    branches: [Core]
+    branches: [Core, Development]
   workflow_dispatch:
 
 permissions:
@@ -24,11 +24,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Verify exact source fingerprints and no generated artifacts
+      - name: Verify G2 candidate exact source fingerprints and no generated artifacts
         id: provenance
         continue-on-error: true  # run regressions despite drift; fail gate below
         working-directory: .
-        run: python tools/u026_g0_drift_audit.py
+        run: python tools/u026_g2_exact_source_audit.py
       - name: Record exact G0 candidate source hashes
         working-directory: .
         run: |
@@ -52,7 +52,7 @@ jobs:
           PROVENANCE_OUTCOME: ${{ steps.provenance.outcome }}
         run: |
           if [ "$PROVENANCE_OUTCOME" != success ]; then
-            echo 'G0 provenance FAILED; regression evidence retained, promotion blocked.'
+            echo 'G2 candidate provenance FAILED; regression evidence retained, promotion blocked.'
             exit 1
           fi
 
