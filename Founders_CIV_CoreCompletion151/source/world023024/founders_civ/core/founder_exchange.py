@@ -191,6 +191,8 @@ def decide_offer(sim, receiver, offer_id, accept, payment_lot=None):
     if offer['status'] == 'declined':
         if accept:
             raise ValueError('declined agreement cannot be accepted')
+        if payment_lot is not None:
+            raise ValueError('declined agreement replay cannot supply payment')
         return None
     if offer['status'] == 'accepted':
         if not accept or payment_lot != offer['payment_lot']:
@@ -206,6 +208,8 @@ def decide_offer(sim, receiver, offer_id, accept, payment_lot=None):
     if not _active(sim, receiver):
         raise ValueError('offer not addressed to active recipient')
     if not accept:
+        if payment_lot is not None:
+            raise ValueError('declining an agreement cannot transfer payment')
         offer['status'] = 'declined'
         sim.log('resource_agreement_declined', receiver,
                 parent=getattr(sim, '_current_parent', None), offer_id=offer_id,
