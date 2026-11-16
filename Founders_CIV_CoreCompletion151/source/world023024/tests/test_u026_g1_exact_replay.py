@@ -10,6 +10,25 @@ class G1ExactReplayTests(unittest.TestCase):
         self.book.seed_energy("river_pool", 2.0)
         self.book.freeze()
 
+    def test_ieee_rounding_only_does_not_block_funded_physical_transfer(self):
+        book = Book()
+        book.seed_energy("embodied:funded", 2.64)
+        book.freeze()
+        # Several floating-point legs may overstate the debit by one ULP.
+        book.move(energy=[("embodied:funded", "heat", 2.6400000000000006)])
+        self.assertEqual(book.energy["embodied:funded"], 0.)
+        self.assertLess(abs(book.audit()["energy_error"]), 1e-12)
+
+    def test_real_tiny_overdraft_above_ulp_is_still_fail_closed(self):
+        book = Book()
+        book.seed_energy("embodied:funded", 2.64)
+        book.freeze()
+        before = (dict(book.energy), book.seq)
+        with self.assertRaisesRegex(ValueError, "energy overdraw"):
+            book.move(energy=[("embodied:funded", "heat", 2.640000000001)])
+        self.assertEqual(before, (dict(book.energy), book.seq))
+        book.audit()
+
     def test_exact_retry_returns_original_without_second_debit(self):
         tx = self.book.move(material=[("plant:tree", "plant:founder", 0.5)],
                             operation_id="g1:harvest:1")
