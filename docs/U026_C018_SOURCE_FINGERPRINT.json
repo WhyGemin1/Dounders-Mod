@@ -1,5 +1,5 @@
 {
-  "source": "U026-C017 verified canonical source",
+  "source": "U026-C036 G0 reviewed candidate, CI acceptance pending; original C018 preserved in Git history",
   "files": 497,
   "sha256": {
     "Founders_CIV_CoreCompletion151/source/capacity_dose_021131.py": "fc9800b1846604edfd1bee305bc866030748f109929825b4422671127808e036",
@@ -415,7 +415,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "ff56c6a958b3af7dc03d5d6ba3006b74e9403358c2b3affa31a0fcbe38620237",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "0a06b3e88dc4fd58c5314da62111c0609f302fab7e2360fbcdff22021a503539",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "fdae8696db73222e129cf75b6450ca908f172a85397f141790eda94e823fa6bb",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "9c0e2d24bedb1fefadce4e233258499dea38d172e3e5f15862c2719bd7c7e5ec",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "8cb7b28e6f30eb31efa48356303f10bff69a901716ee99ec2b780a8551f9a754",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "ac16f35fd8be31880c21cf7eb85ceb5908acb898c956747be19aac27aa99a76e",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "4468dae8555504aa413411929cb89eddd6f4f1099426b7365495e54f55f088c1",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "d1688574f0dbbdaf556fb0db93e8cb5b429e0e95dfc3127da1cbd30c4854a016",
@@ -428,7 +428,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/social_agents.py": "f12d5a9af1b09522f947c1a33c9148d198bba18cb1308156e2dd6c63e1239d79",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/soul.py": "aba416742da915286bafb8c4483b1692b8d85116ad287c80f1b2a32fd65d09cc",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world024.py": "d1856f9eaf8bc3ebbde41aed614253d07ac07beb7c6da55abd715f896341df39",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_integration.py": "3632587ca0086fda6211c3a98ed87a923c9bec408265d09e0234120d0e0bc660",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_integration.py": "3f04f547bb07a1d84ef70a60206da98cdb64b9726dc9d0c8590c724326feb274",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_trees.py": "20f00140ba0b0809d926af142bbaa6b6ea0cef68a172ee0196d11bbf05e02dfb",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/integration/__init__.py": "c752ac2fd07e5ddbf7f75e34ae4b5b0fdda380c9d48404f908018f7cf3be494f",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/integration/branches.py": "02c5bb7b76310eb1a72b631f1326027e3ec7d35d7ff8450d3851337bebcaccb6",
