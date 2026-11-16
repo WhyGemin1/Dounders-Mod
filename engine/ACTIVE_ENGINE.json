@@ -21,7 +21,7 @@
     "clean_checkout": "PASS clean GitHub Actions checkout at 24692b7, run 43772637029",
     "book_audit_this_cycle": "New fail-closed audit test committed; no numerical Book mass/energy values extracted this cycle",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
-    "real_archive_this_cycle": "Authorized Drive ZIP downloaded and SHA256 independently verified as 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
+    "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
     "knowledge_architecture": "6/6 PASS local extracted exact SHA archive source",
     "pilot": "seed400, 1 day PASS, 100 Founders verified separately, 16 tree residents, Book mass error -2.73e-12, energy error -1.12e-8",
@@ -42,7 +42,8 @@
     "p0_founder_object_substitution": "PASS GitHub Actions run 43784232338 on a7e43e0cf2a9971309fb05f387e6b56a1f98612e",
     "p0_founder_strong_reference": "PASS GitHub Actions run 43784451806 on 871c11171939e291226bd5633f2d39de647e3711",
     "p0_nonfinite_book_audit": "PASS GitHub Actions run 43789231933 on test source commit 60c3a20a1dc028fd845afd2f7633a17dc286a7d5",
-    "p0_source_provenance": "New synthetic drift/missing/allowlist regression committed and wired to GitHub CI; outcome pending"
+    "p0_source_provenance": "PASS GitHub Actions 43795939367 (synthetic provenance tests)",
+    "p0_provenance_symlink_ancestor": "New test committed; GitHub CI pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -51,11 +52,11 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Verify new CI; obtain authorized archive bytes and run verify_checkout against clean checkout; review explicit overlay allowlist and unexpected drift",
-  "last_cycle": "2026-11-15 P0 archive-to-checkout source drift verifier",
+  "next_cycle": "Confirm symlink CI; compare actual 27 source modules to authorized ZIP and classify any M01 overlays",
+  "last_cycle": "2026-11-15 P0 symlink ancestor provenance hardening",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "60c3a20a1dc028fd845afd2f7633a17dc286a7d5",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43789231933",
-  "last_unverified_code_commit": "8fa9efdf19c6e906ffb3a0814c1a69ced99905b4"
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43795939367",
+  "last_unverified_code_commit": "d44afc74797776331ab37bccacbfdb09ac128d37"
 }
