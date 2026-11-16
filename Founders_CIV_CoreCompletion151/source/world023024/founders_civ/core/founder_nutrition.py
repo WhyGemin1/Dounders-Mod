@@ -18,13 +18,14 @@ def _owned_harvests(book, founder):
 
 
 def _tree_for_lot(sim, lot):
-    # Resolve the lot's immutable producing Tree. Even a collapsed Tree may
-    # retain food previously harvested by a Founder.
-    for tree_id, tree in sorted(sim.world_trees.worlds.items()):
-        if tree.provisioning is not None and lot in tree.provisioning.lots:
-            if tree.provisioning.lots[lot].kind == 'food':
-                return tree_id, tree
-    return None, None
+    """Resolve physical food origin through the existing shared Book provenance.
+
+    TreeResourceOps may create real food directly without C003 provisioning.
+    Those lots are already recognized for harvesting and voluntary exchange;
+    nutrition must not silently make the same owned food inedible.
+    """
+    from founders_civ.core.founder_exchange import _origin
+    return _origin(sim, 'food', lot)
 
 
 def propose_nutrition(sim, founder):
