@@ -77,7 +77,12 @@ def perform_nutrition(sim, founder, action, target):
     if actual_id != tree_id or tree is None:
         raise ValueError('unknown identified food lot')
     from founders_civ.core.founder_exchange import owns_lot
-    if action == 'food_ingest' and not owns_lot(sim, founder, 'food', lot):
+    # A completed ingestion consumed the portable holding; a retry must be
+    # resolved by this Founder's exact Book receipt, not rejected as theft.
+    # New ingestion still requires real current ownership.
+    ingested_id = f'food:ingest:{lot}:{founder}'
+    if (action == 'food_ingest' and ingested_id not in sim.book.operations
+            and not owns_lot(sim, founder, 'food', lot)):
         raise ValueError('Founder never harvested or received this food lot')
     if action == 'food_digest' and f'food:ingest:{lot}:{founder}' not in sim.book.operations:
         raise ValueError('Founder has not ingested identified food lot')
