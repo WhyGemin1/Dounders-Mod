@@ -418,7 +418,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/founders.py": "be33d310ebe6aaef4d7d5628ffd9dc3316ce9810025ac6b6c968c7da27aef844",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/social_agents.py": "7079d88453deda0d47f2b6ddfeb8ce1082477cf80caa35f866f574bba2e63bb3",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/soul.py": "aba416742da915286bafb8c4483b1692b8d85116ad287c80f1b2a32fd65d09cc",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_integration.py": "1a887600680b16bf47208b30b9ec2b5531712bd544811778cbb0e689517464f1",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_integration.py": "edebc93b3cfbd4a9275af89c5b3bb4d3e44863b7af62940ff3fdc2ae7d3220e4",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_trees.py": "20f00140ba0b0809d926af142bbaa6b6ea0cef68a172ee0196d11bbf05e02dfb",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world024.py": "d1856f9eaf8bc3ebbde41aed614253d07ac07beb7c6da55abd715f896341df39",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/integration/__init__.py": "c752ac2fd07e5ddbf7f75e34ae4b5b0fdda380c9d48404f908018f7cf3be494f",
@@ -470,7 +470,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/test_world_integration.py": "b0b3f13af8de0228129c92b629312a4af5b2245d3a9cb4c9579636d1572d965b",
     "Founders_CIV_CoreCompletion151/source/world023024/test_world_tree_023.py": "f417520ef235d99bcdf4eeb6f0f24103fdbd04dfe8f87c5486bc535f1e6496ad",
     "Founders_CIV_CoreCompletion151/source/world023024/test_world024.py": "79e0541e3d8c00a594e6f10109af1acb6538501cc143073e9c1d41644e37a9f3",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_autonomous_provisioning_c003.py": "b8b3a8f2780aa184baf2dd6055af8d1c8c8e2160f4027bd5071dcc22d5b62f53",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_autonomous_provisioning_c003.py": "fabe3713763a02de58aaa16fd5fdddfdd06bd5adccc185fea884e59647b8883b",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_book_assets_c002.py": "151d47d1a4514cc49590da8aee9c78e2894b8a2bdd15573ba19bc69c65379e18",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c002_provenance.py": "afc92c7eb9e13761e31f2eb4863b083f5c3af5048c0f6b6da1d72ed28f280ab5",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c005_harvest_policy.py": "4b3ce441569eb1153dcf6bd9bf6c8f3e04ea6d6999baaa43497d52e48373b762",
@@ -576,7 +576,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "89740285b970465197be6d340cf8705a5d410a0e",
+  "source_commit": "740d37d25ca10adfccb0e39d913b8732a194908e",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
