@@ -3,8 +3,10 @@
 The /capabilities route returns bare JSON; /health and /cmd use an
 {ok,result,tick} envelope. These fixtures are not live WorldBox tests.
 """
+import io
 import json
 import sys
+from urllib.error import HTTPError
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -68,6 +70,56 @@ class BridgeResponseTests(unittest.TestCase):
     def test_non_object_json_fails_closed(self):
         with self.assertRaisesRegex(RuntimeError,'non-object'):
             self.receive('capabilities',['query_actor_identities'])
+
+    def test_http_422_game_rejection_is_explained(self):
+        response={'ok':False,'error':{'code':'GAME_REJECTED',
+                  'message':'Pause WorldBox before a stable-ID snapshot.'}}
+        err=HTTPError('http://127.0.0.1:8723/cmd',422,'Unprocessable Entity',{},
+                      io.BytesIO(json.dumps(response).encode()))
+        with patch('founders_worldbox.client.request.urlopen',side_effect=err):
+            with self.assertRaisesRegex(RuntimeError,
+                    r'HTTP 422 GAME_REJECTED: Pause WorldBox'):
+                self.client.command('query_actor_identities')
+
+    def test_http_404_unregistered_command_is_explained(self):
+        response={'ok':False,'error':{'code':'UNKNOWN_COMMAND',
+                  'message':'No registered command query_actor_identities.'}}
+        err=HTTPError('http://127.0.0.1:8723/cmd',404,'Not Found',{},
+                      io.BytesIO(json.dumps(response).encode()))
+        with patch('founders_worldbox.client.request.urlopen',side_effect=err):
+            with self.assertRaisesRegex(RuntimeError,
+                    r'HTTP 404 UNKNOWN_COMMAND'):
+                self.client.command('query_actor_identities')
+
+    def test_http_403_permission_denied_is_explained(self):
+        response={'ok':False,'error':{'code':'PERMISSION_DENIED',
+                  'message':'ReadOwnFaction permission required.'}}
+        err=HTTPError('http://127.0.0.1:8723/cmd',403,'Forbidden',{},
+                      io.BytesIO(json.dumps(response).encode()))
+        with patch('founders_worldbox.client.request.urlopen',side_effect=err):
+            with self.assertRaisesRegex(RuntimeError,
+                    r'HTTP 403 PERMISSION_DENIED'):
+                self.client.command('query_actor_identities')
+
+    def test_http_500_never_exposes_raw_or_token(self):
+        token=self.client.token
+        response={'ok':False,'error':{'code':'GAME_CRASH',
+                  'message':'Secret='+token}}
+        err=HTTPError('http://127.0.0.1:8723/cmd',500,'Server Error',{},
+                      io.BytesIO(json.dumps(response).encode()))
+        with patch('founders_worldbox.client.request.urlopen',side_effect=err):
+            with self.assertRaisesRegex(RuntimeError,
+                    r'HTTP 500 GAME_CRASH') as captured:
+                self.client.command('query_actor_identities')
+        self.assertNotIn(token,str(captured.exception))
+
+    def test_http_html_error_reports_status_without_body(self):
+        err=HTTPError('http://127.0.0.1:8723/cmd',502,'Bad Gateway',{},
+                      io.BytesIO(b'<html>PRIVATE</html>'))
+        with patch('founders_worldbox.client.request.urlopen',side_effect=err):
+            with self.assertRaisesRegex(RuntimeError,r'HTTP 502 HTTP_ERROR') as captured:
+                self.client.command('query_actor_identities')
+        self.assertNotIn('PRIVATE',str(captured.exception))
 
     def test_read_only_command_rejects_mutation(self):
         with self.assertRaisesRegex(PermissionError,'read-only'):
