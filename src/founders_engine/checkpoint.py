@@ -44,6 +44,12 @@ def _validate_world(world, tree_id):
     receipts = getattr(session.book, 'request_receipts', None)
     if not isinstance(receipts, dict):
         raise ValueError('missing authoritative Book replay receipts')
+    history = getattr(session.book, 'transaction_history', None)
+    if (not isinstance(history, list) or len(history) != session.book.seq or
+            any(not isinstance(tx, Transaction) or tx.seq != i
+                for i, tx in enumerate(history, 1)) or
+            (history[-1] if history else None) != session.book.last):
+        raise ValueError('inconsistent canonical Book transaction history')
     seen_sequences = set()
     for request_id, record in receipts.items():
         if not isinstance(request_id, str) or not request_id.strip():
@@ -57,11 +63,10 @@ def _validate_world(world, tree_id):
                 or receipt.material != legs[0] or receipt.energy != legs[1]
                 or receipt.seq < 1 or receipt.seq > session.book.seq):
             raise ValueError('inconsistent Book replay receipt')
-        # The newest receipt must match the Book's actual latest transaction,
-        # not merely a plausible sequence and self-consistent forged legs.
-        # Older receipts still need durable transaction-history linkage.
-        if receipt.seq == session.book.seq and receipt != session.book.last:
-            raise ValueError('receipt does not match latest Book transaction')
+        # Every receipt, including historical ones, must match its committed
+        # transaction in this SAME authoritative Book.
+        if receipt != history[receipt.seq - 1]:
+            raise ValueError('receipt does not match canonical Book transaction history')
         if receipt.seq in seen_sequences:
             raise ValueError('duplicate Book settlement sequence')
         seen_sequences.add(receipt.seq)
