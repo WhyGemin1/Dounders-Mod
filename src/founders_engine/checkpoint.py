@@ -57,6 +57,11 @@ def _validate_world(world, tree_id):
                 or receipt.material != legs[0] or receipt.energy != legs[1]
                 or receipt.seq < 1 or receipt.seq > session.book.seq):
             raise ValueError('inconsistent Book replay receipt')
+        # The newest receipt must match the Book's actual latest transaction,
+        # not merely a plausible sequence and self-consistent forged legs.
+        # Older receipts still need durable transaction-history linkage.
+        if receipt.seq == session.book.seq and receipt != session.book.last:
+            raise ValueError('receipt does not match latest Book transaction')
         if receipt.seq in seen_sequences:
             raise ValueError('duplicate Book settlement sequence')
         seen_sequences.add(receipt.seq)
