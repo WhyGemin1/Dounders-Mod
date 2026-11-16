@@ -154,10 +154,15 @@ def withdraw_offer(sim, seller, offer_id):
     if not getattr(sim, 'founder_exchange_enabled', False):
         raise ValueError('resource agreements disabled')
     offer = _data(sim).get(offer_id)
-    if offer is None or offer['seller'] != seller or not _active(sim, seller):
-        raise ValueError('only the active seller may withdraw this offer')
+    if offer is None or offer['seller'] != seller:
+        raise ValueError('only the original seller may withdraw this offer')
+    # A completed withdrawal is historical state, not a fresh action.
+    # Its exact replay must survive the seller's later death without
+    # reactivating the offer or writing another event.
     if offer['status'] == 'withdrawn':
         return None
+    if not _active(sim, seller):
+        raise ValueError('only the active seller may withdraw this offer')
     if offer['status'] != 'open':
         raise ValueError('settled or declined offer cannot be withdrawn')
     offer['status'] = 'withdrawn'
