@@ -109,6 +109,8 @@ def offer_resource(sim, seller, receiver, kind, lot, wanted_kind=None, decision_
         raise ValueError('unsupported resource kind')
     if wanted_kind == kind:
         raise ValueError('exchange must provide a distinct resource kind')
+    if seller == receiver:
+        raise ValueError('resource agreement requires distinct Founders')
     if decision_id is None:
         decision_id = getattr(sim, '_current_parent', None)
     if not isinstance(decision_id, str) or not 1 <= len(decision_id) <= 72:
