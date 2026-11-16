@@ -328,3 +328,8 @@
 - Test source commit: d3d8cb7c06393147fed9803e0d8b89a2543c031a. Expected workflow command: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_durable_harvest.py'. New CI result and numeric residuals PENDING at ledger entry; do not claim a pass until verified.
 - VERIFIED: previous CI run 43857105676 and current source commit. PROVISIONAL: new conservation regression pending CI. BLOCKED: native WorldBox identities/units/version/exactly-once ACK, M05 independent SQLite migration, physical power-loss durability and ecological long horizons.
 - Next: confirm current CI, inspect numeric BOOK_AUDIT output, repair any failure; then investigate replay receipts' linkage to actual transaction history. PR #2 remains draft, no merge or main changes. M01 iteration 3 lock and M02–M07 backlog retained.
+
+### Verified CI addendum — restored Book conservation
+- GitHub Actions run 43864971835 completed SUCCESS on test source d3d8cb7c06393147fed9803e0d8b89a2543c031a. Clean-checkout job steps include source provenance, one-engine/M01, durable checkpoint, fault recovery and native read-only isolation. The new real Core151 test asserts finite mass/energy residuals within 1e-6 before/after funded harvest, trusted restart and subsequent world tick; all steps passed.
+- The test prints BOOK_AUDIT residuals, but job-step metadata does not expose stdout; exact measured numbers have NOT been extracted, and no independent manual run occurred. This is a test-bound verification, not an independently reported numerical audit or ecological stability result.
+- Next: retrieve exact BOOK_AUDIT log values where available and review receipt-to-transaction-history integrity. No merge, second authority, or native writes.
