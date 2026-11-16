@@ -33,6 +33,14 @@ class NativeBoundaryTests(unittest.TestCase):
                 self.boundary.inspect(replace(self.claim, quantity=value))
 
 
+    def test_huge_integer_quantities_fail_closed_without_overflow(self):
+        for quantity in (2**53 + 1, 10**1000):
+            with self.subTest(digits=len(str(quantity))):
+                with self.assertRaisesRegex(ValueError, 'exact integer range'):
+                    self.boundary.inspect(replace(self.claim, quantity=quantity))
+        self.assertEqual(self.boundary.inspect(replace(self.claim, quantity=2**53))['status'],
+                         'OBSERVED_UNVERIFIED')
+
     def test_batch_identical_replay_remains_read_only(self):
         result = self.boundary.inspect_batch([self.claim, self.claim])
         self.assertEqual(len(result), 2)
