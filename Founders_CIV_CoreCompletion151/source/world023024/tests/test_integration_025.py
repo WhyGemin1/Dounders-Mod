@@ -59,8 +59,9 @@ class AdapterCompatibilityTests(unittest.TestCase):
         self.assertIn('founders_civ/experimental/world_integration.py',c017['unapproved_files'])
         candidate=reviewed_check(root,root/'docs/INTEGRATION_025/BASELINE_HASHES.json',
                                  root/'docs/INTEGRATION_025/APPROVED_DRIFT_C018.json')
-        self.assertEqual(candidate['status'],'approved_drift')
-        self.assertEqual(candidate['unapproved_files'],[])
+        # C018 is immutable historical evidence, not approval for newer code.
+        self.assertEqual(candidate['status'],'drift_requires_review')
+        self.assertIn('founders_civ/experimental/world_integration.py',candidate['unapproved_files'])
     def test_legacy_social_branch_readonly(self):
         s=SocialSimulation(seed=820)
         d=describe_branch(s)
