@@ -53,7 +53,7 @@
     "p0_book_receipt_history": "PASS GitHub Actions run 43849553308 on source/test/pin commit 7be64b7b89505894ef09f55dfbdf5c4a98514fc0",
     "p0_corrupt_checkpoint_receipt": "PASS GitHub Actions run 43857105676 on regression commit 00bdb673ed38ca419eb262ae1faa7f34e8c37f71",
     "p0_numeric_restored_book_audit": "PASS GitHub Actions run 43864971835 on code commit d3d8cb7c06393147fed9803e0d8b89a2543c031a; numerical residual lines emitted but exact numbers not extracted from logs",
-    "p0_latest_receipt_authenticity": "New real Core151 checksum-valid forged latest receipt negative regression committed at 3e4bb980; CI pending"
+    "p0_latest_receipt_authenticity": "PASS GitHub Actions run 43874364593 on test commit 3e4bb980f1cfd7283db47e70bb2b5926e910e7a7; full clean-checkout job steps SUCCESS"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -66,7 +66,7 @@
   "last_cycle": "2026-11-16 P0 latest-transaction receipt authenticity on checkpoint save/load",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "d3d8cb7c06393147fed9803e0d8b89a2543c031a",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43864971835",
-  "last_unverified_code_commit": "3e4bb980f1cfd7283db47e70bb2b5926e910e7a7"
+  "last_verified_code_commit": "3e4bb980f1cfd7283db47e70bb2b5926e910e7a7",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43874364593",
+  "last_unverified_code_commit": null
 }
