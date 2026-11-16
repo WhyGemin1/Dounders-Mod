@@ -100,6 +100,9 @@ def tend_parent(sim, founder, target, decision_id):
         # under the same decision ID without paying or flagging the conflict.
         return sim.book.move(energy=[(f'founder:{founder}', f'reserve:{realm_id}', amount)],
                              operation_id=receipt)
+    # New physical transfers require local access; past Book receipts replay anywhere.
+    if person.location not in OBSERVATION_SITES:
+        raise ValueError('Realm stewardship requires local physical access')
     knowledge = sim.seeds.owner_reserve_knowledge.get(realm_id, {}).get(founder)
     if knowledge is None or sim.tick - knowledge['tick'] > 4:
         raise ValueError('fresh parent reserve observation required')
