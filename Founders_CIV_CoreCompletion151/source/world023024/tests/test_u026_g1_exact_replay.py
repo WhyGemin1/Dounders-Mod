@@ -113,5 +113,64 @@ class G1ExactReplayTests(unittest.TestCase):
         self.book.audit()
 
 
+class G1CompositeAtomicityTests(unittest.TestCase):
+    """Failure injection: a failed *composite* must not spend Book resources."""
+
+    def test_failed_fruit_growth_does_not_reserve_chemical_or_creation_charge(self):
+        from types import SimpleNamespace
+        from unittest.mock import Mock
+        from founders_civ.core.autonomous_provisioning import TreeProvisioningPolicy
+
+        book = Book()
+        book.seed_mass("plant:T1:forest", 4.)
+        book.seed_energy("sun:T1:forest", .2)
+        book.seed_energy("river_pool", 2.)
+        book.freeze()
+        tree = SimpleNamespace(
+            id="T1", age=12, state="active", book=book, residents={},
+            sim=SimpleNamespace(seeds=SimpleNamespace(plants={"T1": {"status": "stable"}})),
+            acct=lambda kind, biome: f"{kind}:T1:{biome}",
+            grow_creation_fruit=Mock(side_effect=RuntimeError("injected fruit-growth failure"))
+        )
+        policy = TreeProvisioningPolicy(tree, minimum_plant=1.)
+        before = (dict(book.mass), dict(book.energy), book.seq, dict(book.operations))
+        with self.assertRaisesRegex(RuntimeError, "injected fruit-growth failure"):
+            policy._allocate("fruit", "forest")
+        self.assertEqual(before, (dict(book.mass), dict(book.energy),
+                                  book.seq, dict(book.operations)))
+        self.assertEqual(policy.lots, {})
+        self.assertEqual(policy.events, [])
+        book.audit()
+
+    def test_failed_construct_build_does_not_debit_founder_or_claim_creation(self):
+        from types import SimpleNamespace
+        from unittest.mock import Mock
+        from founders_civ.experimental.world_integration import SeedRegistry, SeedBlueprint, RULE_DEFAULTS
+
+        book = Book()
+        book.seed_mass("soil:Solara:grassland", 10.)
+        book.seed_energy("founder:F1", 3.)
+        book.seed_energy("house", 20.)
+        book.freeze()
+        sim = SimpleNamespace(
+            book=book, tick=3,
+            founders=SimpleNamespace(people={"F1": SimpleNamespace(alive=True)}))
+        seeds = SeedRegistry(sim)
+        blueprint = SeedBlueprint(
+            id="SEED-00001", author="F1", kind="realm", name="First Realm",
+            parent_id=None, rules=dict(RULE_DEFAULTS), created_tick=0,
+            x=30., y=30., stage="validated")
+        seeds.blueprints[blueprint.id] = blueprint
+        seeds.constructs.build = Mock(side_effect=RuntimeError("injected construct-build failure"))
+        before = (dict(book.mass), dict(book.energy), book.seq, dict(book.operations))
+        with self.assertRaisesRegex(RuntimeError, "injected construct-build failure"):
+            seeds.plant("F1", blueprint.id)
+        self.assertEqual(before, (dict(book.mass), dict(book.energy),
+                                  book.seq, dict(book.operations)))
+        self.assertEqual(seeds.plants, {})
+        self.assertEqual(blueprint.stage, "validated")
+        book.audit()
+
+
 if __name__ == "__main__":
     unittest.main()
