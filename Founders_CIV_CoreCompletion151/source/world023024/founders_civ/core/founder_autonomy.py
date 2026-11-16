@@ -84,6 +84,14 @@ def observe_personal_outcomes(sim, founder):
             tree_delta = .18
         elif name == 'seed_planted':
             creation_delta = .42
+        elif name == 'resource_agreement_received':
+            tree_delta = .16 if event.get('resource_kind') == 'food' else .08
+            creation_delta = .19 if event.get('resource_kind') == 'fruit' else 0.
+        elif name == 'resource_agreement_provided':
+            # Cooperation has an opportunity cost; no forced positive valuation.
+            tree_delta = .08 if event.get('wanted_kind') else -.04
+        elif name == 'resource_agreement_declined':
+            tree_delta = -.02
         elif name in ('founder_parent_realm_tended', 'creation_autonomous_stewardship',
                       'tree_autonomous_maintenance'):
             # Choosing to spend fuel is not proof that spending was worthwhile.
@@ -137,6 +145,8 @@ def value_proposals(sim, founder, proposals):
         elif action in MAKE:
             score = max(-.6, min(2.1, raw*.36 + .80*m.creation_preference +
                                  1.1*m.believed_creation_value + .25*m.believed_tree_value))
+        elif action in ('exchange_offer', 'exchange_accept', 'exchange_decline'):
+            score = raw + .50*m.resource_preference + .24*m.believed_tree_value
         elif action in ('tree_harvest', 'food_ingest', 'food_digest'):
             score = max(-.6, min(2.5, raw*.53 + .75*m.resource_preference +
                                  .65*m.believed_tree_value))

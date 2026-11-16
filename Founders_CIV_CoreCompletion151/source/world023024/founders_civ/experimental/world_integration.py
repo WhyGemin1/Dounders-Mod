@@ -266,6 +266,7 @@ class IntegratedWorld(SocialSimulation):
         self.founder_tree_independence_enabled=False  # C017 opt-in independent fruit-funded World Trees
         self.founder_parent_stewardship_enabled=False  # C018 voluntary funded Realm maintenance
         self.founder_autonomy_learning_enabled=False  # C019 personal value and experience
+        self.founder_exchange_enabled=False  # C020 optional consensual whole-lot food/fruit agreements
         self.founder_nutrition_enabled=False  # C015 opt-in ingestion/digestion; control unchanged
         # C016 opt-in: Book-funded food-to-work recovery, no legacy river recharge.
         self.founder_recovery_enabled=False
@@ -342,6 +343,9 @@ class IntegratedWorld(SocialSimulation):
         if self.founder_parent_stewardship_enabled:
             from founders_civ.core.founder_parent_stewardship import propose_parent_stewardship
             props.extend(propose_parent_stewardship(self,a))
+        if self.founder_exchange_enabled:
+            from founders_civ.core.founder_exchange import propose_exchange
+            props.extend(propose_exchange(self,a,contacts))
         # C027: affordable observations are not prohibited by the work threshold.
         # Tree.observe itself pays .025 energy through the authoritative Book.
         if .025 <= self._energy(a) < .19 and founder.location in ('house','riverbank'):
@@ -428,6 +432,16 @@ class IntegratedWorld(SocialSimulation):
             return self.log('legacy_recharge_blocked',a,parent,
                             reason='Founder work cannot be minted from river/House energy')
         try:
+            if action=='exchange_offer' and self.founder_exchange_enabled:
+                from founders_civ.core.founder_exchange import offer_resource
+                kind, lot, wanted = meta
+                return offer_resource(self,a,target,kind,lot,wanted,parent)
+            if action in ('exchange_accept','exchange_decline') and self.founder_exchange_enabled:
+                from founders_civ.core.founder_exchange import decide_offer
+                if action=='exchange_decline':
+                    return decide_offer(self,a,meta,False)
+                offer_id, payment_lot = meta
+                return decide_offer(self,a,offer_id,True,payment_lot)
             if action=='parent_inspect':
                 from founders_civ.core.founder_parent_stewardship import inspect_parent
                 return inspect_parent(self,a,meta)

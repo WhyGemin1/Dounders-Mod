@@ -39,10 +39,10 @@ class C002ProvenanceTests(unittest.TestCase):
         self.assertEqual(old['status'],'drift_requires_review')
         self.assertIn('founders_civ/experimental/world_integration.py',old['unapproved_files'])
 
-    def test_c019_exact_candidate_accepts_and_rejects_tamper(self):
+    def test_c019_historical_candidate_rejects_c020_scheduler(self):
         r=reviewed_check(ROOT,BASE,C019)
-        self.assertEqual(r['status'],'approved_drift')
-        self.assertEqual(r['unapproved_files'],[])
+        self.assertEqual(r['status'],'drift_requires_review')
+        self.assertIn('founders_civ/experimental/world_integration.py',r['unapproved_files'])
         with tempfile.TemporaryDirectory() as temp:
             tr=Path(temp)
             for name in TRACKED:

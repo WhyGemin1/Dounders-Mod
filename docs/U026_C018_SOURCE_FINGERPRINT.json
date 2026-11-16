@@ -1,6 +1,6 @@
 {
-  "source": "U026-C019 opt-in Founder autonomy learning Development candidate; C036 historical attestation untouched; no Core promotion",
-  "files": 500,
+  "source": "U026-C020 opt-in voluntary real-lot resource agreements: experimental Development candidate. Earlier approvals remain immutable. Concurrent G1 Book edits require independent acceptance.",
+  "files": 502,
   "sha256": {
     "Founders_CIV_CoreCompletion151/source/capacity_dose_021131.py": "fc9800b1846604edfd1bee305bc866030748f109929825b4422671127808e036",
     "Founders_CIV_CoreCompletion151/source/check_cycle136_crossprocess.py": "98ba465a0114ee85335150cc9d955b889eccade366cd5318b51ae82a6ddfa694",
@@ -416,9 +416,9 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "0a06b3e88dc4fd58c5314da62111c0609f302fab7e2360fbcdff22021a503539",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "fdae8696db73222e129cf75b6450ca908f172a85397f141790eda94e823fa6bb",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "8cb7b28e6f30eb31efa48356303f10bff69a901716ee99ec2b780a8551f9a754",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "ac16f35fd8be31880c21cf7eb85ceb5908acb898c956747be19aac27aa99a76e",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "f820689214e61b4d3f1b59002d56a995da26f5a7a98fd959da6c167b33bd5f4f",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "4468dae8555504aa413411929cb89eddd6f4f1099426b7365495e54f55f088c1",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "d1688574f0dbbdaf556fb0db93e8cb5b429e0e95dfc3127da1cbd30c4854a016",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "92c2994f1cf8136f700e7fc4c0fe473ca0ca07b0b6eb56cfe7f19787d1432a8c",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py": "d2789540e8dda85dc23b2b340e4d47249369cfbc33334f939a469a8ebba19d1b",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/living_assets.py": "5fb57c92e243b2b95850f70ccac3b98c467b40482ae4da7b17ff24927c535853",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/__init__.py": "e40f61d7c61986c018aba343681265a3d221c8b4b0db7c6fd9c101010551af25",
@@ -428,7 +428,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/social_agents.py": "f12d5a9af1b09522f947c1a33c9148d198bba18cb1308156e2dd6c63e1239d79",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/soul.py": "aba416742da915286bafb8c4483b1692b8d85116ad287c80f1b2a32fd65d09cc",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world024.py": "d1856f9eaf8bc3ebbde41aed614253d07ac07beb7c6da55abd715f896341df39",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_integration.py": "fcdd5e43eba8328369fc3b5a3a197979f84eb1c2ac184adfc11d853d67df6b9e",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_integration.py": "65d35d1f9202ff10804649e92e5dec50fac698eebc27f0e4e9e8dcf5053fc8e5",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_trees.py": "20f00140ba0b0809d926af142bbaa6b6ea0cef68a172ee0196d11bbf05e02dfb",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/integration/__init__.py": "c752ac2fd07e5ddbf7f75e34ae4b5b0fdda380c9d48404f908018f7cf3be494f",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/integration/branches.py": "02c5bb7b76310eb1a72b631f1326027e3ec7d35d7ff8450d3851337bebcaccb6",
@@ -499,9 +499,11 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "ac92d141ff5535147d6ff33f88f7e984055aef956ef958521e94cdc057fbf50a",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "e004009859edc3fd48a7c07db8b22c276d10a01be52588a78dddee398999123d",
     "Founders_CIV_CoreCompletion151/source/world023024/docs/INTEGRATION_025/APPROVED_DRIFT_C018.json": "fdd10aa0f31d80b2bd9a63c7e4c36d767b9d424a0a2b8ab65caa71229503e43a",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "61d528e40063205e8f89b935ad52de8f6fab1346b99e5293c462232c9f32bda5",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "634e3665ec7a76a52fdf81405cc160b6168adc52ea1201a3804bb21fb30eeb6e",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c019_founder_autonomy.py": "a900f37114133ff102f447efa7c622aa980a2d9adfecc3555f575ff589277332",
-    "Founders_CIV_CoreCompletion151/source/world023024/docs/INTEGRATION_025/APPROVED_DRIFT_C019.json": "e5b1e650e3f16f0120b0d5026bb41aed2be497cd7f2f5ed7306420a3990c5324"
+    "Founders_CIV_CoreCompletion151/source/world023024/docs/INTEGRATION_025/APPROVED_DRIFT_C019.json": "e5b1e650e3f16f0120b0d5026bb41aed2be497cd7f2f5ed7306420a3990c5324",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "f49c8b045f896c0f802f5c0bb2d65ef4bebdce625113b759218f47158b4e9a08",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c020_resource_agreements.py": "1659607171c2426553d7ab365c563abfa8a4ee1334f93a7c9d631402b1d60919"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",

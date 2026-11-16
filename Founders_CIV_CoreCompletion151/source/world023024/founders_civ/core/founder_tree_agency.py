@@ -41,21 +41,12 @@ def _realm_to_develop(sim):
 
 
 def _own_fruit(sim, founder):
-    """Inspect only the Founder's harvest receipts, not other owners' fruit."""
-    suffix = ':' + founder
-    prefix = 'fruit:harvest:'
-    for op in sorted(sim.book.operations):
-        if not op.startswith(prefix) or not op.endswith(suffix):
-            continue
-        lot = op[len(prefix):-len(suffix)]
-        # A valid receipt does not imply that the fruit is still unspent.
-        if (sim.book.mass.get(f'fruit:lot:{lot}:founder:{founder}', 0.) < .10 - 1e-8
-                or sim.book.energy.get(f'ce:fruit:lot:{lot}:founder:{founder}', 0.) < 1. - 1e-8):
-            continue
-        for tid, tree in sorted(sim.world_trees.worlds.items()):
-            if tree.provisioning is not None and lot in tree.provisioning.lots:
-                if tree.provisioning.lots[lot].kind == 'fruit':
-                    yield tid, lot
+    """Fruit personally harvested OR accepted through a real Book agreement."""
+    from founders_civ.core.founder_exchange import owned_lots, _origin
+    for lot in owned_lots(sim, founder, 'fruit'):
+        tid, tree = _origin(sim, 'fruit', lot)
+        if tree is not None:
+            yield tid, lot
 
 
 def propose_self_trees(sim, founder, contacts):
@@ -124,7 +115,16 @@ def fund_own_tree(sim, founder, target):
         raise ValueError('unknown real fruit lot')
     if tree.provisioning.lots[lot].kind != 'fruit':
         raise ValueError('only Creation fruit funds the World seed')
-    if f'fruit:harvest:{lot}:{founder}' not in sim.book.operations:
+    from founders_civ.core.founder_exchange import owns_lot
+    # Identical retry of a successfully funded seed is Book-idempotent even
+    # after the fruit was consumed. Check the original physical source so an
+    # unrelated fruit cannot reuse the same blueprint identity.
+    funded = sim.book.operations.get(f'seed:fund:{blueprint_id}')
+    previous_source = f'fruit:lot:{lot}:founder:{founder}'
+    previous_ce = f'ce:fruit:lot:{lot}:founder:{founder}'
+    replay_owned = bool(funded and any(leg[0] == previous_source for leg in funded[1].material)
+                        and any(leg[0] == previous_ce for leg in funded[1].energy))
+    if not owns_lot(sim, founder, 'fruit', lot) and not replay_owned:
         raise ValueError('Founder does not own identified fruit')
     # Calls the existing transactional Book path, keeping fruit and CE distinct.
     already = f'seed:fund:{blueprint_id}' in sim.book.operations
