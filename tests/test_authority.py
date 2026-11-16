@@ -149,5 +149,31 @@ class SingleAuthorityTests(unittest.TestCase):
         session.step()
         self.assertEqual(session.audit().book_sequence, world.book.seq)
 
+    def test_book_replay_receipt_must_belong_to_existing_history(self):
+        from founders_civ.core.ledger import Book, Transaction
+        book = Book()
+        book.seed_mass('plant:source', 2.0)
+        book.seed_energy('chem:source', 3.0)
+        book.freeze()
+        legs = (('plant:source', 'plant:founder:F001', 0.5),)
+        first, applied = book.move_once('m01:test:source:r1', material=legs)
+        self.assertTrue(applied)
+        before = (book.seq, dict(book.mass), dict(book.energy))
+        replay, applied = book.move_once('m01:test:source:r1', material=legs)
+        self.assertFalse(applied)
+        self.assertEqual(first, replay)
+        self.assertEqual(before, (book.seq, dict(book.mass), dict(book.energy)))
+        key = 'm01:test:source:r1'
+        original = book.request_receipts[key]
+        try:
+            book.request_receipts[key] = (original[0], Transaction(
+                book.seq + 1, 'move', legs, (), 0.0, 0.0))
+            with self.assertRaisesRegex(ValueError, 'invalid canonical Book replay receipt'):
+                book.move_once(key, material=legs)
+            self.assertEqual(before, (book.seq, dict(book.mass), dict(book.energy)))
+        finally:
+            book.request_receipts[key] = original
+        book.audit()
+
 if __name__ == '__main__':
     unittest.main()
