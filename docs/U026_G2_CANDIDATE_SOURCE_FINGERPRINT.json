@@ -495,7 +495,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_drift_provenance_069.py": "e2ffa6e15b8631d39320ef31c7f3b18ca680415158df627a0829c1ad006c977b",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_founder_harvesting_c004.py": "dd31b5e2c195cc182002c0b85b041e33925d40739ab31179a415e6f7e75e66ca",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_four_systems.py": "6ea1e70f3df0716589fc97bc9717e877dba368e71dc48b0ba8fe45cdd19c65b1",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_integration_025.py": "1734b1b1154ff93b4036f245455970ae41a9ce251ce9322893986d2398a99a5e",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_integration_025.py": "cf1f044a6adde67996052cad0e2dd6684cebcbad2a72be62373f66385c1da101",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_knowledge_architecture.py": "c4ad0208e202b906c2f0cc94eae80d00ca7d54e52ac4aa152c3cd4a11580a999",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_observatory.py": "5f0d183fdaef124171109d5bb8ff32049da04114c3a49b7d102caee905ab2442",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_release.py": "9e55fc979866a2e667038e762c2487080695fbbd9ebd1868cb371d7a5afd3b69",
@@ -576,7 +576,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "d569f2accdd39a544bbed12e1ee55e07ab357b96",
+  "source_commit": "89740285b970465197be6d340cf8705a5d410a0e",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
