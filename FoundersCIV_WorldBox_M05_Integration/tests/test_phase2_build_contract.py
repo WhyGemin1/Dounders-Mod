@@ -30,7 +30,7 @@ class Phase2BuildContract(unittest.TestCase):
         self.assertNotIn("Assembly-CSharp", references)
 
     def test_source_has_m053_harmony_and_json_serializer_fix(self):
-        self.assertIn('"0.5.3"', self.source)
+        self.assertIn('"0.5.4"', self.source)
         self.assertIn("new HarmonyMethod(finalizer), null);", self.source)
         self.assertNotIn("null, finalizer == null ? null : new HarmonyMethod(finalizer));",
                          self.source)
@@ -54,6 +54,31 @@ class Phase2BuildContract(unittest.TestCase):
         self.assertIn("dependency_manifest.json", self.script)
         self.assertIn("plugin_backups", self.script)
         self.assertIn("Installed DLL hash mismatch", self.script)
+
+    def test_native_hook_probe_and_heartbeat_are_independent(self):
+        self.assertIn('kind="observer_heartbeat"', self.source)
+        self.assertIn('kind="hook_probe"', self.source)
+        self.assertIn("update_frames=", self.source)
+        self.assertIn("hook_hits=", self.source)
+        self.assertIn("callback_errors=", self.source)
+        self.assertIn("emit_errors=", self.source)
+        self.assertIn("private static string HookCounts()", self.source)
+        for name in (
+            "_hitNutrition", "_hitPrey", "_hitFood", "_hitKill",
+            "_hitDeath", "_hitBaby", "_hitBirth"
+        ):
+            self.assertIn("Hit(ref " + name + ",", self.source)
+
+    def test_callback_errors_are_reported_instead_of_silently_discarded(self):
+        self.assertNotIn("catch { /* never disrupt native game execution */ }",
+                         self.source)
+        for method in (
+            "NutritionFinalizer", "PreyFinalizer", "ResourceFinalizer",
+            "KillFinalizer", "DieFinalizer", "BabyFinalizer", "BirthFinalizer"
+        ):
+            self.assertIn('ReportCallbackFailure("' + method + '", ex);',
+                          self.source)
+        self.assertIn("M05 event emission failed:", self.source)
 
     def test_native_observer_has_seven_monitored_methods(self):
         for method in (
