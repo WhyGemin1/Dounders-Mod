@@ -419,7 +419,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "0a06b3e88dc4fd58c5314da62111c0609f302fab7e2360fbcdff22021a503539",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "31e1e5b386b6429d6377693b2524369cf57a8142e58ac2c0f600cdc13cee56e2",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "a8acfed70da51508aff5bba505823c4bbc06b96f2116ac16493ab049f2f585e1",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "9d8e34548e2b115e24b744116e65b647cef8fa452a95d3695bc3508d60893c99",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "8f343988cfee48e1b9a3a89d5c8402348da4bcdae1bc6dbac4ffdcba5bde2173",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "8181f1c9c3abb630e21374e60a9299e0263da9ca5ef2f49d443281a79597bf18",
@@ -485,7 +485,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "870e838c492e45eed7e2d96dd2900247060568e30b27fce7fae18dcc3b943a97",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "e004009859edc3fd48a7c07db8b22c276d10a01be52588a78dddee398999123d",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c019_founder_autonomy.py": "a900f37114133ff102f447efa7c622aa980a2d9adfecc3555f575ff589277332",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c020_resource_agreements.py": "47d78a0668078a58d03cf3bb1d79e2de2ceade1913c74f6fc52ba2e16d500746",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c020_resource_agreements.py": "a32d19ce5bbad3f6fca94cb4303b282780daf2be0eac340475ce4f2534266acc",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c021_nutrition_wiring.py": "cf3d279274feda9ff70679a303d2b849e1b215eb99ae3f5cdf74e459fdb6c43e",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c022_tree_proposal_preservation.py": "d92b1075bc6daffbf14b34a96b6504dde33f58e1aa7396c657bf5d125079fedd",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c026_food_priority.py": "2839b25a9eb61f383224d87ee38bcc99c44dc98ae71c6e2d31670a036578b824",
@@ -613,5 +613,5 @@
     "tools/u026_g2_exact_source_audit.py"
   ],
   "gate_decision": "PENDING_CI_AND_INDEPENDENT_REVIEW",
-  "candidate_note": "C015 reconcile C012 harvesting guard and C013 regression fixture; current-source CI and independent review required"
+  "candidate_note": "C016 reviewed self-dealing prevention and regression fixture; current-source CI, tamper controls and independent review required"
 }
