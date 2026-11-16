@@ -1,10 +1,14 @@
 """Importer tests: set CORE151_ARCHIVE to authorized Cycle152 ZIP path."""
 import os
 import hashlib
+import io
+import json
+import sys
+from contextlib import redirect_stdout
 import tempfile
 import unittest
 from pathlib import Path
-from import_core151 import install, plan, verify_checkout
+from import_core151 import install, plan, verify_checkout, main
 from unittest.mock import patch
 
 ARCHIVE = os.environ.get("CORE151_ARCHIVE")
@@ -80,6 +84,27 @@ class ImportTests(unittest.TestCase):
                 verify_checkout("synthetic.zip", d, (), {name: expected})
             with self.assertRaisesRegex(ValueError, "invalid overlay SHA-256"):
                 verify_checkout("synthetic.zip", d, [name], {name: "not-a-hash"})
+
+    def test_cli_verify_reports_actual_matches_and_rejects_unpinned_drift(self):
+        entries = {"founders_civ/core/ledger.py": b"baseline"}
+        with tempfile.TemporaryDirectory() as d, patch("import_core151.plan", return_value=entries):
+            path = Path(d) / "founders_civ/core/ledger.py"
+            path.parent.mkdir(parents=True)
+            path.write_bytes(b"baseline")
+            output = io.StringIO()
+            with patch.object(sys, "argv", ["import_core151.py", "synthetic.zip", d, "--verify"]), redirect_stdout(output):
+                main()
+            self.assertEqual(json.loads(output.getvalue())["matched"], 1)
+            path.write_bytes(b"reviewed")
+            with patch.object(sys, "argv", ["import_core151.py", "synthetic.zip", d, "--verify"]):
+                with self.assertRaisesRegex(ValueError, "provenance mismatch"):
+                    main()
+            pin = hashlib.sha256(b"reviewed").hexdigest()
+            output = io.StringIO()
+            with patch.object(sys, "argv", ["import_core151.py", "synthetic.zip", d, "--verify",
+                                           "--overlay-sha256", f"founders_civ/core/ledger.py={pin}"]), redirect_stdout(output):
+                main()
+            self.assertIn("founders_civ/core/ledger.py", json.loads(output.getvalue())["overlays"])
 
     def test_wrong_archive_rejected(self):
         with tempfile.TemporaryDirectory() as d:
