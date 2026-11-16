@@ -118,5 +118,19 @@ class SingleAuthorityTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, 'non-finite canonical Book'):
                     session.audit()
 
+    def test_reject_out_of_session_world_clock_change(self):
+        world, _, tree_id = bootstrap(406)
+        session = SingleEngineSession(world, tree_id)
+        original_tick = world.tick
+        try:
+            world.tick += 1
+            with self.assertRaisesRegex(RuntimeError, 'clock changed outside session'):
+                session.audit()
+            with self.assertRaisesRegex(RuntimeError, 'clock changed outside session'):
+                session.step()
+        finally:
+            world.tick = original_tick
+        session.audit()
+
 if __name__ == '__main__':
     unittest.main()
