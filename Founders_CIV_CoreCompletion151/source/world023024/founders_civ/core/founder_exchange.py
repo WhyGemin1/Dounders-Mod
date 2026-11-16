@@ -34,17 +34,25 @@ def _active(sim, actor):
 
 
 def _origin(sim, kind, lot):
+    """Resolve one authentic source, never silently choose between two Worlds.
+
+    Identified lots may be created by C003 provisioning or direct TreeResourceOps.
+    A duplicate lot ID across independent Worlds is ambiguous because portable
+    holdings and ingestion receipts are keyed by lot, not by World. Refusing
+    the ambiguous lookup prevents cross-World food/fruit misattribution.
+    """
+    matches = []
     for tid, tree in sorted(sim.world_trees.worlds.items()):
-        if tree.provisioning is not None and lot in tree.provisioning.lots:
-            if tree.provisioning.lots[lot].kind == kind:
-                return tid, tree
-        # Some real Book-funded lots are made directly through TreeResourceOps
-        # outside the C003 automatic provisioning loop. They remain authentic.
-        provenance = (f'food:make:{tid}:{lot}' if kind=='food'
+        provisioned = (tree.provisioning is not None
+                       and lot in tree.provisioning.lots
+                       and tree.provisioning.lots[lot].kind == kind)
+        provenance = (f'food:make:{tid}:{lot}' if kind == 'food'
                       else f'fruit:grow:{tid}:{lot}')
-        if provenance in sim.book.operations:
-            return tid, tree
-    return None, None
+        if provisioned or provenance in sim.book.operations:
+            matches.append((tid, tree))
+            if len(matches) > 1:
+                return None, None
+    return matches[0] if matches else (None, None)
 
 
 def owns_lot(sim, founder, kind, lot):
