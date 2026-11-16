@@ -26,6 +26,26 @@ def harvest(sim, tree, founder, lot):
     return perform_harvest(sim, founder, (tree.id, lot, 'food'))
 
 
+
+def test_direct_book_funded_food_origin_matches_exchange_and_nutrition():
+    # A valid C002 TreeResourceOps food lot can exist without C003 provisioning.
+    # The nutrition resolver must accept the same immutable provenance as trade.
+    from types import SimpleNamespace
+    from founders_civ.core.founder_exchange import _origin
+    from founders_civ.core.founder_nutrition import _tree_for_lot
+
+    tree = SimpleNamespace(provisioning=None)
+    sim = SimpleNamespace(
+        world_trees=SimpleNamespace(worlds={'W1': tree}),
+        book=SimpleNamespace(operations={'food:make:W1:direct-lot': object()}),
+    )
+    assert _origin(sim, 'food', 'direct-lot') == ('W1', tree)
+    assert _tree_for_lot(sim, 'direct-lot') == ('W1', tree)
+    assert _tree_for_lot(sim, 'forged-lot') == (None, None)
+    # A fruit receipt must not be mistaken for food provenance.
+    sim.book.operations = {'fruit:grow:W1:direct-lot': object()}
+    assert _tree_for_lot(sim, 'direct-lot') == (None, None)
+
 def test_real_world_harvest_ingest_digest_conserves_single_book():
     sim, tree, founder, lot = prepared()
     prior_energy = sim.book.energy[f'founder:{founder}']
