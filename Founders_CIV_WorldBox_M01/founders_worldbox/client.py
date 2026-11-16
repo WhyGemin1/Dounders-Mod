@@ -23,10 +23,24 @@ class BridgeClient:
                 result=json.loads(r.read())
         except (error.URLError,TimeoutError) as e:
             raise ConnectionError(f'WorldBox bridge unavailable or rejected the request: {type(e).__name__}') from e
+        if not isinstance(result,dict):
+            raise RuntimeError('WorldBox read returned a non-object JSON response')
+        # The pinned WorldBox MCP bridge intentionally returns a bare JSON
+        # capabilities document, unlike /health and /cmd success envelopes.
+        # Accept that exception only on /capabilities and never ignore an
+        # explicit error response or a malformed capabilities document.
+        if route=='/capabilities' and 'ok' not in result:
+            if (isinstance(result.get('commands'),list)
+                and isinstance(result.get('mod_version'),str)
+                and isinstance(result.get('assembly_csharp_sha256'),str)):
+                return result
+            raise RuntimeError('WorldBox capabilities response missing required schema')
         if result.get('ok') is not True:
-            error_data=result.get('error',{})
+            error_data=result.get('error')
+            if not isinstance(error_data,dict):error_data={}
             raise RuntimeError(f'WorldBox read rejected: {error_data.get("code","unknown")} {error_data.get("message","")}')
-        return result.get('result') if isinstance(result.get('result'),dict) else result
+        payload=result.get('result')
+        return payload if isinstance(payload,dict) else result
     def health(self):return self._call('/health')
     def capabilities(self):return self._call('/capabilities')
     def command(self,name,args=None):
