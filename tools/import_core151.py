@@ -97,6 +97,43 @@ def install(archive, destination, dry_run=False):
     return manifest
 
 
+
+def verify_checkout(archive, checkout, allowed_overlays=()):
+    """Compare tracked Python bytes to the authorized archive, without writes.
+
+    Every changed module must be explicitly allowlisted; unknown drift and
+    missing source fail closed. This does not approve an overlay's behavior.
+    """
+    entries = plan(archive)
+    root = Path(checkout)
+    overlays = set(allowed_overlays)
+    unknown = overlays - set(entries)
+    if unknown:
+        raise ValueError("overlay not present in archive: " + repr(sorted(unknown)))
+    report = {"matched": [], "overlays": {}, "missing": [], "drift": {}}
+    for name, expected in sorted(entries.items()):
+        path = root / name
+        if path.is_symlink() or not path.is_file():
+            report["missing"].append(name)
+            continue
+        actual = path.read_bytes()
+        if actual == expected:
+            report["matched"].append(name)
+        elif name in overlays:
+            report["overlays"][name] = {
+                "archive_sha256": digest(expected),
+                "checkout_sha256": digest(actual),
+            }
+        else:
+            report["drift"][name] = {
+                "archive_sha256": digest(expected),
+                "checkout_sha256": digest(actual),
+            }
+    if report["missing"] or report["drift"]:
+        raise ValueError("Core151 checkout provenance mismatch: " +
+                         json.dumps(report, sort_keys=True))
+    return report
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("archive")
