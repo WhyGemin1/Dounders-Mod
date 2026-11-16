@@ -14,12 +14,12 @@
   "source_status": "27 tracked Core151 modules: 26 historical exact matches, 1 reviewed-as-overlay ledger.py; overlay blob SHA pinned at 23b9e5d48f35a24abc53810b915ab11bf697e877 (behavior pending CI)",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "GitHub Actions run 43966274146 headless SUCCESS for preceding whitespace persisted-key guard; new Book.move_once whitespace request validation NOT YET VERIFIED",
+    "github_ci": "Run 43975306101 headless SUCCESS for previous Book whitespace guard; new historical metadata validation NOT YET VERIFIED",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "Previous run 43966274146 passed; current Book settlement guard and new test pending CI",
-    "book_audit_this_cycle": "No fresh numeric audit; new regression asserts no mass, energy, seq, or receipt mutation (not yet executed)",
+    "book_audit_this_cycle": "No new numerical audit; regression added to check Book balances and seq remain unchanged after malformed historical toll/external rejection; pending CI",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -58,7 +58,8 @@
     "p0_legacy_checkpoint_fail_closed": "PASS GitHub Actions run 43913323628 (#150), all 15 headless job steps success",
     "p0_replay_leg_binding": "SOURCE/TEST COMMITTED 21de73d, 76f8bb5; pinned source 8899c3b; CI not yet confirmed",
     "p0_nonfinite_historical_leg": "PASS GitHub Actions run 43955044716, headless steps success",
-    "p0_whitespace_replay_key": "SOURCE 9d949bff and TEST dd0f71b5 committed; CI not yet verified"
+    "p0_whitespace_replay_key": "SOURCE 9d949bff and TEST dd0f71b5 committed; CI not yet verified",
+    "p0_historical_metadata": "SOURCE/TEST pending GitHub CI; rejects nonfinite/negative toll and external history metadata"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -67,12 +68,12 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Verify new replay-key regression on clean checkout; investigate canonical Book history storage growth",
-  "last_cycle": "2026-11-16 P0 reject whitespace aliases in persisted Book replay request IDs",
+  "next_cycle": "Verify historical metadata validation on clean-checkout CI; measure canonical Book transaction-history growth",
+  "last_cycle": "2026-11-16 P0 fail-closed historical Book toll/external metadata",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "d9efc75bb1771a223f52673a1941aaf06ef34b1c",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43955044716",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43975306101",
   "last_unverified_code_commit": "dd0f71b5ce79afcf3a5ea72ade4c0acab905c9fc",
-  "next_engineering_task": "Verify new replay-key regression on clean checkout; investigate canonical Book history storage growth"
+  "next_engineering_task": "Verify historical metadata validation on clean-checkout CI; measure canonical Book transaction-history growth"
 }
