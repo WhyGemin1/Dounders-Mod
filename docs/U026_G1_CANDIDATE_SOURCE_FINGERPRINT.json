@@ -1,5 +1,5 @@
 {
-  "source": "U026-G1 C040 exact-source acceptance candidate, not a G1 promotion",
+  "source": "U026-G1 C040 exact-source candidate, nutrition replay, legacy source replay, and CI fixture corrections",
   "files": 514,
   "sha256": {
     ".github/workflows/u026_core151.yml": "9a5562b1011a578141d71fb60eef7ee99b80b95cdfa951869d9a7f7b1a06b988",
@@ -405,7 +405,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "fdae8696db73222e129cf75b6450ca908f172a85397f141790eda94e823fa6bb",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "61d528e40063205e8f89b935ad52de8f6fab1346b99e5293c462232c9f32bda5",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "8cb7b28e6f30eb31efa48356303f10bff69a901716ee99ec2b780a8551f9a754",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "ac16f35fd8be31880c21cf7eb85ceb5908acb898c956747be19aac27aa99a76e",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "55eba7814946d4c943aa40c149e9c24c833cbd5585a7887869350c298f12e655",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "8576d6e19489e8aa8a90203ba37df422b069698716f28a20d2bd7c09c04c7bb8",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "4468dae8555504aa413411929cb89eddd6f4f1099426b7365495e54f55f088c1",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "d1688574f0dbbdaf556fb0db93e8cb5b429e0e95dfc3127da1cbd30c4854a016",
@@ -470,8 +470,8 @@
     "Founders_CIV_CoreCompletion151/source/world023024/test_world_tree_023.py": "f417520ef235d99bcdf4eeb6f0f24103fdbd04dfe8f87c5486bc535f1e6496ad",
     "Founders_CIV_CoreCompletion151/source/world023024/test_world024.py": "79e0541e3d8c00a594e6f10109af1acb6538501cc143073e9c1d41644e37a9f3",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_autonomous_provisioning_c003.py": "25419535b87a74cfa5e632b78355234509046847277f33240d582411e556bc79",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_book_assets_c002.py": "a42a8d38e714b427385a094c1a2bbf13d51f04284e53420b6ed4a0fa4fe7155e",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c002_provenance.py": "87157a8dfbce996719f79049ada4eb6d25107e0b352ba92a95311ae6063ae0af",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_book_assets_c002.py": "71ea174ac08d2a10ce791ce7f829f3e0107fd96c1da94e9c5cb399e0deb49278",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c002_provenance.py": "4ebe693ce2064eb1d80ebbcfdcf146768b16a5388fccaa5cda4071fe8492d6c5",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c005_harvest_policy.py": "4b3ce441569eb1153dcf6bd9bf6c8f3e04ea6d6999baaa43497d52e48373b762",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c006_ingestion.py": "acc0bd7382f4631a2beb05d1f7085c475e32ef81542c08e2b91ea27f0517085c",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c009_digestion_contract.py": "113b8b1d700f005edc7b7367cefd49a9901547df509b7444eaff925bfd9724c5",
@@ -514,7 +514,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/WORLD_023_MANIFEST.json": "8a1dba36d7f56792d3d9eda47225774862506408404b7d9d48698f351f428332",
     "Founders_CIV_CoreCompletion151/source/world023024/WORLD_024_MANIFEST.json": "6c41d7b2d4f3316000849dc4e7df6b5343b629f772a2020ba4aefa597c28a7c3",
     "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
-    ".github/workflows/u026_g1_acceptance.yml": "81d229da74c95a54ffd2f3535057134f0bd997f7cd75c6b6a80215e63e4978ab",
+    ".github/workflows/u026_g1_acceptance.yml": "8757406b52f208e3b38ff766c34bd2a257cf9ef2007641460ffb4fb90aac7064",
     "tools/u026_g1_exact_source_audit.py": "61297e9d75a1e52cc6b2f47ce8ab82f39b972d2c657a1e6596e5f7653dc80eb1"
   },
   "excluded": [
@@ -575,7 +575,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "2db07ae96500f451dcd5e2d93f75970038447ff2",
+  "source_commit": "f894f02524b3f7684fe8e41f6270520e055d603f",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
