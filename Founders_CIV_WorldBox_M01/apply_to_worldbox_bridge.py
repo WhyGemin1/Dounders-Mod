@@ -23,7 +23,7 @@ def apply(repo_dir,template=None):
     # Only known M01 migration: the previous reviewed command was identical
     # except for its missing BridgeRejectionException namespace import.
     # Do NOT overwrite a locally edited/unknown version.
-    namespace_line='using WorldBoxBridge.Commands.Action;\\n'
+    namespace_line='using WorldBoxBridge.Commands.Action;' + chr(10)
     if source.count(namespace_line)!=1:
         raise ValueError('Reviewed M01 template namespace invariant failed')
     previous=source.replace(namespace_line,'')
