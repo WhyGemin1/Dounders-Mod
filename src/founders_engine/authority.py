@@ -36,6 +36,7 @@ class SingleEngineSession:
         self._founder_ids = frozenset(world.founders.people)
         self._founder_objects = dict(world.founders.people)
         self.book = world.book
+        self._expected_tick = world.tick
         self.tree_id = tree_id
         self.gateway = WorldBoxGatewayM01(tree)
         # If persistence fails after settlement, callers must discard this
@@ -45,6 +46,8 @@ class SingleEngineSession:
     def _assert_authority(self):
         if self._checkpoint_uncertain:
             raise RuntimeError('checkpoint outcome uncertain: reload durable world')
+        if self.world.tick != self._expected_tick:
+            raise RuntimeError('authoritative world clock changed outside session')
         if frozenset(self.world.founders.people) != self._founder_ids:
             raise RuntimeError('authoritative Founder identities changed')
         if any(actor is not self._founder_objects[fid]
@@ -79,6 +82,7 @@ class SingleEngineSession:
         result = self.world.step()
         if self.world.tick != before + 1:
             raise RuntimeError('non-monotonic or duplicated simulation clock')
+        self._expected_tick = self.world.tick
         self.audit()
         return result
 
