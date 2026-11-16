@@ -200,7 +200,9 @@ class SocialSimulation:
     def _pay(self,a,action,extra=0):
         q=COST[action]+extra
         if q<=0:return None
-        if self._energy(a)+1e-10<q:return False
+        # A proposal is not permission to overdraw. Binary-float balances
+        # slightly below q must reject gracefully instead of reaching Book.
+        if self._energy(a)<q:return False
         return self.book.move(energy=[(f'founder:{a}','environment:heat',q)])
 
     def _goal_boost(self,s,action):
