@@ -93,6 +93,18 @@ class G2ParentStewardshipTests(unittest.TestCase):
         self.assertEqual(self.sim.book.seq, 1)
         self.sim.book.audit()
 
+    def test_remote_new_stewardship_rejected_but_prior_receipt_replays(self):
+        first = tend_parent(self.sim, "F1", ("R1", 0.30), "local-decision")
+        self.sim.founders.people["F1"].location = "ridge"
+        before = (dict(self.sim.book.energy), self.sim.book.seq,
+                  len(self.sim.seeds.constructs.events), len(self.logs))
+        with self.assertRaisesRegex(ValueError, "local physical access"):
+            tend_parent(self.sim, "F1", ("R1", 0.20), "remote-decision")
+        self.assertEqual(before, (dict(self.sim.book.energy), self.sim.book.seq,
+                                  len(self.sim.seeds.constructs.events), len(self.logs)))
+        self.assertIs(tend_parent(self.sim, "F1", ("R1", 0.30), "local-decision"), first)
+        self.sim.book.audit()
+
     def test_stale_knowledge_rejects_new_contribution(self):
         self.sim.tick += 5
         before = (dict(self.sim.book.energy), self.sim.book.seq)
