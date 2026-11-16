@@ -291,3 +291,26 @@ def test_settlement_and_decline_replay_after_recipient_death_without_new_transfe
     with pytest.raises(ValueError, match='active recipient'):
         decide_offer(u, buyer, oid, True)
     audit(u)
+
+
+def test_withdrawn_offer_replay_after_seller_death_is_historical_not_new_action():
+    """A prior voluntary withdrawal stays withdrawn after its author dies."""
+    s, _, _, seller, buyer, lot = setup(seed=824)
+    oid = offer_resource(s, seller, buyer, 'food', lot, decision_id='withdraw-death')
+    assert withdraw_offer(s, seller, oid) is None
+    before = (s.book.seq, dict(s.book.mass), dict(s.book.energy), len(s.events))
+    s.founders.people[seller].alive = False
+    assert withdraw_offer(s, seller, oid) is None
+    assert s.founder_exchange_offers[oid]['status'] == 'withdrawn'
+    assert (s.book.seq, dict(s.book.mass), dict(s.book.energy), len(s.events)) == before
+    with pytest.raises(ValueError, match='not open'):
+        decide_offer(s, buyer, oid, True)
+    audit(s)
+
+    t, _, _, seller, buyer, lot = setup(seed=825)
+    oid = offer_resource(t, seller, buyer, 'food', lot, decision_id='still-open')
+    t.founders.people[seller].alive = False
+    with pytest.raises(ValueError, match='active seller'):
+        withdraw_offer(t, seller, oid)
+    assert t.founder_exchange_offers[oid]['status'] == 'open'
+    audit(t)
