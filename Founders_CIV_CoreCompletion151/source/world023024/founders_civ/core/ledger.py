@@ -207,6 +207,26 @@ class Book:
             if leg_source==source:
                 source_delta-=amount
         house_toll_share=work+source_delta
+        # The binary-float accumulator in Book.apply can round the last
+        # subtraction upward by one ULP of *work*, even though all work was
+        # funded. Choose the greatest representable House leg whose combined
+        # debit does not exceed the declared work. This is independent of
+        # current account balances, so an exact checkpoint replay keeps its
+        # original transaction signature; genuine overdrafts still reject.
+        # Only the final toll leg absorbs representational roundoff.
+        for _ in range(64):
+            combined=0.
+            for leg_source, _, amount in legs:
+                if leg_source==source:
+                    combined-=amount
+            combined-=house_toll_share
+            if house_toll_share>0 and -combined<=work:
+                break
+            if house_toll_share<=0:
+                raise ValueError('unfunded House toll leg')
+            house_toll_share=math.nextafter(house_toll_share,0.)
+        else:
+            raise ValueError('cannot represent funded House toll leg')
         legs.append((source,'house',house_toll_share))
         # Enforce caller's declared work output, disallow hidden work energy.
         if abs(sum(q for s,t,q in energy_outputs if s==source)-(work-toll))>EPS:
