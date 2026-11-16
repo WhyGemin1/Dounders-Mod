@@ -231,3 +231,11 @@
 - GitHub Actions run 43789231933 for code commit 60c3a20a1dc028fd845afd2f7633a17dc286a7d5 completed SUCCESS. GitHub jobs endpoint shows clean checkout, Python compilation, one-engine/M01 regression, Book-funded harvest, checkpoint/restart, fsync/process termination, native read-only boundary and Core151 isolation steps all SUCCESS.
 - This verifies the new negative NaN/Infinity Book audit test ran in the one-engine regression step. Numerical conservation residuals were not separately captured, so do not report new residual values. Native WorldBox game and ecological long horizons NOT RUN.
 - ACTIVE_ENGINE.json updated after this result. No merge or main modification.
+
+## 2026-11-15 — P0 fail-closed source provenance drift verifier
+- Ground: previous non-finite Book audit GitHub CI run 43789231933 SUCCESS at 60c3a20a1dc028fd845afd2f7633a17dc286a7d5. Google Drive metadata confirms authorized Cycle152 archive (956121 bytes); archive contents not downloaded or compared in this run.
+- Implementation: tools/import_core151.py adds verify_checkout(archive, checkout, allowed_overlays) comparing every authorized Python module byte-for-byte against tracked checkout, reporting matched files and SHA-256 pairs for explicitly allowed overlays; missing source, unexpected drift and unknown allowlist entries fail closed. No files overwritten and no new engine. Synthetic regression tests added; GitHub workflow now executes them on pull requests.
+- Commits: 905589f98a2c480b61790f991f827902aca0c5f0 (source), 7a9a53091eb5c42421d722df08d7dfbb208412d1 (tests), 8fa9efdf19c6e906ffb3a0814c1a69ced99905b4 (workflow).
+- Test evidence: prior CI verified; new tests committed and CI pending. Real archive-to-checkout comparison NOT RUN; numerical Book audit, native WorldBox game test and long-horizon ecology NOT RUN.
+- Status: VERIFIED source/test/workflow commits and prior CI; PROVISIONAL new provenance gate pending CI and real archive comparison; BLOCKED native identity/unit/version/ACK and WorldBox writes.
+- Next: verify CI, run actual authorized archive comparison on clean checkout, review overlays explicitly, and retain source archives. Main unchanged; no merge.
