@@ -360,3 +360,36 @@ def test_resource_agreement_cannot_self_deal_even_if_contact_layer_allows_it():
     assert (s.book.seq, dict(s.book.mass), dict(s.book.energy), len(s.events)) == before
     assert not getattr(s, 'founder_exchange_offers', {})
     audit(s)
+
+
+def test_c021_world_qualified_tree_lot_survives_checkpoint_and_book_audit():
+    """Explicit World identity travels with physical production and replay."""
+    sim, realm, tid = bootstrap(seed=829)
+    tree = sim.world_trees.worlds[tid]
+    tree.world_id = 'WORLD-A'
+    tree.enable_provisioning()
+    for _ in range(17):
+        sim.step()
+    lots = sorted(tree.provisioning.lots)
+    assert lots and all(lot.startswith('W-WORLD-A-C003-') for lot in lots)
+    for lot, rec in tree.provisioning.lots.items():
+        mass_kind = 'portable_food' if rec.kind == 'food' else 'fruit'
+        account = f'{mass_kind}:lot:{lot}:tree:{tid}'
+        assert account in sim.book.mass
+    restored = pickle.loads(pickle.dumps(sim))
+    assert sorted(restored.world_trees.worlds[tid].provisioning.lots) == lots
+    assert dict(restored.book.mass) == dict(sim.book.mass)
+    assert dict(restored.book.energy) == dict(sim.book.energy)
+    audit(restored)
+
+
+def test_c021_reject_invalid_world_namespace_before_physical_production():
+    sim, _, tid = bootstrap(seed=830)
+    tree = sim.world_trees.worlds[tid]
+    tree.world_id = 'bad:namespace'
+    tree.enable_provisioning()
+    with pytest.raises(ValueError, match='invalid World identity'):
+        for _ in range(8):
+            sim.step()
+    assert not tree.provisioning.lots
+    audit(sim)
