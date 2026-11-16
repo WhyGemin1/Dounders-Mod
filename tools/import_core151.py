@@ -157,10 +157,28 @@ def main():
     parser.add_argument("archive")
     parser.add_argument("destination")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--verify", action="store_true",
+                        help="read-only comparison of authorized archive to checkout")
+    parser.add_argument("--overlay-sha256", action="append", default=[], metavar="PATH=SHA256",
+                        help="explicit reviewed overlay path and SHA-256 (requires --verify)")
     args = parser.parse_args()
-    result = install(args.archive, args.destination, args.dry_run)
-    print(json.dumps({"files": len(result["files"]), "archive_sha256": SOURCE_SHA256,
-                      "dry_run": args.dry_run}))
+    if args.verify:
+        pins = {}
+        for entry in args.overlay_sha256:
+            name, sep, fingerprint = entry.partition("=")
+            if not sep or not name or name in pins:
+                parser.error("each --overlay-sha256 must be unique PATH=SHA256")
+            pins[name] = fingerprint
+        result = verify_checkout(args.archive, args.destination, pins.keys(), pins)
+        print(json.dumps({"archive_sha256": SOURCE_SHA256, "matched": len(result["matched"]),
+                          "overlays": result["overlays"], "missing": result["missing"],
+                          "drift": result["drift"]}, sort_keys=True))
+    else:
+        if args.overlay_sha256:
+            parser.error("--overlay-sha256 requires --verify")
+        result = install(args.archive, args.destination, args.dry_run)
+        print(json.dumps({"files": len(result["files"]), "archive_sha256": SOURCE_SHA256,
+                          "dry_run": args.dry_run}))
 
 
 if __name__ == "__main__":
