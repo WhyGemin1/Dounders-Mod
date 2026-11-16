@@ -32,6 +32,7 @@ class SingleEngineSession:
         if tree.sim is not world or tree.book is not world.book:
             raise ValueError('World Tree uses different resource authority')
         self.world = world
+        self._founder_ids = frozenset(world.founders.people)
         self.book = world.book
         self.tree_id = tree_id
         self.gateway = WorldBoxGatewayM01(tree)
@@ -42,6 +43,10 @@ class SingleEngineSession:
     def _assert_authority(self):
         if self._checkpoint_uncertain:
             raise RuntimeError('checkpoint outcome uncertain: reload durable world')
+        if frozenset(self.world.founders.people) != self._founder_ids:
+            raise RuntimeError('authoritative Founder identities changed')
+        if self.world.founders.book is not self.book:
+            raise RuntimeError('Founder registry Book authority changed')
         if self.world.book is not self.book:
             raise RuntimeError('Book authority changed')
         tree = self.world.world_trees.worlds[self.tree_id]
