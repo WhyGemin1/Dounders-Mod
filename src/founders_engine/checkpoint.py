@@ -56,6 +56,19 @@ def _validate_world(world, tree_id):
                 for i, tx in enumerate(history, 1)) or
             (history[-1] if history else None) != session.book.last):
         raise ValueError('inconsistent canonical Book transaction history')
+    # Reject malformed historical legs even when the transaction was not an
+    # M01 receipt. A valid checkpoint digest is not proof of valid Book data.
+    import math
+    for tx in history:
+        for legs in (tx.material, tx.energy):
+            for leg in legs:
+                if (not isinstance(leg, tuple) or len(leg) != 3 or
+                        not isinstance(leg[0], str) or not isinstance(leg[1], str) or
+                        not leg[0] or not leg[1] or leg[0] == leg[1] or
+                        isinstance(leg[2], bool) or
+                        not isinstance(leg[2], (int, float)) or
+                        not math.isfinite(leg[2]) or leg[2] <= 0):
+                    raise ValueError('malformed canonical Book transaction leg')
     seen_sequences = set()
     for request_id, record in receipts.items():
         if not isinstance(request_id, str) or not request_id.strip():
