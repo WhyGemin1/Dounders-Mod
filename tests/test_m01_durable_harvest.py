@@ -292,5 +292,38 @@ class DurableHarvestTests(unittest.TestCase):
         self.assertEqual(dict(book.mass), mass)
         self.assertEqual(dict(book.energy), energy)
 
+
+    def test_malformed_historical_book_transaction_fails_checkpoint_closed(self):
+        """A malformed older transaction must not be accepted with a valid envelope."""
+        import pickle
+        from dataclasses import replace
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'malformed-history.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'malformed-history', 'v1',
+                'forest', 'plant', .01, .001)
+            book = self.session.book
+            self.assertGreater(book.seq, 1)
+            original = book.transaction_history[0]
+            original_seq = book.seq
+            mass, energy = dict(book.mass), dict(book.energy)
+            try:
+                book.transaction_history[0] = replace(original, kind='fabricated')
+                path.write_bytes(_encode(pickle.dumps(
+                    (self.tree_id, self.world), protocol=pickle.HIGHEST_PROTOCOL)))
+                corrupt_bytes = path.read_bytes()
+                with self.assertRaisesRegex(ValueError, 'inconsistent canonical Book transaction history'):
+                    load_checkpoint(path, self.tree_id)
+                with self.assertRaisesRegex(ValueError, 'inconsistent canonical Book transaction history'):
+                    save_checkpoint(self.world, self.tree_id, path)
+                self.assertEqual(path.read_bytes(), corrupt_bytes)
+                self.assertEqual(book.seq, original_seq)
+                self.assertEqual(dict(book.mass), mass)
+                self.assertEqual(dict(book.energy), energy)
+            finally:
+                book.transaction_history[0] = original
+        book.audit()
+
 if __name__ == '__main__':
     unittest.main()
