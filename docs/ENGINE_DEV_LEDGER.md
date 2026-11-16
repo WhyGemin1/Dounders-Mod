@@ -193,3 +193,11 @@
 - Test command intended in GitHub workflow: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_native_claim_boundary.py'`. **NOT EXECUTED/CONFIRMED in this entry**. No fresh Book mass/energy audit, WorldBox gameplay, or ecological horizon tests.
 - VERIFIED: changes committed to experimental branch. PROVISIONAL: numeric guard behavior pending CI. BLOCKED: native identities, units, versions, and exactly-once external ACK; all external writes remain disabled.
 - Next: inspect CI at test commit, repair if needed, then obtain independently sourced native fixture contract.
+
+## 2026-11-15 — P0 authoritative Founder identity/Book drift guard
+- Ground: GitHub main 26a02ba5 unchanged; PRs #1, #2, #3 open drafts. Quantity guard CI 43778025831 completed SUCCESS at code commit 88375ba322e2e87deb3aa08865e6afc038e99100.
+- Implementation: SingleEngineSession captures original Founder ID set and checks it on audit/step/harvest; also rejects Founder registry Book pointer changes. Added two negative regression tests using real Core151 bootstrap seeds 401 and 402. Existing world.book/world.tick remain sole authorities.
+- Code commits: cdbef13dbe3645fbc657cb98a8ee34d621113b3f and 8164da99b457305336b19e3091db3ec28d99aa1b.
+- Tests: new tests committed, CI result not yet confirmed at ledger write. Previous quantity CI verified; no local clean-checkout tests or new numerical Book audits performed in this invocation. WorldBox and long-horizon ecology NOT RUN.
+- Status: VERIFIED source commit and previous quantity CI; PROVISIONAL new authority guard until CI; BLOCKED external native writes/ACK and long-horizon ecology.
+- Next: inspect GitHub CI for these commits, fix any regression, then continue clean-checkout provenance/authority verification. No merge or main change.
