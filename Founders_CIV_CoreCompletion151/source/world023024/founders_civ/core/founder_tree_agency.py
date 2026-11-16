@@ -14,7 +14,9 @@ def _stable_worlds(sim, founder):
 
 
 def _has_active_stewardship(sim, founder):
-    return any(c['owner']==founder and c['status']=='stable'
+    # A Realm is a parent habitat, not an already established personal food Tree.
+    # Owning a stable Realm must not prohibit a fruit-funded World creation.
+    return any(c['owner']==founder and c['kind']=='world' and c['status']=='stable'
                for c in sim.seeds.plants.values())
 
 
