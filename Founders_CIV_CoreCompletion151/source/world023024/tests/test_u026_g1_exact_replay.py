@@ -102,6 +102,55 @@ class G1ExactReplayTests(unittest.TestCase):
         self.assertEqual(before, (dict(self.book.mass), self.book.seq))
         self.book.audit()
 
+    def test_fully_funded_death_transform_has_no_ulp_overdraw(self):
+        book = Book()
+        book.seed_mass("body:grazer", 1.65)
+        book.seed_energy("embodied:grazer", 2.64)
+        book.freeze()
+        book.transform(
+            [("body:grazer", "carcass:patch", 1.65)],
+            "embodied:grazer", 2.64,
+            energy_outputs=[
+                ("embodied:grazer", "carrionchem:patch", 2.64 * .60),
+                ("embodied:grazer", "heat:world", 2.64 * .30),
+            ],
+            operation_id="death:grazer",
+        )
+        self.assertEqual(book.energy["embodied:grazer"], 0.0)
+        self.assertEqual(book.mass["body:grazer"], 0.0)
+        self.assertEqual(book.seq, 1)
+        book.audit()
+
+    def test_death_transform_preserves_independent_food_chemical_transfer(self):
+        book = Book()
+        book.seed_mass("body:grazer", 1.65)
+        book.seed_energy("embodied:grazer", 2.64)
+        book.seed_energy("foodchem:grazer", .4)
+        book.freeze()
+        book.transform(
+            [("body:grazer", "carcass:patch", 1.65)],
+            "embodied:grazer", 2.64,
+            energy_outputs=[
+                ("foodchem:grazer", "carrionchem:patch", .4),
+                ("embodied:grazer", "carrionchem:patch", 2.64 * .60),
+                ("embodied:grazer", "heat:world", 2.64 * .30),
+            ],
+            operation_id="death:with_food",
+        )
+        self.assertEqual(book.energy["foodchem:grazer"], 0.0)
+        self.assertEqual(book.energy["embodied:grazer"], 0.0)
+        book.audit()
+
+    def test_book_audits_energy_only_conservation_without_mass_seed(self):
+        book = Book()
+        book.seed_energy("founder:F1", .5)
+        book.freeze()
+        book.move(energy=[("founder:F1", "reserve:R1", .3)],
+                  operation_id="energy:only")
+        audit = book.audit()
+        self.assertEqual(audit["mass_total"], 0.0)
+        self.assertEqual(audit["energy_total"], .5)
+
     def test_failed_transfer_does_not_claim_operation_identity(self):
         with self.assertRaisesRegex(ValueError, "material overdraw"):
             self.book.move(material=[("plant:tree", "plant:founder", 3.0)],
