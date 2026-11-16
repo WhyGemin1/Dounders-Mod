@@ -284,9 +284,29 @@ class SeedRegistry:
         if amount<=0 or not isfinite(float(amount)):raise ValueError('invalid amount')
         # Unlike the old scripted top-up, named Founder must actively fund upkeep.
         if self.sim.book.energy[f'founder:{actor}']<amount:raise ValueError('Founder lacks upkeep energy')
-        self.constructs.top_up(creation_id,amount,source=f'founder:{actor}')
-        self.owner_reserve_knowledge.setdefault(creation_id,{})[actor]={'tick':self.sim.tick,'reserve':self.sim.book.energy[f'reserve:{creation_id}']}
-        self.sim.log('creation_tended',actor,txn=self.sim.book.last,creation=creation_id,amount=round(amount,5))
+        had_knowledge=creation_id in self.owner_reserve_knowledge
+        prior_knowledge=deepcopy(self.owner_reserve_knowledge.get(creation_id,{}))
+        construct_events=len(self.constructs.events)
+        sim_events=len(self.sim.events)
+        counter=self.sim.counter.copy()
+        next_event=self.sim.next_event
+        with self.sim.book.atomic_batch():
+            try:
+                self.constructs.top_up(creation_id,amount,source=f'founder:{actor}')
+                self.owner_reserve_knowledge.setdefault(creation_id,{})[actor]={
+                    'tick':self.sim.tick,'reserve':self.sim.book.energy[f'reserve:{creation_id}']}
+                self.sim.log('creation_tended',actor,txn=self.sim.book.last,
+                             creation=creation_id,amount=round(amount,5))
+            except Exception:
+                if had_knowledge:
+                    self.owner_reserve_knowledge[creation_id]=prior_knowledge
+                else:
+                    self.owner_reserve_knowledge.pop(creation_id,None)
+                del self.constructs.events[construct_events:]
+                del self.sim.events[sim_events:]
+                self.sim.counter.clear();self.sim.counter.update(counter)
+                self.sim.next_event=next_event
+                raise
         return c
 
     def advance(self):
