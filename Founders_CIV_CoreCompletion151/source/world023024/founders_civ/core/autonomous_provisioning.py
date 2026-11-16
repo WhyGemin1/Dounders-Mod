@@ -73,7 +73,19 @@ class TreeProvisioningPolicy:
         tree=self.tree;book=tree.book
         amount=.08 if kind=='food' else .10
         if not self._reserve(biome,amount,kind=='food'):return False
-        lot=f'C003-{tree.id}-{kind}-{tree.age}'
+        # A World namespace, when assigned by the global scheduler, is part of
+        # the physical lot identity carried through Book accounts, harvest,
+        # exchange, ingestion and replay. Preserve old checkpoint identities
+        # for legacy single-World Trees without an explicit namespace.
+        world_id=getattr(tree, 'world_id', None)
+        if world_id is not None:
+            if (not isinstance(world_id, str) or not world_id or
+                len(world_id)>64 or any(c not in
+                'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-' for c in world_id)):
+                raise ValueError('invalid World identity for physical lot')
+            lot=f'W-{world_id}-C003-{tree.id}-{kind}-{tree.age}'
+        else:
+            lot=f'C003-{tree.id}-{kind}-{tree.age}'
         if kind=='food':
             tree.make_portable_food(biome,lot)
         else:
