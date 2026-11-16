@@ -2,7 +2,7 @@
   "source": "U026 G2 proposed exact-source candidate with reviewed G1 atomic planting, social fuel preflight and failure-injection tests; G2 not promoted",
   "files": 515,
   "sha256": {
-    ".github/workflows/u026_core151.yml": "4ba98792c8347ebddd5416bc1d543052bec72182a39d9fb4628d87f8b18a6005",
+    ".github/workflows/u026_core151.yml": "df39338779fc0a1276eec10b3928a1ecd5a365c0a367f316cb873ae9fc8dee97",
     "Founders_CIV_CoreCompletion151/source/capacity_dose_021131.py": "fc9800b1846604edfd1bee305bc866030748f109929825b4422671127808e036",
     "Founders_CIV_CoreCompletion151/source/check_cycle136_crossprocess.py": "98ba465a0114ee85335150cc9d955b889eccade366cd5318b51ae82a6ddfa694",
     "Founders_CIV_CoreCompletion151/source/cycle024_daily_eligibility.py": "a8bebdf2730ac0e030269a4a9d55c1172985179930a96b8c13e802a4da1c2bf2",
@@ -576,7 +576,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "740d37d25ca10adfccb0e39d913b8732a194908e",
+  "source_commit": "f79c9bc6ff204a83077661db1bcec2ffef42e57b",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
