@@ -173,3 +173,17 @@ def test_scheduler_funds_personal_world_seed_once():
     assert sim.counter['founder_own_tree_seed_funded']==count_before+1
     assert sim.book.energy[f'ce:seed:{b.id}']==pytest.approx(1.)
     sim.book.audit()
+
+
+def test_realm_owner_with_real_fruit_can_propose_first_personal_world():
+    sim, realm, tid = setup_world()
+    owner = sim.seeds.plants[realm]['owner']
+    assert sim.seeds.plants[realm]['kind'] == 'realm'
+    assert not any(p['kind'] == 'world' and p['owner'] == owner and p['status'] == 'stable'
+                   for p in sim.seeds.plants.values())
+    assert propose_self_trees(sim, owner, []) == []
+    harvest_a_fruit(sim, tid, owner)
+    proposals = propose_self_trees(sim, owner, [])
+    assert any(p[1] == 'seed_design' and p[3] == ('world', realm) for p in proposals)
+    assert len(sim.founders.people) == 100
+    assert sim.book.audit()['energy_error'] < 1e-6
