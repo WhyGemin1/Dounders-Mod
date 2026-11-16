@@ -45,6 +45,10 @@ def _validate_world(world, tree_id):
     if not isinstance(receipts, dict):
         raise ValueError('missing authoritative Book replay receipts')
     history = getattr(session.book, 'transaction_history', None)
+    # Older checkpoints cannot prove historical replay receipts. Do not
+    # fabricate a transaction history from balances or silently migrate.
+    if history is None:
+        raise ValueError('legacy checkpoint missing canonical Book transaction history; reviewed migration required')
     if (not isinstance(history, list) or len(history) != session.book.seq or
             any(not isinstance(tx, Transaction) or tx.seq != i
                 for i, tx in enumerate(history, 1)) or
