@@ -164,6 +164,41 @@ class DurableHarvestTests(unittest.TestCase):
             self.assertEqual(path.read_bytes(), forged_bytes)
 
 
+    def test_historical_receipt_forgery_rejected_after_later_book_move(self):
+        """A valid older sequence cannot impersonate another Book transfer."""
+        import pickle
+        from dataclasses import replace
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'world.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'older-receipt', 'v1',
+                'forest', 'plant', .01, .001)
+            key = f'm01:{self.tree_id}:older-receipt:v1'
+            legs, receipt = self.session.book.request_receipts[key]
+            # Advance canonical history beyond the receipt using the same Book.
+            self.session.step()
+            self.assertLess(receipt.seq, self.session.book.seq)
+            clean_seq = self.session.book.seq
+            clean_mass = dict(self.session.book.mass)
+            clean_energy = dict(self.session.book.energy)
+            fake_material = tuple((src, dst, qty * .5)
+                                  for src, dst, qty in legs[0])
+            self.session.book.request_receipts[key] = (
+                (fake_material, legs[1]),
+                replace(receipt, material=fake_material))
+            path.write_bytes(_encode(pickle.dumps(
+                (self.tree_id, self.world), protocol=pickle.HIGHEST_PROTOCOL)))
+            forged_bytes = path.read_bytes()
+            with self.assertRaisesRegex(ValueError, 'canonical Book transaction history'):
+                load_checkpoint(path, self.tree_id)
+            with self.assertRaisesRegex(ValueError, 'canonical Book transaction history'):
+                save_checkpoint(self.world, self.tree_id, path)
+            self.assertEqual(path.read_bytes(), forged_bytes)
+            self.assertEqual(self.session.book.seq, clean_seq)
+            self.assertEqual(dict(self.session.book.mass), clean_mass)
+            self.assertEqual(dict(self.session.book.energy), clean_energy)
+
     def test_checksum_valid_latest_receipt_cannot_impersonate_book_transaction(self):
         """A self-consistent forged receipt at the real last seq is not authentic."""
         import pickle
@@ -188,7 +223,7 @@ class DurableHarvestTests(unittest.TestCase):
             path.write_bytes(_encode(pickle.dumps(
                 (self.tree_id, self.world), protocol=pickle.HIGHEST_PROTOCOL)))
             forged_bytes = path.read_bytes()
-            with self.assertRaisesRegex(ValueError, 'latest Book transaction'):
+            with self.assertRaisesRegex(ValueError, 'canonical Book transaction history'):
                 load_checkpoint(path, self.tree_id)
             with self.assertRaisesRegex(ValueError, 'latest Book transaction'):
                 save_checkpoint(self.world, self.tree_id, path)
