@@ -143,6 +143,9 @@ class Book:
             if (not isinstance(history, list) or len(history) != self.seq or
                     history[receipt.seq - 1] != receipt):
                 raise ValueError('receipt does not match canonical Book history')
+            if (not isinstance(prior_legs, tuple) or len(prior_legs) != 2 or
+                    receipt.material != prior_legs[0] or receipt.energy != prior_legs[1]):
+                raise ValueError('receipt legs do not match canonical Book transaction')
             if prior_legs != legs:
                 raise ValueError('request id reused with different transfer')
             return receipt, False
