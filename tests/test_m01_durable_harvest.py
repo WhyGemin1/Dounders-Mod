@@ -199,6 +199,31 @@ class DurableHarvestTests(unittest.TestCase):
             self.assertEqual(dict(self.session.book.mass), clean_mass)
             self.assertEqual(dict(self.session.book.energy), clean_energy)
 
+    def test_legacy_checkpoint_without_book_history_fails_closed(self):
+        """No inferred transaction history from balances, even with valid checksum."""
+        import pickle
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'legacy.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'legacy-claim', 'v1',
+                'forest', 'plant', .01, .001)
+            clean_seq = self.session.book.seq
+            clean_mass = dict(self.session.book.mass)
+            clean_energy = dict(self.session.book.energy)
+            del self.session.book.transaction_history
+            path.write_bytes(_encode(pickle.dumps(
+                (self.tree_id, self.world), protocol=pickle.HIGHEST_PROTOCOL)))
+            legacy_bytes = path.read_bytes()
+            with self.assertRaisesRegex(ValueError, 'reviewed migration required'):
+                load_checkpoint(path, self.tree_id)
+            with self.assertRaisesRegex(ValueError, 'reviewed migration required'):
+                save_checkpoint(self.world, self.tree_id, path)
+            self.assertEqual(path.read_bytes(), legacy_bytes)
+            self.assertEqual(self.session.book.seq, clean_seq)
+            self.assertEqual(dict(self.session.book.mass), clean_mass)
+            self.assertEqual(dict(self.session.book.energy), clean_energy)
+
     def test_checksum_valid_latest_receipt_cannot_impersonate_book_transaction(self):
         """A self-consistent forged receipt at the real last seq is not authentic."""
         import pickle
