@@ -64,12 +64,13 @@ class Book:
                     raise ValueError('invalid '+label)
             if asset_id is not None and operation_id is None:
                 raise ValueError('unique assets require an operation ID')
-            # Normalize deterministic JSON/float round-trips at 12 decimals.
-            # This affects only replay identity, never transferred amounts.
+            # Preserve exact binary-float identities for replay signatures.
+            # Rounding to 12 decimals could silently accept a different amount
+            # as an idempotent retry, even though no transfer was performed.
             def stable_legs(legs):
-                return tuple((src,dst,round(float(q),12)) for src,dst,q in legs)
+                return tuple((src,dst,float(q).hex()) for src,dst,q in legs)
             signature=(kind,stable_legs(material),stable_legs(energy),
-                       round(float(toll),12),round(float(external),12),asset_id)
+                       float(toll).hex(),float(external).hex(),asset_id)
             if operation_id is not None and operation_id in self.operations:
                 prior_sig, prior_txn = self.operations[operation_id]
                 if prior_sig!=signature:raise ValueError('conflicting operation ID replay')
