@@ -105,6 +105,22 @@ class G2ParentStewardshipTests(unittest.TestCase):
         self.assertIs(tend_parent(self.sim, "F1", ("R1", 0.30), "local-decision"), first)
         self.sim.book.audit()
 
+    def test_remote_founder_is_not_offered_impossible_stewardship(self):
+        # Existing knowledge can remain fresh after travel, but no physical
+        # contribution should be proposed until the Founder returns.
+        self.assertTrue(any(p[1] == "parent_steward"
+                            for p in propose_parent_stewardship(self.sim, "F1")))
+        before = (dict(self.sim.book.energy), self.sim.book.seq,
+                  len(self.sim.seeds.constructs.events), len(self.logs))
+        self.sim.founders.people["F1"].location = "ridge"
+        self.assertEqual(propose_parent_stewardship(self.sim, "F1"), [])
+        self.assertEqual(before, (dict(self.sim.book.energy), self.sim.book.seq,
+                                  len(self.sim.seeds.constructs.events), len(self.logs)))
+        self.sim.founders.people["F1"].location = "riverbank"
+        self.assertTrue(any(p[1] == "parent_steward"
+                            for p in propose_parent_stewardship(self.sim, "F1")))
+        self.sim.book.audit()
+
     def test_stale_knowledge_rejects_new_contribution(self):
         self.sim.tick += 5
         before = (dict(self.sim.book.energy), self.sim.book.seq)
