@@ -18,6 +18,7 @@ C016=ROOT/'docs/INTEGRATION_025/APPROVED_DRIFT_C016.json'
 C017=ROOT/'docs/INTEGRATION_025/APPROVED_DRIFT_C017.json'
 C018=ROOT/'docs/INTEGRATION_025/APPROVED_DRIFT_C018.json'
 C036=ROOT/'docs/INTEGRATION_025/APPROVED_DRIFT_C036.json'
+C019=ROOT/'docs/INTEGRATION_025/APPROVED_DRIFT_C019.json'
 
 
 class C002ProvenanceTests(unittest.TestCase):
@@ -33,8 +34,13 @@ class C002ProvenanceTests(unittest.TestCase):
         self.assertIn('founders_civ/core/ledger.py',r['approved_files'])
         self.assertIn('founders_civ/experimental/world_trees.py',r['approved_files'])
 
-    def test_c036_exact_current_source_approval_and_mutation_rejection(self):
-        r=reviewed_check(ROOT,BASE,C036)
+    def test_c036_is_historical_and_rejects_new_autonomy_scheduler(self):
+        old=reviewed_check(ROOT,BASE,C036)
+        self.assertEqual(old['status'],'drift_requires_review')
+        self.assertIn('founders_civ/experimental/world_integration.py',old['unapproved_files'])
+
+    def test_c019_exact_candidate_accepts_and_rejects_tamper(self):
+        r=reviewed_check(ROOT,BASE,C019)
         self.assertEqual(r['status'],'approved_drift')
         self.assertEqual(r['unapproved_files'],[])
         with tempfile.TemporaryDirectory() as temp:
@@ -44,7 +50,7 @@ class C002ProvenanceTests(unittest.TestCase):
                 dst.write_bytes((ROOT/name).read_bytes())
             target=tr/'founders_civ/experimental/world_integration.py'
             target.write_bytes(target.read_bytes()+b'\\n# unauthorized drift\\n')
-            changed=reviewed_check(tr,BASE,C036)
+            changed=reviewed_check(tr,BASE,C019)
             self.assertEqual(changed['status'],'drift_requires_review')
             self.assertIn('founders_civ/experimental/world_integration.py',changed['unapproved_files'])
 

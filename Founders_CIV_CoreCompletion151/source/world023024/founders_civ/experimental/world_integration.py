@@ -265,6 +265,7 @@ class IntegratedWorld(SocialSimulation):
         self.founder_community_foraging_enabled=False  # C017 opt-in local food perception
         self.founder_tree_independence_enabled=False  # C017 opt-in independent fruit-funded World Trees
         self.founder_parent_stewardship_enabled=False  # C018 voluntary funded Realm maintenance
+        self.founder_autonomy_learning_enabled=False  # C019 personal value and experience
         self.founder_nutrition_enabled=False  # C015 opt-in ingestion/digestion; control unchanged
         # C016 opt-in: Book-funded food-to-work recovery, no legacy river recharge.
         self.founder_recovery_enabled=False
@@ -304,6 +305,10 @@ class IntegratedWorld(SocialSimulation):
         if len(worlds)<len(realms)*2:return ('world',realms[0]['id'])
         if worlds and len(unders)<len(worlds):return ('underworld',worlds[0]['id'])
         return ('realm',None)
+
+    def _personal_choice(self,a,proposals):
+        from founders_civ.core.founder_autonomy import value_proposals
+        return value_proposals(self,a,proposals)
 
     def _proposals(self,a,contacts):
         props=super()._proposals(a,contacts)
@@ -347,7 +352,7 @@ class IntegratedWorld(SocialSimulation):
                 intel=tree.observations.get(a)
                 if intel is None or self.tick-intel['seen_tick']>=5:
                     props.append((2.2,'tree_observe',None,cid))
-        if self._energy(a)<.19:return props
+        if self._energy(a)<.19:return self._personal_choice(a,props)
         mine=[b for b in self.seeds.blueprints.values() if b.author==a and b.stage!='planted']
         agenda=state.main_goal
         if mine:
@@ -408,11 +413,13 @@ class IntegratedWorld(SocialSimulation):
                 if estimate < plant['upkeep']*5 and self._energy(a)>.68:
                     props.append((3.70+.4*(agenda in ('security','solidarity')),
                                   'tree_tend',None,cid))
-        return props
+        return self._personal_choice(a,props)
 
     def _do(self,a,choice,contacts,rng,parent):
         self._current_parent=parent
         score,action,target,meta=choice
+        if action=='decline_investment' and self.founder_autonomy_learning_enabled:
+            return self.log('founder_declined_investment',a,parent)
         if self.founder_recovery_enabled:
             if action=='rest':
                 from founders_civ.core.founder_recovery import perform_rest
