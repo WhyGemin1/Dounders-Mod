@@ -333,3 +333,14 @@ def test_decline_cannot_carry_payment_or_change_historical_replay():
     assert decide_offer(s, buyer, oid, False) is None
     assert (s.book.seq, dict(s.book.mass), dict(s.book.energy), len(s.events)) == declined
     audit(s)
+
+
+def test_resource_agreement_cannot_self_deal_even_if_contact_layer_allows_it():
+    """A Founder cannot manufacture a social exchange by transferring to self."""
+    s, _, _, seller, buyer, lot = setup(seed=827)
+    before = (s.book.seq, dict(s.book.mass), dict(s.book.energy), len(s.events))
+    with pytest.raises(ValueError, match='distinct Founders'):
+        offer_resource(s, seller, seller, 'food', lot, decision_id='self-deal')
+    assert (s.book.seq, dict(s.book.mass), dict(s.book.energy), len(s.events)) == before
+    assert not getattr(s, 'founder_exchange_offers', {})
+    audit(s)
