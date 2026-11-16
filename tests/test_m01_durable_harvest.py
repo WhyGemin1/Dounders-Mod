@@ -163,5 +163,39 @@ class DurableHarvestTests(unittest.TestCase):
                 save_checkpoint(self.world, self.tree_id, path)
             self.assertEqual(path.read_bytes(), forged_bytes)
 
+
+    def test_checksum_valid_latest_receipt_cannot_impersonate_book_transaction(self):
+        """A self-consistent forged receipt at the real last seq is not authentic."""
+        import pickle
+        from dataclasses import replace
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'world.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'latest-forgery', 'v1',
+                'forest', 'plant', .01, .001)
+            key = f'm01:{self.tree_id}:latest-forgery:v1'
+            original_seq = self.session.book.seq
+            original_mass = dict(self.session.book.mass)
+            original_energy = dict(self.session.book.energy)
+            legs, receipt = self.session.book.request_receipts[key]
+            fake_material = tuple((s, t, q * .5) for s, t, q in legs[0])
+            fake_legs = (fake_material, legs[1])
+            forged_receipt = replace(receipt, material=fake_material)
+            self.assertEqual(forged_receipt.seq, original_seq)
+            self.assertNotEqual(forged_receipt, self.session.book.last)
+            self.session.book.request_receipts[key] = (fake_legs, forged_receipt)
+            path.write_bytes(_encode(pickle.dumps(
+                (self.tree_id, self.world), protocol=pickle.HIGHEST_PROTOCOL)))
+            forged_bytes = path.read_bytes()
+            with self.assertRaisesRegex(ValueError, 'latest Book transaction'):
+                load_checkpoint(path, self.tree_id)
+            with self.assertRaisesRegex(ValueError, 'latest Book transaction'):
+                save_checkpoint(self.world, self.tree_id, path)
+            self.assertEqual(path.read_bytes(), forged_bytes)
+            self.assertEqual(self.session.book.seq, original_seq)
+            self.assertEqual(dict(self.session.book.mass), original_mass)
+            self.assertEqual(dict(self.session.book.energy), original_energy)
+
 if __name__ == '__main__':
     unittest.main()
