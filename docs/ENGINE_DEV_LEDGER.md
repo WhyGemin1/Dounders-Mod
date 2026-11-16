@@ -274,3 +274,11 @@
 - Tests: CI triggered by test commit; result pending at ledger write. Prior provenance CLI GitHub CI 43813656249 passed. No new numerical Book conservation audit, WorldBox gameplay or ecological horizon run.
 - VERIFIED: source/test commits and previous CI; PROVISIONAL: new clock guard until current CI; BLOCKED: actual archive-to-checkout comparison, native identity/units/version/exactly-once ACK, M05 writer migration and ecological stability.
 - Next: verify new CI, then execute 27-module comparison against actual authorized ZIP without auto-approving overlays. M01 iteration 3 remains locked; no merge or alternate engine.
+
+## 2026-11-16 — P0 out-of-session canonical Book sequence guard
+- Ground: previous external world.tick mutation CI run 43821123440 completed SUCCESS on 517c95bd1541721998c7e5ebee75cc70829aecbe. Live PR #2 remains draft. Actual authorized 27-file ZIP-to-checkout provenance comparison remains NOT RUN.
+- Implementation: SingleEngineSession retains canonical world.book.seq and rejects out-of-session sequence changes before audit/step/harvest; expected sequence advances only following session-managed step and Book-funded harvest. Existing world.book remains sole writer, world.tick sole clock, 100 Founder object identities retained. No native writes or second engine.
+- Commits: source e40ce03c837f5ee37855cb3151cecc90fab9c4f0, test 267eb6dfeb67277cb4b969f5aca4a1617e31364f. Test uses real Core151 bootstrap seed 407 and restores Book sequence after negative tamper assertions, then verifies legitimate session step updates the expected sequence.
+- Execution: GitHub Actions CI triggered for new regression; result pending at ledger write. No new independent numerical mass/energy residuals, in-game WorldBox or ecological long-horizon runs.
+- VERIFIED: previous CI and new commits. PROVISIONAL: new guard until CI completes. BLOCKED: actual archive comparison, native IDs/units/version/exactly-once ACK, M05 independent writer migration and ecological stability.
+- Next: confirm CI; perform real authorized archive-to-checkout source comparison and classify overlays. M01 iteration 3 remains locked, M02-M07 deferred. No merge/main modification.
