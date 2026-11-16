@@ -44,7 +44,11 @@ class AdapterCompatibilityTests(unittest.TestCase):
         old=reviewed_check(root,root/'docs/INTEGRATION_025/BASELINE_HASHES.json',
                            root/'docs/INTEGRATION_025/APPROVED_DRIFT_C004.json')
         self.assertEqual(old['status'],'drift_requires_review')
-        self.assertEqual(old['unapproved_files'],['founders_civ/experimental/world_integration.py'])
+        # Later G1 Book corrections also invalidate the old C004 approval.
+        # Verify BOTH current drifts remain unapproved by the historical file.
+        self.assertEqual(set(old['unapproved_files']),
+                         {'founders_civ/core/ledger.py',
+                          'founders_civ/experimental/world_integration.py'})
         historical=reviewed_check(root,root/'docs/INTEGRATION_025/BASELINE_HASHES.json',
                                   root/'docs/INTEGRATION_025/APPROVED_DRIFT_C015.json')
         self.assertEqual(historical['status'],'drift_requires_review')
