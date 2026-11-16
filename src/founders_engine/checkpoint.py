@@ -56,6 +56,20 @@ def _validate_world(world, tree_id):
                 for i, tx in enumerate(history, 1)) or
             (history[-1] if history else None) != session.book.last):
         raise ValueError('inconsistent canonical Book transaction history')
+    # Historical transaction metadata is part of the canonical Book proof.
+    # A valid checkpoint checksum cannot legitimize NaN/negative tolls or
+    # forged external inflows. Only Wellspring may add external energy.
+    import math
+    for tx in history:
+        if (any(isinstance(value, bool) or
+                not isinstance(value, (int, float)) or
+                not math.isfinite(value) or value < 0
+                for value in (tx.toll, tx.external)) or
+                (tx.kind != 'transform' and tx.toll != 0) or
+                (tx.kind == 'transform' and tx.toll <= 0) or
+                (tx.kind != 'wellspring' and tx.external != 0) or
+                (tx.kind == 'wellspring' and tx.external <= 0)):
+            raise ValueError('malformed canonical Book transaction metadata')
     # Reject malformed historical legs even when the transaction was not an
     # M01 receipt. A valid checkpoint digest is not proof of valid Book data.
     import math
