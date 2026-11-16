@@ -33,7 +33,7 @@ class SingleEngineSession:
             raise ValueError('World Tree uses different resource authority')
         self.world = world
         self._founder_ids = frozenset(world.founders.people)
-        self._founder_objects = {fid: id(actor) for fid, actor in world.founders.people.items()}
+        self._founder_objects = dict(world.founders.people)
         self.book = world.book
         self.tree_id = tree_id
         self.gateway = WorldBoxGatewayM01(tree)
@@ -46,7 +46,7 @@ class SingleEngineSession:
             raise RuntimeError('checkpoint outcome uncertain: reload durable world')
         if frozenset(self.world.founders.people) != self._founder_ids:
             raise RuntimeError('authoritative Founder identities changed')
-        if any(id(actor) != self._founder_objects[fid]
+        if any(actor is not self._founder_objects[fid]
                for fid, actor in self.world.founders.people.items()):
             raise RuntimeError('authoritative Founder object replaced')
         if self.world.founders.book is not self.book:
