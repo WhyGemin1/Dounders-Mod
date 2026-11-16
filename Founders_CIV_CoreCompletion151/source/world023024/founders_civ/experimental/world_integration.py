@@ -10,6 +10,7 @@ Provisional mechanics do NOT assert empirical realism or canon numeric threshold
 from __future__ import annotations
 from dataclasses import dataclass, field, asdict
 from copy import deepcopy
+from contextlib import contextmanager
 from collections import Counter
 from math import isfinite
 from random import Random
@@ -149,6 +150,43 @@ class SeedRegistry:
         b.validation_event=self._event('seed_validated',actor,b,txn,author=b.author)
         return b
 
+    @contextmanager
+    def _atomic_plant(self, blueprint):
+        """Commit a new physical creation only after Book and registry succeed.
+
+        Staging remains in the existing Book and existing registries; an
+        exception restores both, including identity journal and success logs.
+        This covers new constructs and new World Tree registration. Existing
+        species resident mutation requires separate acceptance review.
+        """
+        plants=self.plants.copy()
+        owner_knowledge=self.owner_reserve_knowledge.copy()
+        constructs=self.constructs.items.copy()
+        construct_events=len(self.constructs.events)
+        worlds=self.sim.world_trees.worlds.copy()
+        seed_events=len(self.events)
+        sim_events=len(self.sim.events)
+        sim_counter=self.sim.counter.copy()
+        next_event=self.sim.next_event
+        stage,planted=blueprint.stage,blueprint.planted_id
+        try:
+            with self.sim.book.atomic_batch():
+                yield
+        except Exception:
+            self.plants.clear();self.plants.update(plants)
+            self.owner_reserve_knowledge.clear()
+            self.owner_reserve_knowledge.update(owner_knowledge)
+            self.constructs.items.clear();self.constructs.items.update(constructs)
+            del self.constructs.events[construct_events:]
+            self.sim.world_trees.worlds.clear()
+            self.sim.world_trees.worlds.update(worlds)
+            del self.events[seed_events:]
+            del self.sim.events[sim_events:]
+            self.sim.counter.clear();self.sim.counter.update(sim_counter)
+            self.sim.next_event=next_event
+            blueprint.stage,blueprint.planted_id=stage,planted
+            raise
+
     def plant(self,actor,seed_id):
         b=self.blueprints[seed_id]
         self._need_actor(actor)
@@ -182,34 +220,35 @@ class SeedRegistry:
         if book.energy[f_acct]<1.0000001:raise ValueError('not enough Founder work energy')
         if book.mass[mat]+1e-9<recipe['material']:raise ValueError('insufficient physical substrate')
         if book.energy['house']+1e-9<reserve+binding:raise ValueError('insufficient House reserve')
-        cid=f'CRE-{len(self.plants)+1:05d}'
-        work_acct=f'work:{actor}'
-        txn=book.move(energy=[(f_acct,work_acct,1.)])
-        cost=recipe['daily_energy']*(.8+.4*b.rules['openness'])
-        # Substrate changes physical state. One toll from the Founder's funded work.
-        construct=self.constructs.build(cid,'dimension' if b.kind in ('realm','world','dimension') else 'construct',
-            b.parent_id or 'sea',mat,recipe['material'],cost,
-            initial_reserve=reserve,binding_energy=binding,work_source=work_acct)
-        b.stage='planted';b.planted_id=cid
-        item={'id':cid,'kind':b.kind,'symbol':recipe['symbol'],'name':b.name,'blueprint_id':b.id,
-              'parent':b.parent_id,'owner':b.author,'rules':deepcopy(b.rules),'x':b.x,'y':b.y,
-              'status':'stable','created_tick':self.sim.tick,'mass':recipe['material'],
-              'reserve':reserve,'upkeep':cost,'inhabitants':0}
-        self.plants[cid]=item
-        self.owner_reserve_knowledge[cid]={b.author:{'tick':self.sim.tick,'reserve':reserve}}
-        if b.kind=='world':
-            self.sim.world_trees.add(item,b)
-            if getattr(self.sim, 'founder_tree_independence_enabled', False):
-                # Named fruit biomass and finite CE are *bound* to this new
-                # Tree, not duplicated in a second creation inventory.
-                book.move(material=[(f'world_seed:{b.id}',f'world_seed:planted:{cid}',.10)],
-                          energy=[(f'ce:seed:{b.id}',f'ce:world:{cid}',1.)],
-                          operation_id=f'world:seed_germinated:{b.id}')
-                self.sim.world_trees.worlds[cid].enable_provisioning()
-        if b.kind=='species':self.sim.world_trees.worlds[b.parent_id].admit_species(item,b)
-        self._event('seed_planted',actor,b,book.last,material=recipe['material'],
-                    binding=round(binding,3),reserve=round(reserve,3),host_parent=b.parent_id)
-        return item
+        with self._atomic_plant(b):
+            cid=f'CRE-{len(self.plants)+1:05d}'
+            work_acct=f'work:{actor}'
+            txn=book.move(energy=[(f_acct,work_acct,1.)])
+            cost=recipe['daily_energy']*(.8+.4*b.rules['openness'])
+            # Substrate changes physical state. One toll from the Founder's funded work.
+            construct=self.constructs.build(cid,'dimension' if b.kind in ('realm','world','dimension') else 'construct',
+                b.parent_id or 'sea',mat,recipe['material'],cost,
+                initial_reserve=reserve,binding_energy=binding,work_source=work_acct)
+            b.stage='planted';b.planted_id=cid
+            item={'id':cid,'kind':b.kind,'symbol':recipe['symbol'],'name':b.name,'blueprint_id':b.id,
+                  'parent':b.parent_id,'owner':b.author,'rules':deepcopy(b.rules),'x':b.x,'y':b.y,
+                  'status':'stable','created_tick':self.sim.tick,'mass':recipe['material'],
+                  'reserve':reserve,'upkeep':cost,'inhabitants':0}
+            self.plants[cid]=item
+            self.owner_reserve_knowledge[cid]={b.author:{'tick':self.sim.tick,'reserve':reserve}}
+            if b.kind=='world':
+                self.sim.world_trees.add(item,b)
+                if getattr(self.sim, 'founder_tree_independence_enabled', False):
+                    # Named fruit biomass and finite CE are *bound* to this new
+                    # Tree, not duplicated in a second creation inventory.
+                    book.move(material=[(f'world_seed:{b.id}',f'world_seed:planted:{cid}',.10)],
+                              energy=[(f'ce:seed:{b.id}',f'ce:world:{cid}',1.)],
+                              operation_id=f'world:seed_germinated:{b.id}')
+                    self.sim.world_trees.worlds[cid].enable_provisioning()
+            if b.kind=='species':self.sim.world_trees.worlds[b.parent_id].admit_species(item,b)
+            self._event('seed_planted',actor,b,book.last,material=recipe['material'],
+                        binding=round(binding,3),reserve=round(reserve,3),host_parent=b.parent_id)
+            return item
 
     def tend(self,actor,creation_id,amount=.6):
         self._need_actor(actor)
