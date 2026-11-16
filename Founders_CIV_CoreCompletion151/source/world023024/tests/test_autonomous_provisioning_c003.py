@@ -178,6 +178,49 @@ class AutonomousProvisioningTests(unittest.TestCase):
         self.assertEqual(before,after)
         self.book.audit()
 
+    def test_g1_failed_species_plant_restores_existing_tree(self):
+        # The Species Seed introduces residents to an existing Tree. Inject
+        # a failure after those residents are created and verify that their
+        # Book mass/fuel, IDs, membership and events all roll back together.
+        from unittest.mock import patch
+        rs=self.sim.seeds
+        founder=max(self.sim.founders.people,
+                    key=lambda a:(self.book.energy[f'founder:{a}'],a))
+        wb=rs.draft(founder,'world','G1 Species Rollback Tree',self.realm,x=69,y=44)
+        rs.research(founder,wb.id)
+        self.sim.step()
+        if self.sim.tick not in wb.research_ticks:rs.research(founder,wb.id)
+        reviewer=next(a for a,v in self.sim.founders.people.items()
+                      if a!=founder and v.location==self.sim.founders.people[founder].location)
+        rs.validate(reviewer,wb.id)
+        new_world=rs.plant(founder,wb.id)
+        tid=new_world['id']
+        tree=self.sim.world_trees.worlds[tid]
+        founder=max(self.sim.founders.people,
+                    key=lambda a:(self.book.energy[f'founder:{a}'],a))
+        sb=rs.draft(founder,'species','G1 Interrupted Species',tid,x=69.3,y=44.1)
+        rs.research(founder,sb.id)
+        self.sim.step()
+        if self.sim.tick not in sb.research_ticks:rs.research(founder,sb.id)
+        reviewer=next(a for a,v in self.sim.founders.people.items()
+                      if a!=founder and v.location==self.sim.founders.people[founder].location)
+        rs.validate(reviewer,sb.id)
+        before=(dict(self.book.mass),dict(self.book.energy),self.book.seq,
+                len(tree.residents),tree.serial,tuple(tree.species_seed_ids),
+                set(rs.constructs.items[tid].inhabitants),
+                rs.plants[tid]['inhabitants'],len(self.sim.events),
+                len(tree.timeline),sb.stage,sb.planted_id)
+        with patch.object(rs,'_event',side_effect=RuntimeError('injected species finalization')):
+            with self.assertRaisesRegex(RuntimeError,'injected species finalization'):
+                rs.plant(founder,sb.id)
+        after=(dict(self.book.mass),dict(self.book.energy),self.book.seq,
+               len(tree.residents),tree.serial,tuple(tree.species_seed_ids),
+               set(rs.constructs.items[tid].inhabitants),
+               rs.plants[tid]['inhabitants'],len(self.sim.events),
+               len(tree.timeline),sb.stage,sb.planted_id)
+        self.assertEqual(before,after)
+        self.book.audit()
+
     def test_two_actual_trees_compete_for_one_river_charge(self):
         rs=self.sim.seeds
         founder=max(self.sim.founders.people,key=lambda a:(self.book.energy[f'founder:{a}'],a))
