@@ -6,6 +6,7 @@ The book is *not* a thermodynamic chemistry model: there is no elemental stoichi
 """
 from __future__ import annotations
 from dataclasses import dataclass
+from contextlib import contextmanager
 from collections import defaultdict
 import math
 
@@ -51,6 +52,35 @@ class Book:
     def freeze(self):
         self.start_mass=sum(self.mass.values())
         self.start_energy=sum(self.energy.values())
+
+    @contextmanager
+    def atomic(self):
+        """Book-owned savepoint for synchronous multi-step physical operations.
+
+        Each inner transaction is separately validated, but no Book effect from
+        the composite operation survives if a later stage fails. This is an
+        in-memory single-threaded savepoint, NOT a second ledger or an external
+        database transaction. Caller-owned registries/events must also be
+        restored on rejection.
+        """
+        original = (
+            dict(self.mass), dict(self.energy), self.external, self.seq,
+            self.transactions, self.toll_count, self.last,
+            dict(self.operations), set(self.asset_ids),
+            self.max_abs_mass_error, self.max_abs_energy_error,
+        )
+        try:
+            yield self
+        except Exception:
+            (mass, energy, self.external, self.seq, self.transactions,
+             self.toll_count, self.last, operations, assets,
+             self.max_abs_mass_error, self.max_abs_energy_error) = original
+            # Preserve references held by the existing Core151 actors.
+            self.mass.clear(); self.mass.update(mass)
+            self.energy.clear(); self.energy.update(energy)
+            self.operations.clear(); self.operations.update(operations)
+            self.asset_ids.clear(); self.asset_ids.update(assets)
+            raise
 
     def apply(self,kind,material=(),energy=(),toll=0.,external=0.,operation_id=None,asset_id=None):
         """Prevalidate complete deltas, commit atomically; failures mutate no state."""
