@@ -67,6 +67,11 @@ def perform_harvest(sim,founder,target):
         raise ValueError('Founder is not physically at the riverbank')
     tree=sim.world_trees.worlds.get(tid)
     if tree is None or tree.provisioning is None:raise ValueError('unknown resource Tree')
+    # Every Tree must debit the one authoritative simulation Book. A detached
+    # Tree Book would create untracked physical food or CE even when its local
+    # balances appear valid; fail before touching either ledger.
+    if tree.book is not sim.book:
+        raise ValueError('Tree does not share the authoritative Book')
     evidence=tree.observations.get(founder)
     if (evidence is None or not 0<=sim.tick-evidence.get('seen_tick',-10000)<=MAX_STALENESS or
         not any(x.get('lot')==lot and x.get('kind')==kind for x in evidence.get('known_lots',()))):
