@@ -5,7 +5,8 @@
 param(
     [ValidateSet('probe','before','after','compare')][string]$Stage = 'probe',
     [string]$GameDir = 'C:\Program Files (x86)\Steam\steamapps\common\WorldBox',
-    [string]$EvidenceDir = "$env:USERPROFILE\Documents\FoundersCIV-Phase4"
+    [string]$EvidenceDir = "$env:USERPROFILE\Documents\FoundersCIV-Phase4",
+    [string]$AssetId = '' # Exact native species ID, e.g. rabbit; use same value for before and after
 )
 $ErrorActionPreference = 'Stop'
 if (-not (Get-Command 'py' -ErrorAction SilentlyContinue)) {
@@ -42,17 +43,22 @@ try {
         [Environment]::SetEnvironmentVariable('WORLDBOX_MCP_TOKEN',$token,'Process')
     }
     $cli = Join-Path $PSScriptRoot 'm01.py'
+    $cohortArgs = @()
+    if (-not [string]::IsNullOrWhiteSpace($AssetId)) {
+        $cohortArgs = @('--asset-id', $AssetId.Trim())
+    }
     if ($Stage -eq 'probe') {
         & py $cli live-probe
     } elseif ($Stage -eq 'before') {
-        & py $cli live-snapshot --output $before
+        & py $cli live-snapshot --output $before @cohortArgs
     } else {
-        & py $cli live-snapshot --output $after
+        & py $cli live-snapshot --output $after @cohortArgs
     }
     if ($LASTEXITCODE -ne 0) { throw 'Live native identity query FAILED; do not substitute names or positions.' }
     if ($Stage -eq 'before') {
         Write-Host "Saved BEFORE snapshot: $before" -ForegroundColor Green
         Write-Host 'Now save and close WorldBox normally, reload the SAME disposable save and PAUSE before running -Stage after.'
+        Write-Host 'If using -AssetId, use EXACTLY the same -AssetId value for the AFTER snapshot.'
     } elseif ($Stage -eq 'after') {
         Write-Host "Saved AFTER snapshot: $after" -ForegroundColor Green
         Write-Host 'Run -Stage compare to check native IDs, species and parent data.'
