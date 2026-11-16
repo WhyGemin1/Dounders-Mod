@@ -71,6 +71,37 @@ class G1ExactReplayTests(unittest.TestCase):
         self.assertEqual(self.book.mass["plant:founder"], 5e-8)
         self.book.audit()
 
+    def test_nonfinite_material_replay_rejected_without_mutation(self):
+        self.book.move(material=[("plant:tree", "plant:founder", 0.5)],
+                       operation_id="g1:nonfinite:material")
+        before = (dict(self.book.mass), self.book.seq)
+        for invalid in (float("nan"), float("inf"), float("-inf")):
+            with self.assertRaisesRegex(ValueError, "invalid transfer quantity"):
+                self.book.move(material=[("plant:tree", "plant:founder", invalid)],
+                               operation_id="g1:nonfinite:material")
+        self.assertEqual(before, (dict(self.book.mass), self.book.seq))
+        self.book.audit()
+
+    def test_nonfinite_ce_replay_rejected_without_mutation(self):
+        self.book.reserve_creation_charge(0.5, "g1:nonfinite:ce")
+        before = (dict(self.book.energy), self.book.seq)
+        for invalid in (float("nan"), float("inf"), float("-inf")):
+            with self.assertRaisesRegex(ValueError, "invalid transfer quantity"):
+                self.book.reserve_creation_charge(invalid, "g1:nonfinite:ce")
+        self.assertEqual(before, (dict(self.book.energy), self.book.seq))
+        self.book.audit()
+
+    def test_zero_or_negative_replay_amount_is_not_idempotent(self):
+        self.book.move(material=[("plant:tree", "plant:founder", 0.5)],
+                       operation_id="g1:nonpositive")
+        before = (dict(self.book.mass), self.book.seq)
+        for invalid in (0.0, -0.5):
+            with self.assertRaisesRegex(ValueError, "invalid transfer quantity"):
+                self.book.move(material=[("plant:tree", "plant:founder", invalid)],
+                               operation_id="g1:nonpositive")
+        self.assertEqual(before, (dict(self.book.mass), self.book.seq))
+        self.book.audit()
+
     def test_failed_transfer_does_not_claim_operation_identity(self):
         with self.assertRaisesRegex(ValueError, "material overdraw"):
             self.book.move(material=[("plant:tree", "plant:founder", 3.0)],
