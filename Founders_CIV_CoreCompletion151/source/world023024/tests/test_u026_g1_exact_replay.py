@@ -161,6 +161,40 @@ class G1CompositeAtomicityTests(unittest.TestCase):
         self.assertEqual(policy.events, [])
         book.audit()
 
+    def test_failed_world_registration_after_real_build_rolls_back_book_and_construct(self):
+        from types import SimpleNamespace
+        from unittest.mock import Mock, patch
+        from founders_civ.experimental.world_integration import SeedRegistry, SeedBlueprint, RULE_DEFAULTS
+        from founders_civ.experimental.world_trees import WorldTree
+
+        book = Book()
+        book.seed_mass("soil:Solara:grassland", 10.)
+        book.seed_energy("founder:F1", 3.)
+        book.seed_energy("house", 20.)
+        book.freeze()
+        worlds = SimpleNamespace(worlds={}, add=Mock(side_effect=RuntimeError("injected Tree registration failure")))
+        sim = SimpleNamespace(
+            book=book, tick=3, world_trees=worlds,
+            founders=SimpleNamespace(people={"F1": SimpleNamespace(alive=True)}))
+        seeds = SeedRegistry(sim)
+        seeds.plants["CRE-PARENT"] = {"id": "CRE-PARENT", "kind": "realm", "status": "stable"}
+        blueprint = SeedBlueprint(
+            id="SEED-00001", author="F1", kind="world", name="First World",
+            parent_id="CRE-PARENT", rules=dict(RULE_DEFAULTS),
+            created_tick=0, stage="validated")
+        seeds.blueprints[blueprint.id] = blueprint
+        prior = (dict(book.mass), dict(book.energy), book.seq, dict(book.operations))
+        with patch.object(WorldTree, "preflight", return_value=None):
+            with self.assertRaisesRegex(RuntimeError, "injected Tree registration failure"):
+                seeds.plant("F1", blueprint.id)
+        self.assertEqual(prior, (dict(book.mass), dict(book.energy),
+                                 book.seq, dict(book.operations)))
+        self.assertEqual(set(seeds.plants), {"CRE-PARENT"})
+        self.assertEqual(seeds.constructs.items, {})
+        self.assertEqual(worlds.worlds, {})
+        self.assertEqual(blueprint.stage, "validated")
+        book.audit()
+
     def test_failed_construct_build_does_not_debit_founder_or_claim_creation(self):
         from types import SimpleNamespace
         from unittest.mock import Mock
