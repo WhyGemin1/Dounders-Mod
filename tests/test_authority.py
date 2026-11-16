@@ -78,5 +78,18 @@ class SingleAuthorityTests(unittest.TestCase):
         finally:
             world.founders.book = original
 
+    def test_detect_same_id_founder_object_replacement(self):
+        from copy import copy
+        world, _, tree_id = bootstrap(403)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        original = world.founders.people[founder_id]
+        try:
+            world.founders.people[founder_id] = copy(original)
+            with self.assertRaisesRegex(RuntimeError, 'Founder object replaced'):
+                session.audit()
+        finally:
+            world.founders.people[founder_id] = original
+
 if __name__ == '__main__':
     unittest.main()
