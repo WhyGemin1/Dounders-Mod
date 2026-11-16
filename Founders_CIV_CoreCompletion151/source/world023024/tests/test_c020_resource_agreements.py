@@ -243,6 +243,22 @@ def test_two_worlds_cannot_claim_same_ambiguous_physical_lot():
     assert _origin(sim, 'food', 'shared') == ('W1', tree_a)
 
 
+def test_detached_tree_cannot_authenticate_shared_book_resource_origin():
+    """A foreign Book must not authorize a World lot for exchange or ingestion."""
+    from types import SimpleNamespace
+    from founders_civ.core.founder_exchange import _origin
+    shared = object()
+    foreign = object()
+    tree = SimpleNamespace(book=foreign, provisioning=None)
+    sim = SimpleNamespace(book=shared, world_trees=SimpleNamespace(worlds={'W1': tree}))
+    # An old provenance receipt in the authoritative Book is insufficient
+    # when the currently registered World writes to a different Book.
+    sim.book = SimpleNamespace(operations={'food:make:W1:lot': object()})
+    tree.book = foreign
+    assert _origin(sim, 'food', 'lot') == (None, None)
+    tree.book = sim.book
+    assert _origin(sim, 'food', 'lot') == ('W1', tree)
+
 def test_offer_identity_replay_after_settlement_and_separation_is_side_effect_free():
     s, _, _, seller, buyer, lot = setup()
     oid = offer_resource(s, seller, buyer, 'food', lot, decision_id='stable-offer')
