@@ -113,6 +113,9 @@ def verify_checkout(archive, checkout, allowed_overlays=()):
     report = {"matched": [], "overlays": {}, "missing": [], "drift": {}}
     for name, expected in sorted(entries.items()):
         path = root / name
+        if root.is_symlink() or any(parent.is_symlink() for parent in path.parents if parent == root or root in parent.parents):
+            report["missing"].append(name)
+            continue
         if path.is_symlink() or not path.is_file():
             report["missing"].append(name)
             continue
