@@ -29,8 +29,19 @@ def main():
             client=BridgeClient(base_url=args.base_url)
             if args.command=='live-probe':
                 health=client.health();cap=client.capabilities()
-                show({'health':health,'capabilities':cap,
-                      'note':'No WorldBox mutations. New actor ID command must be installed before the snapshot call.'})
+                names=[c.get('name') for c in cap.get('commands',[])
+                       if isinstance(c,dict)]
+                present='query_actor_identities' in names
+                show({'health':health,
+                      'worldbox_version':cap.get('worldbox_version'),
+                      'native_assembly_sha256':cap.get('assembly_csharp_sha256'),
+                      'registered_commands':len(names),
+                      'query_actor_identities_registered':present,
+                      'next_step':('Pause a fully loaded disposable WorldBox world, then run -Stage before.'
+                                   if present else
+                                   'M01 command not in live capabilities. Check installed WorldBoxBridge.dll and BepInEx logs.'),
+                      'note':'Read-only bridge probe; no native mutations or Book writes.'})
+                if not present:raise RuntimeError('M01 command absent from live /capabilities; do not attempt identity snapshots')
                 return
             snap=client.command('query_actor_identities')
             from founders_worldbox import normalize_snapshot
