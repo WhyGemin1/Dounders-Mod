@@ -4,6 +4,8 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
+      - 'tools/import_core151.py'
+      - 'tools/test_import_core151.py'
       - '.github/workflows/core151-m01-tests.yml'
   workflow_dispatch:
 jobs:
@@ -17,6 +19,8 @@ jobs:
           python-version: '3.11'
       - name: Compile imported source
         run: python -m compileall -q src
+      - name: Source provenance drift verifier regression
+        run: python -m unittest discover -v -s tools -p 'test_import_core151.py'
       - name: One-engine and M01 gateway regression
         env:
           PYTHONPATH: src
