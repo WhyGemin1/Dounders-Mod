@@ -38,8 +38,8 @@ class CohortSnapshotTests(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.out = Path(self.tmp.name) / "before.json"
 
-    def capture(self, snap, asset="rabbit"):
-        cli = ["m01.py", "live-snapshot", "--output", str(self.out)]
+    def capture(self, snap, asset="rabbit", minimum=20):
+        cli = ["m01.py", "live-snapshot", "--output", str(self.out), "--min-actors", str(minimum)]
         if asset is not None:
             cli += ["--asset-id", asset]
         with patch.object(sys, "argv", cli), patch("m01.BridgeClient") as bridge:
@@ -69,6 +69,40 @@ class CohortSnapshotTests(unittest.TestCase):
     def test_filtered_too_few_actors_refuses_and_does_not_save(self):
         with self.assertRaisesRegex(SystemExit, "2"):
             self.capture(sample(n=12))
+        self.assertFalse(self.out.exists())
+
+    def test_after_cohort_shrink_to_19_is_saved_for_analysis(self):
+        # 457 original rabbits, 19 after reload must be retained as evidence,
+        # not silently dropped merely because the initial cohort minimum is 20.
+        before=sample(n=457)
+        self.capture(before)
+        initial=Path(self.tmp.name)/"initial.json"
+        initial.write_text(self.out.read_text())
+        after=sample(n=19)
+        self.capture(after, minimum=0)
+        saved=json.loads(self.out.read_text())
+        self.assertEqual(saved["capture_asset_id"],"rabbit")
+        self.assertEqual(len(saved["items"]),19)
+        self.assertFalse(compare(initial,self.out)["identity_and_lineage_pass"])
+        self.assertEqual(len(compare(initial,self.out)["missing_or_changed"]),438)
+
+    def test_after_cohort_zero_is_valid_observation_not_a_promotion(self):
+        self.capture(sample(n=20))
+        initial=Path(self.tmp.name)/"initial.json"
+        initial.write_text(self.out.read_text())
+        self.capture(sample(n=0),minimum=0)
+        self.assertEqual(json.loads(self.out.read_text())["matched"],0)
+        self.assertEqual(len(compare(initial,self.out)["missing_or_changed"]),20)
+        self.assertFalse(compare(initial,self.out)["identity_and_lineage_pass"])
+
+    def test_before_minimum_remains_20(self):
+        with self.assertRaisesRegex(SystemExit,"2"):
+            self.capture(sample(n=19),minimum=20)
+        self.assertFalse(self.out.exists())
+
+    def test_negative_minimum_rejected(self):
+        with self.assertRaisesRegex(SystemExit,"2"):
+            self.capture(sample(n=20),minimum=-1)
         self.assertFalse(self.out.exists())
 
     def test_empty_filter_refuses_and_does_not_save(self):
