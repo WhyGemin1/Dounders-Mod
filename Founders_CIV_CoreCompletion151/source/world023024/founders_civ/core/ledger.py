@@ -7,6 +7,7 @@ The book is *not* a thermodynamic chemistry model: there is no elemental stoichi
 from __future__ import annotations
 from dataclasses import dataclass
 from collections import defaultdict
+from contextlib import contextmanager
 import math
 
 EPS=1e-7
@@ -164,6 +165,32 @@ class Book:
             if asset_id is not None:self.asset_ids.add(asset_id)
             return self.last
         except (ValueError,AssertionError):
+            self.rejected+=1
+            raise
+
+    @contextmanager
+    def atomic_batch(self):
+        """Roll back an interrupted composite Book operation as one unit.
+
+        Used only when several *Book* transactions form one physical action.
+        The caller must defer non-Book side effects until this context exits.
+        This is not a shadow ledger: the same Book object is restored in place.
+        """
+        stocks=(self.mass.copy(),self.energy.copy())
+        journal=(self.operations.copy(),self.asset_ids.copy())
+        counters=(self.external,self.seq,self.transactions,self.toll_count,
+                  self.rejected,self.max_abs_mass_error,self.max_abs_energy_error,
+                  self.last)
+        try:
+            yield self
+        except Exception:
+            self.mass.clear();self.mass.update(stocks[0])
+            self.energy.clear();self.energy.update(stocks[1])
+            self.operations.clear();self.operations.update(journal[0])
+            self.asset_ids.clear();self.asset_ids.update(journal[1])
+            (self.external,self.seq,self.transactions,self.toll_count,
+             self.rejected,self.max_abs_mass_error,self.max_abs_energy_error,
+             self.last)=counters
             self.rejected+=1
             raise
 
