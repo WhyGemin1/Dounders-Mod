@@ -90,5 +90,37 @@ class DurableHarvestTests(unittest.TestCase):
             self.session.audit()
 
 
+    def test_corrupt_receipt_in_valid_envelope_rejected_without_settlement(self):
+        """Trusted checkpoint with valid digest but impossible Book receipt fails closed."""
+        import pickle
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'world.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'corrupt-receipt', 'v1',
+                'forest', 'plant', .01, .001)
+            clean_bytes = path.read_bytes()
+            clean_seq = self.session.book.seq
+            clean_mass = dict(self.session.book.mass)
+            clean_energy = dict(self.session.book.energy)
+            key = f'm01:{self.tree_id}:corrupt-receipt:v1'
+            legs, receipt = self.session.book.request_receipts[key]
+            from dataclasses import replace
+            self.session.book.request_receipts[key] = (
+                legs, replace(receipt, seq=clean_seq + 1))
+            path.write_bytes(_encode(pickle.dumps(
+                (self.tree_id, self.world), protocol=pickle.HIGHEST_PROTOCOL)))
+            forged_bytes = path.read_bytes()
+            self.assertNotEqual(forged_bytes, clean_bytes)
+            with self.assertRaisesRegex(ValueError, 'inconsistent Book replay receipt'):
+                load_checkpoint(path, self.tree_id)
+            self.assertEqual(path.read_bytes(), forged_bytes)
+            self.assertEqual(self.session.book.seq, clean_seq)
+            self.assertEqual(dict(self.session.book.mass), clean_mass)
+            self.assertEqual(dict(self.session.book.energy), clean_energy)
+            with self.assertRaisesRegex(ValueError, 'inconsistent Book replay receipt'):
+                save_checkpoint(self.world, self.tree_id, path)
+            self.assertEqual(path.read_bytes(), forged_bytes)
+
 if __name__ == '__main__':
     unittest.main()
