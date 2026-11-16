@@ -1,0 +1,55 @@
+{
+  "schema": "u026-gate-decision-v1",
+  "gate": "G1",
+  "decision": "REVISE",
+  "scope": "isolated G1 acceptance branch; NOT promoted and NOT merged to Development/Core",
+  "candidate_sha": "d5ac2e79126c012fdc4464f1a8db794671fa886a",
+  "review_pr": "https://github.com/WhyGemin1/Dounders-Mod/pull/8",
+  "evidence_at_last_executed_acceptance_sha": "1307a17fd5a44632f175033647c0b13aa20239eb",
+  "last_executed_runs": [
+    {
+      "url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43788899650",
+      "focused_g1_pass": 19,
+      "g2_stewardship_pass": 10,
+      "full_core151_pass": 288,
+      "full_core151_fail": 3,
+      "worldbox_offline": "success",
+      "workflow": "failure"
+    },
+    {
+      "url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43788899755",
+      "focused_g1_pass": 19,
+      "full_core151_pass": 286,
+      "full_core151_fail": 5,
+      "additional_failure_cause": "standalone job omitted generated sample_run fixture",
+      "worldbox_offline": "success",
+      "workflow": "failure"
+    }
+  ],
+  "actual_failures": [
+    "Checkpoint test replayed .009 rather than the producer's exact .9*work floating-point operation, triggering exact-identity conflict",
+    "Historical C018 provenance assertion incorrectly treated modified Book as still approved",
+    "Repeated food ingestion failed ownership after the already committed first ingestion; real exact replay must not spend or log twice"
+  ],
+  "subsequent_unverified_fixes": [
+    "Regression replay test now uses the exact producer float expression",
+    "Historical C018 test now expects post-C018 Book drift to be unapproved",
+    "Nutrition handler returns committed exact replay without renewed inventory check or duplicate success event",
+    "Standalone workflow now generates fixture and enforces separate 514-file G1 source audit"
+  ],
+  "g1_acceptance_matrix": {
+    "G1-A01": "UNVERIFIED: a full exhaustive single-Book ownership audit has not completed",
+    "G1-A02": "PARTIAL PASS: injected fruit provisioning and construct/Tree registration rollbacks passed focused suite; other composite fault points remain unverified",
+    "G1-A03": "PARTIAL PASS: focused conservation and exact-ULP checks passed; entire integrated suite red",
+    "G1-A04": "FAIL in last full-suite run: checkpoint replay test; correction unverified",
+    "G1-A05": "FAIL in last full-suite run: repeated ingestion replay; correction unverified",
+    "G1-A06": "UNVERIFIED: entire adversarial refusal/negative path matrix not executed",
+    "G1-A07": "PARTIAL PASS: offline WorldBox tests green; full integration red",
+    "G1-A08": "FAIL: 288/291 or 286/291 full suite; ten matched 30/180-day seed trials not executed",
+    "G1-A09": "UNVERIFIED: new 514-file exact-source candidate fingerprint not yet observed green in CI",
+    "G1-A10": "FAIL: no fully passing candidate-sha CI acceptance and no G1 promotion"
+  },
+  "reason": "G1 requires complete fail-closed cross-step resource integrity and a full green exact-source workflow on one immutable SHA. Last executed runs had 3 physical/provenance failures and not all 10 acceptance dimensions executed. Later corrections exist but are not independently validated.",
+  "next_required_verification": "Rerun standalone G1 exact-source audit, focused suite, full Core151 regression and offline jobs against the latest candidate SHA; inspect conflicts from moving Development; then execute matched 10-seed 30/180-day trials and remaining negative paths. Do not promote from a partial green subset.",
+  "historical_g0_remains_promoted": true
+}
