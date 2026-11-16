@@ -178,8 +178,11 @@ def decide_offer(sim, receiver, offer_id, accept, payment_lot=None):
     if not isinstance(offer_id, str) or not isinstance(accept, bool):
         raise ValueError('invalid agreement decision')
     offer = _data(sim).get(offer_id)
-    if offer is None or offer['receiver'] != receiver or not _active(sim, receiver):
-        raise ValueError('offer not addressed to active recipient')
+    if offer is None or offer['receiver'] != receiver:
+        raise ValueError('offer not addressed to recipient')
+    # Settled and declined decisions are historical identities. A deterministic
+    # replay must remain valid after death or other later changes to actor state.
+    # New decisions still require a living recipient below.
     if offer['status'] == 'declined':
         if accept:
             raise ValueError('declined agreement cannot be accepted')
@@ -195,6 +198,8 @@ def decide_offer(sim, receiver, offer_id, accept, payment_lot=None):
         return sim.book.move(material=mats, energy=energies, operation_id=f'exchange:settle:{offer_id}')
     if offer['status'] != 'open':
         raise ValueError('offer is not open')
+    if not _active(sim, receiver):
+        raise ValueError('offer not addressed to active recipient')
     if not accept:
         offer['status'] = 'declined'
         sim.log('resource_agreement_declined', receiver,
