@@ -90,6 +90,47 @@ class DurableHarvestTests(unittest.TestCase):
             self.session.audit()
 
 
+    def test_restored_book_conservation_after_funded_harvest_and_tick(self):
+        """Numerical mass/energy residuals must survive real Book settlement and restart."""
+        import math
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'world.cp'
+            before = self.session.audit()
+            receipt = self.session.checkpointed_harvest(
+                path, 'F001', 'audit-restart', 'v1',
+                'forest', 'plant', .01, .001)
+            after = self.session.audit()
+            restored = load_checkpoint(path, self.tree_id)
+            replay = restored.checkpointed_harvest(
+                path, 'F001', 'audit-restart', 'v1',
+                'forest', 'plant', .01, .001)
+            self.assertEqual(receipt, replay)
+            self.assertEqual(after.book_sequence, restored.book.seq)
+            self.assertEqual(before.tick, restored.world.tick)
+            self.assertEqual(dict(restored.book.mass), dict(self.session.book.mass))
+            self.assertEqual(dict(restored.book.energy), dict(self.session.book.energy))
+            for label, snapshot in (('before', before), ('settled', after),
+                                    ('restored', restored.audit())):
+                with self.subTest(stage=label):
+                    self.assertTrue(math.isfinite(snapshot.book_mass_error))
+                    self.assertTrue(math.isfinite(snapshot.book_energy_error))
+                    self.assertLessEqual(abs(snapshot.book_mass_error), 1e-6)
+                    self.assertLessEqual(abs(snapshot.book_energy_error), 1e-6)
+                print('BOOK_AUDIT', label,
+                      'mass_error=', repr(snapshot.book_mass_error),
+                      'energy_error=', repr(snapshot.book_energy_error),
+                      'seq=', snapshot.book_sequence, flush=True)
+            restored.step()
+            advanced = restored.audit()
+            self.assertEqual(advanced.tick, before.tick + 1)
+            self.assertEqual(advanced.founder_count, 100)
+            self.assertLessEqual(abs(advanced.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(advanced.book_energy_error), 1e-6)
+            print('BOOK_AUDIT stepped',
+                  'mass_error=', repr(advanced.book_mass_error),
+                  'energy_error=', repr(advanced.book_energy_error),
+                  'seq=', advanced.book_sequence, flush=True)
+
     def test_corrupt_receipt_in_valid_envelope_rejected_without_settlement(self):
         """Trusted checkpoint with valid digest but impossible Book receipt fails closed."""
         import pickle
