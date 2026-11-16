@@ -21,8 +21,28 @@ class BridgeClient:
         try:
             with request.urlopen(req,timeout=self.timeout) as r:
                 result=json.loads(r.read())
+        except error.HTTPError as e:
+            # urllib raises on 4xx/5xx *before* we can inspect the bridge's
+            # standard {ok:false,error:{code,message}} response envelope.
+            # Keep the status and safe structured reason, not response bodies,
+            # request headers, authentication tokens or exception stack traces.
+            try:
+                reply=json.loads(e.read(16384).decode('utf-8'))
+            except (ValueError,UnicodeDecodeError):
+                reply=None
+            detail=reply.get('error') if isinstance(reply,dict) else None
+            if not isinstance(detail,dict):
+                detail={}
+            code=str(detail.get('code') or 'HTTP_ERROR')[:96]
+            message=str(detail.get('message') or 'bridge returned no structured error')[:400]
+            # No token or credentials should appear even if an unexpected
+            # upstream error message includes the caller's credential.
+            if self.token:
+                code=code.replace(self.token,'[redacted]')
+                message=message.replace(self.token,'[redacted]')
+            raise RuntimeError(f'WorldBox read rejected: HTTP {e.code} {code}: {message}') from None
         except (error.URLError,TimeoutError) as e:
-            raise ConnectionError(f'WorldBox bridge unavailable or rejected the request: {type(e).__name__}') from e
+            raise ConnectionError(f'WorldBox bridge unavailable: {type(e).__name__}') from e
         if not isinstance(result,dict):
             raise RuntimeError('WorldBox read returned a non-object JSON response')
         # The pinned WorldBox MCP bridge intentionally returns a bare JSON
