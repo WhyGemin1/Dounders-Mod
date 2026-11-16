@@ -239,3 +239,11 @@
 - Test evidence: prior CI verified; new tests committed and CI pending. Real archive-to-checkout comparison NOT RUN; numerical Book audit, native WorldBox game test and long-horizon ecology NOT RUN.
 - Status: VERIFIED source/test/workflow commits and prior CI; PROVISIONAL new provenance gate pending CI and real archive comparison; BLOCKED native identity/unit/version/ACK and WorldBox writes.
 - Next: verify CI, run actual authorized archive comparison on clean checkout, review overlays explicitly, and retain source archives. Main unchanged; no merge.
+
+## 2026-11-15 — P0 source provenance symlink-parent rejection
+- Ground: prior provenance synthetic CI PASS, GitHub Actions 43795939367. Authorized Drive ZIP downloaded and independently SHA-256 checked locally: `29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8` (956121 bytes).
+- Implementation: `verify_checkout()` now treats symlinked checkout roots and ancestor directories as provenance mismatch, not only symlinked leaf files. This prevents a checkout path from silently resolving to outside files with identical bytes. Added synthetic symlinked `founders_civ/core` regression.
+- Source commits: e985ca44141116f28dc907f87f0697092e76bcd8, d44afc74797776331ab37bccacbfdb09ac128d37.
+- Execution: previous CI VERIFIED. New regression CI pending at ledger write. Local GitHub checkout could not be retrieved in container (network DNS unavailable); actual archive-to-checkout byte comparison NOT RUN. No new numerical Book audit, WorldBox gameplay, or ecological long-horizon run.
+- Status: VERIFIED prior CI, source/test commits, archive hash; PROVISIONAL new regression until CI; BLOCKED real archive-to-checkout comparison and external native WorldBox writes/ACK.
+- Next: confirm CI and compare all 27 imported source modules to verified ZIP with reviewed overlay allowlist. No merge, no second engine.
