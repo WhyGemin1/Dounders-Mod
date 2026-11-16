@@ -22,7 +22,7 @@ def main():
     q=subs.add_parser('shadow');q.add_argument('--world-id',required=True);q.add_argument('--core-source');q.add_argument('--core-state-json');q.add_argument('--seed',type=int,default=100001)
     q=subs.add_parser('export-core');q.add_argument('--core-source',required=True);q.add_argument('--seed',type=int,default=100001);q.add_argument('--output',required=True)
     q=subs.add_parser('live-probe');q.add_argument('--base-url',default='http://127.0.0.1:8723')
-    q=subs.add_parser('live-snapshot');q.add_argument('--base-url',default='http://127.0.0.1:8723');q.add_argument('--output',required=True);q.add_argument('--asset-id',help='Exact native actor asset_id, e.g. rabbit; filter cohort in worlds with over 5000 actors')
+    q=subs.add_parser('live-snapshot');q.add_argument('--base-url',default='http://127.0.0.1:8723');q.add_argument('--output',required=True);q.add_argument('--asset-id',help='Exact native actor asset_id, e.g. rabbit; filter cohort in worlds with over 5000 actors');q.add_argument('--min-actors',type=int,default=20,help='Minimum filtered cohort size; use 20 before, 0 after to observe loss')
     args=p.parse_args()
     try:
         if args.command.startswith('live-'):
@@ -53,11 +53,13 @@ def main():
             # Explicit source-consistency gate: a filter must not silently
             # include animals from another species; at least 20 identities
             # are needed for our first save/reload acceptance experiment.
+            if args.min_actors < 0 or args.min_actors > 5000:
+                raise ValueError('--min-actors must be between 0 and 5000')
             if cohort is not None:
                 if any(item.get('asset_id') != cohort for item in items):
                     raise BridgeIntegrityError('Native bridge returned actors outside requested cohort')
-                if len(items)<20:
-                    raise ValueError(f'Only {len(items)} native actors of asset_id={cohort}; select a species with at least 20 for the identity test')
+                if len(items) < args.min_actors:
+                    raise ValueError(f'Only {len(items)} native actors of asset_id={cohort}; required minimum {args.min_actors}')
                 snap['capture_asset_id']=cohort
             Path(args.output).write_text(json.dumps(snap,indent=2))
             show({'saved':str(Path(args.output).resolve()),'asset_id_filter':cohort,**meta,
