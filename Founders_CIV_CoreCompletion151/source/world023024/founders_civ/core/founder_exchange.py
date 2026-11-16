@@ -102,14 +102,13 @@ def offer_resource(sim, seller, receiver, kind, lot, wanted_kind=None, decision_
     """Seller proposes an explicit gift or whole-lot barter. No Book mutation."""
     if not getattr(sim, 'founder_exchange_enabled', False):
         raise ValueError('resource agreements disabled')
-    if not _contact(sim, seller, receiver):
-        raise ValueError('Founders must meet to offer resources')
+    # A retry of an existing offer is an identity lookup, not a new physical
+    # offer. It must remain replayable after the lot is transferred or the
+    # participants separate, without rechecking current possession/contact.
     if kind not in KINDS or wanted_kind not in (None, *KINDS):
         raise ValueError('unsupported resource kind')
     if wanted_kind == kind:
         raise ValueError('exchange must provide a distinct resource kind')
-    if not isinstance(lot, str) or not owns_lot(sim, seller, kind, lot):
-        raise ValueError('seller lacks identified Book-owned lot')
     if decision_id is None:
         decision_id = getattr(sim, '_current_parent', None)
     if not isinstance(decision_id, str) or not 1 <= len(decision_id) <= 72:
@@ -122,6 +121,10 @@ def offer_resource(sim, seller, receiver, kind, lot, wanted_kind=None, decision_
                 seller, receiver, kind, lot, wanted_kind):
             raise ValueError('conflicting offer decision replay')
         return offer_id
+    if not _contact(sim, seller, receiver):
+        raise ValueError('Founders must meet to offer resources')
+    if not isinstance(lot, str) or not owns_lot(sim, seller, kind, lot):
+        raise ValueError('seller lacks identified Book-owned lot')
     if any(o['status']=='open' and o['seller']==seller and o['kind']==kind and o['lot']==lot
            for o in offers.values()):
         raise ValueError('lot already offered by this Founder')
