@@ -45,6 +45,17 @@ class CrossWorldHarvestIdentityTests(unittest.TestCase):
         self.assertEqual(sim.world_trees.worlds["W1"].provisioning.lots[
             "LOCAL-7"].state, "stored")
 
+    def test_detached_tree_book_rejected_without_transfer(self):
+        sim, logs = self.make_sim(False)
+        tree = sim.world_trees.worlds["W1"]
+        tree.book = SimpleNamespace(mass=defaultdict(float), energy=defaultdict(float))
+        before = (sim.book.seq, dict(sim.book.mass), dict(sim.book.operations))
+        with self.assertRaisesRegex(ValueError, "authoritative Book"):
+            perform_harvest(sim, "F1", ("W1", "LOCAL-7", "food"))
+        self.assertEqual(before, (sim.book.seq, dict(sim.book.mass), dict(sim.book.operations)))
+        self.assertEqual(tree.provisioning.lots["LOCAL-7"].state, "stored")
+        self.assertEqual(logs, [])
+
     def test_unique_local_lot_remains_harvestable(self):
         sim, logs = self.make_sim(False)
         self.assertEqual(perform_harvest(
