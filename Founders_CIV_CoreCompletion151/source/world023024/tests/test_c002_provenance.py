@@ -31,7 +31,8 @@ class C002ProvenanceTests(unittest.TestCase):
         r=reviewed_check(ROOT,BASE,C018)
         self.assertEqual(r['status'],'drift_requires_review')
         self.assertIn('founders_civ/experimental/world_integration.py',r['unapproved_files'])
-        self.assertIn('founders_civ/core/ledger.py',r['approved_files'])
+        # This historical C018 signature predates G1/G2 ledger changes.
+        self.assertIn('founders_civ/core/ledger.py',r['unapproved_files'])
         self.assertIn('founders_civ/experimental/world_trees.py',r['approved_files'])
 
     def test_c036_is_historical_and_rejects_new_autonomy_scheduler(self):
