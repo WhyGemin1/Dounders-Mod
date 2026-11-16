@@ -15,8 +15,6 @@ ARCHIVE = os.environ.get("CORE151_ARCHIVE")
 
 
 class ImportTests(unittest.TestCase):
-    @unittest.skipUnless(ARCHIVE and Path(ARCHIVE).is_file(), "CORE151_ARCHIVE unavailable")
-
     def test_current_core151_source_matches_reviewed_fingerprints(self):
         """Exact source fingerprints: 26 archive matches; ledger overlay observed, NOT approved.
 
@@ -65,6 +63,7 @@ run_world_tree_pilot.py 2866b99e7ebf5b325e17b5091eae4806de0e7b45""".splitlines()
             expected["founders_civ/core/ledger.py"],
             "2899f8eba59ded15ea5e7ce64fea2e6044f98398")
 
+    @unittest.skipUnless(ARCHIVE and Path(ARCHIVE).is_file(), "CORE151_ARCHIVE unavailable")
     def test_verified_archive_contains_single_world(self):
         files = plan(ARCHIVE)
         self.assertIn("founders_civ/core/ledger.py", files)
