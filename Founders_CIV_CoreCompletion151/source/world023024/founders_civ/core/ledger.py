@@ -6,6 +6,7 @@ The book is *not* a thermodynamic chemistry model: there is no elemental stoichi
 """
 from __future__ import annotations
 from dataclasses import dataclass
+from contextlib import contextmanager
 from collections import defaultdict
 import math
 
@@ -51,6 +52,35 @@ class Book:
     def freeze(self):
         self.start_mass=sum(self.mass.values())
         self.start_energy=sum(self.energy.values())
+
+    @contextmanager
+    def atomic(self):
+        """Book-owned savepoint for synchronous multi-step physical operations.
+
+        Each inner transaction is separately validated, but no Book effect from
+        the composite operation survives if a later stage fails. This is an
+        in-memory single-threaded savepoint, NOT a second ledger or an external
+        database transaction. Caller-owned registries/events must also be
+        restored on rejection.
+        """
+        original = (
+            dict(self.mass), dict(self.energy), self.external, self.seq,
+            self.transactions, self.toll_count, self.last,
+            dict(self.operations), set(self.asset_ids),
+            self.max_abs_mass_error, self.max_abs_energy_error,
+        )
+        try:
+            yield self
+        except Exception:
+            (mass, energy, self.external, self.seq, self.transactions,
+             self.toll_count, self.last, operations, assets,
+             self.max_abs_mass_error, self.max_abs_energy_error) = original
+            # Preserve references held by the existing Core151 actors.
+            self.mass.clear(); self.mass.update(mass)
+            self.energy.clear(); self.energy.update(energy)
+            self.operations.clear(); self.operations.update(operations)
+            self.asset_ids.clear(); self.asset_ids.update(assets)
+            raise
 
     def apply(self,kind,material=(),energy=(),toll=0.,external=0.,operation_id=None,asset_id=None):
         """Prevalidate complete deltas, commit atomically; failures mutate no state."""
@@ -138,12 +168,19 @@ class Book:
                 de[s]-=q;de[t]+=q
             if kind=='wellspring':de['house']+=external
             if abs(sum(dm.values()))>EPS or abs(sum(de.values())-external)>EPS:raise ValueError('unbalanced transaction')
-            # EPS is an audit tolerance, never permission to create stock.
-            # Reject even sub-EPS overdrafts before any mutation.
-            if any(self.mass.get(k,0.)+v < 0 for k,v in dm.items()):raise ValueError('material overdraw')
+            # Never treat fixed EPS as spendable credit. Allow only the
+            # representation error of a few IEEE-754 ULPs when funded
+            # multi-leg totals differ from their source by rounding.
+            def unpaid(stock, delta):
+                if delta >= 0: return False
+                remaining = stock + delta
+                return remaining < 0 and (stock <= 0 or
+                      -remaining > 8 * math.ulp(max(abs(stock), abs(delta))))
+            if any(unpaid(self.mass.get(k,0.),v) for k,v in dm.items()):
+                raise ValueError('material overdraw')
             for key, delta in de.items():
                 prior = self.energy.get(key, 0.)
-                if prior + delta < 0:
+                if unpaid(prior,delta):
                     raise ValueError(f'energy overdraw {key}: balance={prior!r} '
                                      f'delta={delta!r} deficit={-(prior+delta)!r}')
             if kind=='transform':
