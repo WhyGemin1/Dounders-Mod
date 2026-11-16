@@ -422,3 +422,10 @@
 - NEXT: refresh tracked ledger.py overlay fingerprint and run full clean-checkout CI; fix any failures before history-growth work.
 
 - PROVENANCE FOLLOW-UP: updated exact tracked Git blob pin for ledger.py to 23b9e5d48f35a24abc53810b915ab11bf697e877 in tools/test_import_core151.py, commit 60ca55c1e38bc25148ae168cb51c6037fe4e37bd. New full CI remains unverified; no behavioral acceptance claimed.
+
+## 2026-11-16 — P0 historical transaction metadata fail-closed
+- Prior GitHub Actions run 43975306101 (#177) verified SUCCESS on all reported headless steps for the preceding replay-key guard.
+- Implemented canonical checkpoint validation of historical Book toll/external metadata: finite nonnegative numeric values, toll only for transforms, external inflow only for Wellspring. Same Book and clock; no second resource authority.
+- Added real Core151 seed-400 regression forging NaN external inflow and negative toll in historical transaction metadata inside checksum-valid checkpoint; asserts load/save fail closed and no mutation to file bytes, Book balances or sequence.
+- New regression NOT YET EXECUTED at commit time. No new numerical mass/energy residuals or WorldBox/ecology measurements. Preserve M01 iteration-3 lock and M02–M07 backlog.
+- Next: confirm clean-checkout CI then measure transaction-history storage growth.
