@@ -185,3 +185,11 @@
 - **Next:** inspect post-fix CI and correct any remaining failure; then obtain independently sourced WorldBox identity/version/unit fixtures for read-only contract tests.
 
 - **Post-repair verification:** [GitHub Actions run 43772637029](https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43772637029) on exact repaired source commit `24692b7abf5fba4195d1d74f6fa7b90046a09cb6` completed **SUCCESS** on clean GitHub checkout. The native identifier regression repair is now VERIFIED. This does not establish native WorldBox compatibility, in-game execution, or ecological stability.
+
+## 2026-11-15 — M01 native quantity precision and overflow gate
+- Ground: reviewed tracked `src/founders_engine/native_claim_boundary.py`, active engine state and draft PR #2. The prior numeric validator called `math.isfinite` on arbitrary Python integers, which can raise `OverflowError` for enormous values; values above 2**53 also cannot be represented as exact integers in common double-precision transports.
+- Implementation: reject positive integers greater than 2**53 with `ValueError` before float conversion; retain existing finite/positive numeric validation. Added regression exercising 2**53+1, 10**1000 and the exact-range boundary 2**53. No Book, clock, Founder, or external settlement path changed.
+- Commits: implementation `8e8dd1aef6524b5bce3a87a4d44ec66ae78a4dc5`, tests `88375ba322e2e87deb3aa08865e6afc038e99100`. Engine state updated subsequently.
+- Test command intended in GitHub workflow: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_native_claim_boundary.py'`. **NOT EXECUTED/CONFIRMED in this entry**. No fresh Book mass/energy audit, WorldBox gameplay, or ecological horizon tests.
+- VERIFIED: changes committed to experimental branch. PROVISIONAL: numeric guard behavior pending CI. BLOCKED: native identities, units, versions, and exactly-once external ACK; all external writes remain disabled.
+- Next: inspect CI at test commit, repair if needed, then obtain independently sourced native fixture contract.
