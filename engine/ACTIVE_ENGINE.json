@@ -52,7 +52,7 @@
     "p0_checkout_fingerprint_regression": "PASS GitHub Actions run 43836994575 at b0e042fe38d6eebbaf3af1f6304ee54718801460",
     "p0_book_receipt_history": "PASS GitHub Actions run 43849553308 on source/test/pin commit 7be64b7b89505894ef09f55dfbdf5c4a98514fc0",
     "p0_corrupt_checkpoint_receipt": "PASS GitHub Actions run 43857105676 on regression commit 00bdb673ed38ca419eb262ae1faa7f34e8c37f71",
-    "p0_numeric_restored_book_audit": "Regression committed d3d8cb7c06393147fed9803e0d8b89a2543c031a; CI and actual numerical output pending"
+    "p0_numeric_restored_book_audit": "PASS GitHub Actions run 43864971835 on code commit d3d8cb7c06393147fed9803e0d8b89a2543c031a; numerical residual lines emitted but exact numbers not extracted from logs"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -61,11 +61,11 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Confirm new CI and extract BOOK_AUDIT numerical output; if passing review receipt integrity against actual transaction history",
+  "next_cycle": "Extract exact numeric BOOK_AUDIT log values, then verify receipt linkage to transaction history; no promotion without acceptance",
   "last_cycle": "2026-11-16 P0 numeric Book audit after durable harvest and restart",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "00bdb673ed38ca419eb262ae1faa7f34e8c37f71",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43857105676",
-  "last_unverified_code_commit": "d3d8cb7c06393147fed9803e0d8b89a2543c031a"
+  "last_verified_code_commit": "d3d8cb7c06393147fed9803e0d8b89a2543c031a",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43864971835",
+  "last_unverified_code_commit": null
 }
