@@ -219,3 +219,25 @@ def test_seller_can_voluntarily_withdraw_and_reoffer_unspent_food():
     assert not owns_lot(s,a,'food',lot)
     assert s.book.seq==old+1
     audit(s)
+
+
+def test_two_worlds_cannot_claim_same_ambiguous_physical_lot():
+    """A portable lot ID without a World namespace must never choose a World."""
+    from types import SimpleNamespace
+    from founders_civ.core.founder_exchange import _origin
+    from founders_civ.core.founder_nutrition import _tree_for_lot
+    tree_a = SimpleNamespace(provisioning=None)
+    tree_b = SimpleNamespace(provisioning=None)
+    sim = SimpleNamespace(
+        world_trees=SimpleNamespace(worlds={'W1': tree_a, 'W2': tree_b}),
+        book=SimpleNamespace(operations={
+            'food:make:W1:shared': object(),
+            'food:make:W2:shared': object(),
+            'fruit:grow:W1:shared': object(),
+        }),
+    )
+    assert _origin(sim, 'food', 'shared') == (None, None)
+    assert _tree_for_lot(sim, 'shared') == (None, None)
+    assert _origin(sim, 'fruit', 'shared') == ('W1', tree_a)
+    del sim.book.operations['food:make:W2:shared']
+    assert _origin(sim, 'food', 'shared') == ('W1', tree_a)
