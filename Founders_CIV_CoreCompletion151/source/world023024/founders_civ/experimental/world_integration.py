@@ -436,6 +436,9 @@ class IntegratedWorld(SocialSimulation):
                 from founders_civ.core.founder_exchange import offer_resource
                 kind, lot, wanted = meta
                 return offer_resource(self,a,target,kind,lot,wanted,parent)
+            if action=='exchange_withdraw' and self.founder_exchange_enabled:
+                from founders_civ.core.founder_exchange import withdraw_offer
+                return withdraw_offer(self,a,meta)
             if action in ('exchange_accept','exchange_decline') and self.founder_exchange_enabled:
                 from founders_civ.core.founder_exchange import decide_offer
                 if action=='exchange_decline':

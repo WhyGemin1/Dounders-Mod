@@ -133,6 +133,29 @@ def _legs(kind, lot, source, destination):
     return ((source_m, dest_m, qty), (source_e, dest_e, charge))
 
 
+
+def withdraw_offer(sim, seller, offer_id):
+    """The original proposer can freely withdraw an unsettled offer.
+
+    No resource was escrowed by making the offer. A withdrawn offer cannot
+    force its original recipient to trade and cannot be silently replayed.
+    """
+    if not getattr(sim, 'founder_exchange_enabled', False):
+        raise ValueError('resource agreements disabled')
+    offer = _data(sim).get(offer_id)
+    if offer is None or offer['seller'] != seller or not _active(sim, seller):
+        raise ValueError('only the active seller may withdraw this offer')
+    if offer['status'] == 'withdrawn':
+        return None
+    if offer['status'] != 'open':
+        raise ValueError('settled or declined offer cannot be withdrawn')
+    offer['status'] = 'withdrawn'
+    sim.log('resource_agreement_withdrawn', seller,
+            parent=getattr(sim, '_current_parent', None),
+            offer_id=offer_id, receiver=offer['receiver'])
+    return None
+
+
 def decide_offer(sim, receiver, offer_id, accept, payment_lot=None):
     """The recipient may reject for free or accept atomic Book-funded barter.
 
@@ -220,7 +243,13 @@ def propose_exchange(sim, founder, contacts):
         score += .55 if offer['kind']=='fruit' and s.main_goal in ('research','exploration') else 0
         proposals.append((score, 'exchange_accept', offer['seller'], (offer_id, payment)))
         proposals.append((.8 + .25*s.caution, 'exchange_decline', offer['seller'], offer_id))
-    if contacts and not any(o['status']=='open' and o['seller']==founder for o in offers.values()):
+    my_open = [oid for oid, o in sorted(offers.items())
+               if o['status']=='open' and o['seller']==founder]
+    if my_open:
+        # A seller can reconsider when the recipient moves away, or whenever
+        # the seller's private goals change. The offer never seizes the lot.
+        proposals.append((1.2 + .32*s.caution, 'exchange_withdraw', None, my_open[0]))
+    if contacts and not my_open:
         # No centralized obligation to share; supply comes ONLY from owned lots.
         owned_food = owned_lots(sim, founder, 'food')
         owned_fruit = owned_lots(sim, founder, 'fruit')

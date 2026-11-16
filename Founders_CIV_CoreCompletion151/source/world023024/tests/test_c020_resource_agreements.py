@@ -8,7 +8,7 @@ import pytest
 from run_world_tree_pilot import bootstrap
 from founders_civ.core.founder_harvesting import observed_lots, perform_harvest
 from founders_civ.core.founder_exchange import (offer_resource,decide_offer,owns_lot,
-    owned_lots,propose_exchange)
+    owned_lots,propose_exchange,withdraw_offer)
 from founders_civ.core.founder_nutrition import propose_nutrition, perform_nutrition
 from founders_civ.core.founder_tree_agency import _own_fruit, fund_own_tree
 
@@ -196,5 +196,26 @@ def test_scheduler_can_settle_consentful_gift_but_keeps_decline_option():
     s._do(b,choice,[a],Random(9),'decision-2')
     assert s.counter['resource_agreement_received']==1
     assert owns_lot(s,b,'food',lot)
+    assert s.book.seq==old+1
+    audit(s)
+
+
+def test_seller_can_voluntarily_withdraw_and_reoffer_unspent_food():
+    s,_,_,a,b,lot=setup()
+    s.founders.people['F003'].location='riverbank'
+    old=s.book.seq
+    original=offer_resource(s,a,b,'food',lot,decision_id='first')
+    option=next(x for x in s._proposals(a,[b]) if x[1]=='exchange_withdraw')
+    s._do(a,option,[b],Random(2),'withdraw-decision')
+    assert s.founder_exchange_offers[original]['status']=='withdrawn'
+    assert owns_lot(s,a,'food',lot)
+    assert s.book.seq==old
+    assert withdraw_offer(s,a,original) is None  # retry is free
+    with pytest.raises(ValueError,match='not open'):
+        decide_offer(s,b,original,True)
+    revised=offer_resource(s,a,'F003','food',lot,decision_id='second')
+    decide_offer(s,'F003',revised,True)
+    assert owns_lot(s,'F003','food',lot)
+    assert not owns_lot(s,a,'food',lot)
     assert s.book.seq==old+1
     audit(s)

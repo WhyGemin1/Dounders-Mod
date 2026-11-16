@@ -145,7 +145,7 @@ def value_proposals(sim, founder, proposals):
         elif action in MAKE:
             score = max(-.6, min(2.1, raw*.36 + .80*m.creation_preference +
                                  1.1*m.believed_creation_value + .25*m.believed_tree_value))
-        elif action in ('exchange_offer', 'exchange_accept', 'exchange_decline'):
+        elif action in ('exchange_offer', 'exchange_accept', 'exchange_decline', 'exchange_withdraw'):
             score = raw + .50*m.resource_preference + .24*m.believed_tree_value
         elif action in ('tree_harvest', 'food_ingest', 'food_digest'):
             score = max(-.6, min(2.5, raw*.53 + .75*m.resource_preference +
