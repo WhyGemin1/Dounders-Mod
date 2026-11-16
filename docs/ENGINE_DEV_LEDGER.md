@@ -310,3 +310,7 @@
 ### CI correction — pinned source fingerprint
 - GitHub Actions run 43849277385 FAILED at the source provenance drift verifier step because the 27-file fingerprint test still pinned the pre-change ledger.py blob 2d4881bcef9d4bd77ab553d66080fc5d28526ae0. All subsequent tests were skipped; no authority test pass can be claimed for that run.
 - Corrected the ledger.py pin to actual committed blob b86f9eb0c8a21f0ae677fb3a9de5536c1d495664 in tools/test_import_core151.py, commit 7be64b7b89505894ef09f55dfbdf5c4a98514fc0. The original 26 source file pins remain unchanged. New CI pending at entry; no new Book residuals extracted.
+
+### Verified corrected CI — Book receipt history guard
+- GitHub Actions run 43849553308 completed SUCCESS on source/test/fingerprint commit 7be64b7b89505894ef09f55dfbdf5c4a98514fc0. This supersedes failed run 43849277385. CI runs the source provenance and one-engine/M01 regression steps; this confirms the new Book replay guard regression passes on the tested source.
+- No fresh independent numerical mass/energy residuals, native gameplay, or long-horizon ecology measured. Overlay remains provisionally compatible in covered paths, not universally approved.
