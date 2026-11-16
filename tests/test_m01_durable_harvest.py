@@ -258,6 +258,23 @@ class DurableHarvestTests(unittest.TestCase):
             self.assertEqual(dict(self.session.book.energy), original_energy)
 
 
+    def test_new_book_move_rejects_truncated_history_without_resource_mutation(self):
+        """New M01 settlement must fail closed if canonical history was truncated."""
+        book = self.session.book
+        original_history = book.transaction_history
+        seq, mass, energy = book.seq, dict(book.mass), dict(book.energy)
+        try:
+            book.transaction_history = original_history[:-1]
+            with self.assertRaisesRegex(ValueError, 'inconsistent canonical Book transaction history'):
+                book.move_once('m01:damaged-history', material=(('plant:forest', 'plant:founder:F001', .001),))
+            self.assertNotIn('m01:damaged-history', book.request_receipts)
+            self.assertEqual(book.seq, seq)
+            self.assertEqual(dict(book.mass), mass)
+            self.assertEqual(dict(book.energy), energy)
+        finally:
+            book.transaction_history = original_history
+        book.audit()
+
     def test_direct_book_replay_rejects_forged_stored_legs(self):
         """A matching request must not replay a canonical receipt with forged stored legs."""
         self.session.harvest('F001', 'replay-legs', 'v1', 'forest', 'plant', .01, .001)
