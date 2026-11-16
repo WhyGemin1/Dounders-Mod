@@ -127,6 +127,27 @@ class AutonomousProvisioningTests(unittest.TestCase):
         with self.assertRaises(ValueError):self.tree.resources.decay_fruit('forest','C003-MANUAL')
         self.assertEqual(self.book.seq,seq)
 
+    def test_g1_failed_fruit_growth_rolls_back_reserved_ce(self):
+        # Inject a failure between river CE reservation and fruit creation.
+        # A rejected composite operation must leave the Book unchanged.
+        from unittest.mock import patch
+        policy=self.tree.enable_provisioning(minimum_plant=0.)
+        biome=next(p for p in self.tree.habitats
+                   if policy._reserve(p,.10,False))
+        self.assertLess(self.book.energy['ce:river'],1.)
+        self.assertGreaterEqual(self.book.energy['river_pool'],1.)
+        before=(dict(self.book.mass),dict(self.book.energy),self.book.seq,
+                dict(self.book.operations),set(self.book.asset_ids))
+        with patch.object(self.tree,'grow_creation_fruit',
+                          side_effect=RuntimeError('injected fruit failure')):
+            with self.assertRaisesRegex(RuntimeError,'injected fruit failure'):
+                policy._allocate('fruit',biome)
+        self.assertEqual(before,(dict(self.book.mass),dict(self.book.energy),
+                                 self.book.seq,dict(self.book.operations),
+                                 set(self.book.asset_ids)))
+        self.assertEqual(policy.lots,{})
+        self.book.audit()
+
     def test_two_actual_trees_compete_for_one_river_charge(self):
         rs=self.sim.seeds
         founder=max(self.sim.founders.people,key=lambda a:(self.book.energy[f'founder:{a}'],a))
