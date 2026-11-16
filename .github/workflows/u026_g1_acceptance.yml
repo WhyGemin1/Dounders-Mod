@@ -25,13 +25,26 @@ jobs:
           python-version: '3.11'
       - name: Install pytest
         run: python -m pip install --disable-pip-version-check pytest==8.4.1
+      - name: Verify G1 exact-source candidate; retain regressions even if stale
+        id: provenance
+        continue-on-error: true
+        working-directory: .
+        run: python tools/u026_g1_exact_source_audit.py
+      - name: Generate deterministic observatory fixture in CI workspace
+        run: python -c "import json; from pathlib import Path; from founders_civ.runner import run; Path('web/sample_run.json').write_text(json.dumps(run(42,30,'1111')))"
       - name: G1 atomic composite failure-injection and exact replay tests
         run: python -m pytest -q tests/test_u026_g1_exact_replay.py
       - name: Complete Core151 regression suite
         run: python -m pytest -q tests
-      - name: Verify single-authority candidate G1 fingerprint
-        working-directory: .
-        run: python tools/u026_g1_exact_source_audit.py
+      - name: Enforce reviewed G1 provenance after all regressions
+        if: always()
+        env:
+          PROVENANCE_OUTCOME: ${{ steps.provenance.outcome }}
+        run: |
+          if [ "$PROVENANCE_OUTCOME" != success ]; then
+            echo 'G1 candidate exact-source audit FAILED; promotion blocked.'
+            exit 1
+          fi
 
   worldbox-offline:
     runs-on: ubuntu-latest
