@@ -226,3 +226,8 @@
 - Verification: previous GitHub CI VERIFIED; new regression awaiting CI at ledger write. No new independent numerical mass/energy audit, native game test, or ecological horizon executed. No local clone/test claimed.
 - Status: VERIFIED prior CI and new commits; PROVISIONAL new guard until CI; BLOCKED native WorldBox IDs/units/version/ACK and ecological stability.
 - Next: confirm CI, then add exact-source provenance drift checks against verified archive without overwriting M01 overlays.
+
+### CI verification addendum — P0 non-finite Book audit guard
+- GitHub Actions run 43789231933 for code commit 60c3a20a1dc028fd845afd2f7633a17dc286a7d5 completed SUCCESS. GitHub jobs endpoint shows clean checkout, Python compilation, one-engine/M01 regression, Book-funded harvest, checkpoint/restart, fsync/process termination, native read-only boundary and Core151 isolation steps all SUCCESS.
+- This verifies the new negative NaN/Infinity Book audit test ran in the one-engine regression step. Numerical conservation residuals were not separately captured, so do not report new residual values. Native WorldBox game and ecological long horizons NOT RUN.
+- ACTIVE_ENGINE.json updated after this result. No merge or main modification.
