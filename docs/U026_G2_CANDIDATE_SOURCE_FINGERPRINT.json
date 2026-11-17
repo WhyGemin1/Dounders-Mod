@@ -519,7 +519,7 @@
     "tools/u026_g1_matched_acceptance.py": "2f51a17d478b1a7927417eabd3bd52d44cbf0287ba9c37bbaa64a8a432911af3",
     "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
     "tools/u026_g2_matched_acceptance.py": "6cc54f3311416833ddfe64e6010fa4bc50c373d9d09563554abeaad83649bc9f",
-    ".github/workflows/u026_g2_acceptance.yml": "fca12ed5e677a059e741fb71e70a01162a37c44b986ed07c0637070ca801d381"
+    ".github/workflows/u026_g2_acceptance.yml": "5427dae9b78cbcb48831815007df1156c3370ea7e507ece1682ff52def817a3a"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
@@ -579,7 +579,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "40b9bc81bc1bac6932080a031546e6f588a3814a",
+  "source_commit": "f26628ceacdc3cdf7817b351db8fd1c5ef1ecb11",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
@@ -617,6 +617,6 @@
     "tools/u026_g2_exact_source_audit.py",
     "tools/u026_g2_matched_acceptance.py"
   ],
-  "gate_decision": "PENDING_C048_REVIEWED_ACCEPTANCE",
-  "candidate_note": "C048: G2 agency failed ecological matched controls; opt-in parent care inspection/urgency corrected and accepted only if replay, Book conservation and no candidate-only whole-World extinction. Exact gate self-tests and causal factorial runs required. No branch promotion authorized."
+  "gate_decision": "PENDING_C048_CURRENT_CI",
+  "candidate_note": "C048 plus C047: G2 retains provisional status. Workflow fix simplifies condition to always() so causal factorial diagnostics execute even if matched test fails; full source and ecological revalidation required. Historical G0/G1 accepted revisions intact."
 }
