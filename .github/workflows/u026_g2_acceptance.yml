@@ -46,9 +46,13 @@ jobs:
             tests/test_c018_parent_stewardship.py \
             tests/test_c020_resource_agreements.py \
             tests/test_u026_g2_parent_stewardship.py
+      - name: G2 promotion gate negative controls: paired extinction must fail
+        run: python tools/u026_g2_matched_acceptance.py --self-test
       - name: G2 matched actual engine control and voluntary agency, checkpoint and one Book
+        id: matched
         run: python tools/u026_g2_matched_acceptance.py --seeds 4 --days 180 --output "${{ runner.temp }}/u026_g2_matched.jsonl"
       - name: G2 factorial cause isolation, two matched seeds by six opt-in arms
+        if: ${{ steps.matched.outcome == 'success' || steps.matched.outcome == 'failure' }}
         run: python tools/u026_g2_matched_acceptance.py --factorial --seeds 2 --days 180 --output "${{ runner.temp }}/u026_g2_factorial.jsonl"
       - name: Upload raw matched seed manifest (not committed)
         if: always()
