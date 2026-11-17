@@ -482,5 +482,40 @@ class DurableHarvestTests(unittest.TestCase):
                 book.transaction_history[0] = original
         book.audit()
 
+
+    def test_boolean_historical_book_sequence_fails_closed(self):
+        """True must not alias transaction sequence 1 in a trusted checkpoint."""
+        import pickle
+        from dataclasses import replace
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'boolean-sequence.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'bool-sequence', 'v1',
+                'forest', 'plant', .01, .001)
+            book = self.session.book
+            self.assertGreater(book.seq, 1)
+            original = book.transaction_history[0]
+            self.assertEqual(original.seq, 1)
+            seq, mass, energy = book.seq, dict(book.mass), dict(book.energy)
+            try:
+                book.transaction_history[0] = replace(original, seq=True)
+                path.write_bytes(_encode(pickle.dumps(
+                    (self.tree_id, self.world),
+                    protocol=pickle.HIGHEST_PROTOCOL)))
+                forged_bytes = path.read_bytes()
+                for action in (lambda: load_checkpoint(path, self.tree_id),
+                               lambda: save_checkpoint(self.world, self.tree_id, path)):
+                    with self.assertRaisesRegex(
+                            ValueError, 'inconsistent canonical Book transaction history'):
+                        action()
+                self.assertEqual(path.read_bytes(), forged_bytes)
+                self.assertEqual(book.seq, seq)
+                self.assertEqual(dict(book.mass), mass)
+                self.assertEqual(dict(book.energy), energy)
+            finally:
+                book.transaction_history[0] = original
+        book.audit()
+
 if __name__ == '__main__':
     unittest.main()
