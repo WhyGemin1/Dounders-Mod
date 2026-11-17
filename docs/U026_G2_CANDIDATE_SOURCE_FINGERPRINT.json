@@ -434,7 +434,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/social_agents.py": "7079d88453deda0d47f2b6ddfeb8ce1082477cf80caa35f866f574bba2e63bb3",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/soul.py": "aba416742da915286bafb8c4483b1692b8d85116ad287c80f1b2a32fd65d09cc",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world024.py": "d1856f9eaf8bc3ebbde41aed614253d07ac07beb7c6da55abd715f896341df39",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_integration.py": "a96f50850a7ef85ebb7388e0dd8010a0f616e4795cf0f8f5bd1a913cfc95551f",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_integration.py": "8e04b5f0b813bac4c92a130243445efe82c3d59c02b77d688b12718647745565",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_trees.py": "2d0d373ec417d8a7da2ee8b995c924b3b9fb1ee26997dcf1273bcf1c867d3325",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/integration/__init__.py": "c752ac2fd07e5ddbf7f75e34ae4b5b0fdda380c9d48404f908018f7cf3be494f",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/integration/branches.py": "02c5bb7b76310eb1a72b631f1326027e3ec7d35d7ff8450d3851337bebcaccb6",
@@ -481,7 +481,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c013_lot_isolation.py": "79f0693cbdf86a81233977dd08c9ed9010ca107661b069cffc58d8bb8f273264",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c015_founder_nutrition.py": "734eae6a59ff4d03f330db15351ca04d4dec5a98039fbe2d50f8210837605202",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c016_metabolic_rest.py": "f01568be81a906f8a36895c8c2f071f2ece6d634b87eeb6023f08806765b4e5c",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_community_foraging.py": "e9b3d3dbe801bd19a8bb1c35cb4c51f2713aa1b93cc3bc1915e7f4b49da812f2",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_community_foraging.py": "a2f6b63ed7b7971ebada3f1cf901966e874abc9bfb97a7ad02d1a35066807d30",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "8dd29f551248fdfa5d8841918c37e8751639209ea459af776bb09d96496aff53",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "e004009859edc3fd48a7c07db8b22c276d10a01be52588a78dddee398999123d",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c019_founder_autonomy.py": "a900f37114133ff102f447efa7c622aa980a2d9adfecc3555f575ff589277332",
@@ -519,7 +519,7 @@
     "tools/u026_g1_matched_acceptance.py": "2f51a17d478b1a7927417eabd3bd52d44cbf0287ba9c37bbaa64a8a432911af3",
     "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
     "tools/u026_g2_matched_acceptance.py": "9ec201d43a7344078fbc6252ba947c1e63aed1b07486452c1811251472eaf1e3",
-    ".github/workflows/u026_g2_acceptance.yml": "90a0ab8f74c33c81acec0d8d45aba021fa2594a27e95f78097f745dbc23fc0a0"
+    ".github/workflows/u026_g2_acceptance.yml": "bded770f3486fd0465ff0c2fea5caad1db585f57a19bb80c5532ee152cc76868"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
@@ -579,7 +579,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "652b58570aece7ea0c694a4c9c7a7d42912365ee",
+  "source_commit": "8c43d2178353821ae037c59618ee5701dc6af00e",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
@@ -602,6 +602,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c005_harvest_policy.py",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c006_ingestion.py",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c009_digestion_contract.py",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_community_foraging.py",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c020_resource_agreements.py",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c021_nutrition_wiring.py",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c022_tree_proposal_preservation.py",
@@ -616,6 +617,6 @@
     "tools/u026_g2_exact_source_audit.py",
     "tools/u026_g2_matched_acceptance.py"
   ],
-  "gate_decision": "PENDING_CURRENT_C047_INDEPENDENT_G2_CI",
-  "candidate_note": "C047: G2 opt-in repeat Tree founding requires personally acquired real finite CE fruit and remains voluntary. Source and test changed; separate 4-seed 2-arm 30/180-day matched replay and current Core151 full regression required. No Core merge claimed."
+  "gate_decision": "PENDING_C047_FIX_CI",
+  "candidate_note": "C047: matched seed 9711 G2 opt-in crashed on food-only owner observation without a population key. Actual WORLD-024 proposal code corrected to interpret missing census as unknown; regression added, independent G2 workflow added, current-source full acceptance pending."
 }
