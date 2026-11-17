@@ -422,7 +422,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "2355885bf289771f559799762272ae3dc9d957f8ca1d11defdcccaf3619af63a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "60f171a4080a1ff0c46e763e5b513ca9c328db254bc958831a39f4a45c1953f3",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "8181f1c9c3abb630e21374e60a9299e0263da9ca5ef2f49d443281a79597bf18",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "26bfd626285919faeb32bd1fdcbf9fe16ebf3e99cfb419d36fb883296660920a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "4468dae8555504aa413411929cb89eddd6f4f1099426b7365495e54f55f088c1",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "0631bae8c8cfa9cc71ed17c43b9ca11a6f9a9b07fa7eee65ed561a35b383f638",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py": "41fd892f3d9d1ffcd72c4a353a5c30d77c155fe356e206261babc1d2b47d9745",
@@ -483,7 +483,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c016_metabolic_rest.py": "f01568be81a906f8a36895c8c2f071f2ece6d634b87eeb6023f08806765b4e5c",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_community_foraging.py": "a2f6b63ed7b7971ebada3f1cf901966e874abc9bfb97a7ad02d1a35066807d30",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "8dd29f551248fdfa5d8841918c37e8751639209ea459af776bb09d96496aff53",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "e004009859edc3fd48a7c07db8b22c276d10a01be52588a78dddee398999123d",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "5175102b1ff13eeb6f8947feec323f2c3897193c0edd2736c6dbb04fce883e36",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c019_founder_autonomy.py": "280dac3e1ebdc4596dfe5b606243e44289d8094d7158d06149a0e99efc7decc2",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c020_resource_agreements.py": "de2bd7a2bdff1d142afa4b5d159996fe3c67a8a71f0f93c31f153f84b4570e7a",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c021_nutrition_wiring.py": "cf3d279274feda9ff70679a303d2b849e1b215eb99ae3f5cdf74e459fdb6c43e",
@@ -617,6 +617,6 @@
     "tools/u026_g2_exact_source_audit.py",
     "tools/u026_g2_matched_acceptance.py"
   ],
-  "gate_decision": "PENDING_C048_AUTONOMY_REFUSAL_FIX_CI",
-  "candidate_note": "C048: after original 4/4 G2 candidate-only Tree extinctions, observed parent-care urgency and local inspection revised. Full regression revealed two Founder opt-out reachability failures. Corrected urgent-care decline score to preserve stochastic voluntary refusal. G0/G1/G2 re-verification pending; no promotion."
+  "gate_decision": "C049_PENDING_SOURCE_AND_ECOLOGY_ACCEPTANCE",
+  "candidate_note": "C049: dependent Realm owners can voluntarily move along the existing physical social map to inspect parent reserves when stale/low and geographically remote; four behavioral/Book regression tests. G2 matched 4-seed prior run seed 400 candidate-only collapse. G0/G1 reverify; G2 rejection gate required before promotion. None of these changes grant material/energy, teleport, force Tree upkeep, or establish ecological stability."
 }
