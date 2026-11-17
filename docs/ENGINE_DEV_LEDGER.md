@@ -542,3 +542,10 @@
 - Execute/test: existing GitHub Actions #231 PASS; **new test not executed locally or confirmed in CI**. No fresh numerical Book residuals collected in this cycle. No WorldBox game test.
 - Ecological/behavioral audit: test covers checkpoint authority, not ecological stability; WorldBox native writes remain read-only, M01 iteration-3 repair lock and M02–M07 backlog unchanged.
 - NEXT: obtain clean-checkout CI for new test and repair any failure before extending Book-history scaling.
+
+## 2026-11-17 10:00 CST — independent positive world-clock divergence regression
+- Ground/design: inspected live `tests/test_book_history_growth.py`, `src/founders_engine/checkpoint.py`, `engine/ACTIVE_ENGINE.json` and prior CI #231 (44099358010), which had 18 reported successful headless steps. GitHub commit-workflow lookup for prior 03155413 / a7560e61 returned no PR-triggered workflow; this does NOT establish CI success for the new tests. Authorized Cycle152 ZIP metadata confirmed on Drive.
+- Implementation: extended the EXISTING seed-400 `test_world_clock_tampering_fails_closed_without_checkpoint_mutation` to independently set `world.tick=original_tick+1` with `world.ecology.day` unchanged; expects explicit clock-disagreement rejection, unchanged checkpoint bytes and canonical Book seq/history, then successful 100-Founder restoration. Test commit `69cb0761a471dbc81186a38af1aab3efe03d1694`; state commit `07c93e859a1b6dd57d2673d3faec05e68ab2eb22`. No second Book/clock/engine.
+- Execute/test: no local unittest or new clean-checkout CI executed; test PROVISIONAL. Existing CI #231 verified successful, but predates this test. No fresh numerical conservation residuals.
+- Ecological/behavioral audit: no ecology long-horizon or native WorldBox tests; M01 iteration-3 repair lock and M02-M07 backlog preserved, external writes disabled. No merge/main mutation.
+- NEXT: verify clean-checkout CI for both independent world-clock tests and correct failures before adding more regression breadth.
