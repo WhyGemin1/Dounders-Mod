@@ -19,6 +19,19 @@ from run_world_tree_pilot import bootstrap  # noqa: E402
 
 SEEDS = (42, 400, 821, 9711, 73, 117, 260, 511, 808, 1009)
 EPS = 1e-5
+PROFILES = {
+    "g1-funded-baseline": (),
+    "g2-observe-exchange": ("founder_community_foraging_enabled",
+                            "founder_exchange_enabled"),
+    "g2-tree-agency": ("founder_tree_independence_enabled",),
+    "g2-parent-stewardship": ("founder_parent_stewardship_enabled",),
+    "g2-social-learning": ("founder_autonomy_learning_enabled",),
+    "g2-voluntary-agency": ("founder_tree_independence_enabled",
+                            "founder_community_foraging_enabled",
+                            "founder_parent_stewardship_enabled",
+                            "founder_exchange_enabled",
+                            "founder_autonomy_learning_enabled"),
+}
 
 
 def _audit(sim, founders, tree):
@@ -46,8 +59,14 @@ def _snapshot(sim, tree, day, founder_ids):
     states = {}
     for lot in lots.values():
         states[lot.state] = states.get(lot.state, 0) + 1
+    worlds = list(sim.world_trees.worlds.values())
+    # An original Tree's collapse is not proof all Worlds died: distinguish
+    # original population from ALL actually funded World Tree populations.
     return {
         "day": day,
+        "worlds_count": len(worlds),
+        "active_worlds": sum(t.state == "active" for t in worlds),
+        "total_living_residents": sum(t.population for t in worlds),
         "book_seq": sim.book.seq,
         "asset_ids": len(sim.book.asset_ids),
         "mass_error": audit["mass_error"],
@@ -62,18 +81,17 @@ def _snapshot(sim, tree, day, founder_ids):
     }
 
 
-def run(seed: int, enhanced: bool, days: int) -> dict:
+def run(seed: int, enhanced: bool, days: int, profile: str | None = None) -> dict:
     sim, _, tree_id = bootstrap(seed=seed)
     tree = sim.world_trees.worlds[tree_id]
     tree.enable_provisioning()
     sim.founder_harvest_enabled = True
     sim.founder_nutrition_enabled = True
-    if enhanced:
-        sim.founder_tree_independence_enabled = True
-        sim.founder_community_foraging_enabled = True
-        sim.founder_parent_stewardship_enabled = True
-        sim.founder_exchange_enabled = True
-        sim.founder_autonomy_learning_enabled = True
+    profile = profile or ("g2-voluntary-agency" if enhanced else "g1-funded-baseline")
+    if profile not in PROFILES:
+        raise ValueError("unknown G2 factorial profile")
+    for flag in PROFILES[profile]:
+        setattr(sim, flag, True)
     founder_ids = set(sim.founders.people)
     _audit(sim, founder_ids, tree)
     snapshots = []
@@ -97,7 +115,7 @@ def run(seed: int, enhanced: bool, days: int) -> dict:
     return {
         "gate": "G2-candidate",
         "seed": seed,
-        "arm": "g2-voluntary-agency" if enhanced else "g1-funded-baseline",
+        "arm": profile,
         "days": days,
         "checkpoint_replay": "PASS" if days >= 35 else "NOT_RUN",
         "snapshots": snapshots,
@@ -109,19 +127,25 @@ def main():
     p.add_argument("--seeds", type=int, default=4)
     p.add_argument("--days", type=int, default=180)
     p.add_argument("--output", type=Path)
+    p.add_argument("--factorial", action="store_true",
+                   help="compare G2 options separately before promoting full agency")
     args = p.parse_args()
     if not 1 <= args.seeds <= len(SEEDS) or args.days < 35:
         p.error("seeds must be 1..10, days >= 35")
+    profiles = tuple(PROFILES) if args.factorial else (
+        "g1-funded-baseline", "g2-voluntary-agency")
     rows = []
+    profile = "NOT_STARTED"
     try:
         for seed in SEEDS[:args.seeds]:
-            for enhanced in (False, True):
-                result = run(seed, enhanced, args.days)
+            for profile in profiles:
+                result = run(seed, profile != "g1-funded-baseline",
+                             args.days, profile=profile)
                 rows.append(result)
                 print(json.dumps({"decision": "PASS", **result}, sort_keys=True), flush=True)
     except Exception as exc:
         print(json.dumps({"gate": "G2-candidate", "decision": "FAIL",
-                          "seed": seed, "arm": enhanced,
+                          "seed": seed, "arm": profile,
                           "error": repr(exc)}), flush=True)
         raise
     if args.output:
@@ -130,7 +154,7 @@ def main():
             "\n".join(json.dumps(x, sort_keys=True) for x in rows) + "\n",
             encoding="utf-8")
     print(json.dumps({"gate": "G2-candidate", "decision": "PASS",
-                      "matched_seeds": args.seeds, "arms": 2,
+                      "matched_seeds": args.seeds, "arms": len(profiles),
                       "runs": len(rows), "horizons": [30, args.days],
                       "ecological_stability": "NOT_INFERRED"}), flush=True)
 
