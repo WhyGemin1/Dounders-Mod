@@ -64,7 +64,7 @@
     "p0_direct_boolean_replay": "VERIFIED GitHub Actions #195 headless SUCCESS",
     "p0_historical_wellspring_legs": "VERIFIED GitHub Actions #201 (44021528722), headless job success",
     "p0_historical_wellspring_aggregate": "SOURCE 95cf7cf9 and TEST d6007917 committed; clean-checkout CI pending; no fresh numerical Book audit",
-    "book_history_growth": "CI #217 passed previous 3-settlement replay gate; expanded real Core151 test to 15 settlements, 16 checkpoints and per-settlement byte deltas at 524b71a; new extension NOT YET VERIFIED"
+    "book_history_growth": "15-settlement regression 524b71a and restored-roster/clock/conservation extension f5f7780 committed; neither extension accepted by CI; last verified #217 ran 3-settlement version"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -73,14 +73,14 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Verify 15-settlement clean-checkout CI, capture per-settlement checkpoint-byte increments and conservation; repair failures before storage changes",
-  "last_cycle": "2026-11-17 P0 extended canonical Book history growth and replay regression",
+  "next_cycle": "Obtain CI for 15-settlement restored-authority regression; collect BOOK_HISTORY_GROWTH byte deltas and numerical Book audits, fix failures before storage changes",
+  "last_cycle": "2026-11-17 P0 restored-checkpoint Founder roster, world tick and numerical Book audit regression",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "67293debc946ec59e19bd9e4be76ca4fbadb3b71",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44052041259",
-  "last_unverified_code_commit": "524b71a0bb1267f13174ccf5ec900d7f99972480",
-  "next_engineering_task": "Verify 15-settlement clean-checkout CI, capture per-settlement checkpoint-byte increments and conservation; repair failures before storage changes",
+  "last_unverified_code_commit": "f5f778030a4ece897676145219b271338b7dbb89",
+  "next_engineering_task": "Obtain CI for 15-settlement restored-authority regression; collect BOOK_HISTORY_GROWTH byte deltas and numerical Book audits, fix failures before storage changes",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
