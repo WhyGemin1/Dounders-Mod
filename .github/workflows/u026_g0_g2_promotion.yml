@@ -43,6 +43,11 @@ jobs:
           PY
       - name: Install pinned test runner
         run: python -m pip install --disable-pip-version-check pytest==8.4.1
+      - name: Generate deterministic observatory fixture in CI workspace only
+        working-directory: Founders_CIV_CoreCompletion151/source/world023024
+        env:
+          PYTHONPATH: .
+        run: python -c "import json; from pathlib import Path; from founders_civ.runner import run; Path('web/sample_run.json').write_text(json.dumps(run(42,30,'1111')))"
       - name: Real authoritative Core151 WORLD-024 complete regression
         working-directory: Founders_CIV_CoreCompletion151/source/world023024
         env:
