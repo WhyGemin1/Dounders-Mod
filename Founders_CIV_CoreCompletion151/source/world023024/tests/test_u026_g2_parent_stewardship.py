@@ -113,7 +113,12 @@ class G2ParentStewardshipTests(unittest.TestCase):
         before = (dict(self.sim.book.energy), self.sim.book.seq,
                   len(self.sim.seeds.constructs.events), len(self.logs))
         self.sim.founders.people["F1"].location = "ridge"
-        self.assertEqual(propose_parent_stewardship(self.sim, "F1"), [])
+        remote = propose_parent_stewardship(self.sim, "F1")
+        # C049 allows a voluntary, Book-funded physical return to observe;
+        # still forbid an impossible offsite stewardship transfer.
+        self.assertFalse(any(p[1] == "parent_steward" for p in remote))
+        self.assertTrue(any(p[1] == "move" and p[3] == "riverbank"
+                            for p in remote))
         self.assertEqual(before, (dict(self.sim.book.energy), self.sim.book.seq,
                                   len(self.sim.seeds.constructs.events), len(self.logs)))
         self.sim.founders.people["F1"].location = "riverbank"
