@@ -129,6 +129,24 @@ class AutonomousProvisioningTests(unittest.TestCase):
         self.assertFalse(policy.tick())
         self.assertEqual((self.book.seq,policy.events),snapshot)
 
+    def test_detached_book_rejects_provisioning_without_side_effects(self):
+        # C027: production must never use an unregistered second Book.
+        policy=self.tree.enable_provisioning(food_period=1,fruit_period=1)
+        self.advance(2)
+        before=(policy.last_age,copy.deepcopy(policy.lots),list(policy.events),
+                dict(self.book.mass),dict(self.book.energy),self.book.seq)
+        authoritative=self.tree.book
+        self.tree.book=object()
+        try:
+            with self.assertRaisesRegex(ValueError,'authoritative simulation Book'):
+                policy.tick()
+        finally:
+            self.tree.book=authoritative
+        after=(policy.last_age,policy.lots,policy.events,
+               dict(self.book.mass),dict(self.book.energy),self.book.seq)
+        self.assertEqual(before,after)
+        self.book.audit()
+
     def test_tick_replay_does_not_duplicate_events_or_assets(self):
         policy=self.tree.enable_provisioning()
         self.advance(24)
