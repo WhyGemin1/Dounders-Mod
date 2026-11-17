@@ -129,6 +129,25 @@ class AutonomousProvisioningTests(unittest.TestCase):
         self.assertFalse(policy.tick())
         self.assertEqual((self.book.seq,policy.events),snapshot)
 
+    def test_invalid_habitat_rotation_rejects_before_book_mutation(self):
+        # C033: corrupt scheduler habitat inputs must fail closed.
+        policy=self.tree.enable_provisioning(food_period=1,fruit_period=1)
+        self.advance(2)
+        self.tree.age+=1
+        before=(policy.last_age,copy.deepcopy(policy.lots),list(policy.events),
+                dict(self.book.mass),dict(self.book.energy),self.book.seq)
+        original=self.tree.habitats
+        self.tree.habitats=()
+        try:
+            with self.assertRaisesRegex(ValueError,'invalid Tree habitat'):
+                policy.tick()
+        finally:
+            self.tree.habitats=original
+        self.assertEqual(before,(policy.last_age,policy.lots,policy.events,
+                                 dict(self.book.mass),dict(self.book.energy),self.book.seq))
+        policy.tick()
+        self.book.audit()
+
     def test_detached_book_rejects_provisioning_without_side_effects(self):
         # C027: production must never use an unregistered second Book.
         policy=self.tree.enable_provisioning(food_period=1,fruit_period=1)
