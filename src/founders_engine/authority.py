@@ -110,6 +110,10 @@ class SingleEngineSession:
         """Optional Book-funded tree inventory transfer, not measured game harvest."""
         self._assert_authority()
         before_sequence = self.book.seq
+        # Validation failures are retryable only when the canonical Book is unchanged.
+        before_book = (dict(self.book.mass), dict(self.book.energy),
+                       self.book.transactions, tuple(self.book.transaction_history),
+                       dict(self.book.request_receipts))
         try:
             receipt = self.gateway.founder_harvest(
                 founder_id, source_id, revision, habitat, material,
@@ -125,7 +129,11 @@ class SingleEngineSession:
             # A rejected ValueError is retryable only if authority still audits.
             import sys
             failure = sys.exc_info()[1]
-            if self.book.seq != before_sequence or not isinstance(failure, ValueError):
+            after_book = (dict(self.book.mass), dict(self.book.energy),
+                          self.book.transactions, tuple(self.book.transaction_history),
+                          dict(self.book.request_receipts))
+            if (self.book.seq != before_sequence or before_book != after_book or
+                    not isinstance(failure, ValueError)):
                 self._checkpoint_uncertain = True
             else:
                 try:
