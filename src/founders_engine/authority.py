@@ -58,6 +58,9 @@ class SingleEngineSession:
             raise RuntimeError('invalid canonical world clock')
         if self.world.tick != self._expected_tick or self.world.ecology.day != self.world.tick:
             raise RuntimeError('authoritative world clock changed outside session')
+        # bool compares equal to 0/1 in Python; sequence must be a real counter.
+        if type(self.book.seq) is not int or self.book.seq < 0:
+            raise RuntimeError('invalid canonical Book sequence')
         if self.book.seq != self._expected_book_sequence:
             raise RuntimeError('canonical Book sequence changed outside session')
         if frozenset(self.world.founders.people) != self._founder_ids:
