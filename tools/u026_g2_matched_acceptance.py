@@ -40,9 +40,8 @@ def _audit(sim, founders, tree):
     return audit
 
 
-def _snapshot(sim, tree, day):
-    founders = set(sim.founders.people)
-    audit = _audit(sim, founders, tree)
+def _snapshot(sim, tree, day, founder_ids):
+    audit = _audit(sim, founder_ids, tree)
     lots = tree.provisioning.lots if tree.provisioning else {}
     states = {}
     for lot in lots.values():
@@ -59,7 +58,7 @@ def _snapshot(sim, tree, day):
         "births": tree.counters["tree_birth"],
         "deaths": tree.counters["tree_death"],
         "lot_states": states,
-        "founders": len(founders),
+        "founders": len(founder_ids),
     }
 
 
@@ -94,7 +93,7 @@ def run(seed: int, enhanced: bool, days: int) -> dict:
                     or set(copy_at_30.founders.people) != founder_ids):
                 raise AssertionError("G2 deterministic checkpoint replay mismatch")
         if day in (30, days):
-            snapshots.append(_snapshot(sim, tree, day))
+            snapshots.append(_snapshot(sim, tree, day, founder_ids))
     return {
         "gate": "G2-candidate",
         "seed": seed,
