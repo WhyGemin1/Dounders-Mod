@@ -39,16 +39,16 @@ namespace FoundersCIV.WorldBoxM05
         private LiveState _live;
         [Serializable] private sealed class LiveTree {
             public string tree_id = "";
-            public float health;
-            public bool alive;
-            public int unharvested_fruit;
+            public float health = 0f;
+            public bool alive = false;
+            public int unharvested_fruit = 0;
             public string native_status = "";
         }
         [Serializable] private sealed class LiveState {
             public string world_key = "";
             public string projection_kind = "";
-            public int period;
-            public int shared_river_remaining;
+            public int period = 0;
+            public int shared_river_remaining = 0;
             public LiveTree[] trees = new LiveTree[0];
         }
         private readonly List<string> _activeHooks = new List<string>();
