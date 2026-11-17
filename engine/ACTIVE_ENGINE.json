@@ -14,7 +14,7 @@
   "source_status": "27 tracked Core151 modules: 26 archive matches, one reviewed-as-overlay ledger.py; current overlay blob 5993a9168d5b35e58c30761030d0444ad2ea551c (new direct replay guard awaiting CI)",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "Run #214 (44043478908) PASS all 18 reported headless steps on previous commit 9f5c902, including Book-history growth test; restarted replay no-growth extension commit b01d013 awaiting CI",
+    "github_ci": "GitHub Actions #217 (44052041259) SUCCESS all 18 headless steps at ceae5f0, including 3-settlement restart replay regression; 15-settlement extension at 524b71a pending CI",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -64,7 +64,7 @@
     "p0_direct_boolean_replay": "VERIFIED GitHub Actions #195 headless SUCCESS",
     "p0_historical_wellspring_legs": "VERIFIED GitHub Actions #201 (44021528722), headless job success",
     "p0_historical_wellspring_aggregate": "SOURCE 95cf7cf9 and TEST d6007917 committed; clean-checkout CI pending; no fresh numerical Book audit",
-    "book_history_growth": "CI #214 verified sequences [2213,2214,2215,2216], checkpoint bytes [1830052,1830495,1830872,1831248], +1196 bytes across 3 settlements; restart replay no-growth regression added at b01d013, NOT YET VERIFIED"
+    "book_history_growth": "CI #217 passed previous 3-settlement replay gate; expanded real Core151 test to 15 settlements, 16 checkpoints and per-settlement byte deltas at 524b71a; new extension NOT YET VERIFIED"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -73,14 +73,14 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Confirm post-fix clean-checkout CI, collect BOOK_HISTORY_GROWTH checkpoint bytes and conservation evidence",
-  "last_cycle": "2026-11-17 P0 Wellspring validation-order CI repair",
+  "next_cycle": "Verify 15-settlement clean-checkout CI, capture per-settlement checkpoint-byte increments and conservation; repair failures before storage changes",
+  "last_cycle": "2026-11-17 P0 extended canonical Book history growth and replay regression",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "67293debc946ec59e19bd9e4be76ca4fbadb3b71",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44021528722",
-  "last_unverified_code_commit": "6453baf0c0336cb8d48426ab5557fcf947420f85",
-  "next_engineering_task": "Confirm post-fix clean-checkout CI, collect BOOK_HISTORY_GROWTH checkpoint bytes and conservation evidence",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44052041259",
+  "last_unverified_code_commit": "524b71a0bb1267f13174ccf5ec900d7f99972480",
+  "next_engineering_task": "Verify 15-settlement clean-checkout CI, capture per-settlement checkpoint-byte increments and conservation; repair failures before storage changes",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
