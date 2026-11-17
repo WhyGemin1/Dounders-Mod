@@ -461,3 +461,11 @@
 - NEXT: verify CI for strict direct Book replay receipt sequence, repair failures, then quantify canonical Book transaction-history storage growth without deleting historical replay proofs.
 
 - POST-RUN VERIFICATION: GitHub Actions #195 (https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44013639471) completed SUCCESS; all 18 headless job steps SUCCESS including source provenance, real Core151 M01 durable-harvest, restart, filesystem-fault, native read-only tests. New direct Book replay Boolean-sequence regression is VERIFIED by this workflow. No separate local checkout or fresh numerical conservation residual values; ecological long horizons and WorldBox gameplay remain UNVERIFIED.
+
+
+## 2026-11-16 23:00 CST — P0 historical Wellspring legs fail-closed
+- GROUND: read live Core151 Book, checkpoint validator, seed-400 regression, active state and authoritative Drive ZIP metadata. Previous GitHub Actions #195 completed SUCCESS. Found that historical Wellspring records could retain transfer legs while declaring external energy.
+- IMPLEMENT: checkpoint.py rejects Wellspring history entries with material/energy transfer legs (source 280076f78b5e8e17a6a55a6b00757d5fc745ee65). Added real seed-400 checksum-valid forged-history regression requiring load/save rejection with unchanged checkpoint bytes, Book balances and sequence (test d4eca92a0b083d8aa7df2d6d328561ca2ced52fb). Updated ACTIVE_ENGINE.json b362ae7f84ad7d48068f9ab8764ae342102ab8f7.
+- EXECUTE: GitHub connector writes succeeded; new test not locally executed, no fresh numerical conservation residuals, and CI not yet confirmed. Prior #195 clean-checkout headless success applies only to preceding commit.
+- AUDIT: VERIFIED commits; PROVISIONAL new behavior pending clean-checkout CI; BLOCKED native WorldBox transactions and long-horizon ecology. No second Book/clock/engine, main merge, or M01 iteration3 lock change.
+- NEXT: confirm latest headless CI and fix failures, then measure canonical Book transaction-history growth without losing replay proof.
