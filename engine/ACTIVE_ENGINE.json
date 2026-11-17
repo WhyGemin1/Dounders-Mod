@@ -14,12 +14,12 @@
   "source_status": "27 tracked Core151 modules: 26 archive matches, one reviewed-as-overlay ledger.py; current overlay blob 5993a9168d5b35e58c30761030d0444ad2ea551c (new direct replay guard awaiting CI)",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "Run #201 headless SUCCESS for preceding Wellspring-leg guard; new aggregate regression pending",
+    "github_ci": "Run #211 (44035077372) FAILED at durable-harvest test: expected malformed Wellspring legs error, received historical inflow reconciliation error; checkpoint validation reordered at 6453baf; new CI pending",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #195 headless SUCCESS including direct Book Boolean replay regression; no separate local checkout",
-    "book_audit_this_cycle": "Not yet measured; new test asserts abs mass/energy residual <=1e-6 at each real harvest checkpoint",
+    "book_audit_this_cycle": "CI #211 durable-harvest test printed before mass -2.9103830456733704e-11 energy -7.799826562404633e-09; settled/restored mass -2.8194335754960775e-11 energy -7.799826562404633e-09; stepped mass -9.00399754755199e-11 energy -1.0302755981683731e-08; all within test thresholds, but overall workflow failed",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -64,7 +64,7 @@
     "p0_direct_boolean_replay": "VERIFIED GitHub Actions #195 headless SUCCESS",
     "p0_historical_wellspring_legs": "VERIFIED GitHub Actions #201 (44021528722), headless job success",
     "p0_historical_wellspring_aggregate": "SOURCE 95cf7cf9 and TEST d6007917 committed; clean-checkout CI pending; no fresh numerical Book audit",
-    "book_history_growth": "New actual Core151 3-harvest checkpoint growth regression committed b6cc046; CI acceptance and numeric byte measurements PENDING"
+    "book_history_growth": "Committed regression b6cc046; CI #211 skipped this step after earlier failure; checkpoint-byte measurements not yet available"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -73,17 +73,18 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Verify historical Wellspring aggregate regression in clean-checkout CI, then measure Book transaction-history growth",
-  "last_cycle": "2026-11-17 P0 historical Wellspring aggregate reconciliation",
+  "next_cycle": "Confirm post-fix clean-checkout CI, collect BOOK_HISTORY_GROWTH checkpoint bytes and conservation evidence",
+  "last_cycle": "2026-11-17 P0 Wellspring validation-order CI repair",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "67293debc946ec59e19bd9e4be76ca4fbadb3b71",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44021528722",
-  "last_unverified_code_commit": "d6007917f79f49f4668792cbbd2e4529b743c2f8",
-  "next_engineering_task": "Verify historical Wellspring aggregate regression in clean-checkout CI, then measure Book transaction-history growth",
+  "last_unverified_code_commit": "6453baf0c0336cb8d48426ab5557fcf947420f85",
+  "next_engineering_task": "Confirm post-fix clean-checkout CI, collect BOOK_HISTORY_GROWTH checkpoint bytes and conservation evidence",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
-    "p0_direct_boolean_replay": "VERIFIED PASS in PR CI #195; no numerical Book residuals collected"
+    "p0_direct_boolean_replay": "VERIFIED PASS in PR CI #195; no numerical Book residuals collected",
+    "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   }
 }
