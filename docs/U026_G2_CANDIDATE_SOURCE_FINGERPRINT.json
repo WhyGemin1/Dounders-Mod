@@ -519,7 +519,7 @@
     "tools/u026_g1_matched_acceptance.py": "2f51a17d478b1a7927417eabd3bd52d44cbf0287ba9c37bbaa64a8a432911af3",
     "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
     "tools/u026_g2_matched_acceptance.py": "6cc54f3311416833ddfe64e6010fa4bc50c373d9d09563554abeaad83649bc9f",
-    ".github/workflows/u026_g2_acceptance.yml": "bf06cba2ac666a90985c692b52c1a89feb8227f8d7bbec99c4295b8e9b73be54"
+    ".github/workflows/u026_g2_acceptance.yml": "fca12ed5e677a059e741fb71e70a01162a37c44b986ed07c0637070ca801d381"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
@@ -617,6 +617,6 @@
     "tools/u026_g2_exact_source_audit.py",
     "tools/u026_g2_matched_acceptance.py"
   ],
-  "gate_decision": "PENDING_C048_GATE_CI",
-  "candidate_note": "C048: New opt-in parent urgency behavior and C019 tests under matched verification; G2 matched technical acceptance must also reject a candidate-only World Tree extinction while preserving natural failure in both control and candidate. No formal G2 promotion."
+  "gate_decision": "PENDING_C048_REVIEWED_ACCEPTANCE",
+  "candidate_note": "C048: G2 agency failed ecological matched controls; opt-in parent care inspection/urgency corrected and accepted only if replay, Book conservation and no candidate-only whole-World extinction. Exact gate self-tests and causal factorial runs required. No branch promotion authorized."
 }
