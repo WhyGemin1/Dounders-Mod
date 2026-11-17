@@ -1,0 +1,57 @@
+name: U026 G2 independent World Tree acceptance
+on:
+  push:
+    branches: [Development]
+    paths:
+      - 'Founders_CIV_CoreCompletion151/source/world023024/**'
+      - 'tools/u026_g2_matched_acceptance.py'
+      - 'tools/u026_g2_exact_source_audit.py'
+      - 'docs/U026_G2_CANDIDATE_SOURCE_FINGERPRINT.json'
+      - '.github/workflows/u026_g2_acceptance.yml'
+  pull_request:
+    paths:
+      - 'Founders_CIV_CoreCompletion151/source/world023024/**'
+      - 'tools/u026_g2_matched_acceptance.py'
+      - 'docs/U026_G2_CANDIDATE_SOURCE_FINGERPRINT.json'
+      - '.github/workflows/u026_g2_acceptance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  g2-tree-agency-acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Checkout current source commit
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify exact G2 source and forbidden artifacts fail closed
+        run: python tools/u026_g2_exact_source_audit.py
+      - name: Install fixed test runner
+        run: python -m pip install --disable-pip-version-check pytest==8.4.1
+      - name: G2 real Tree, voluntary Founder choice, trade and autonomy regressions
+        working-directory: Founders_CIV_CoreCompletion151/source/world023024
+        run: |
+          PYTHONPATH=. python -m pytest -q \
+            tests/test_autonomous_provisioning_c003.py \
+            tests/test_c017_self_world_trees.py \
+            tests/test_c018_parent_stewardship.py \
+            tests/test_c020_resource_agreements.py \
+            tests/test_u026_g2_parent_stewardship.py
+      - name: G2 matched actual engine control and voluntary agency, checkpoint and one Book
+        run: python tools/u026_g2_matched_acceptance.py --seeds 4 --days 180 --output "${{ runner.temp }}/u026_g2_matched.jsonl"
+      - name: Upload raw matched seed manifest (not committed)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: u026-g2-matched-evidence
+          path: ${{ runner.temp }}/u026_g2_matched.jsonl
+          if-no-files-found: ignore
+          retention-days: 14
