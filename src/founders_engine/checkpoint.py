@@ -96,6 +96,7 @@ def _validate_world(world, tree_id):
                 or not isinstance(receipt, Transaction)
                 or receipt.kind != 'move'
                 or receipt.material != legs[0] or receipt.energy != legs[1]
+                or type(receipt.seq) is not int
                 or receipt.seq < 1 or receipt.seq > session.book.seq):
             raise ValueError('inconsistent Book replay receipt')
         # Every receipt, including historical ones, must match its committed
