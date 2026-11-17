@@ -1,6 +1,6 @@
 {
   "source": "U026 G2 proposed exact-source candidate with reviewed G1 atomic planting, social fuel preflight and failure-injection tests; G2 not promoted",
-  "files": 516,
+  "files": 518,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
     "Founders_CIV_CoreCompletion151/source/capacity_dose_021131.py": "fc9800b1846604edfd1bee305bc866030748f109929825b4422671127808e036",
@@ -517,7 +517,9 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/styles.css": "599cbc94b42122a2b5d5676d99c6cca4c43d185f3dc1aedaa4e4ab497ca51157",
     "Founders_CIV_CoreCompletion151/source/world_funding_141_results.csv": "24f6b734926f13fcb6f874f5c97337cefe46edd43c6841dbc1b735234b1fa38f",
     "tools/u026_g1_matched_acceptance.py": "2f51a17d478b1a7927417eabd3bd52d44cbf0287ba9c37bbaa64a8a432911af3",
-    "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29"
+    "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
+    "tools/u026_g2_matched_acceptance.py": "9ec201d43a7344078fbc6252ba947c1e63aed1b07486452c1811251472eaf1e3",
+    ".github/workflows/u026_g2_acceptance.yml": "90a0ab8f74c33c81acec0d8d45aba021fa2594a27e95f78097f745dbc23fc0a0"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
@@ -577,10 +579,11 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "2ff4945b9fd30d5c911f543e8dfc2811404d86ae",
+  "source_commit": "652b58570aece7ea0c694a4c9c7a7d42912365ee",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
+    ".github/workflows/u026_g2_acceptance.yml",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py",
@@ -610,8 +613,9 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_g1_exact_replay.py",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_g2_parent_stewardship.py",
     "tools/u026_g1_matched_acceptance.py",
-    "tools/u026_g2_exact_source_audit.py"
+    "tools/u026_g2_exact_source_audit.py",
+    "tools/u026_g2_matched_acceptance.py"
   ],
-  "gate_decision": "PENDING_C047_CURRENT_SOURCE_CI_AND_G2_REVIEW",
-  "candidate_note": "C047: G2 opt-in repeat independent Tree creation proposals can be considered only with newly owned Book-backed finite CE fruit; current source and full acceptance must pass before separate G2 decision. Historical G0/G1 approvals unchanged."
+  "gate_decision": "PENDING_CURRENT_C047_INDEPENDENT_G2_CI",
+  "candidate_note": "C047: G2 opt-in repeat Tree founding requires personally acquired real finite CE fruit and remains voluntary. Source and test changed; separate 4-seed 2-arm 30/180-day matched replay and current Core151 full regression required. No Core merge claimed."
 }
