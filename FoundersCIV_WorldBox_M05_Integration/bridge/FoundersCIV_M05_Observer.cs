@@ -253,7 +253,8 @@ namespace FoundersCIV.WorldBoxM05
         }
         private static void Send(Event ev)
         {
-            try { if (Current != null) Current.Emit(ev); } catch (Exception ex) { ReportCallbackFailure("Send", ex); }
+            try { if (Current != null && !Current._observerDisabled) Current.Emit(ev); }
+            catch (Exception ex) { ReportCallbackFailure("Send", ex); }
         }
         private static string CurrentContext()
         {
@@ -393,6 +394,13 @@ namespace FoundersCIV.WorldBoxM05
                     try { if (_harmony != null) _harmony.UnpatchSelf(); } catch { }
                     Logger.LogError("M05 disable check failed; observer disabled: " + ex.Message);
                 }
+            }
+            if (_observerDisabled) {
+                // Previously queued observations are flushed, but disabled
+                // observers do not gather new snapshots, heartbeats or callbacks.
+                try { Drain(false); }
+                catch (Exception ex) { Logger.LogError("M05 disabled drain failure: " + ex.Message); }
+                return;
             }
             if (Time.unscaledTime >= _nextDiagnosticRead) {
                 _nextDiagnosticRead = Time.unscaledTime + 15f;
