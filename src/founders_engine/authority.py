@@ -119,8 +119,19 @@ class SingleEngineSession:
         except Exception:
             # Invalid pre-settlement requests may be retried, but an error
             # after Book mutation leaves the transaction outcome uncertain.
-            if self.book.seq != before_sequence:
+            # A non-validation gateway failure can mutate balances or actor
+            # state before the Book sequence advances. Sequence equality is
+            # insufficient evidence of rollback; fail closed for such errors.
+            # A rejected ValueError is retryable only if authority still audits.
+            import sys
+            failure = sys.exc_info()[1]
+            if self.book.seq != before_sequence or not isinstance(failure, ValueError):
                 self._checkpoint_uncertain = True
+            else:
+                try:
+                    self.audit()
+                except Exception:
+                    self._checkpoint_uncertain = True
             raise
         return receipt
 
