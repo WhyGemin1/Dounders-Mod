@@ -177,6 +177,35 @@ class SingleAuthorityTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'checkpoint outcome uncertain'):
             session.step()
 
+    def test_value_error_after_book_balance_mutation_quarantines(self):
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(412)
+        session = SingleEngineSession(world, tree_id)
+        before_seq = world.book.seq
+        key = 'plant:injected-uncommitted'
+        original = world.book.mass.get(key, 0.0)
+
+        def partial_validation(*args, **kwargs):
+            world.book.mass[key] = original + 0.25
+            raise ValueError('injected mutation before rejected request')
+
+        try:
+            with patch.object(session.gateway, 'founder_harvest',
+                              side_effect=partial_validation):
+                with self.assertRaisesRegex(ValueError, 'injected mutation'):
+                    session.harvest('F001', 'source', 'r1',
+                                    'forest', 'plant', .01, .001)
+            self.assertEqual(world.book.seq, before_seq)
+            with self.assertRaisesRegex(RuntimeError, 'checkpoint outcome uncertain'):
+                session.audit()
+            with self.assertRaisesRegex(RuntimeError, 'checkpoint outcome uncertain'):
+                session.step()
+        finally:
+            if original == 0.0:
+                world.book.mass.pop(key, None)
+            else:
+                world.book.mass[key] = original
+
     def test_invalid_harvest_does_not_quarantine_clean_session(self):
         world, _, tree_id = bootstrap(410)
         session = SingleEngineSession(world, tree_id)
