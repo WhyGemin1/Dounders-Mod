@@ -147,6 +147,19 @@ class TreeProvisioningPolicy:
         # refresh/decay transaction. Future-dated or foreign-habitat lots
         # indicate a corrupt checkpoint, not goods eligible for recycling.
         for lot, rec in self.lots.items():
+            # Check record shape and exact lot identity before accessing fields.
+            # A corrupt restored checkpoint must fail closed, not throw an
+            # AttributeError or accidentally operate on another Book account.
+            if (not isinstance(lot, str) or not lot.startswith(
+                    f'W-{world_id}-C003-{tree.id}-' if world_id is not None
+                    else f'C003-{tree.id}-') or
+                    type(rec) is not ProvisionedLot):
+                raise ValueError('invalid Tree provisioned-lot checkpoint')
+            expected_lot=(f'W-{world_id}-C003-{tree.id}-{rec.kind}-{rec.created}'
+                          if world_id is not None else
+                          f'C003-{tree.id}-{rec.kind}-{rec.created}')
+            if lot != expected_lot:
+                raise ValueError('invalid Tree provisioned-lot checkpoint')
             if (type(rec.created) is not int or rec.created < 0 or
                     rec.created > tree.age or rec.biome not in habitats or
                     rec.kind not in ('food', 'fruit') or
