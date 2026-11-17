@@ -79,6 +79,10 @@ while ($null -ne ($line = $reader.ReadLine())) {
         $failures.Add("Bridge dropped events; capture cannot be promoted")
         break
     }
+    if ($kind -eq 'observer_disabled') {
+        $failures.Add("Observer disabled during capture; session cannot certify hook coverage")
+        break
+    }
     if ($kind -eq 'session_open') {
         if ($null -ne $opening) { $failures.Add("Duplicate session_open"); break }
         $opening = $ev
