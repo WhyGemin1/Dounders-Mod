@@ -50,7 +50,7 @@ def _validate_world(world, tree_id):
     if history is None:
         raise ValueError('legacy checkpoint missing canonical Book transaction history; reviewed migration required')
     if (not isinstance(history, list) or len(history) != session.book.seq or
-            any(not isinstance(tx, Transaction) or tx.seq != i or
+            any(not isinstance(tx, Transaction) or type(tx.seq) is not int or tx.seq != i or
                 tx.kind not in {'move', 'ingest', 'transform', 'wellspring'} or
                 not isinstance(tx.material, tuple) or not isinstance(tx.energy, tuple)
                 for i, tx in enumerate(history, 1)) or
