@@ -253,6 +253,25 @@ class SingleAuthorityTests(unittest.TestCase):
             world.tick = original_tick
         session.audit()
 
+    def test_reject_invalid_canonical_book_sequence_types(self):
+        world, _, tree_id = bootstrap(414)
+        session = SingleEngineSession(world, tree_id)
+        original = world.book.seq
+        for invalid in (True, False, -1, 0.5):
+            with self.subTest(invalid=invalid):
+                try:
+                    world.book.seq = invalid
+                    with self.assertRaisesRegex(RuntimeError, 'invalid canonical Book sequence'):
+                        session.audit()
+                    with self.assertRaisesRegex(RuntimeError, 'invalid canonical Book sequence'):
+                        session.step()
+                    with self.assertRaisesRegex(RuntimeError, 'invalid canonical Book sequence'):
+                        session.harvest('FAKE', 'invalid-source', 'r1',
+                                        'forest', 'plant', .01, .001)
+                finally:
+                    world.book.seq = original
+        session.audit()
+
     def test_reject_out_of_session_book_sequence_change(self):
         world, _, tree_id = bootstrap(407)
         session = SingleEngineSession(world, tree_id)
