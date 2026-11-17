@@ -44,10 +44,28 @@ def propose_parent_stewardship(sim, founder):
         if knowledge is None or sim.tick - knowledge['tick'] > 4:
             if person.location in OBSERVATION_SITES:
                 proposals.append((5.40, 'parent_inspect', None, rid))
+            elif sim.book.energy.get(f'founder:{founder}', 0.) >= .055 - 1e-8:
+                # Offer the *existing physical movement action*, never a
+                # teleport or a compelled maintenance transaction. The graph
+                # permits ridge -> riverbank and fields -> house in one step.
+                destination = ('riverbank' if person.location == 'ridge' else
+                               'house' if person.location == 'fields' else None)
+                if destination is not None:
+                    proposals.append((2.75, 'move', None, destination))
             continue
         # A remembered reserve does not authorize remote physical work.
-        # Remote Founders may keep their knowledge but must return to a site.
+        # With an observed shortage, a dependent Founder may voluntarily
+        # travel to inspect/tend; moving is Book-funded and does not maintain
+        # the Realm. A distant owner can always choose another action.
         if person.location not in OBSERVATION_SITES:
+            predicted = max(0., knowledge['reserve'] -
+                            (sim.tick - knowledge['tick']) * realm['upkeep'])
+            if (predicted < 7.0 * realm['upkeep'] and
+                    sim.book.energy.get(f'founder:{founder}', 0.) >= .055 - 1e-8):
+                destination = ('riverbank' if person.location == 'ridge' else
+                               'house' if person.location == 'fields' else None)
+                if destination is not None:
+                    proposals.append((3.10, 'move', None, destination))
             continue
         predicted = max(0., knowledge['reserve'] -
                         (sim.tick - knowledge['tick']) * realm['upkeep'])
