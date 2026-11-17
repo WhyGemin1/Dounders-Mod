@@ -49,8 +49,9 @@ function Run-Case([string]$Name, [bool]$ShouldPass) {
     'duplicate_open' { $events[1].kind = 'session_open' }
     default { throw "Unknown fixture $Name" }
   }
-  @($events | ForEach-Object { $_ | ConvertTo-Json -Depth 8 -Compress }) |
-    Set-Content -LiteralPath $script:path -Encoding UTF8
+  $lines = [string[]]@($events | ForEach-Object { $_ | ConvertTo-Json -Depth 8 -Compress })
+  [System.IO.File]::WriteAllLines($script:path, $lines,
+    (New-Object System.Text.UTF8Encoding($false)))
   $passed = $true
   try { & $script:validator -GameDir $script:root *> $null }
   catch { $passed = $false }
