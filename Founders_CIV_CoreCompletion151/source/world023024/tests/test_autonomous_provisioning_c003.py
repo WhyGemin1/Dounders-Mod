@@ -147,6 +147,28 @@ class AutonomousProvisioningTests(unittest.TestCase):
         self.assertEqual(before,after)
         self.book.audit()
 
+    def test_invalid_world_namespace_rejects_before_remnant_refresh(self):
+        # C028: a malformed World ID must not age lots or mutate the Book,
+        # even on an archived Tree that cannot produce new food or fruit.
+        policy=self.tree.enable_provisioning(food_period=999,fruit_period=1)
+        self.advance(2)
+        self.tree.collapse('invalid-world-id-check')
+        self.tree.age+=policy.maturity_days
+        before=(policy.last_age,copy.deepcopy(policy.lots),list(policy.events),
+                dict(self.book.mass),dict(self.book.energy),self.book.seq)
+        self.tree.world_id='bad:namespace'
+        try:
+            with self.assertRaisesRegex(ValueError,'invalid World identity'):
+                policy.tick()
+        finally:
+            del self.tree.world_id
+        after=(policy.last_age,policy.lots,policy.events,
+               dict(self.book.mass),dict(self.book.energy),self.book.seq)
+        self.assertEqual(before,after)
+        policy.tick()
+        self.assertTrue(any(rec.state=='mature' for rec in policy.lots.values()))
+        self.book.audit()
+
     def test_tick_replay_does_not_duplicate_events_or_assets(self):
         policy=self.tree.enable_provisioning()
         self.advance(24)
