@@ -418,7 +418,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "2269c4aea4ef6569b08f86a515390eacf7fde0b8d26a1ba5e861837f6c7ab8d9",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "0a06b3e88dc4fd58c5314da62111c0609f302fab7e2360fbcdff22021a503539",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "31e1e5b386b6429d6377693b2524369cf57a8142e58ac2c0f600cdc13cee56e2",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "43dda9257fc439bb1c11ce5c5e1bc202bd6696af1f7a9460db9314f74f2ce39a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "2355885bf289771f559799762272ae3dc9d957f8ca1d11defdcccaf3619af63a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "60f171a4080a1ff0c46e763e5b513ca9c328db254bc958831a39f4a45c1953f3",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
@@ -484,7 +484,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_community_foraging.py": "a2f6b63ed7b7971ebada3f1cf901966e874abc9bfb97a7ad02d1a35066807d30",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "8dd29f551248fdfa5d8841918c37e8751639209ea459af776bb09d96496aff53",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "e004009859edc3fd48a7c07db8b22c276d10a01be52588a78dddee398999123d",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c019_founder_autonomy.py": "a900f37114133ff102f447efa7c622aa980a2d9adfecc3555f575ff589277332",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c019_founder_autonomy.py": "280dac3e1ebdc4596dfe5b606243e44289d8094d7158d06149a0e99efc7decc2",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c020_resource_agreements.py": "de2bd7a2bdff1d142afa4b5d159996fe3c67a8a71f0f93c31f153f84b4570e7a",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c021_nutrition_wiring.py": "cf3d279274feda9ff70679a303d2b849e1b215eb99ae3f5cdf74e459fdb6c43e",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c022_tree_proposal_preservation.py": "d92b1075bc6daffbf14b34a96b6504dde33f58e1aa7396c657bf5d125079fedd",
@@ -617,6 +617,6 @@
     "tools/u026_g2_exact_source_audit.py",
     "tools/u026_g2_matched_acceptance.py"
   ],
-  "gate_decision": "C047_SOURCE_ACCEPTED_FOR_CI_ECOLOGY_DECISION_PENDING",
-  "candidate_note": "C047 exact-source rescope: first four G2 enhanced arms preserved 100 Founders/Book/replay but original World Tree collapsed in all four by day180 vs none in baseline. Now measure all Worlds and isolate six causal arms over matched seeds, without forced care or resource minting. G2 Core promotion withheld."
+  "gate_decision": "PENDING_C048_CAUSAL_AND_FULL_CI",
+  "candidate_note": "C048: G2 4 matched seeds produced 4/4 Tree collapses under opt-in voluntary agency vs 0/4 controls at 180 days. Corrected opt-in personal value weighting of physically observable parent reserve inspection and urgent care choices while retaining refusal, Founder heterogeneity, Book-funded transfers, and failure possibility. Updated existing C019 regression. Technical acceptance and ecological comparison must be rerun; no promotion."
 }
