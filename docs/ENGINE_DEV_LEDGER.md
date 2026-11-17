@@ -577,3 +577,9 @@
 - Execution: New tests **NOT RUN** in this cycle. No new numerical mass/energy residuals; no new clean-checkout CI acceptance. This is a provisional change.
 - Audit: Partial mutation must require durable reload. A test-injected Book sequence change is not a successful resource conservation audit. M01 iteration-3 lock retained; M02–M07 deferred; WorldBox remains read-only; main untouched.
 - Next: Execute GitHub CI against latest PR head, diagnose any regression failures, and verify Book conservation and restart recovery.
+
+## 2026-11-17 — M01 harvest pre-sequence exception containment
+- Ground/design: inspected current SingleEngineSession and tests on experimental branch. GitHub Actions run 44154807337 headless job SUCCESS (16 substantive steps), but this predates the new code. Authorized Drive Cycle152 ZIP accessible (956121 bytes); no new archive-to-checkout comparison.
+- Implementation: authority.py now quarantines on any non-ValueError gateway exception even if Book sequence is unchanged; ValueError is retryable only if no sequence change and authority audit succeeds. Existing Book, clock and 100-Founder identities retained. Source commit 335a43e1d938971e04a1d73343386cd1c4dd09bd; regression test commit 8d39c7f4d31aa52a8d9cd137d0ee88da72750209; ACTIVE_ENGINE.json commit c0c395d726fa2725de4d5e036f0f3371119b593a.
+- Execute/test: new regression committed but NOT EXECUTED in this cycle; no clean-checkout test, no new CI result, and no new numerical mass/energy residuals. Container git remote unavailable (DNS resolution failure). Previous CI is not acceptance of this change.
+- Audit/handoff: PROVISIONAL containment change; BLOCKED native WorldBox writes and long-horizon ecology. No main merge, no second Book or clock, M01 iteration-3 repair lock and M02–M07 backlog preserved. NEXT: execute full headless suite against this branch, inspect test results and Book audits, repair any failures.
