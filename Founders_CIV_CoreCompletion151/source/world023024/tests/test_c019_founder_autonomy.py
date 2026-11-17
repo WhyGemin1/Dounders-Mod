@@ -122,3 +122,31 @@ def test_integration_step_identity_conservation_and_optional_refusal():
     assert s.counter['founder_declined_investment']>=1
     assert s.book.audit()['mass_error']<1e-6
     assert s.book.audit()['energy_error']<1e-6
+
+
+
+def test_c048_critical_parent_upkeep_remains_a_competitive_free_choice():
+    """Observed dependent-Realm danger must not be erased by autonomy scoring.
+
+    Competing care/inspection proposals stay optional, locally authorized
+    actions; valuing them cannot transfer even one unit from the Book.
+    """
+    s, realm, _ = sim_on(seed=820)
+    founder = 'F002'
+    before = (s.book.seq, dict(s.book.energy), dict(s.book.mass))
+    candidates = [
+        (5.40, 'parent_inspect', None, realm),
+        (7.60, 'parent_steward', None, (realm, .30)),
+        (1.50, 'study', None, None),
+    ]
+    weighted = value_proposals(s, founder, candidates)
+    scores = {action: score for score, action, _, _ in weighted}
+    assert scores['parent_inspect'] > scores['study']
+    assert scores['parent_steward'] > scores['study']
+    assert 'decline_investment' in scores
+    assert scores['parent_steward'] < 7.60
+    assert (s.book.seq, dict(s.book.energy), dict(s.book.mass)) == before
+    # Both the care and opt-out paths remain accessible to the chooser.
+    decisions = {s._choose(founder, weighted, Random(i))[1] for i in range(250)}
+    assert 'parent_steward' in decisions
+    assert 'decline_investment' in decisions
