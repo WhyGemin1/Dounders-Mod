@@ -122,6 +122,44 @@ def run(seed: int, enhanced: bool, days: int, profile: str | None = None) -> dic
     }
 
 
+def paired_collapse_regressions(rows):
+    """Flag candidate-only collapse; do not disallow natural failure in both arms."""
+    grouped = {}
+    for row in rows:
+        snap = next(x for x in row["snapshots"] if x["day"] == row["days"])
+        grouped.setdefault(row["seed"], {})[row["arm"]] = snap
+    failures = []
+    for seed, arms in sorted(grouped.items()):
+        control, candidate = (arms.get("g1-funded-baseline"),
+                              arms.get("g2-voluntary-agency"))
+        if control is None or candidate is None:
+            failures.append({"seed": seed, "reason": "missing_paired_arm"})
+        elif (control["active_worlds"] > 0
+              and control["total_living_residents"] > 0
+              and candidate["active_worlds"] == 0
+              and candidate["total_living_residents"] == 0):
+            failures.append({"seed": seed, "reason": "candidate_only_extinction",
+                             "control_residents": control["total_living_residents"]})
+    return failures
+
+
+def _test_paired_regression_gate():
+    def row(seed, arm, count):
+        snap = {"day": 180, "active_worlds": int(count > 0),
+                "total_living_residents": count}
+        return {"seed": seed, "arm": arm, "days": 180, "snapshots": [snap]}
+    rows = [row(42, "g1-funded-baseline", 30),
+            row(42, "g2-voluntary-agency", 0)]
+    assert paired_collapse_regressions(rows)[0]["reason"] == "candidate_only_extinction"
+    rows[1] = row(42, "g2-voluntary-agency", 22)
+    assert paired_collapse_regressions(rows) == []
+    rows[0] = row(42, "g1-funded-baseline", 0)
+    rows[1] = row(42, "g2-voluntary-agency", 0)
+    assert paired_collapse_regressions(rows) == []
+    assert paired_collapse_regressions(rows[:1])[0]["reason"] == "missing_paired_arm"
+    print("G2 paired ecological regression gate negative controls PASS")
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--seeds", type=int, default=4)
@@ -129,7 +167,12 @@ def main():
     p.add_argument("--output", type=Path)
     p.add_argument("--factorial", action="store_true",
                    help="compare G2 options separately before promoting full agency")
+    p.add_argument("--self-test", action="store_true",
+                   help="exercise promotion rejection with synthetic matched failures")
     args = p.parse_args()
+    if args.self_test:
+        _test_paired_regression_gate()
+        return
     if not 1 <= args.seeds <= len(SEEDS) or args.days < 35:
         p.error("seeds must be 1..10, days >= 35")
     profiles = tuple(PROFILES) if args.factorial else (
@@ -153,10 +196,15 @@ def main():
         args.output.write_text(
             "\n".join(json.dumps(x, sort_keys=True) for x in rows) + "\n",
             encoding="utf-8")
-    print(json.dumps({"gate": "G2-candidate", "decision": "PASS",
+    paired_failures = paired_collapse_regressions(rows)
+    decision = "FAIL_PAIRED_EXTINCTION" if paired_failures else "PASS"
+    print(json.dumps({"gate": "G2-candidate", "decision": decision,
                       "matched_seeds": args.seeds, "arms": len(profiles),
                       "runs": len(rows), "horizons": [30, args.days],
+                      "paired_extinction_regressions": paired_failures,
                       "ecological_stability": "NOT_INFERRED"}), flush=True)
+    if paired_failures:
+        raise SystemExit("G2 promotion blocked: matched candidate-only World Tree extinction")
 
 
 if __name__ == "__main__":
