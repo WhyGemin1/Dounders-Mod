@@ -33,6 +33,35 @@ class BookHistoryGrowthTests(unittest.TestCase):
             self.assertEqual(restored.world.tick, original_tick)
             self.assertEqual(len(restored.world.founders.people), 100)
 
+    def test_ecology_clock_tampering_fails_closed_without_book_or_checkpoint_mutation(self):
+        # Independently exercise ecology.day; a matching world.tick is not
+        # sufficient if the ecology clock is Boolean, negative, or divergent.
+        world, _, tree_id = bootstrap(400)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "world.cp"
+            save_checkpoint(world, tree_id, path)
+            original_bytes = path.read_bytes()
+            original_tick = world.tick
+            original_seq = world.book.seq
+            original_history = list(world.book.transaction_history)
+            for invalid_day, message in (
+                (True, "invalid canonical world clock"),
+                (-1, "invalid canonical world clock"),
+                (original_tick + 1, "ecology and Founder clocks disagree"),
+            ):
+                with self.subTest(ecology_day=invalid_day):
+                    world.ecology.day = invalid_day
+                    with self.assertRaisesRegex(ValueError, message):
+                        save_checkpoint(world, tree_id, path)
+                    self.assertEqual(path.read_bytes(), original_bytes)
+                    self.assertEqual(world.book.seq, original_seq)
+                    self.assertEqual(world.book.transaction_history, original_history)
+            world.ecology.day = original_tick
+            restored = load_checkpoint(path, tree_id)
+            self.assertEqual(restored.world.tick, original_tick)
+            self.assertEqual(restored.world.ecology.day, original_tick)
+            self.assertEqual(len(restored.world.founders.people), 100)
+
     def test_history_grows_only_with_real_settlements_and_restart_preserves_it(self):
         world, _, tree_id = bootstrap(400)
         session = SingleEngineSession(world, tree_id)
