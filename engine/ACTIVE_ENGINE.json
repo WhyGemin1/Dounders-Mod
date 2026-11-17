@@ -19,7 +19,7 @@
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #195 headless SUCCESS including direct Book Boolean replay regression; no separate local checkout",
-    "book_audit_this_cycle": "NOT MEASURED; new regression asserts unchanged balances/seq/external",
+    "book_audit_this_cycle": "Not yet measured; new test asserts abs mass/energy residual <=1e-6 at each real harvest checkpoint",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -63,7 +63,8 @@
     "p0_boolean_history_sequence": "PENDING clean-checkout CI; checkpoint.py type(tx.seq) is int and seed400 regression committed at ecc6baca50836b3b50720cf11462b23f520b3afc; container git ls-remote failed DNS; no numerical audit",
     "p0_direct_boolean_replay": "VERIFIED GitHub Actions #195 headless SUCCESS",
     "p0_historical_wellspring_legs": "VERIFIED GitHub Actions #201 (44021528722), headless job success",
-    "p0_historical_wellspring_aggregate": "SOURCE 95cf7cf9 and TEST d6007917 committed; clean-checkout CI pending; no fresh numerical Book audit"
+    "p0_historical_wellspring_aggregate": "SOURCE 95cf7cf9 and TEST d6007917 committed; clean-checkout CI pending; no fresh numerical Book audit",
+    "book_history_growth": "New actual Core151 3-harvest checkpoint growth regression committed b6cc046; CI acceptance and numeric byte measurements PENDING"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
