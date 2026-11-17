@@ -617,6 +617,6 @@
     "tools/u026_g2_exact_source_audit.py",
     "tools/u026_g2_matched_acceptance.py"
   ],
-  "gate_decision": "PENDING_C048_CURRENT_CI",
-  "candidate_note": "C048 plus C047: G2 retains provisional status. Workflow fix simplifies condition to always() so causal factorial diagnostics execute even if matched test fails; full source and ecological revalidation required. Historical G0/G1 accepted revisions intact."
+  "gate_decision": "PENDING_C048_YAML_FIX_CI",
+  "candidate_note": "C048 G2 opt-in observed-care priority and matched extinction regression guard, workflow YAML syntax repaired, full current-source exact audit/CI and ecological nondegradation pending. Promotion not authorized."
 }
