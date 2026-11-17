@@ -46,7 +46,7 @@ jobs:
             tests/test_c018_parent_stewardship.py \
             tests/test_c020_resource_agreements.py \
             tests/test_u026_g2_parent_stewardship.py
-      - name: G2 promotion gate negative controls: paired extinction must fail
+      - name: "G2 promotion gate negative controls: paired extinction must fail"
         run: python tools/u026_g2_matched_acceptance.py --self-test
       - name: G2 matched actual engine control and voluntary agency, checkpoint and one Book
         id: matched
