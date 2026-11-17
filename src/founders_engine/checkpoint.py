@@ -78,7 +78,8 @@ def _validate_world(world, tree_id):
             for leg in legs:
                 if (not isinstance(leg, tuple) or len(leg) != 3 or
                         not isinstance(leg[0], str) or not isinstance(leg[1], str) or
-                        not leg[0] or not leg[1] or leg[0] == leg[1] or
+                        not leg[0] or not leg[1] or leg[0] != leg[0].strip() or
+                        leg[1] != leg[1].strip() or leg[0] == leg[1] or
                         isinstance(leg[2], bool) or
                         not isinstance(leg[2], (int, float)) or
                         not math.isfinite(leg[2]) or leg[2] <= 0):
