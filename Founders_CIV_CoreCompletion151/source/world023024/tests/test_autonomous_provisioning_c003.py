@@ -17,6 +17,24 @@ class AutonomousProvisioningTests(unittest.TestCase):
     def advance(self,n):
         for _ in range(n):self.sim.step()
 
+    def test_c039_invalid_provisioning_cadence_fails_before_install(self):
+        # Fractional and Boolean periods previously truncated to zero or one,
+        # potentially failing only after advancing a live Tree checkpoint.
+        invalid=({'food_period':0.5},{'fruit_period':0.5},
+                 {'food_period':True},{'fruit_period':2.5},
+                 {'maturity_days':0.5},{'food_lifetime':False},
+                 {'fruit_lifetime':float('nan')})
+        for options in invalid:
+            with self.subTest(options=options):
+                before=(self.tree.provisioning,self.tree.age,self.book.seq,
+                        dict(self.book.mass),dict(self.book.energy))
+                with self.assertRaisesRegex(ValueError,'positive integers'):
+                    self.tree.enable_provisioning(**options)
+                self.assertEqual(before,(self.tree.provisioning,self.tree.age,
+                                         self.book.seq,dict(self.book.mass),
+                                         dict(self.book.energy)))
+        self.book.audit()
+
     def test_c036_invalid_tree_clock_fails_closed(self):
         # Invalid scheduler/checkpoint ages cannot create lots or mutate Book.
         policy=self.tree.enable_provisioning(food_period=1,fruit_period=1)
