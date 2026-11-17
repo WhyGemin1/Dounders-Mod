@@ -12,7 +12,8 @@ class BookHistoryGrowthTests(unittest.TestCase):
     def test_session_rejects_clock_corruption_before_harvest(self):
         # This guards live session mutations, not just checkpoint writes.
         for clock_name, invalid in (("tick", True), ("tick", -1),
-                                    ("day", True), ("day", -1), ("day", 1)):
+                                    ("day", True), ("day", -1), ("day", 1),
+                                    ("tick", 1), ("tick", 0.5)):
             with self.subTest(clock_name=clock_name, invalid=invalid):
                 world, _, tree_id = bootstrap(400)
                 session = SingleEngineSession(world, tree_id)
@@ -25,6 +26,12 @@ class BookHistoryGrowthTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "world clock"):
                     session.harvest("F001", "clock-guard", "v1",
                                     "forest", "plant", .01, .001)
+                self.assertEqual(world.book.seq, original_seq)
+                self.assertEqual(world.book.transaction_history, original_history)
+                # A rejected harvest must not leave the session able to advance
+                # the same corrupted world through its sole clock authority.
+                with self.assertRaisesRegex(RuntimeError, "world clock"):
+                    session.step()
                 self.assertEqual(world.book.seq, original_seq)
                 self.assertEqual(world.book.transaction_history, original_history)
 
