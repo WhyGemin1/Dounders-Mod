@@ -53,5 +53,52 @@ internal static class Smoke {
             }
         }
         Console.WriteLine("C044 C# M05 queue smoke PASS: 50,000 cap, one dropped event, one loss marker, full drain");
+        // C046: the real observer Update must detach hooks and stop recording
+        // after a user creates disable.flag. No game API hooks are invoked here.
+        var flag = Path.GetTempFileName();
+        try {
+            var disabled = new M05EventBridge();
+            var harmony = new HarmonyLib.Harmony("c046-test");
+            Set(disabled, "_session", "disabled-fixture");
+            Set(disabled, "_worldKey", "copied-save");
+            Set(disabled, "_harmony", harmony);
+            Set(disabled, "_disablePath", flag);
+            using (var memory = new MemoryStream())
+            using (var sink = new StreamWriter(memory, new System.Text.UTF8Encoding(false), 1024, true)) {
+                Set(disabled, "_writer", sink);
+                UnityEngine.Time.unscaledTime = 1f;
+                Call(disabled, "Update");
+                Check((bool)Get(disabled, "_observerDisabled"), "disable flag did not disable observer");
+                Check(harmony.WasUnpatched, "disable flag did not unpatch Harmony hooks");
+                sink.Flush();
+                var firstLength = memory.Length;
+                Check(firstLength > 0, "disable marker not recorded");
+                memory.Position = 0;
+                using (var reader = new StreamReader(memory, System.Text.Encoding.UTF8, false, 1024, true)) {
+                    Check(reader.ReadLine() == "observer_disabled", "wrong first disable record");
+                    Check(reader.ReadLine() == null, "disabled observer wrote an unexpected heartbeat");
+                }
+                File.Delete(flag);
+                UnityEngine.Time.unscaledTime = 2f;
+                Call(disabled, "Update");
+                Check((bool)Get(disabled, "_observerDisabled"), "observer re-enabled without restart");
+                // Native callback Send must remain a no-op even if Harmony unpatch failed.
+                M05EventBridge.Current = disabled;
+                try {
+                    var send = typeof(M05EventBridge).GetMethod(
+                        "Send", BindingFlags.Static | BindingFlags.NonPublic);
+                    Check(send != null, "missing native callback output guard");
+                    send.Invoke(null, new object[] { new M05EventBridge.Event { kind = "nutrition_call" } });
+                    Call(disabled, "Drain", true);
+                } finally {
+                    M05EventBridge.Current = null;
+                }
+                Check(memory.Length == firstLength, "disabled observer continued recording native events");
+            }
+            Console.WriteLine("C046 C# disable smoke PASS: unpatch, one disable marker, no heartbeat, no callback, no automatic re-enable");
+        }
+        finally {
+            if (File.Exists(flag)) File.Delete(flag);
+        }
     }
 }
