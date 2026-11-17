@@ -123,7 +123,13 @@ class TreeProvisioningPolicy:
             expected=(f'W-{world_id}-C003-{tree.id}-' if world_id is not None else f'C003-{tree.id}-')
             if any(not lot.startswith(expected) for lot in self.lots):
                 raise ValueError('World identity changed after physical lot production')
-        # Reject corrupted habitat rotation before checkpoint or Book mutation.\n        habitats=tuple(tree.habitats)\n        if (not habitats or len(set(habitats)) != len(habitats) or\n                any(not isinstance(h, str) or not h for h in habitats)):\n            raise ValueError('invalid Tree habitat configuration')\n        if tree.age==self.last_age:return False
+        # Reject corrupted habitat rotation before checkpoint or Book mutation.
+        habitats=tuple(tree.habitats)
+        if (not habitats or any(not isinstance(h, str) or not h or
+                len(h)>64 or any(c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-' for c in h)
+                for h in habitats) or len(set(habitats)) != len(habitats)):
+            raise ValueError('invalid Tree habitat configuration')
+        if tree.age==self.last_age:return False
         if tree.age<self.last_age:raise ValueError('Tree age reversed; restore consistent checkpoint')
         self.last_age=tree.age
         # Existing physical lots continue aging after Tree collapse. Only new
