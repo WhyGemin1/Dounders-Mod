@@ -116,6 +116,13 @@ class TreeProvisioningPolicy:
                 len(world_id)>64 or any(c not in
                 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-' for c in world_id)):
             raise ValueError('invalid World identity for physical lot')
+        # Existing physical lots retain their original World namespace. A
+        # reassigned Tree must not silently mix two World identities under
+        # one policy/checkpoint (including after collapse).
+        if self.lots:
+            expected=(f'W-{world_id}-C003-' if world_id is not None else 'C003-')
+            if any(not lot.startswith(expected) for lot in self.lots):
+                raise ValueError('World identity changed after physical lot production')
         if tree.age==self.last_age:return False
         if tree.age<self.last_age:raise ValueError('Tree age reversed; restore consistent checkpoint')
         self.last_age=tree.age
