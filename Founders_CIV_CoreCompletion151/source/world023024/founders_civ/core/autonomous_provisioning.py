@@ -131,7 +131,9 @@ class TreeProvisioningPolicy:
         # one policy/checkpoint (including after collapse).
         if self.lots:
             expected=(f'W-{world_id}-C003-{tree.id}-' if world_id is not None else f'C003-{tree.id}-')
-            if any(not isinstance(lot, str) or not lot.startswith(expected) for lot in self.lots):
+            if any(not isinstance(lot, str) for lot in self.lots):
+                raise ValueError('invalid Tree provisioned-lot checkpoint')
+            if any(not lot.startswith(expected) for lot in self.lots):
                 raise ValueError('World identity changed after physical lot production')
         # Reject corrupted habitat rotation before checkpoint or Book mutation.
         habitats=tuple(tree.habitats)
