@@ -120,7 +120,7 @@ class TreeProvisioningPolicy:
         # reassigned Tree must not silently mix two World identities under
         # one policy/checkpoint (including after collapse).
         if self.lots:
-            expected=(f'W-{world_id}-C003-' if world_id is not None else 'C003-')
+            expected=(f'W-{world_id}-C003-{tree.id}-' if world_id is not None else f'C003-{tree.id}-')
             if any(not lot.startswith(expected) for lot in self.lots):
                 raise ValueError('World identity changed after physical lot production')
         if tree.age==self.last_age:return False
