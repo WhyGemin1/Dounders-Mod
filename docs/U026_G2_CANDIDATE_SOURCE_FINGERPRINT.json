@@ -415,7 +415,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/__init__.py": "2ebe358c0f18620a3d84851fde318dca48f8010775fcebcdbb63f136cba58205",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/canon.py": "c2ed048e8b717897f5a690084d3c339b312a9f15b15a859f443f9231d790d7ae",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "fbe0cc5957abd4ef2633cdd251a1f25169a4ae946ea7a1bbcf38bf483d8547ea",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "8d378653641946fc52bf8ea19694933dcbd49e6a25dddb82ee681377fbfeb991",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "0a06b3e88dc4fd58c5314da62111c0609f302fab7e2360fbcdff22021a503539",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "31e1e5b386b6429d6377693b2524369cf57a8142e58ac2c0f600cdc13cee56e2",
@@ -577,7 +577,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "f31bfe66c8b119c8a9c13995ea7637976c9447a2",
+  "source_commit": "9b09e8f98ad6d55a03c6a28c9801e01299a25468",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
