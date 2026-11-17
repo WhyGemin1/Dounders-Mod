@@ -551,5 +551,27 @@ class DurableHarvestTests(unittest.TestCase):
                 book.request_receipts[key] = original
         book.audit()
 
+
+    def test_direct_book_replay_rejects_boolean_receipt_sequence(self):
+        """Direct Book replay must not treat True as committed sequence 1."""
+        from dataclasses import replace
+        self.session.harvest('F001', 'bool-direct-replay', 'v1',
+                             'forest', 'plant', .01, .001)
+        book = self.session.book
+        key = f'm01:{self.tree_id}:bool-direct-replay:v1'
+        original = book.request_receipts[key]
+        legs, receipt = original
+        seq, mass, energy = book.seq, dict(book.mass), dict(book.energy)
+        try:
+            book.request_receipts[key] = (legs, replace(receipt, seq=True))
+            with self.assertRaisesRegex(ValueError, 'invalid canonical Book replay receipt'):
+                book.move_once(key, material=legs[0], energy=legs[1])
+            self.assertEqual(book.seq, seq)
+            self.assertEqual(dict(book.mass), mass)
+            self.assertEqual(dict(book.energy), energy)
+        finally:
+            book.request_receipts[key] = original
+        book.audit()
+
 if __name__ == '__main__':
     unittest.main()
