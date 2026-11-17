@@ -14,12 +14,12 @@
   "source_status": "27 tracked Core151 modules: 26 archive matches, one reviewed-as-overlay ledger.py; current overlay blob 5993a9168d5b35e58c30761030d0444ad2ea551c (new direct replay guard awaiting CI)",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "Run #211 (44035077372) FAILED at durable-harvest test: expected malformed Wellspring legs error, received historical inflow reconciliation error; checkpoint validation reordered at 6453baf; new CI pending",
+    "github_ci": "Run #214 (44043478908) PASS all 18 reported headless steps on previous commit 9f5c902, including Book-history growth test; restarted replay no-growth extension commit b01d013 awaiting CI",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #195 headless SUCCESS including direct Book Boolean replay regression; no separate local checkout",
-    "book_audit_this_cycle": "CI #211 durable-harvest test printed before mass -2.9103830456733704e-11 energy -7.799826562404633e-09; settled/restored mass -2.8194335754960775e-11 energy -7.799826562404633e-09; stepped mass -9.00399754755199e-11 energy -1.0302755981683731e-08; all within test thresholds, but overall workflow failed",
+    "book_audit_this_cycle": "CI #214 before mass -2.9103830456733704e-11 energy -7.799826562404633e-09; restored mass -2.8194335754960775e-11 energy -7.799826562404633e-09; stepped mass -9.00399754755199e-11 energy -1.0302755981683731e-08; newly authored replay test pending",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -64,7 +64,7 @@
     "p0_direct_boolean_replay": "VERIFIED GitHub Actions #195 headless SUCCESS",
     "p0_historical_wellspring_legs": "VERIFIED GitHub Actions #201 (44021528722), headless job success",
     "p0_historical_wellspring_aggregate": "SOURCE 95cf7cf9 and TEST d6007917 committed; clean-checkout CI pending; no fresh numerical Book audit",
-    "book_history_growth": "Committed regression b6cc046; CI #211 skipped this step after earlier failure; checkpoint-byte measurements not yet available"
+    "book_history_growth": "CI #214 verified sequences [2213,2214,2215,2216], checkpoint bytes [1830052,1830495,1830872,1831248], +1196 bytes across 3 settlements; restart replay no-growth regression added at b01d013, NOT YET VERIFIED"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
