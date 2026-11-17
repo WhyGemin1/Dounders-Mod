@@ -36,6 +36,13 @@ class BookHistoryGrowthTests(unittest.TestCase):
                 self.assertEqual(restored.book.transaction_history, book.transaction_history)
                 self.assertEqual(restored.book.seq, book.seq)
                 self.assertIs(restored.world.founders.book, restored.book)
+                # Restored snapshots must retain the original Founder roster and world clock.
+                self.assertEqual(set(restored.world.founders.people), set(world.founders.people))
+                self.assertEqual(len(restored.world.founders.people), 100)
+                self.assertEqual(restored.world.tick, world.tick)
+                restored_audit = SingleEngineSession(restored.world, tree_id).audit()
+                self.assertLessEqual(abs(restored_audit.book_mass_error), 1e-6)
+                self.assertLessEqual(abs(restored_audit.book_energy_error), 1e-6)
                 # Replaying a durable claim after restart must not grow history.
                 if i:
                     replay_session = SingleEngineSession(restored.world, tree_id)
