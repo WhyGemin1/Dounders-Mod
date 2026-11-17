@@ -94,6 +94,21 @@ class AutonomousProvisioningTests(unittest.TestCase):
         self.assertFalse(policy.tick())
         self.assertEqual((self.book.seq,policy.events),before)
 
+    def test_archived_tree_without_provisioning_still_ages(self):
+        # C026: elapsed world time must not depend on optional food policy.
+        self.assertIsNone(self.tree.provisioning)
+        self.advance(2)
+        self.tree.collapse('unprovisioned-remnant-clock')
+        age=self.tree.age
+        founder_ids=set(self.sim.founders.people)
+        book_seq=self.book.seq
+        self.advance(7)
+        self.assertEqual(self.tree.age,age+7)
+        self.assertIsNone(self.tree.provisioning)
+        self.assertEqual(set(self.sim.founders.people),founder_ids)
+        self.assertGreaterEqual(self.book.seq,book_seq)
+        self.book.audit()
+
     def test_archived_remnants_age_under_global_scheduler(self):
         policy=self.tree.enable_provisioning(food_period=999,fruit_period=1)
         self.advance(2)
