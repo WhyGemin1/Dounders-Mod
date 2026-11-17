@@ -118,6 +118,28 @@ class SingleAuthorityTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, 'non-finite canonical Book'):
                     session.audit()
 
+    def test_failed_world_step_quarantines_session(self):
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(408)
+        session = SingleEngineSession(world, tree_id)
+        before = world.tick
+
+        def partial_step():
+            world.tick += 1
+            raise OSError('injected mid-step failure')
+
+        with patch.object(world, 'step', side_effect=partial_step):
+            with self.assertRaisesRegex(OSError, 'mid-step failure'):
+                session.step()
+        self.assertEqual(world.tick, before + 1)
+        with self.assertRaisesRegex(RuntimeError, 'step outcome uncertain'):
+            session.audit()
+        with self.assertRaisesRegex(RuntimeError, 'step outcome uncertain'):
+            session.step()
+        with self.assertRaisesRegex(RuntimeError, 'step outcome uncertain'):
+            session.harvest('FAKE', 'invalid-source', 'r1',
+                            'forest', 'plant', .01, .001)
+
     def test_reject_out_of_session_world_clock_change(self):
         world, _, tree_id = bootstrap(406)
         session = SingleEngineSession(world, tree_id)
