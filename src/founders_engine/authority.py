@@ -47,7 +47,12 @@ class SingleEngineSession:
     def _assert_authority(self):
         if self._checkpoint_uncertain:
             raise RuntimeError('checkpoint outcome uncertain: reload durable world')
-        if self.world.tick != self._expected_tick:
+        # Equality alone accepts True == 1 and can miss ecology clock drift.
+        # Reject invalid clocks before any session-mediated mutation.
+        if (type(self.world.tick) is not int or self.world.tick < 0 or
+                type(self.world.ecology.day) is not int or self.world.ecology.day < 0):
+            raise RuntimeError('invalid canonical world clock')
+        if self.world.tick != self._expected_tick or self.world.ecology.day != self.world.tick:
             raise RuntimeError('authoritative world clock changed outside session')
         if self.book.seq != self._expected_book_sequence:
             raise RuntimeError('canonical Book sequence changed outside session')
