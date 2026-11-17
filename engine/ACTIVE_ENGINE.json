@@ -69,7 +69,8 @@
     "p0_ecology_clock_tampering": "VERIFIED GitHub Actions #231 headless success after negative ecology-day validation-order correction",
     "p0_independent_world_clock": "SOURCE TEST committed 0315541388633fae25ffee70b73ba3a520adcdfd; clean-checkout CI pending",
     "p0_independent_positive_world_clock_divergence": "Committed test source 69cb0761a471dbc81186a38af1aab3efe03d1694; not locally executed or CI-verified. Reject world.tick=original_tick+1 while ecology.day unchanged; checkpoint bytes and Book history/seq must remain unchanged.",
-    "p0_world_clock_tamper_ci": "Prior regression 03155413 has no PR workflow returned by commit-run lookup; CI acceptance unverified."
+    "p0_world_clock_tamper_ci": "Prior regression 03155413 has no PR workflow returned by commit-run lookup; CI acceptance unverified.",
+    "latest_cycle": "2026-11-17 16:00 CST: Book-balance mutation on rejected M01 ValueError guarded at commits 99f897f and 03badbe7; new regression NOT EXECUTED, CI unverified; prior results not evidence for this change."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -100,5 +101,6 @@
     "previous_ci": "44154807337 passed; predates current source change",
     "book_audit": "NOT MEASURED this cycle",
     "worldbox": "READ_ONLY; native integration not verified"
-  }
+  },
+  "next_task": "Execute full clean-checkout CI for test_authority.py including seed-412 mutation regression; fix failures before expanding mechanics."
 }
