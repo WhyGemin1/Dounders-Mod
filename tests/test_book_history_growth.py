@@ -9,6 +9,30 @@ from run_world_tree_pilot import bootstrap
 
 
 class BookHistoryGrowthTests(unittest.TestCase):
+    def test_boolean_world_clock_rejected_without_checkpoint_mutation(self):
+        world, _, tree_id = bootstrap(400)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "world.cp"
+            save_checkpoint(world, tree_id, path)
+            original_bytes = path.read_bytes()
+            original_tick = world.tick
+            original_seq = world.book.seq
+            original_history = list(world.book.transaction_history)
+            # A checksum-valid object graph cannot turn a Boolean into a clock.
+            # Preserve the original checkpoint and canonical Book on rejection.
+            world.tick = True
+            world.ecology.day = True
+            with self.assertRaisesRegex(ValueError, "invalid canonical world clock"):
+                save_checkpoint(world, tree_id, path)
+            self.assertEqual(path.read_bytes(), original_bytes)
+            self.assertEqual(world.book.seq, original_seq)
+            self.assertEqual(world.book.transaction_history, original_history)
+            world.tick = original_tick
+            world.ecology.day = original_tick
+            restored = load_checkpoint(path, tree_id)
+            self.assertEqual(restored.world.tick, original_tick)
+            self.assertEqual(len(restored.world.founders.people), 100)
+
     def test_history_grows_only_with_real_settlements_and_restart_preserves_it(self):
         world, _, tree_id = bootstrap(400)
         session = SingleEngineSession(world, tree_id)
