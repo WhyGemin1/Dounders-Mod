@@ -70,18 +70,18 @@ def _validate_world(world, tree_id):
                 (tx.kind != 'wellspring' and tx.external != 0) or
                 (tx.kind == 'wellspring' and tx.external <= 0)):
             raise ValueError('malformed canonical Book transaction metadata')
-    # Reconcile the complete historical external-energy record with the ONE
-    # authoritative Book accumulator. A valid envelope cannot authorize a
-    # fabricated Wellspring inflow that was never committed to Book stock.
-    if not math.isclose(sum(tx.external for tx in history), session.book.external,
-                        rel_tol=1e-12, abs_tol=1e-7):
-        raise ValueError('canonical Book Wellspring history does not reconcile')
     # Wellspring is the sole source of external energy. It credits the
     # canonical house account without material or transfer legs; allowing
     # legs here would conceal an additional unverified resource movement.
     for tx in history:
         if tx.kind == 'wellspring' and (tx.material or tx.energy):
             raise ValueError('malformed canonical Wellspring transaction')
+    # Reconcile the complete historical external-energy record with the ONE
+    # authoritative Book accumulator. A valid envelope cannot authorize a
+    # fabricated Wellspring inflow that was never committed to Book stock.
+    if not math.isclose(sum(tx.external for tx in history), session.book.external,
+                        rel_tol=1e-12, abs_tol=1e-7):
+        raise ValueError('canonical Book Wellspring history does not reconcile')
     # Reject malformed historical legs even when the transaction was not an
     # M01 receipt. A valid checkpoint digest is not proof of valid Book data.
     import math
