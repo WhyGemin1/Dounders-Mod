@@ -418,7 +418,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "2269c4aea4ef6569b08f86a515390eacf7fde0b8d26a1ba5e861837f6c7ab8d9",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "0a06b3e88dc4fd58c5314da62111c0609f302fab7e2360fbcdff22021a503539",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "43dda9257fc439bb1c11ce5c5e1bc202bd6696af1f7a9460db9314f74f2ce39a",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "73a8454648e9adc0420f78b3d631b80dfc11c6eaf6d63643268b243815e0b5d1",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "2355885bf289771f559799762272ae3dc9d957f8ca1d11defdcccaf3619af63a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "60f171a4080a1ff0c46e763e5b513ca9c328db254bc958831a39f4a45c1953f3",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
@@ -617,6 +617,6 @@
     "tools/u026_g2_exact_source_audit.py",
     "tools/u026_g2_matched_acceptance.py"
   ],
-  "gate_decision": "PENDING_C048_YAML_FIX_CI",
-  "candidate_note": "C048 G2 opt-in observed-care priority and matched extinction regression guard, workflow YAML syntax repaired, full current-source exact audit/CI and ecological nondegradation pending. Promotion not authorized."
+  "gate_decision": "PENDING_C048_AUTONOMY_REFUSAL_FIX_CI",
+  "candidate_note": "C048: after original 4/4 G2 candidate-only Tree extinctions, observed parent-care urgency and local inspection revised. Full regression revealed two Founder opt-out reachability failures. Corrected urgent-care decline score to preserve stochastic voluntary refusal. G0/G1/G2 re-verification pending; no promotion."
 }
