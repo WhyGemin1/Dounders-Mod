@@ -19,7 +19,7 @@ class BookHistoryGrowthTests(unittest.TestCase):
             path = Path(tmp) / "world.cp"
             sizes = []
             counts = []
-            for i in range(4):
+            for i in range(16):
                 if i:
                     session.checkpointed_harvest(
                         path, "F001", f"growth-{i}", "v1",
@@ -49,8 +49,11 @@ class BookHistoryGrowthTests(unittest.TestCase):
                     after_audit = replay_session.audit()
                     self.assertEqual(after_audit.book_mass_error, before_audit.book_mass_error)
                     self.assertEqual(after_audit.book_energy_error, before_audit.book_energy_error)
-            self.assertEqual(counts[-1] - counts[0], 3)
+            self.assertEqual(counts[-1] - counts[0], 15)
             self.assertTrue(all(b > a for a, b in zip(sizes, sizes[1:])))
+            increments = [b - a for a, b in zip(sizes, sizes[1:])]
+            self.assertTrue(all(delta > 0 for delta in increments))
             print("BOOK_HISTORY_GROWTH", "sequences=", counts,
                   "checkpoint_bytes=", sizes,
-                  "delta_bytes=", sizes[-1] - sizes[0], flush=True)
+                  "delta_bytes=", sizes[-1] - sizes[0],
+                  "per_settlement_bytes=", increments, flush=True)
