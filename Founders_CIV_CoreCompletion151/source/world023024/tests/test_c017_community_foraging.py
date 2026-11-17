@@ -90,3 +90,27 @@ def test_checkpoint_replay_inspection_and_harvest_book_identical():
     assert sim.book.operations==clone.book.operations
     assert sim.book.audit()==clone.book.audit()
     assert sim.world_trees.worlds[tid].observations[f]==clone.world_trees.worlds[tid].observations[f]
+
+
+def test_g2_food_only_owner_observation_does_not_crash_or_invent_census():
+    """G2 seed 9711 exposed owner food scans lacking a population field.
+
+    Missing animal census must not be interpreted as zero population and
+    policy proposals must preserve the single authoritative Book.
+    """
+    sim, _realm, tid = bootstrap(seed=9711)
+    tree = sim.world_trees.worlds[tid]
+    owner = tree.owner
+    sim.founders.people[owner].location = 'riverbank'
+    tree.observations[owner] = {'seen_tick': sim.tick - 5, 'known_lots': []}
+    if sim.book.energy[f'founder:{owner}'] < .19:
+        donor = max((f for f in sim.founders.people if f != owner),
+                    key=lambda f: sim.book.energy.get(f'founder:{f}', 0))
+        amount = .21 - sim.book.energy[f'founder:{owner}']
+        sim.book.move(energy=[(f'founder:{donor}', f'founder:{owner}', amount)])
+    before = (dict(sim.book.mass), dict(sim.book.energy), sim.book.seq)
+    plans = sim._proposals(owner, [])
+    assert any(p[1] == 'tree_observe' and p[3] == tid for p in plans)
+    assert (dict(sim.book.mass), dict(sim.book.energy), sim.book.seq) == before
+    assert len(sim.founders.people) == 100
+    sim.book.audit()
