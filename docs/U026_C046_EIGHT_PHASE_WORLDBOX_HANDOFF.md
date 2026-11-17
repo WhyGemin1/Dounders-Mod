@@ -27,7 +27,7 @@ Decision: REVISE / keep all mechanics on Development; **no live WorldBox certifi
 - C045 Windows: https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44186586578
 - C046 Windows: https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44187000358
 - C046 M01 offline bridge: https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44187000385
-- C046 full Core151 source, conservation, provenance, G1 matched: https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44187000445 (inspect conclusion before calling it passed)
+- C046 full Core151 source, conservation, provenance, G1 matched: https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44187000445 **success** (327 Python regression tests; 17 G1 exact replay, 12 G2 stewardship, fail-closed provenance, G1 matched 10 seeds x 2 arms = 20 runs at 30/180 days)
 - Prior verified C042 Core151: https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44169067653
 - PR #3 Development -> Core remains draft and unmerged: https://github.com/WhyGemin1/Dounders-Mod/pull/3
 
@@ -39,7 +39,7 @@ Decision: REVISE / keep all mechanics on Development; **no live WorldBox certifi
 | C045 Windows | 627090bb0117af9855eaf28fda57a1c3e25edfa6 | PASS | 49 M05 unit + 15 synthetic Windows captures + C# queue smoke |
 | C046 Windows | c3c8de39bc73fd29d33b2d863c43b4c73cdf959d | PASS | 49 M05 tests + 16 synthetic captures + C# queue/disable smoke |
 | C046 M01 | c3c8de39bc73fd29d33b2d863c43b4c73cdf959d | PASS | pinned source bridge compilation/testing, offline |
-| C046 Core151 | c3c8de39bc73fd29d33b2d863c43b4c73cdf959d | Pending final confirmation at initial handoff | full-source/provenance/G1 matched |
+| C046 Core151 | c3c8de39bc73fd29d33b2d863c43b4c73cdf959d | PASS workflow 44187000445 | 327 full tests; 17 focused G1; 12 focused G2; 20 matched runs; source audit |
 | Seeds/horizons added | N/A | 0 | No new C046 ecological or animal behavior run |
 | Native gameplay | N/A | NOT RUN | No real Windows/BepInEx game observation |
 
