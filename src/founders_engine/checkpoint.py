@@ -34,6 +34,9 @@ def _decode(data: bytes) -> bytes:
 def _validate_world(world, tree_id):
     from founders_engine.authority import SingleEngineSession
     session = SingleEngineSession(world, tree_id)
+    # A Boolean is not a valid clock, even though Python treats True == 1.
+    if type(world.tick) is not int or type(world.ecology.day) is not int or world.tick < 0:
+        raise ValueError('invalid canonical world clock')
     if world.tick != world.ecology.day:
         raise ValueError('ecology and Founder clocks disagree')
     session.audit()
