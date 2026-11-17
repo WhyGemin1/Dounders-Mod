@@ -108,6 +108,14 @@ class TreeProvisioningPolicy:
         # Fail before last_age, lot records, or any physical transaction changes.
         if tree.book is not tree.sim.book:
             raise ValueError('Tree provisioning requires authoritative simulation Book')
+        # Reject invalid World namespaces before refreshing or aging existing
+        # lots, not only when a new food/fruit lot happens to be produced.
+        # This keeps malformed checkpoint identities from partially advancing.
+        world_id=getattr(tree, 'world_id', None)
+        if world_id is not None and (not isinstance(world_id, str) or not world_id or
+                len(world_id)>64 or any(c not in
+                'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-' for c in world_id)):
+            raise ValueError('invalid World identity for physical lot')
         if tree.age==self.last_age:return False
         if tree.age<self.last_age:raise ValueError('Tree age reversed; restore consistent checkpoint')
         self.last_age=tree.age
