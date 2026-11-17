@@ -148,6 +148,30 @@ class AutonomousProvisioningTests(unittest.TestCase):
         policy.tick()
         self.book.audit()
 
+    def test_c034_duplicate_and_malformed_habitats_fail_closed(self):
+        # Neither repeated nor malformed habitat identities may age the
+        # provisioning checkpoint or transact physical Book resources.
+        policy=self.tree.enable_provisioning(food_period=1,fruit_period=1)
+        self.advance(2)
+        self.tree.age+=1
+        original=self.tree.habitats
+        for invalid in (('forest','forest'), ('forest','bad:account'),
+                        ('forest',42), ('forest','')):
+            before=(policy.last_age,copy.deepcopy(policy.lots),
+                    list(policy.events),dict(self.book.mass),
+                    dict(self.book.energy),self.book.seq)
+            self.tree.habitats=invalid
+            try:
+                with self.assertRaisesRegex(ValueError,'invalid Tree habitat'):
+                    policy.tick()
+            finally:
+                self.tree.habitats=original
+            self.assertEqual(before,(policy.last_age,policy.lots,
+                             policy.events,dict(self.book.mass),
+                             dict(self.book.energy),self.book.seq))
+        policy.tick()
+        self.book.audit()
+
     def test_detached_book_rejects_provisioning_without_side_effects(self):
         # C027: production must never use an unregistered second Book.
         policy=self.tree.enable_provisioning(food_period=1,fruit_period=1)
