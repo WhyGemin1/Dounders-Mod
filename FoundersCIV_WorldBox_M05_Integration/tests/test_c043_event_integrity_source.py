@@ -45,16 +45,16 @@ class M05C043SafetyContract(unittest.TestCase):
         self.assertIn("$behaviorKinds -contains $kind", self.validator)
         self.assertNotIn("'hook_probe', 'nutrition_call'", self.validator)
 
-    def test_windows_fixture_suite_covers_one_pass_and_fourteen_rejections(self):
+    def test_windows_fixture_suite_covers_one_pass_and_fifteen_rejections(self):
         for name in (
             "good", "seq_gap", "duplicate_seq", "missing_close",
-            "bridge_loss", "missing_hook", "wrong_assembly",
+            "bridge_loss", "observer_disabled", "missing_hook", "wrong_assembly",
             "no_behavior", "no_heartbeat", "unbound",
             "mixed_session", "callback_error", "emit_error",
             "wrong_schema", "duplicate_open",
         ):
             self.assertIn("'" + name + "'", self.fixture)
-        self.assertIn("$casesRun -ne 15", self.fixture)
+        self.assertIn("$casesRun -ne 16", self.fixture)
 
 
 if __name__ == "__main__":
