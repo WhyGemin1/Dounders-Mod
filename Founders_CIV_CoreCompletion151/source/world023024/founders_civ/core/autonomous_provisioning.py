@@ -107,8 +107,11 @@ class TreeProvisioningPolicy:
         if tree.age==self.last_age:return False
         if tree.age<self.last_age:raise ValueError('Tree age reversed; restore consistent checkpoint')
         self.last_age=tree.age
-        if tree.state!='active' or tree.sim.seeds.plants[tree.id]['status']!='stable':return False
+        # Existing physical lots continue aging after Tree collapse. Only new
+        # production requires a living, stable Tree; archived remnants may
+        # mature or decay without minting any matter or Creation Energy.
         self._refresh()
+        if tree.state!='active' or tree.sim.seeds.plants[tree.id]['status']!='stable':return False
         # Deterministic habitat rotation, never an artificial time currency.
         habitats=tuple(tree.habitats)
         if tree.age%self.food_period==0:
