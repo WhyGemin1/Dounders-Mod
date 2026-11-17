@@ -91,5 +91,13 @@
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
     "p0_direct_boolean_replay": "VERIFIED PASS in PR CI #195; no numerical Book residuals collected",
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
+  },
+  "latest_cycle": {
+    "date": "2026-11-17",
+    "change": "Live SingleEngineSession rejects Boolean, negative and divergent world/ecology clocks before harvest or step",
+    "source_commit": "ec356373c7462821e7f45e01aa80db4f64f3509b",
+    "regression_commit": "6df64ad9ac34cc492dc8e8d9a592e31786cb755f",
+    "acceptance": "PROVISIONAL: regression committed; clean-checkout CI not verified",
+    "next": "Run full clean-checkout regression and repair failures before further mechanics"
   }
 }
