@@ -590,3 +590,9 @@
 - Execution: GitHub file commits verified. New unittest NOT EXECUTED; no fresh clean-checkout CI or numerical Book conservation measurements. Status PROVISIONAL.
 - Audit: no second Book, clock, Founder registry, or native WorldBox writes introduced. This guard cannot prove absence of non-Book actor mutations before a ValueError; durable rollback remains unverified.
 - Next: run clean-checkout `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_authority.py'` and complete headless CI; repair any failure before new mechanics. M01 iteration-3 repair lock and M02–M07 backlog preserved. No main merge.
+
+## 2026-11-17 17:00 CST — Nested M01 receipt mutation fail-closed guard
+- Ground: inspected live authority, tests, state, PR #1/#2 and authorized Drive ZIP metadata. Both PRs remained draft/unmerged. Local `git ls-remote` failed: `Could not resolve host: github.com`.
+- Implementation: replaced shallow Book-state comparison with `deepcopy` snapshots of canonical mass, energy, transactions, history and receipts in `SingleEngineSession.harvest` (012733da6c9ae8419bae3effba2d3bf062d6778b). Added seed-413 regression mutating a nested receipt value before raising ValueError (205d86b8f1e85d26bf13fd204ecdf0cd8f114351). ACTIVE_ENGINE.json updated at 462c3ecdf22df6f50f235837f3c39d8ee510e42e.
+- Execute/test: GitHub commits verified; new test NOT RUN; no clean-checkout CI evidence or fresh mass/energy residuals. Status PROVISIONAL. Synthetic nested fixture is not a native WorldBox receipt.
+- Ecological audit: no new engine, clock, Book or Founder identities. M01 iteration-3 repair lock and M02–M07 backlog retained; WorldBox writes remain prohibited; no ecological stability claim. Next: run clean-checkout authority and full headless suite, fix any failures, measure conservation/restart behavior.
