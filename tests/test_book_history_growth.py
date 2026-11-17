@@ -43,10 +43,13 @@ class BookHistoryGrowthTests(unittest.TestCase):
             original_tick = world.tick
             original_seq = world.book.seq
             original_history = list(world.book.transaction_history)
-            for invalid_tick in (-1, 0.5, True):
+            for invalid_tick, expected_error in ((-1, "invalid canonical world clock"),
+                                                 (0.5, "invalid canonical world clock"),
+                                                 (True, "invalid canonical world clock"),
+                                                 (original_tick + 1, "ecology and Founder clocks disagree")):
                 with self.subTest(world_tick=invalid_tick):
                     world.tick = invalid_tick
-                    with self.assertRaisesRegex(ValueError, "invalid canonical world clock"):
+                    with self.assertRaisesRegex(ValueError, expected_error):
                         save_checkpoint(world, tree_id, path)
                     self.assertEqual(path.read_bytes(), original_bytes)
                     self.assertEqual(world.book.seq, original_seq)
