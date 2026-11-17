@@ -14,7 +14,7 @@
   "source_status": "27 tracked Core151 modules: 26 archive matches, one reviewed-as-overlay ledger.py; current overlay blob 5993a9168d5b35e58c30761030d0444ad2ea551c (new direct replay guard awaiting CI)",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "GitHub Actions #228 (44088638968) FAILURE: 21/21 durable harvest passed; book-history 2/3 tests passed, negative ecology.day validation error mismatch; subsequent steps skipped",
+    "github_ci": "GitHub Actions #231 (44099358010): headless job SUCCESS, all 18 reported steps including Book history and durable harvest",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -66,7 +66,8 @@
     "p0_historical_wellspring_aggregate": "SOURCE 95cf7cf9 and TEST d6007917 committed; clean-checkout CI pending; no fresh numerical Book audit",
     "book_history_growth": "VERIFIED CI #225: 15 settlements, sequences 2213..2228; checkpoint bytes 1830052..1835775, +5723 bytes; per-settlement deltas [443,377,376,376,376,376,376,376,376,377,377,377,377,377,386]; restored audits asserted <=1e-6",
     "p0_boolean_world_clock": "VERIFIED CI #225 passed test_boolean_world_clock_rejected_without_checkpoint_mutation",
-    "p0_ecology_clock_tampering": "CI #228 failed only ecology.day=-1 expected invalid-clock error; checkpoint.py corrected at 26cf4afd; retest pending"
+    "p0_ecology_clock_tampering": "VERIFIED GitHub Actions #231 headless success after negative ecology-day validation-order correction",
+    "p0_independent_world_clock": "SOURCE TEST committed 0315541388633fae25ffee70b73ba3a520adcdfd; clean-checkout CI pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -75,14 +76,14 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Verify correction in PR clean-checkout CI, then run remaining workflow steps; do not claim full acceptance until green",
-  "last_cycle": "2026-11-17 P0 ecology negative-day validation order correction",
+  "next_cycle": "Verify independent world.tick regression in CI, then evaluate larger Book history scaling",
+  "last_cycle": "2026-11-17 09:00 CST independent world.tick tampering regression",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "c996be5659476fb5ad19de3391556115db233fe6",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44079584621",
-  "last_unverified_code_commit": "26cf4afdf6c296cd9e712be53361d92a8a2b2407",
-  "next_engineering_task": "Verify correction in PR clean-checkout CI, then run remaining workflow steps; do not claim full acceptance until green",
+  "last_verified_code_commit": "26cf4afdf6c296cd9e712be53361d92a8a2b2407",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44099358010",
+  "last_unverified_code_commit": "0315541388633fae25ffee70b73ba3a520adcdfd",
+  "next_engineering_task": "Verify independent world.tick regression in CI, then evaluate larger Book history scaling",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
