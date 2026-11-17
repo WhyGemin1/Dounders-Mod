@@ -94,6 +94,26 @@ class AutonomousProvisioningTests(unittest.TestCase):
         self.assertFalse(policy.tick())
         self.assertEqual((self.book.seq,policy.events),before)
 
+    def test_archived_remnants_age_under_global_scheduler(self):
+        policy=self.tree.enable_provisioning(food_period=999,fruit_period=1)
+        self.advance(2)
+        stored=[lot for lot,rec in policy.lots.items()
+                if rec.kind=='fruit' and rec.state=='stored']
+        self.assertTrue(stored)
+        lot=stored[0]
+        self.tree.collapse('scheduled-remnant-test')
+        count=len(policy.lots)
+        age=self.tree.age
+        self.advance(policy.maturity_days)
+        self.assertEqual(self.tree.age,age+policy.maturity_days)
+        self.assertEqual(policy.lots[lot].state,'mature')
+        self.assertEqual(len(policy.lots),count)
+        self.assertEqual(len(self.sim.founders.people),100)
+        self.assertLess(abs(self.book.audit()['mass_error']),1e-5)
+        snapshot=(self.book.seq,list(policy.events))
+        self.assertFalse(policy.tick())
+        self.assertEqual((self.book.seq,policy.events),snapshot)
+
     def test_tick_replay_does_not_duplicate_events_or_assets(self):
         policy=self.tree.enable_provisioning()
         self.advance(24)
