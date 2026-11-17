@@ -116,3 +116,70 @@ def test_checkpoint_replay_is_exact_for_a_parent_transfer():
     assert dict(sim.book.energy)==dict(restored.book.energy)
     assert dict(sim.book.mass)==dict(restored.book.mass)
     assert sim.book.seq==restored.book.seq
+
+
+
+def test_c049_remote_dependent_owner_may_return_to_inspect_without_free_care():
+    """A G2 owner can choose a real graph edge, but no care is compelled."""
+    from random import Random
+    from founders_civ.experimental.social_agents import LINKS, COST
+    sim, realm, tid = world()
+    owner = eligible_child_owner(sim, realm)
+    person = sim.founders.people[owner]
+    person.location = 'ridge'
+    assert 'riverbank' in LINKS[person.location]
+    from founders_civ.core.founder_parent_stewardship import OBSERVATION_SITES
+    assert 'riverbank' in OBSERVATION_SITES
+    before = (sim.book.seq, dict(sim.book.mass), dict(sim.book.energy))
+    offers = propose_parent_stewardship(sim, owner)
+    travel = next(p for p in offers if p[1] == 'move' and p[3] == 'riverbank')
+    assert not any(p[1] == 'parent_steward' for p in offers)
+    assert (sim.book.seq, dict(sim.book.mass), dict(sim.book.energy)) == before
+    # The Founder might decline, investigate or simply choose another action.
+    assert travel[0] > 0
+    energy_before = sim.book.energy[f'founder:{owner}']
+    sim._do(owner, travel, [], Random(4), parent='c049-choice')
+    assert person.location == 'riverbank'
+    assert sim.book.energy[f'founder:{owner}'] == pytest.approx(energy_before - COST['explore'])
+    assert realm not in sim.seeds.owner_reserve_knowledge or owner not in sim.seeds.owner_reserve_knowledge.get(realm, {})
+    assert sim.book.audit()['energy_error'] == pytest.approx(0, abs=1e-6)
+    assert any(p[1] == 'parent_inspect' for p in propose_parent_stewardship(sim, owner))
+
+
+def test_c049_recent_remote_shortage_allows_funded_travel_not_telecare():
+    sim, realm, tid = world()
+    owner = eligible_child_owner(sim, realm)
+    person = sim.founders.people[owner]
+    person.location = 'riverbank'
+    reserve_low(sim, realm)
+    inspect_parent(sim, owner, realm)
+    person.location = 'fields'
+    before = (sim.book.seq, dict(sim.book.mass), dict(sim.book.energy))
+    proposals = propose_parent_stewardship(sim, owner)
+    assert any(p[1] == 'move' and p[3] == 'house' for p in proposals)
+    assert not any(p[1] == 'parent_steward' for p in proposals)
+    assert before == (sim.book.seq, dict(sim.book.mass), dict(sim.book.energy))
+    person.location = 'house'
+    assert any(p[1] == 'parent_steward' for p in propose_parent_stewardship(sim, owner))
+
+
+def test_c049_no_free_travel_if_fuel_lacks_existing_move_cost():
+    sim, realm, tid = world()
+    owner = eligible_child_owner(sim, realm)
+    sim.founders.people[owner].location = 'ridge'
+    account = f'founder:{owner}'
+    fuel = sim.book.energy[account]
+    if fuel > .05:
+        sim.book.move(energy=[(account, 'environment:heat', fuel - .05)])
+    before = sim.book.seq
+    assert not any(p[1] == 'move' for p in propose_parent_stewardship(sim, owner))
+    assert sim.book.seq == before
+    sim.book.audit()
+
+
+def test_c049_policy_disabled_no_travel_or_care():
+    sim, realm, tid = world()
+    owner = eligible_child_owner(sim, realm)
+    sim.founders.people[owner].location = 'ridge'
+    sim.founder_parent_stewardship_enabled = False
+    assert propose_parent_stewardship(sim, owner) == []
