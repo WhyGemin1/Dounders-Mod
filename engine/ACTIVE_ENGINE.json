@@ -79,13 +79,13 @@
     "Long-horizon ecological stability and in-game tests not run"
   ],
   "next_cycle": "Verify independent world.tick regression in CI, then evaluate larger Book history scaling",
-  "last_cycle": "2026-11-17 12:00 CST live-clock mutation rejection regression",
+  "last_cycle": "2026-11-17 13:00 CST failed-step quarantine",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "26cf4afdf6c296cd9e712be53361d92a8a2b2407",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44099358010",
-  "last_unverified_code_commit": "4477d0b7be5adeefa6955476cfaaffe116579b5f",
-  "next_engineering_task": "Execute clean-checkout headless CI for live-clock and checkpoint tests; repair any failures",
+  "last_unverified_code_commit": "7ba8b0b281b2af98fcc9ecf3b5169f008020f7fc",
+  "next_engineering_task": "Run clean-checkout authority and Book history tests including injected mid-step failure; inspect CI and repair failures",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -94,9 +94,10 @@
   },
   "latest_cycle": {
     "date": "2026-11-17",
-    "change": "Extended existing live Core151 clock-corruption regression to reject fractional and positive divergent clocks during harvest AND step, with unchanged Book sequence/history",
-    "source_commit": "4477d0b7be5adeefa6955476cfaaffe116579b5f",
-    "acceptance": "PROVISIONAL: committed test not executed; previous CI #231 predates latest commits",
-    "next": "Execute clean-checkout headless CI for live-clock and checkpoint tests; repair any failures"
+    "change": "Fail-closed SingleEngineSession quarantine after world.step exception, invalid clock progression or post-step audit failure; regression injects partial tick mutation",
+    "source_commit": "7ba8b0b281b2af98fcc9ecf3b5169f008020f7fc",
+    "test_commit": "073d94c537a2038f55b083ce7f39122debd62185",
+    "acceptance": "PROVISIONAL: committed, not yet executed in clean-checkout CI",
+    "next": "Run clean-checkout authority and Book history tests including injected mid-step failure; inspect CI and repair failures"
   }
 }
