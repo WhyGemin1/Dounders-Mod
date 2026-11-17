@@ -190,6 +190,31 @@ class AutonomousProvisioningTests(unittest.TestCase):
         self.assertTrue(any(v.state=='mature' for v in policy.lots.values()))
         self.book.audit()
 
+    def test_foreign_tree_lot_rejected_before_remnant_aging(self):
+        # C030: a lot from another Tree in the same World must not be
+        # accepted solely because its World namespace matches.
+        from founders_civ.core.autonomous_provisioning import ProvisionedLot
+        self.tree.world_id='WORLD-A'
+        policy=self.tree.enable_provisioning(food_period=999,fruit_period=1)
+        self.advance(2)
+        self.tree.collapse('foreign-tree-lot')
+        self.tree.age+=policy.maturity_days
+        original=next(iter(policy.lots))
+        record=policy.lots.pop(original)
+        foreign=f'W-WORLD-A-C003-FOREIGN-TREE-fruit-{record.created}'
+        policy.lots[foreign]=record
+        before=(policy.last_age,copy.deepcopy(policy.lots),list(policy.events),
+                dict(self.book.mass),dict(self.book.energy),self.book.seq)
+        with self.assertRaisesRegex(ValueError,'World identity changed'):
+            policy.tick()
+        self.assertEqual(before,(policy.last_age,policy.lots,policy.events,
+                                 dict(self.book.mass),dict(self.book.energy),self.book.seq))
+        policy.lots.pop(foreign)
+        policy.lots[original]=record
+        policy.tick()
+        self.assertEqual(policy.lots[original].state,'mature')
+        self.book.audit()
+
     def test_tick_replay_does_not_duplicate_events_or_assets(self):
         policy=self.tree.enable_provisioning()
         self.advance(24)
