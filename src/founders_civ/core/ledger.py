@@ -138,7 +138,8 @@ class Book:
             prior_legs, receipt = previous
             # A receipt cannot refer to a transaction beyond this Book's
             # current history (for example after a partial/corrupt restore).
-            if not isinstance(receipt, Transaction) or not 1 <= receipt.seq <= self.seq or receipt.kind != 'move':
+            if (not isinstance(receipt, Transaction) or type(receipt.seq) is not int or
+                    not 1 <= receipt.seq <= self.seq or receipt.kind != 'move'):
                 raise ValueError('invalid canonical Book replay receipt')
             history = getattr(self, 'transaction_history', None)
             if (not isinstance(history, list) or len(history) != self.seq or
