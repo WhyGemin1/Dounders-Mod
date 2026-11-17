@@ -518,8 +518,8 @@
     "Founders_CIV_CoreCompletion151/source/world_funding_141_results.csv": "24f6b734926f13fcb6f874f5c97337cefe46edd43c6841dbc1b735234b1fa38f",
     "tools/u026_g1_matched_acceptance.py": "2f51a17d478b1a7927417eabd3bd52d44cbf0287ba9c37bbaa64a8a432911af3",
     "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
-    "tools/u026_g2_matched_acceptance.py": "9ec201d43a7344078fbc6252ba947c1e63aed1b07486452c1811251472eaf1e3",
-    ".github/workflows/u026_g2_acceptance.yml": "bded770f3486fd0465ff0c2fea5caad1db585f57a19bb80c5532ee152cc76868"
+    "tools/u026_g2_matched_acceptance.py": "1682ee05da5b6eb6141b5178cddd10801e8e0ba17d2140e7f480c2e714982eba",
+    ".github/workflows/u026_g2_acceptance.yml": "bf06cba2ac666a90985c692b52c1a89feb8227f8d7bbec99c4295b8e9b73be54"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
@@ -579,7 +579,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "8c43d2178353821ae037c59618ee5701dc6af00e",
+  "source_commit": "40b9bc81bc1bac6932080a031546e6f588a3814a",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
@@ -617,6 +617,6 @@
     "tools/u026_g2_exact_source_audit.py",
     "tools/u026_g2_matched_acceptance.py"
   ],
-  "gate_decision": "PENDING_C047_FIX_CI",
-  "candidate_note": "C047: matched seed 9711 G2 opt-in crashed on food-only owner observation without a population key. Actual WORLD-024 proposal code corrected to interpret missing census as unknown; regression added, independent G2 workflow added, current-source full acceptance pending."
+  "gate_decision": "C047_SOURCE_ACCEPTED_FOR_CI_ECOLOGY_DECISION_PENDING",
+  "candidate_note": "C047 exact-source rescope: first four G2 enhanced arms preserved 100 Founders/Book/replay but original World Tree collapsed in all four by day180 vs none in baseline. Now measure all Worlds and isolate six causal arms over matched seeds, without forced care or resource minting. G2 Core promotion withheld."
 }
