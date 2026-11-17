@@ -444,5 +444,43 @@ class DurableHarvestTests(unittest.TestCase):
                 book.transaction_history[0] = original
         book.audit()
 
+
+    def test_whitespace_historical_account_fails_closed(self):
+        """A checksum-valid checkpoint cannot contain an alias account in history."""
+        import pickle
+        from dataclasses import replace
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'account-alias.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'account-alias', 'v1',
+                'forest', 'plant', .01, .001)
+            book = self.session.book
+            original = book.transaction_history[0]
+            legs = original.material if original.material else original.energy
+            self.assertTrue(legs)
+            first = legs[0]
+            forged = ((' ' + first[0], first[1], first[2]),) + legs[1:]
+            replacement = replace(original, **{
+                'material' if original.material else 'energy': forged})
+            seq, mass, energy = book.seq, dict(book.mass), dict(book.energy)
+            try:
+                book.transaction_history[0] = replacement
+                path.write_bytes(_encode(pickle.dumps(
+                    (self.tree_id, self.world),
+                    protocol=pickle.HIGHEST_PROTOCOL)))
+                original_bytes = path.read_bytes()
+                with self.assertRaisesRegex(ValueError, 'malformed canonical Book transaction leg'):
+                    load_checkpoint(path, self.tree_id)
+                with self.assertRaisesRegex(ValueError, 'malformed canonical Book transaction leg'):
+                    save_checkpoint(self.world, self.tree_id, path)
+                self.assertEqual(path.read_bytes(), original_bytes)
+                self.assertEqual(book.seq, seq)
+                self.assertEqual(dict(book.mass), mass)
+                self.assertEqual(dict(book.energy), energy)
+            finally:
+                book.transaction_history[0] = original
+        book.audit()
+
 if __name__ == '__main__':
     unittest.main()
