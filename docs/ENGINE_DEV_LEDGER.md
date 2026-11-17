@@ -568,3 +568,12 @@
 - IMPLEMENT: SingleEngineSession now quarantines after any exception during the real `world.step()`, clock increment check or post-step audit; a new seed-408 regression injects a partial tick mutation followed by OSError and requires all subsequent audit/step/harvest calls to reject until durable reload. Source 7ba8b0b281b2af98fcc9ecf3b5169f008020f7fc; test 073d94c537a2038f55b083ce7f39122debd62185. One canonical Book/clock/Founder registry unchanged.
 - EXECUTE: GitHub writes verified; new regression NOT RUN locally or in CI in this invocation. No new mass/energy residuals; no claim of verified behavioral acceptance.
 - ECOLOGICAL/HANDOFF: No WorldBox game test or long-horizon ecology. M01 iteration3 repair lock and M02–M07 backlog preserved. NEXT: clean-checkout authority and Book-history tests, fix failures, inspect CI before expanding mechanics.
+
+## 2026-11-17 — harvest post-mutation failure quarantine
+
+- Ground/design: Existing `SingleEngineSession.harvest` advanced the expected Book sequence and audited without guarding exceptions after a partial gateway mutation. The preceding cycle guarded `step`, not `harvest`.
+- Implementation: `439d27ad014de48b09fce6be4a0fa6c5e6066df7` quarantines the existing session when a harvest exception follows a Book sequence change. Pre-settlement invalid requests remain retryable. No alternate Book/clock/engine.
+- Regression: `fb5edebb2b8e43f33f89f95dc2326e84e53d72cc` adds a simulated post-mutation exception and invalid-request no-quarantine check (seeds 409–410).
+- Execution: New tests **NOT RUN** in this cycle. No new numerical mass/energy residuals; no new clean-checkout CI acceptance. This is a provisional change.
+- Audit: Partial mutation must require durable reload. A test-injected Book sequence change is not a successful resource conservation audit. M01 iteration-3 lock retained; M02–M07 deferred; WorldBox remains read-only; main untouched.
+- Next: Execute GitHub CI against latest PR head, diagnose any regression failures, and verify Book conservation and restart recovery.
