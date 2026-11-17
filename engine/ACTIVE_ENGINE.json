@@ -64,7 +64,8 @@
     "p0_direct_boolean_replay": "VERIFIED GitHub Actions #195 headless SUCCESS",
     "p0_historical_wellspring_legs": "VERIFIED GitHub Actions #201 (44021528722), headless job success",
     "p0_historical_wellspring_aggregate": "SOURCE 95cf7cf9 and TEST d6007917 committed; clean-checkout CI pending; no fresh numerical Book audit",
-    "book_history_growth": "15-settlement regression 524b71a and restored-roster/clock/conservation extension f5f7780 committed; neither extension accepted by CI; last verified #217 ran 3-settlement version"
+    "book_history_growth": "15-settlement regression 524b71a and restored-roster/clock/conservation extension f5f7780 committed; neither extension accepted by CI; last verified #217 ran 3-settlement version",
+    "p0_boolean_world_clock": "SOURCE 72761fef and TEST c996be56 committed; clean-checkout CI pending; no fresh numerical Book audit"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -73,14 +74,14 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Obtain CI for 15-settlement restored-authority regression; collect BOOK_HISTORY_GROWTH byte deltas and numerical Book audits, fix failures before storage changes",
-  "last_cycle": "2026-11-17 P0 restored-checkpoint Founder roster, world tick and numerical Book audit regression",
+  "next_cycle": "Verify Boolean clock and 15-settlement growth regressions in clean-checkout CI; extract checkpoint bytes and numerical conservation residuals",
+  "last_cycle": "2026-11-17 P0 canonical world clock type integrity",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "67293debc946ec59e19bd9e4be76ca4fbadb3b71",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44052041259",
-  "last_unverified_code_commit": "f5f778030a4ece897676145219b271338b7dbb89",
-  "next_engineering_task": "Obtain CI for 15-settlement restored-authority regression; collect BOOK_HISTORY_GROWTH byte deltas and numerical Book audits, fix failures before storage changes",
+  "last_unverified_code_commit": "c996be5659476fb5ad19de3391556115db233fe6",
+  "next_engineering_task": "Verify Boolean clock and 15-settlement growth regressions in clean-checkout CI; extract checkpoint bytes and numerical conservation residuals",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
