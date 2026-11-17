@@ -471,7 +471,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/test_world024.py": "79e0541e3d8c00a594e6f10109af1acb6538501cc143073e9c1d41644e37a9f3",
     "Founders_CIV_CoreCompletion151/source/world023024/test_world_integration.py": "b0b3f13af8de0228129c92b629312a4af5b2245d3a9cb4c9579636d1572d965b",
     "Founders_CIV_CoreCompletion151/source/world023024/test_world_tree_023.py": "f417520ef235d99bcdf4eeb6f0f24103fdbd04dfe8f87c5486bc535f1e6496ad",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_autonomous_provisioning_c003.py": "878dd41db63439d40215cfe8057724270e36155feb08d5079a8b41266c3e0102",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_autonomous_provisioning_c003.py": "3f7f8e849f07f3a9998574bac561c64cbc5ae1e5226c04381f58443b83e8e0ce",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_book_assets_c002.py": "151d47d1a4514cc49590da8aee9c78e2894b8a2bdd15573ba19bc69c65379e18",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c002_provenance.py": "bfa711f421483b3b23b55731c99fd11faefe55fdaf8482069d9d733cc0e18fd6",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c005_harvest_policy.py": "4b3ce441569eb1153dcf6bd9bf6c8f3e04ea6d6999baaa43497d52e48373b762",
@@ -613,5 +613,5 @@
     "tools/u026_g2_exact_source_audit.py"
   ],
   "gate_decision": "PENDING_CI_AND_INDEPENDENT_REVIEW",
-  "candidate_note": "C023 C022 World-qualified CE reservation and regression fingerprints reconciled; G2 promotion requires current-source CI, negative tamper controls and independent review"
+  "candidate_note": "C038: reconcile exact C036/C037 negative-age regression bytes after completed CI identified single-file drift; no promotion without clean CI and review."
 }
