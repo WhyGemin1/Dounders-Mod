@@ -549,3 +549,10 @@
 - Execute/test: no local unittest or new clean-checkout CI executed; test PROVISIONAL. Existing CI #231 verified successful, but predates this test. No fresh numerical conservation residuals.
 - Ecological/behavioral audit: no ecology long-horizon or native WorldBox tests; M01 iteration-3 repair lock and M02-M07 backlog preserved, external writes disabled. No merge/main mutation.
 - NEXT: verify clean-checkout CI for both independent world-clock tests and correct failures before adding more regression breadth.
+
+## 2026-11-17 10:55 CST — live session clock fail-closed integration
+- GROUND: Inspected live Core151 authority.py, checkpoint.py, seed-400 regression and ACTIVE_ENGINE.json on feat/single-core151-authority; confirmed authorized Cycle152 ZIP metadata on Drive (956121 bytes). Prior CI #231 was successful but predates latest world-clock tests. Commit-workflow lookup for 00238c06 returned no PR-triggered runs, **not** proof of current CI acceptance.
+- IMPLEMENT: Source commit ec356373c7462821e7f45e01aa80db4f64f3509b rejects Boolean, negative or divergent world/ecology clocks in SingleEngineSession._assert_authority before live step/harvest. Regression commit 6df64ad9ac34cc492dc8e8d9a592e31786cb755f exercises live harvest rejection and no Book sequence/history mutation. One Core151 IntegratedWorld, world.book, world.tick and 100 Founders retained.
+- EXECUTE: GitHub connector commits confirmed. Local unittest **NOT RUN**; new CI **NOT VERIFIED**. Required: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_book_history_growth.py', then full configured headless workflow. No fresh numerical Book residuals.
+- ECOLOGICAL AUDIT: No native WorldBox gameplay, external writes or long-horizon ecology run. M01 iteration-3 lock, M02–M07 backlog unchanged; no main merge.
+- NEXT: Verify new live-clock regression in clean-checkout CI, repair any failures, then assess replay/Book growth and ecological behavior.
