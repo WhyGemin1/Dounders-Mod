@@ -93,12 +93,12 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "date": "2026-11-17",
-    "change": "Quarantine on harvest exception after canonical Book sequence mutation",
-    "source_commit": "439d27ad014de48b09fce6be4a0fa6c5e6066df7",
-    "test_commit": "fb5edebb2b8e43f33f89f95dc2326e84e53d72cc",
-    "verification": "NOT RUN: new tests and clean-checkout CI pending",
-    "authority": "single Core151 Book and world.tick; no WorldBox writes",
-    "next": "Run full clean-checkout CI and inspect failure/recovery audits"
+    "focus": "M01 gateway error containment when Book sequence does not advance",
+    "source_commit": "335a43e1d938971e04a1d73343386cd1c4dd09bd",
+    "test_commit": "8d39c7f4d31aa52a8d9cd137d0ee88da72750209",
+    "status": "PROVISIONAL: new regression committed, not executed",
+    "previous_ci": "44154807337 passed; predates current source change",
+    "book_audit": "NOT MEASURED this cycle",
+    "worldbox": "READ_ONLY; native integration not verified"
   }
 }
