@@ -483,3 +483,12 @@
 - Execute: GitHub connector committed source; local checkout/unittest not executed in this run. New test and numeric byte growth NOT VERIFIED until workflow completes. Previous CI #201 is not acceptance evidence for this new test.
 - Ecological audit: 3 synthetic harvests do not demonstrate ecological stability, native WorldBox ACK or long-horizon behavior. M01 iteration3 repair lock and M02-M07 backlog unchanged.
 - NEXT: obtain new CI result and BOOK_HISTORY_GROWTH numbers, correct any failing assumptions, then assess measured checkpoint growth without discarding historical replay proofs.
+
+## 2026-11-17 — P0 Wellspring validation-order CI repair
+
+- Grounded in GitHub Actions #211 (`44035077372`), headless job `133875904846`: **FAILED** at `test_forged_historical_wellspring_legs_fail_closed`; 20 of 21 durable-harvest tests passed. The code rejected a forged Wellspring transaction correctly but raised `canonical Book Wellspring history does not reconcile` before the test-expected `malformed canonical Wellspring transaction`. The new Book-history growth step was **SKIPPED**, so no checkpoint-byte growth measurements exist.
+- Implemented one change in the existing `src/founders_engine/checkpoint.py`: validate Wellspring's prohibition on transfer legs **before** reconciling historical external inflow. No ledger, clock, Founder identity or M01 settlement semantics changed. Source commit `6453baf0c0336cb8d48426ab5557fcf947420f85` on `feat/single-core151-authority`.
+- Actual executed CI command (prior source): `python -m unittest discover -v -s tests -p 'test_m01_durable_harvest.py'`; result `FAILED (failures=1)`, caused by validation-order assertion. **New source not yet tested** at ledger update.
+- Existing CI numerical `BOOK_AUDIT`: before mass `-2.9103830456733704e-11`, energy `-7.799826562404633e-09` (seq 2213); settled/restored mass `-2.8194335754960775e-11`, energy `-7.799826562404633e-09` (seq 2214); stepped mass `-9.00399754755199e-11`, energy `-1.0302755981683731e-08` (seq 2952). These are from a passing individual test within a failed overall job, not evidence that the full gate passed.
+- No WorldBox gameplay or long-horizon ecological tests. M01 iteration3 repair lock, M02–M07 backlog, single Book/clock and native read-only boundary preserved. No main merge.
+- NEXT: verify a complete new CI run and collect `BOOK_HISTORY_GROWTH` sequence/checkpoint-byte measurements; resolve any new failure before changing storage.
