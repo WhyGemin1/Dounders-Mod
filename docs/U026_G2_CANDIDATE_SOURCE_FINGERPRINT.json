@@ -424,7 +424,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "8181f1c9c3abb630e21374e60a9299e0263da9ca5ef2f49d443281a79597bf18",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "4468dae8555504aa413411929cb89eddd6f4f1099426b7365495e54f55f088c1",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "14918ed5ddd0c3c725af84f646a3779dafe2d1e03de94b70f027d56f0456f0c0",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "0631bae8c8cfa9cc71ed17c43b9ca11a6f9a9b07fa7eee65ed561a35b383f638",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py": "41fd892f3d9d1ffcd72c4a353a5c30d77c155fe356e206261babc1d2b47d9745",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/living_assets.py": "5fb57c92e243b2b95850f70ccac3b98c467b40482ae4da7b17ff24927c535853",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/__init__.py": "e40f61d7c61986c018aba343681265a3d221c8b4b0db7c6fd9c101010551af25",
@@ -482,7 +482,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c015_founder_nutrition.py": "734eae6a59ff4d03f330db15351ca04d4dec5a98039fbe2d50f8210837605202",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c016_metabolic_rest.py": "f01568be81a906f8a36895c8c2f071f2ece6d634b87eeb6023f08806765b4e5c",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_community_foraging.py": "e9b3d3dbe801bd19a8bb1c35cb4c51f2713aa1b93cc3bc1915e7f4b49da812f2",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "870e838c492e45eed7e2d96dd2900247060568e30b27fce7fae18dcc3b943a97",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "8dd29f551248fdfa5d8841918c37e8751639209ea459af776bb09d96496aff53",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "e004009859edc3fd48a7c07db8b22c276d10a01be52588a78dddee398999123d",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c019_founder_autonomy.py": "a900f37114133ff102f447efa7c622aa980a2d9adfecc3555f575ff589277332",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c020_resource_agreements.py": "de2bd7a2bdff1d142afa4b5d159996fe3c67a8a71f0f93c31f153f84b4570e7a",
@@ -577,7 +577,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "9b09e8f98ad6d55a03c6a28c9801e01299a25468",
+  "source_commit": "2ff4945b9fd30d5c911f543e8dfc2811404d86ae",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
@@ -612,6 +612,6 @@
     "tools/u026_g1_matched_acceptance.py",
     "tools/u026_g2_exact_source_audit.py"
   ],
-  "gate_decision": "PENDING_CI_AND_INDEPENDENT_REVIEW",
-  "candidate_note": "C040: reject nonfinite and Boolean ecological plant reserves before policy installation; source and regression updated, pending fresh CI and independent review."
+  "gate_decision": "PENDING_C047_CURRENT_SOURCE_CI_AND_G2_REVIEW",
+  "candidate_note": "C047: G2 opt-in repeat independent Tree creation proposals can be considered only with newly owned Book-backed finite CE fruit; current source and full acceptance must pass before separate G2 decision. Historical G0/G1 approvals unchanged."
 }
