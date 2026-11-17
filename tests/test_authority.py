@@ -206,6 +206,29 @@ class SingleAuthorityTests(unittest.TestCase):
             else:
                 world.book.mass[key] = original
 
+    def test_nested_receipt_mutation_on_rejected_harvest_quarantines(self):
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(413)
+        session = SingleEngineSession(world, tree_id)
+        # Synthetic nested receipt fixture probes the snapshot guard only.
+        key = 'injected:nested-receipt'
+        receipt = {'nested': ['before']}
+        world.book.request_receipts[key] = receipt
+        try:
+            def corrupt_then_reject(*args, **kwargs):
+                receipt['nested'].append('after')
+                raise ValueError('injected nested receipt mutation')
+
+            with patch.object(session.gateway, 'founder_harvest',
+                              side_effect=corrupt_then_reject):
+                with self.assertRaisesRegex(ValueError, 'nested receipt mutation'):
+                    session.harvest('F001', 'source', 'r1',
+                                    'forest', 'plant', .01, .001)
+            with self.assertRaisesRegex(RuntimeError, 'checkpoint outcome uncertain'):
+                session.audit()
+        finally:
+            world.book.request_receipts.pop(key, None)
+
     def test_invalid_harvest_does_not_quarantine_clean_session(self):
         world, _, tree_id = bootstrap(410)
         session = SingleEngineSession(world, tree_id)
