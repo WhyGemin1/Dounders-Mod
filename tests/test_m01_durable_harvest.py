@@ -609,5 +609,44 @@ class DurableHarvestTests(unittest.TestCase):
                 book.transaction_history[0] = original
         book.audit()
 
+    def test_forged_historical_wellspring_inflow_must_reconcile(self):
+        """Checksum-valid historical inflow cannot diverge from Book totals."""
+        import pickle
+        from dataclasses import replace
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'forged-external-history.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'external-history', 'v1',
+                'forest', 'plant', .01, .001)
+            book = self.session.book
+            original = book.transaction_history[0]
+            self.assertTrue(original.material or original.energy)
+            seq, mass, energy, external = (
+                book.seq, dict(book.mass), dict(book.energy), book.external)
+            try:
+                # A syntactically valid Wellspring entry with no transfer
+                # legs, but no corresponding canonical Book inflow.
+                book.transaction_history[0] = replace(
+                    original, kind='wellspring', material=(), energy=(),
+                    toll=0., external=1.)
+                path.write_bytes(_encode(pickle.dumps(
+                    (self.tree_id, self.world),
+                    protocol=pickle.HIGHEST_PROTOCOL)))
+                forged_bytes = path.read_bytes()
+                for action in (lambda: load_checkpoint(path, self.tree_id),
+                               lambda: save_checkpoint(self.world, self.tree_id, path)):
+                    with self.assertRaisesRegex(
+                            ValueError, 'Wellspring history does not reconcile'):
+                        action()
+                self.assertEqual(path.read_bytes(), forged_bytes)
+                self.assertEqual(book.seq, seq)
+                self.assertEqual(dict(book.mass), mass)
+                self.assertEqual(dict(book.energy), energy)
+                self.assertEqual(book.external, external)
+            finally:
+                book.transaction_history[0] = original
+        book.audit()
+
 if __name__ == '__main__':
     unittest.main()
