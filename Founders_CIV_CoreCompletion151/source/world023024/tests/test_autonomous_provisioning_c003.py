@@ -169,6 +169,27 @@ class AutonomousProvisioningTests(unittest.TestCase):
         self.assertTrue(any(rec.state=='mature' for rec in policy.lots.values()))
         self.book.audit()
 
+    def test_world_reassignment_rejected_after_lot_issuance(self):
+        # C029: checkpoint ownership cannot silently switch Worlds once
+        # physical lots exist, even after collapse.
+        self.tree.world_id='WORLD-A'
+        policy=self.tree.enable_provisioning(food_period=999,fruit_period=1)
+        self.advance(2)
+        self.assertTrue(policy.lots)
+        self.tree.collapse('namespace-stability-test')
+        self.tree.age+=policy.maturity_days
+        before=(policy.last_age,copy.deepcopy(policy.lots),list(policy.events),
+                dict(self.book.mass),dict(self.book.energy),self.book.seq)
+        self.tree.world_id='WORLD-B'
+        with self.assertRaisesRegex(ValueError,'World identity changed'):
+            policy.tick()
+        self.assertEqual(before,(policy.last_age,policy.lots,policy.events,
+                                 dict(self.book.mass),dict(self.book.energy),self.book.seq))
+        self.tree.world_id='WORLD-A'
+        policy.tick()
+        self.assertTrue(any(v.state=='mature' for v in policy.lots.values()))
+        self.book.audit()
+
     def test_tick_replay_does_not_duplicate_events_or_assets(self):
         policy=self.tree.enable_provisioning()
         self.advance(24)
