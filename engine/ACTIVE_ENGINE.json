@@ -14,11 +14,11 @@
   "source_status": "27 tracked Core151 modules: 26 archive matches, one reviewed-as-overlay ledger.py; current overlay blob 5993a9168d5b35e58c30761030d0444ad2ea551c (new direct replay guard awaiting CI)",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "Previous run #190 (44006922732) headless job SUCCESS all 18 steps; latest direct Book boolean replay guard pending CI",
+    "github_ci": "Run #195 (44013639471) completed SUCCESS for direct Book Boolean replay guard; all reported headless steps passed",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
-    "clean_checkout": "Prior PR CI #190 passed; current direct Book replay strict-sequence test pending",
+    "clean_checkout": "GitHub Actions PR checkout #195 headless SUCCESS including direct Book Boolean replay regression; no separate local checkout",
     "book_audit_this_cycle": "NOT MEASURED; direct replay regression asserts no sequence or resource balance mutation, pending CI",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
@@ -61,7 +61,7 @@
     "p0_whitespace_replay_key": "SOURCE 9d949bff and TEST dd0f71b5 committed; CI not yet verified",
     "p0_historical_metadata": "SOURCE/TEST pending GitHub CI; rejects nonfinite/negative toll and external history metadata",
     "p0_boolean_history_sequence": "PENDING clean-checkout CI; checkpoint.py type(tx.seq) is int and seed400 regression committed at ecc6baca50836b3b50720cf11462b23f520b3afc; container git ls-remote failed DNS; no numerical audit",
-    "p0_direct_boolean_replay": "Source ed20295f71011e0a7853f7eb2c4f60ac9ab9dee6, test 67293debc946ec59e19bd9e4be76ca4fbadb3b71, pin fc80aa664da3b40c9d84f34c228e52049d2eb860; CI pending"
+    "p0_direct_boolean_replay": "VERIFIED GitHub Actions #195 headless SUCCESS"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -70,17 +70,17 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Verify latest PR CI on direct Book replay Boolean-sequence rejection; fix failures before Book history storage work",
+  "next_cycle": "Measure canonical Book transaction-history storage growth and preserve replay proof; do not optimize until quantitative baseline and rollback plan",
   "last_cycle": "2026-11-16 P0 direct Book replay strict sequence type",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "212220a2f35ac062a5e073b03a599511870c19fe",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44006922732",
-  "last_unverified_code_commit": "67293debc946ec59e19bd9e4be76ca4fbadb3b71",
-  "next_engineering_task": "Verify latest PR CI on direct Book replay Boolean-sequence rejection; fix failures before Book history storage work",
+  "last_verified_code_commit": "67293debc946ec59e19bd9e4be76ca4fbadb3b71",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44013639471",
+  "last_unverified_code_commit": null,
+  "next_engineering_task": "Measure canonical Book transaction-history storage growth and preserve replay proof; do not optimize until quantitative baseline and rollback plan",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
-    "p0_direct_boolean_replay": "IMPLEMENTED, test committed, current CI unverified"
+    "p0_direct_boolean_replay": "VERIFIED PASS in PR CI #195; no numerical Book residuals collected"
   }
 }
