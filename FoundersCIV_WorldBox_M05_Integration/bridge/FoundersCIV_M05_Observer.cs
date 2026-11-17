@@ -193,6 +193,13 @@ namespace FoundersCIV.WorldBoxM05
                         return;
                     }
                     if (_lost > 0) {
+                        // Reserve TWO slots: the explicit loss marker and this event.
+                        // With only one free slot, reject this event rather than
+                        // exceeding the hard queue cap or hiding the loss.
+                        if (_pending.Count >= MaxQueue - 1) {
+                            ++_nextSequence; ++_lost;
+                            return;
+                        }
                         var lost = new Event {kind="bridge_loss", dropped=_lost,
                             notes="Event observer queue overflow; dataset MUST NOT be promoted"};
                         _lost = 0;
@@ -431,10 +438,13 @@ namespace FoundersCIV.WorldBoxM05
                         ";hook_hits=" + HookCounts() +
                         ";callback_errors=" + System.Threading.Interlocked.Read(ref _callbackErrors) +
                         ";emit_errors=" + System.Threading.Interlocked.Read(ref _emitErrors)});
-                Drain(true);
-                if(_harmony!=null) _harmony.UnpatchSelf();
-                if(_writer!=null) {_writer.Dispose();_writer=null;}
-            } catch(Exception ex) { Logger.LogError("M05 shutdown error " + ex.Message); }
+            } catch(Exception ex) { Logger.LogError("M05 shutdown emission error " + ex.Message); }
+            try { Drain(true); }
+            catch(Exception ex) { Logger.LogError("M05 shutdown drain error " + ex.Message); }
+            try { if(_harmony!=null) _harmony.UnpatchSelf(); }
+            catch(Exception ex) { Logger.LogError("M05 unpatch error " + ex.Message); }
+            try { if(_writer!=null) {_writer.Dispose();_writer=null;} }
+            catch(Exception ex) { Logger.LogError("M05 writer close error " + ex.Message); }
             Current=null;
         }
     }
