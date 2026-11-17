@@ -41,6 +41,10 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m unittest discover -v -s tests -p 'test_m01_durable_harvest.py'
+      - name: Canonical Book history checkpoint growth and conservation
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_book_history_growth.py'
       - name: M01 actual checkpoint file fsync and atomic replace faults
         env:
           PYTHONPATH: src
