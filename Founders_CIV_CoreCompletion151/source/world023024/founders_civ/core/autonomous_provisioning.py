@@ -96,7 +96,7 @@ class TreeProvisioningPolicy:
             with book.atomic_batch():
                 if book.energy['ce:river'] < 1.-1e-9:
                     if book.energy['river_pool']<1.-1e-9:return False
-                    book.reserve_creation_charge(1.0,f'ce:reserve:{tree.id}:{tree.age}')
+                    book.reserve_creation_charge(1.0,f'ce:reserve:{world_id}:{tree.id}:{tree.age}' if world_id is not None else f'ce:reserve:{tree.id}:{tree.age}')
                 tree.grow_creation_fruit(biome,lot)
         self.lots[lot]=ProvisionedLot(kind,biome,tree.age)
         self.events.append(('grow',lot,tree.age))
