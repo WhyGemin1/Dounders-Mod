@@ -517,5 +517,39 @@ class DurableHarvestTests(unittest.TestCase):
                 book.transaction_history[0] = original
         book.audit()
 
+
+    def test_boolean_replay_receipt_sequence_fails_closed(self):
+        """A replay receipt with seq=True must not impersonate canonical seq=1."""
+        import pickle
+        from dataclasses import replace
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'boolean-receipt.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'bool-receipt', 'v1',
+                'forest', 'plant', .01, .001)
+            book = self.session.book
+            key = f'm01:{self.tree_id}:bool-receipt:v1'
+            legs, receipt = book.request_receipts[key]
+            original = book.request_receipts[key]
+            seq, mass, energy = book.seq, dict(book.mass), dict(book.energy)
+            try:
+                book.request_receipts[key] = (legs, replace(receipt, seq=True))
+                path.write_bytes(_encode(pickle.dumps(
+                    (self.tree_id, self.world),
+                    protocol=pickle.HIGHEST_PROTOCOL)))
+                forged_bytes = path.read_bytes()
+                for action in (lambda: load_checkpoint(path, self.tree_id),
+                               lambda: save_checkpoint(self.world, self.tree_id, path)):
+                    with self.assertRaisesRegex(ValueError, 'inconsistent Book replay receipt'):
+                        action()
+                self.assertEqual(path.read_bytes(), forged_bytes)
+                self.assertEqual(book.seq, seq)
+                self.assertEqual(dict(book.mass), mass)
+                self.assertEqual(dict(book.energy), energy)
+            finally:
+                book.request_receipts[key] = original
+        book.audit()
+
 if __name__ == '__main__':
     unittest.main()
