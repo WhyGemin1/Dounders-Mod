@@ -175,6 +175,42 @@ def test_scheduler_funds_personal_world_seed_once():
     sim.book.audit()
 
 
+def test_g2_existing_tree_owner_may_expand_only_after_acquiring_real_fruit():
+    """A Founder owning one WORLD-024 Tree may fund another; no global one-Tree cap.
+
+    The existing world is a REAL seeded Tree, and the new propagation lot
+    is transferred through the authoritative Book, not fabricated in a test.
+    """
+    sim, realm, tid = setup_world()
+    owner = sim.seeds.plants[tid]['owner']
+    assert sim.seeds.plants[tid]['status'] == 'stable'
+    assert sim.world_trees.worlds[tid].owner == owner
+    before = (dict(sim.book.mass), dict(sim.book.energy), sim.book.seq)
+    # Without personally acquired propagation fruit, repeat-Tree creation
+    # remains unavailable even to an established Tree owner.
+    assert not any(p[1] == 'seed_design' for p in propose_self_trees(sim, owner, []))
+    assert before == (dict(sim.book.mass), dict(sim.book.energy), sim.book.seq)
+
+    lot = harvest_a_fruit(sim, tid, owner)
+    assert sim.book.mass[f'fruit:lot:{lot}:founder:{owner}'] > 0
+    assert sim.book.energy[f'ce:fruit:lot:{lot}:founder:{owner}'] > 0
+    # A proposal can require existing work fuel, which is transferred rather
+    # than minted when this established Founder has spent their reserve.
+    if sim.book.energy.get(f'founder:{owner}', 0) < .08:
+        donor = max((f for f in sim.founders.people if f != owner),
+                    key=lambda f: sim.book.energy.get(f'founder:{f}', 0))
+        needed = .09 - sim.book.energy.get(f'founder:{owner}', 0)
+        sim.book.move(energy=[(f'founder:{donor}', f'founder:{owner}', needed)])
+    pre_proposal = (dict(sim.book.mass), dict(sim.book.energy), sim.book.seq)
+    choices = propose_self_trees(sim, owner, [])
+    assert any(p[1] == 'seed_design' and p[3] == ('world', realm) for p in choices)
+    assert pre_proposal == (dict(sim.book.mass), dict(sim.book.energy), sim.book.seq)
+    assert len(sim.founders.people) == 100
+    assert len({person.id for person in sim.founders.people.values()}) == 100
+    assert abs(sim.book.audit()['mass_error']) < 1e-5
+    assert abs(sim.book.audit()['energy_error']) < 1e-5
+
+
 def test_realm_owner_with_real_fruit_can_propose_first_personal_world():
     sim, realm, tid = setup_world()
     owner = sim.seeds.plants[realm]['owner']
