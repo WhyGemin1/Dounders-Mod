@@ -13,13 +13,6 @@ def _stable_worlds(sim, founder):
             if c['kind'] == 'world' and c['owner'] == founder and c['status'] == 'stable']
 
 
-def _has_active_stewardship(sim, founder):
-    # A Realm is a parent habitat, not an already established personal food Tree.
-    # Owning a stable Realm must not prohibit a fruit-funded World creation.
-    return any(c['owner']==founder and c['kind']=='world' and c['status']=='stable'
-               for c in sim.seeds.plants.values())
-
-
 def _own_blueprint(sim, founder):
     return next((b for b in sim.seeds.blueprints.values()
                  if b.author == founder and b.kind == 'world'
@@ -55,8 +48,12 @@ def propose_self_trees(sim, founder, contacts):
     if not getattr(sim, 'founder_tree_independence_enabled', False):
         return []
     person = sim.founders.people.get(founder)
-    if person is None or not person.alive or _has_active_stewardship(sim, founder):
+    if person is None or not person.alive:
         return []
+    # Existing Tree ownership is NOT an arbitrary prohibition on founding
+    # another Tree. A new proposal still needs the Founder to possess a
+    # different physical, CE-backed fruit and must pass the ordinary
+    # research, consent, Book-funding and habitat resource preflights.
     b = _own_blueprint(sim, founder)
     energy = sim.book.energy.get(f'founder:{founder}', 0.)
     # No work spent merely on deciding whether to design a Tree.
@@ -146,7 +143,7 @@ def prioritize_propagation(sim, founder, proposals):
     """
     if not getattr(sim, 'founder_tree_independence_enabled', False):
         return proposals
-    if _has_active_stewardship(sim, founder) or any(_own_fruit(sim, founder)):
+    if any(_own_fruit(sim, founder)):
         return proposals
     out=[]
     for score,action,target,meta in proposals:
