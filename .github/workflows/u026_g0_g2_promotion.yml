@@ -1,0 +1,77 @@
+name: U026 G0-G2 selective Core promotion review
+on:
+  push:
+    branches: [u026-g0-g2-core-review]
+  pull_request:
+    branches: [Core]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  candidate-source-and-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: G0 candidate source exact-tree and content audit
+        run: python tools/u026_review_source_audit.py
+      - name: G0 adversarial mutation fails closed (no rewritten attestations)
+        run: |
+          python - <<'PY'
+          import subprocess, sys
+          from pathlib import Path
+          p=Path("Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py")
+          original=p.read_bytes()
+          try:
+              p.write_bytes(original+b"\n# unauthorized change\n")
+              result=subprocess.run([sys.executable, "tools/u026_review_source_audit.py"],
+                  capture_output=True, text=True)
+              assert result.returncode != 0 and "ledger.py" in result.stdout, result.stdout
+          finally:
+              p.write_bytes(original)
+          clean=subprocess.run([sys.executable,"tools/u026_review_source_audit.py"],
+              capture_output=True, text=True)
+          assert clean.returncode == 0, clean.stdout+clean.stderr
+          print("Fail-closed source drift rejection PASS")
+          PY
+      - name: Install pinned test runner
+        run: python -m pip install --disable-pip-version-check pytest==8.4.1
+      - name: Real authoritative Core151 WORLD-024 complete regression
+        working-directory: Founders_CIV_CoreCompletion151/source/world023024
+        env:
+          PYTHONPATH: .
+        run: python -m pytest -q tests
+      - name: Focused G1 replay/conservation + G2 stewardship
+        working-directory: Founders_CIV_CoreCompletion151/source/world023024
+        env:
+          PYTHONPATH: .
+        run: python -m pytest -q tests/test_u026_g1_exact_replay.py tests/test_u026_g2_parent_stewardship.py
+
+  g1-matched:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: G1 10 seeds x 2 arms / 30 and 180-day verified boundaries
+        run: python tools/u026_g1_matched_acceptance.py --seeds 10 --days 180
+
+  g2-matched:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: G2 4 seeds x 2 arms, voluntary agency and checkpoint
+        run: python tools/u026_g2_matched_acceptance.py --seeds 4 --days 180

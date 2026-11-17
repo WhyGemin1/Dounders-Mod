@@ -1,0 +1,30 @@
+{
+  "edition": "WORLD-024 experimental world-tree commons",
+  "base": "WORLD-023 living-world integration with original v0.18 Book",
+  "agents": 100,
+  "tree_habitats": [
+    "forest",
+    "grassland",
+    "wetland",
+    "ridge"
+  ],
+  "stress_plan": "run_world024_batch.py",
+  "source_status": "WORLD-024 reproducible experimental branch; not a released human/ecological science model",
+  "new_features": [
+    "voluntary_stewards",
+    "scheduled_duty",
+    "tree_food_mass",
+    "tree_food_energy",
+    "independent_world_seeds",
+    "transient_environment_shocks"
+  ],
+  "numbers_are_canonical": false,
+  "validation": {
+    "inherited_tests": 85,
+    "top_level_tests": 53,
+    "stress_scenarios_completed": 100,
+    "extended_500_cycle_followups": 5,
+    "world_collapses_expected": true
+  },
+  "project_baseline": "WORLD-023 shared physical engine"
+}
