@@ -9,6 +9,25 @@ from run_world_tree_pilot import bootstrap
 
 
 class BookHistoryGrowthTests(unittest.TestCase):
+    def test_session_rejects_clock_corruption_before_harvest(self):
+        # This guards live session mutations, not just checkpoint writes.
+        for clock_name, invalid in (("tick", True), ("tick", -1),
+                                    ("day", True), ("day", -1), ("day", 1)):
+            with self.subTest(clock_name=clock_name, invalid=invalid):
+                world, _, tree_id = bootstrap(400)
+                session = SingleEngineSession(world, tree_id)
+                original_seq = world.book.seq
+                original_history = list(world.book.transaction_history)
+                if clock_name == "tick":
+                    world.tick = invalid
+                else:
+                    world.ecology.day = invalid
+                with self.assertRaisesRegex(RuntimeError, "world clock"):
+                    session.harvest("F001", "clock-guard", "v1",
+                                    "forest", "plant", .01, .001)
+                self.assertEqual(world.book.seq, original_seq)
+                self.assertEqual(world.book.transaction_history, original_history)
+
     def test_boolean_world_clock_rejected_without_checkpoint_mutation(self):
         world, _, tree_id = bootstrap(400)
         with tempfile.TemporaryDirectory() as tmp:
