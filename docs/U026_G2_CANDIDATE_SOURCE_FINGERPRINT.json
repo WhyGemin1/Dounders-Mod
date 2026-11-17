@@ -415,7 +415,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/__init__.py": "2ebe358c0f18620a3d84851fde318dca48f8010775fcebcdbb63f136cba58205",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/canon.py": "c2ed048e8b717897f5a690084d3c339b312a9f15b15a859f443f9231d790d7ae",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "8d378653641946fc52bf8ea19694933dcbd49e6a25dddb82ee681377fbfeb991",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "b06c55a752774095d83122a363e4417924e84b57134096b1eb5cc5d3adef9c65",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "0a06b3e88dc4fd58c5314da62111c0609f302fab7e2360fbcdff22021a503539",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "31e1e5b386b6429d6377693b2524369cf57a8142e58ac2c0f600cdc13cee56e2",
@@ -471,7 +471,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/test_world024.py": "79e0541e3d8c00a594e6f10109af1acb6538501cc143073e9c1d41644e37a9f3",
     "Founders_CIV_CoreCompletion151/source/world023024/test_world_integration.py": "b0b3f13af8de0228129c92b629312a4af5b2245d3a9cb4c9579636d1572d965b",
     "Founders_CIV_CoreCompletion151/source/world023024/test_world_tree_023.py": "f417520ef235d99bcdf4eeb6f0f24103fdbd04dfe8f87c5486bc535f1e6496ad",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_autonomous_provisioning_c003.py": "3f7f8e849f07f3a9998574bac561c64cbc5ae1e5226c04381f58443b83e8e0ce",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_autonomous_provisioning_c003.py": "d40c9c601930ce6c98b4163dcb61372058d697050012843e0ea0354b70e9be5f",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_book_assets_c002.py": "151d47d1a4514cc49590da8aee9c78e2894b8a2bdd15573ba19bc69c65379e18",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c002_provenance.py": "bfa711f421483b3b23b55731c99fd11faefe55fdaf8482069d9d733cc0e18fd6",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c005_harvest_policy.py": "4b3ce441569eb1153dcf6bd9bf6c8f3e04ea6d6999baaa43497d52e48373b762",
@@ -613,5 +613,5 @@
     "tools/u026_g2_exact_source_audit.py"
   ],
   "gate_decision": "PENDING_CI_AND_INDEPENDENT_REVIEW",
-  "candidate_note": "C038: reconcile exact C036/C037 negative-age regression bytes after completed CI identified single-file drift; no promotion without clean CI and review."
+  "candidate_note": "C039: strict cadence validation and fail-closed regression; pending fresh CI and independent review."
 }
