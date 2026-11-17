@@ -161,6 +161,22 @@ class SingleAuthorityTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'checkpoint outcome uncertain'):
             session.step()
 
+    def test_harvest_failure_without_sequence_advance_quarantines(self):
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(411)
+        session = SingleEngineSession(world, tree_id)
+        before = world.book.seq
+        with patch.object(session.gateway, 'founder_harvest',
+                          side_effect=OSError('injected pre-sequence failure')):
+            with self.assertRaisesRegex(OSError, 'pre-sequence failure'):
+                session.harvest('F001', 'source', 'r1',
+                                'forest', 'plant', .01, .001)
+        self.assertEqual(world.book.seq, before)
+        with self.assertRaisesRegex(RuntimeError, 'checkpoint outcome uncertain'):
+            session.audit()
+        with self.assertRaisesRegex(RuntimeError, 'checkpoint outcome uncertain'):
+            session.step()
+
     def test_invalid_harvest_does_not_quarantine_clean_session(self):
         world, _, tree_id = bootstrap(410)
         session = SingleEngineSession(world, tree_id)
