@@ -488,7 +488,11 @@ class IntegratedWorld(SocialSimulation):
             intel=tree.observations.get(a)
             if founder.location in ('house','riverbank') and self._energy(a)>=.19:
                 if intel is None or self.tick-intel['seen_tick']>=5:
-                    urgency=.4 if intel and intel['population']<10 else 0.
+                    # Food-only community scans intentionally contain no
+                    # animal census. Unknown population is NOT zero; only a
+                    # real nonnegative observation may signal low population.
+                    observed_population = intel.get('population') if isinstance(intel, dict) else None
+                    urgency=.4 if type(observed_population) in (int,float) and 0 <= observed_population < 10 else 0.
                     props.append((2.2+urgency+.5*(agenda=='research')+.25*state.curiosity,
                                   'tree_observe',None,cid))
                 if intel and self.tick-intel['seen_tick']<=6 and self.tick-tree.research.get(a,-100)>=6:
