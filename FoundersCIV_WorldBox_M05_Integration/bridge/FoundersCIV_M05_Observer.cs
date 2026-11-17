@@ -28,6 +28,9 @@ namespace FoundersCIV.WorldBoxM05
         private string _worldKey;
         private string _output;
         private string _projectionPath;
+        private string _disablePath;
+        private bool _observerDisabled;
+        private float _nextDisableCheck;
         private float _nextProjectionRead;
         private float _nextDiagnosticRead;
         private long _updateFrames;
@@ -93,6 +96,10 @@ namespace FoundersCIV.WorldBoxM05
             if (string.IsNullOrWhiteSpace(_worldKey)) _worldKey = "UNBOUND";
             _output = Path.Combine(baseDir, "m05_" + _session + ".jsonl");
             _projectionPath = Path.Combine(baseDir, "live_state.json");
+            // A user-controlled kill switch: create disable.flag to unpatch on
+            // the next Update (within one second). Re-enabling requires restart.
+            _disablePath = Path.Combine(baseDir, "disable.flag");
+            _observerDisabled = File.Exists(_disablePath);
             _writer = new StreamWriter(new FileStream(_output, FileMode.CreateNew, FileAccess.Write,
                 FileShare.Read, 65536), new UTF8Encoding(false), 65536);
 
@@ -109,8 +116,8 @@ namespace FoundersCIV.WorldBoxM05
                 using (var fs = File.OpenRead(actor.Assembly.Location))
                     detectedSha = BitConverter.ToString(sha.ComputeHash(fs)).Replace("-", "").ToLowerInvariant();
             } catch (Exception ex) { Logger.LogWarning("Assembly hash unavailable: " + ex.Message); }
-            bool mayPatch = _worldKey != "UNBOUND" && detectedSha == ExpectedAssemblySha;
-            if (!mayPatch) Logger.LogError("M05 observer fail-closed: bind a unique world_key and use the verified WorldBox build. Assembly SHA=" + detectedSha);
+            bool mayPatch = !_observerDisabled && _worldKey != "UNBOUND" && detectedSha == ExpectedAssemblySha;
+            if (!mayPatch) Logger.LogWarning("M05 observer disabled/fail-closed: check disable.flag, world_key and assembly hash. SHA=" + detectedSha);
             if (mayPatch) {
 
             TryPatch("Actor", "addNutritionFromEating", 3, "Actor.addNutritionFromEating",
@@ -370,6 +377,23 @@ namespace FoundersCIV.WorldBoxM05
         private void Update()
         {
             ++_updateFrames;
+            if (!_observerDisabled && Time.unscaledTime >= _nextDisableCheck) {
+                _nextDisableCheck = Time.unscaledTime + 1f;
+                try {
+                    if (File.Exists(_disablePath)) {
+                        // Never re-enable hooks automatically after disabling.
+                        _observerDisabled = true;
+                        if (_harmony != null) _harmony.UnpatchSelf();
+                        Emit(new Event {kind="observer_disabled",
+                            notes="user_disable_flag;native_hooks_detached;restart_required_to_reenable"});
+                        Logger.LogWarning("M05 disabled by user; native hooks detached");
+                    }
+                } catch (Exception ex) {
+                    _observerDisabled = true; // failure to read/unpatch fails closed
+                    try { if (_harmony != null) _harmony.UnpatchSelf(); } catch { }
+                    Logger.LogError("M05 disable check failed; observer disabled: " + ex.Message);
+                }
+            }
             if (Time.unscaledTime >= _nextDiagnosticRead) {
                 _nextDiagnosticRead = Time.unscaledTime + 15f;
                 Emit(new Event {kind="observer_heartbeat",
@@ -412,7 +436,7 @@ namespace FoundersCIV.WorldBoxM05
         }
         private void OnGUI()
         {
-            if (_live == null || _live.trees == null) return;
+            if (_observerDisabled || _live == null || _live.trees == null) return;
             try {
                 int n = Math.Min(5, _live.trees.Length);
                 float width = 330f;
