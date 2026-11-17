@@ -17,6 +17,31 @@ class AutonomousProvisioningTests(unittest.TestCase):
     def advance(self,n):
         for _ in range(n):self.sim.step()
 
+    def test_c042_corrupt_lot_identity_and_record_type_fail_closed(self):
+        from founders_civ.core.autonomous_provisioning import ProvisionedLot
+        policy=self.tree.enable_provisioning(food_period=999, fruit_period=1)
+        self.advance(2)
+        original=next(iter(policy.lots))
+        record=policy.lots.pop(original)
+        self.tree.age+=1
+        variants=((original, object()), (original+'-alias', record),
+                  (42, record),
+                  (original, ProvisionedLot('fruit', record.biome, record.created+1)))
+        for bad_key,bad_record in variants:
+            policy.lots[bad_key]=bad_record
+            before=(policy.last_age, dict(self.book.mass), dict(self.book.energy),
+                    self.book.seq, list(policy.events))
+            try:
+                with self.assertRaisesRegex(ValueError, 'invalid Tree provisioned-lot checkpoint'):
+                    policy.tick()
+                self.assertEqual(before,(policy.last_age,dict(self.book.mass),
+                    dict(self.book.energy),self.book.seq,list(policy.events)))
+            finally:
+                policy.lots.pop(bad_key)
+        policy.lots[original]=record
+        policy.tick()
+        self.book.audit()
+
     def test_c040_nonfinite_reserve_rejected_without_book_side_effects(self):
         # NaN previously made plant-reserve comparisons false and could
         # permit provisioning despite insufficient physical plant reserves.
