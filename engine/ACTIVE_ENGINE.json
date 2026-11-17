@@ -86,7 +86,7 @@
   "last_verified_code_commit": "26cf4afdf6c296cd9e712be53361d92a8a2b2407",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44099358010",
   "last_unverified_code_commit": "7ba8b0b281b2af98fcc9ecf3b5169f008020f7fc",
-  "next_engineering_task": "Run clean-checkout authority and Book history tests including injected mid-step failure; inspect CI and repair failures",
+  "next_engineering_task": "Execute clean-checkout tests for nested receipt guard and previous harvest quarantine changes; verify Book conservation and durable replay",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -94,13 +94,12 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "focus": "M01 gateway error containment when Book sequence does not advance",
-    "source_commit": "335a43e1d938971e04a1d73343386cd1c4dd09bd",
-    "test_commit": "8d39c7f4d31aa52a8d9cd137d0ee88da72750209",
-    "status": "PROVISIONAL: new regression committed, not executed",
-    "previous_ci": "44154807337 passed; predates current source change",
-    "book_audit": "NOT MEASURED this cycle",
-    "worldbox": "READ_ONLY; native integration not verified"
+    "focus": "Deep-copy Book snapshot detects nested receipt mutation during rejected M01 gateway request",
+    "source_commit": "012733da6c9ae8419bae3effba2d3bf062d6778b",
+    "test_commit": "205d86b8f1e85d26bf13fd204ecdf0cd8f114351",
+    "status": "PROVISIONAL: committed; clean-checkout test not executed due local GitHub DNS failure",
+    "book_audit": "No fresh numerical mass/energy residuals",
+    "next": "Run authority unittest and full clean-checkout CI, repair any failures"
   },
   "next_task": "Execute full clean-checkout CI for test_authority.py including seed-412 mutation regression; fix failures before expanding mechanics."
 }
