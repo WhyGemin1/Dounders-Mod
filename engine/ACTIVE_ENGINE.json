@@ -67,7 +67,9 @@
     "book_history_growth": "VERIFIED CI #225: 15 settlements, sequences 2213..2228; checkpoint bytes 1830052..1835775, +5723 bytes; per-settlement deltas [443,377,376,376,376,376,376,376,376,377,377,377,377,377,386]; restored audits asserted <=1e-6",
     "p0_boolean_world_clock": "VERIFIED CI #225 passed test_boolean_world_clock_rejected_without_checkpoint_mutation",
     "p0_ecology_clock_tampering": "VERIFIED GitHub Actions #231 headless success after negative ecology-day validation-order correction",
-    "p0_independent_world_clock": "SOURCE TEST committed 0315541388633fae25ffee70b73ba3a520adcdfd; clean-checkout CI pending"
+    "p0_independent_world_clock": "SOURCE TEST committed 0315541388633fae25ffee70b73ba3a520adcdfd; clean-checkout CI pending",
+    "p0_independent_positive_world_clock_divergence": "Committed test source 69cb0761a471dbc81186a38af1aab3efe03d1694; not locally executed or CI-verified. Reject world.tick=original_tick+1 while ecology.day unchanged; checkpoint bytes and Book history/seq must remain unchanged.",
+    "p0_world_clock_tamper_ci": "Prior regression 03155413 has no PR workflow returned by commit-run lookup; CI acceptance unverified."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
