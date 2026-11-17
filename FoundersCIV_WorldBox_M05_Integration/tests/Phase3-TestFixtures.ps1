@@ -37,6 +37,7 @@ function Run-Case([string]$Name, [bool]$ShouldPass) {
     'duplicate_seq' { $events[2].seq = 2 }
     'missing_close' { $events = @($events[0],$events[1],$events[2]) }
     'bridge_loss' { $events[2].kind = 'bridge_loss'; $events[2].dropped = 1 }
+    'observer_disabled' { $events[2].kind = 'observer_disabled' }
     'missing_hook' { $events[0].active_hooks = @($script:hooks[0..5]) }
     'wrong_assembly' { $events[0].assembly_sha256 = 'wrong' }
     'no_behavior' { $events[2].kind = 'hook_probe' }
@@ -64,12 +65,12 @@ function Run-Case([string]$Name, [bool]$ShouldPass) {
 try {
   Run-Case 'good' $true
   foreach ($bad in @('seq_gap','duplicate_seq','missing_close','bridge_loss',
-    'missing_hook','wrong_assembly','no_behavior','no_heartbeat','unbound',
+    'observer_disabled','missing_hook','wrong_assembly','no_behavior','no_heartbeat','unbound',
     'mixed_session','callback_error','emit_error','wrong_schema','duplicate_open')) {
       Run-Case $bad $false
   }
-  if ($casesRun -ne 15) { throw "Expected 15 fixtures, got $casesRun" }
-  Write-Host "M05 C043 capture acceptance: $casesRun/15 fixtures PASS" -ForegroundColor Green
+  if ($casesRun -ne 16) { throw "Expected 16 fixtures, got $casesRun" }
+  Write-Host "M05 C046 capture acceptance: $casesRun/16 fixtures PASS" -ForegroundColor Green
 }
 finally {
   Remove-Item -LiteralPath $root -Recurse -Force -ErrorAction SilentlyContinue
