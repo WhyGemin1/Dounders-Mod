@@ -129,7 +129,7 @@ class TreeProvisioningPolicy:
                 len(h)>64 or any(c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-' for c in h)
                 for h in habitats) or len(set(habitats)) != len(habitats)):
             raise ValueError('invalid Tree habitat configuration')
-        if tree.age==self.last_age:return False
+        # Scheduler age is an observed nonnegative integer, never spendable time.\n        # Reject corrupted checkpoint clocks before changing lots or Book state.\n        if type(tree.age) is not int or tree.age < 0:\n            raise ValueError('Tree age must be a nonnegative integer checkpoint')\n        if tree.age==self.last_age:return False
         if tree.age<self.last_age:raise ValueError('Tree age reversed; restore consistent checkpoint')
         self.last_age=tree.age
         # Existing physical lots continue aging after Tree collapse. Only new
