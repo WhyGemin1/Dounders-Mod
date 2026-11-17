@@ -512,4 +512,26 @@ class AutonomousProvisioningTests(unittest.TestCase):
         self.assertAlmostEqual(self.book.energy['ce:river'],0.)
         self.assertLess(abs(self.book.audit()['energy_error']),1e-4)
 
+    def test_corrupt_lot_checkpoint_fails_before_book_or_policy_mutation(self):
+        policy=self.tree.enable_provisioning(food_period=1,fruit_period=999)
+        self.advance(8)
+        self.assertTrue(policy.lots)
+        lot, rec=next(iter(policy.lots.items()))
+        original=(rec.created,rec.biome,rec.kind,rec.state)
+        self.tree.age+=1
+        for field,bad in (('created',self.tree.age+1),
+                          ('created',-1),('created',True),
+                          ('biome','foreign_habitat'),('kind','unknown'),
+                          ('state','invalid')):
+            setattr(rec,field,bad)
+            before=(policy.last_age,len(policy.events),dict(self.book.mass),
+                    dict(self.book.energy),self.book.seq)
+            with self.assertRaisesRegex(ValueError,'invalid Tree provisioned-lot checkpoint'):
+                policy.tick()
+            self.assertEqual(before,(policy.last_age,len(policy.events),
+                                     dict(self.book.mass),dict(self.book.energy),
+                                     self.book.seq))
+            rec.created,rec.biome,rec.kind,rec.state=original
+        self.book.audit()
+
 if __name__=='__main__':unittest.main()
