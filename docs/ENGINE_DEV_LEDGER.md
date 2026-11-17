@@ -535,3 +535,10 @@
 - Execute/test: previous CI #228 is a verified FAILURE, not acceptance of this correction. No local clean checkout executed. New source correction awaiting GitHub Actions CI.
 - Audit: CI #228 printed 15-settlement Book checkpoint growth +5723 bytes (seq 2213..2228), restored mass/energy assertions <=1e-6 in passing growth subtest; previous durable-harvest numerical residuals were mass -2.91e-11 and energy -7.80e-9 before settlement, mass -9.00e-11 and energy -1.03e-8 after tick. No native game or long-horizon ecology testing.
 - Next: verify full clean-checkout CI for negative ecology day, ensure previously skipped tests execute, then consider larger Book-history scaling. M01 iteration3 repair lock and M02–M07 backlog unchanged.
+
+## 2026-11-17 09:00 CST — independent canonical world-clock rejection regression
+- Ground/design: inspected Core151 checkpoint validation and real seed-400 Book-history tests. GitHub Actions #231 (44099358010) headless job **SUCCESS**, 18 reported steps, including prior negative ecology-clock correction and canonical Book-history tests.
+- Implementation: added `test_world_clock_tampering_fails_closed_without_checkpoint_mutation` to `tests/test_book_history_growth.py`, commit `0315541388633fae25ffee70b73ba3a520adcdfd`. Independently mutates `world.tick` to -1, 0.5 and True; requires rejection, unchanged checkpoint bytes, Book sequence/history, and valid restoration of original clock and 100 Founder identities. No new engine or second Book.
+- Execute/test: existing GitHub Actions #231 PASS; **new test not executed locally or confirmed in CI**. No fresh numerical Book residuals collected in this cycle. No WorldBox game test.
+- Ecological/behavioral audit: test covers checkpoint authority, not ecological stability; WorldBox native writes remain read-only, M01 iteration-3 repair lock and M02–M07 backlog unchanged.
+- NEXT: obtain clean-checkout CI for new test and repair any failure before extending Book-history scaling.
