@@ -37,7 +37,9 @@ $lastKind = $null
 $firstKind = $null
 $heartbeatCount = 0
 $behaviorCount = 0
-foreach ($line in [System.IO.File]::ReadLines($file.FullName)) {
+$reader = New-Object System.IO.StreamReader($file.FullName)
+try {
+while ($null -ne ($line = $reader.ReadLine())) {
     if ([string]::IsNullOrWhiteSpace($line)) { continue }
     $index++
     try { $ev = $line | ConvertFrom-Json -ErrorAction Stop }
@@ -87,6 +89,10 @@ foreach ($line in [System.IO.File]::ReadLines($file.FullName)) {
     }
     if ($kind -eq 'observer_heartbeat') { $heartbeatCount++ }
     if ($behaviorKinds -contains $kind) { $behaviorCount++ }
+}
+} finally {
+    # Windows locks an open game log; release even when rejecting early.
+    $reader.Dispose()
 }
 if ($index -eq 0) { $failures.Add("Session log empty") }
 if ($firstKind -ne 'session_open' -or $null -eq $opening) {
