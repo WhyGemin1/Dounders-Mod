@@ -33,6 +33,30 @@ class BookHistoryGrowthTests(unittest.TestCase):
             self.assertEqual(restored.world.tick, original_tick)
             self.assertEqual(len(restored.world.founders.people), 100)
 
+    def test_world_clock_tampering_fails_closed_without_checkpoint_mutation(self):
+        # Reject invalid world.tick independently of the ecology clock.
+        world, _, tree_id = bootstrap(400)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "world.cp"
+            save_checkpoint(world, tree_id, path)
+            original_bytes = path.read_bytes()
+            original_tick = world.tick
+            original_seq = world.book.seq
+            original_history = list(world.book.transaction_history)
+            for invalid_tick in (-1, 0.5, True):
+                with self.subTest(world_tick=invalid_tick):
+                    world.tick = invalid_tick
+                    with self.assertRaisesRegex(ValueError, "invalid canonical world clock"):
+                        save_checkpoint(world, tree_id, path)
+                    self.assertEqual(path.read_bytes(), original_bytes)
+                    self.assertEqual(world.book.seq, original_seq)
+                    self.assertEqual(world.book.transaction_history, original_history)
+            world.tick = original_tick
+            restored = load_checkpoint(path, tree_id)
+            self.assertEqual(restored.world.tick, original_tick)
+            self.assertIs(restored.world.founders.book, restored.book)
+            self.assertEqual(len(restored.world.founders.people), 100)
+
     def test_ecology_clock_tampering_fails_closed_without_book_or_checkpoint_mutation(self):
         # Independently exercise ecology.day; a matching world.tick is not
         # sufficient if the ecology clock is Boolean, negative, or divergent.
