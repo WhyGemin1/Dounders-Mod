@@ -70,6 +70,12 @@ def _validate_world(world, tree_id):
                 (tx.kind != 'wellspring' and tx.external != 0) or
                 (tx.kind == 'wellspring' and tx.external <= 0)):
             raise ValueError('malformed canonical Book transaction metadata')
+    # Wellspring is the sole source of external energy. It credits the
+    # canonical house account without material or transfer legs; allowing
+    # legs here would conceal an additional unverified resource movement.
+    for tx in history:
+        if tx.kind == 'wellspring' and (tx.material or tx.energy):
+            raise ValueError('malformed canonical Wellspring transaction')
     # Reject malformed historical legs even when the transaction was not an
     # M01 receipt. A valid checkpoint digest is not proof of valid Book data.
     import math
