@@ -18,8 +18,8 @@
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
-    "clean_checkout": "New boolean transaction-sequence validation pending clean-checkout CI; previous statuses retained as historical",
-    "book_audit_this_cycle": "NOT RUN: clean checkout unavailable due github.com DNS failure; no conservation result asserted",
+    "clean_checkout": "Boolean replay receipt seq guard committed; clean-checkout acceptance pending",
+    "book_audit_this_cycle": "NOT RUN: no local clean checkout or new numerical conservation measurement",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -69,15 +69,16 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Run clean-checkout CI for historical account alias regression, repair failures; then quantify Book transaction history growth",
-  "last_cycle": "2026-11-16 P0 historical account identifier canonicalization",
+  "next_cycle": "Execute clean-checkout targeted and full CI for boolean replay receipt sequence regression; repair failures before further changes",
+  "last_cycle": "2026-11-16 P0 strict replay receipt sequence type",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "d9efc75bb1771a223f52673a1941aaf06ef34b1c",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43975306101",
-  "last_unverified_code_commit": "ca1e6d953cd3191b6669824cf3795ea4520da498",
-  "next_engineering_task": "Run clean-checkout CI for historical account alias regression, repair failures; then quantify Book transaction history growth",
+  "last_unverified_code_commit": "212220a2f35ac062a5e073b03a599511870c19fe",
+  "next_engineering_task": "Execute clean-checkout targeted and full CI for boolean replay receipt sequence regression; repair failures before further changes",
   "test_results": {
-    "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution"
+    "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
+    "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified"
   }
 }
