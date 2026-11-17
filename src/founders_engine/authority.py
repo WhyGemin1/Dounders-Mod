@@ -43,10 +43,14 @@ class SingleEngineSession:
         # If persistence fails after settlement, callers must discard this
         # in-memory session and recover from the last durable checkpoint.
         self._checkpoint_uncertain = False
+        # A failed world step may have partially mutated the Book or actors.
+        self._step_uncertain = False
 
     def _assert_authority(self):
         if self._checkpoint_uncertain:
             raise RuntimeError('checkpoint outcome uncertain: reload durable world')
+        if self._step_uncertain:
+            raise RuntimeError('simulation step outcome uncertain: reload durable world')
         # Equality alone accepts True == 1 and can miss ecology clock drift.
         # Reject invalid clocks before any session-mediated mutation.
         if (type(self.world.tick) is not int or self.world.tick < 0 or
@@ -87,12 +91,18 @@ class SingleEngineSession:
     def step(self):
         self._assert_authority()
         before = self.world.tick
-        result = self.world.step()
-        if self.world.tick != before + 1:
-            raise RuntimeError('non-monotonic or duplicated simulation clock')
-        self._expected_tick = self.world.tick
-        self._expected_book_sequence = self.book.seq
-        self.audit()
+        try:
+            result = self.world.step()
+            if self.world.tick != before + 1:
+                raise RuntimeError('non-monotonic or duplicated simulation clock')
+            self._expected_tick = self.world.tick
+            self._expected_book_sequence = self.book.seq
+            self.audit()
+        except Exception:
+            # The engine may already have changed resources or actors.
+            # Do not acknowledge another mutation until durable recovery.
+            self._step_uncertain = True
+            raise
         return result
 
     def harvest(self, founder_id, source_id, revision, habitat, material,
