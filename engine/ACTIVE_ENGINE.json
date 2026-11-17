@@ -94,10 +94,11 @@
   },
   "latest_cycle": {
     "date": "2026-11-17",
-    "change": "Fail-closed SingleEngineSession quarantine after world.step exception, invalid clock progression or post-step audit failure; regression injects partial tick mutation",
-    "source_commit": "7ba8b0b281b2af98fcc9ecf3b5169f008020f7fc",
-    "test_commit": "073d94c537a2038f55b083ce7f39122debd62185",
-    "acceptance": "PROVISIONAL: committed, not yet executed in clean-checkout CI",
-    "next": "Run clean-checkout authority and Book history tests including injected mid-step failure; inspect CI and repair failures"
+    "change": "Quarantine on harvest exception after canonical Book sequence mutation",
+    "source_commit": "439d27ad014de48b09fce6be4a0fa6c5e6066df7",
+    "test_commit": "fb5edebb2b8e43f33f89f95dc2326e84e53d72cc",
+    "verification": "NOT RUN: new tests and clean-checkout CI pending",
+    "authority": "single Core151 Book and world.tick; no WorldBox writes",
+    "next": "Run full clean-checkout CI and inspect failure/recovery audits"
   }
 }
