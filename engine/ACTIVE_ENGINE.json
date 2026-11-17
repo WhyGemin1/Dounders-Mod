@@ -68,12 +68,15 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Verify historical metadata validation on clean-checkout CI; measure canonical Book transaction-history growth",
-  "last_cycle": "2026-11-16 P0 fail-closed historical Book toll/external metadata",
+  "next_cycle": "Run clean-checkout CI for historical account alias regression, repair failures; then quantify Book transaction history growth",
+  "last_cycle": "2026-11-16 P0 historical account identifier canonicalization",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "d9efc75bb1771a223f52673a1941aaf06ef34b1c",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43975306101",
-  "last_unverified_code_commit": "dd0f71b5ce79afcf3a5ea72ade4c0acab905c9fc",
-  "next_engineering_task": "Verify historical metadata validation on clean-checkout CI; measure canonical Book transaction-history growth"
+  "last_unverified_code_commit": "ca1e6d953cd3191b6669824cf3795ea4520da498",
+  "next_engineering_task": "Run clean-checkout CI for historical account alias regression, repair failures; then quantify Book transaction history growth",
+  "test_results": {
+    "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution"
+  }
 }
