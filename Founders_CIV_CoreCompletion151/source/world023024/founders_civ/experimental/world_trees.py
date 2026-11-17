@@ -385,8 +385,11 @@ class WorldTree:
         # physical food and fruit remain subject to maturity and decay. Advance
         # measured age only; never grant fuel or produce new resources.
         if self.state=='archived':
+            # Age is measured elapsed world time, not a provisioning reward.
+            # Even a Tree without the optional policy must continue aging;
+            # installing the policy later must not rewind its remnant clock.
+            self.age+=1
             if self.provisioning is not None:
-                self.age+=1
                 self.provisioning.tick()
             return
         if self.state not in ('active','germinating'):return
