@@ -104,6 +104,10 @@ class TreeProvisioningPolicy:
 
     def tick(self):
         tree=self.tree
+        # A detached Book cannot authorize production or age the policy state.
+        # Fail before last_age, lot records, or any physical transaction changes.
+        if tree.book is not tree.sim.book:
+            raise ValueError('Tree provisioning requires authoritative simulation Book')
         if tree.age==self.last_age:return False
         if tree.age<self.last_age:raise ValueError('Tree age reversed; restore consistent checkpoint')
         self.last_age=tree.age
