@@ -17,6 +17,26 @@ class AutonomousProvisioningTests(unittest.TestCase):
     def advance(self,n):
         for _ in range(n):self.sim.step()
 
+    def test_c040_nonfinite_reserve_rejected_without_book_side_effects(self):
+        # NaN previously made plant-reserve comparisons false and could
+        # permit provisioning despite insufficient physical plant reserves.
+        for invalid in (float('nan'), float('inf'), -float('inf'),
+                        True, False, -1.0, '2.5', None):
+            with self.subTest(invalid=repr(invalid)):
+                before=(self.tree.provisioning, self.tree.age, self.book.seq,
+                        dict(self.book.mass), dict(self.book.energy),
+                        dict(self.book.operations))
+                with self.assertRaisesRegex(ValueError,
+                                            'finite and nonnegative'):
+                    self.tree.enable_provisioning(minimum_plant=invalid)
+                self.assertEqual(before, (
+                    self.tree.provisioning, self.tree.age, self.book.seq,
+                    dict(self.book.mass), dict(self.book.energy),
+                    dict(self.book.operations)))
+        policy=self.tree.enable_provisioning(minimum_plant=0.0)
+        self.assertEqual(policy.minimum_plant, 0.0)
+        self.book.audit()
+
     def test_c039_invalid_provisioning_cadence_fails_before_install(self):
         # Fractional and Boolean periods previously truncated to zero or one,
         # potentially failing only after advancing a live Tree checkpoint.
