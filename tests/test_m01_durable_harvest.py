@@ -573,5 +573,41 @@ class DurableHarvestTests(unittest.TestCase):
             book.request_receipts[key] = original
         book.audit()
 
+
+    def test_forged_historical_wellspring_legs_fail_closed(self):
+        """Wellspring must not conceal resource transfer legs in history."""
+        import pickle
+        from dataclasses import replace
+        from founders_engine.checkpoint import _encode
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'forged-wellspring.cp'
+            self.session.checkpointed_harvest(
+                path, 'F001', 'forged-wellspring', 'v1',
+                'forest', 'plant', .01, .001)
+            book = self.session.book
+            self.assertGreater(book.seq, 1)
+            original = book.transaction_history[0]
+            self.assertTrue(original.material or original.energy)
+            seq, mass, energy = book.seq, dict(book.mass), dict(book.energy)
+            try:
+                book.transaction_history[0] = replace(
+                    original, kind='wellspring', toll=0., external=1.)
+                path.write_bytes(_encode(pickle.dumps(
+                    (self.tree_id, self.world),
+                    protocol=pickle.HIGHEST_PROTOCOL)))
+                forged_bytes = path.read_bytes()
+                for action in (lambda: load_checkpoint(path, self.tree_id),
+                               lambda: save_checkpoint(self.world, self.tree_id, path)):
+                    with self.assertRaisesRegex(
+                            ValueError, 'malformed canonical Wellspring transaction'):
+                        action()
+                self.assertEqual(path.read_bytes(), forged_bytes)
+                self.assertEqual(book.seq, seq)
+                self.assertEqual(dict(book.mass), mass)
+                self.assertEqual(dict(book.energy), energy)
+            finally:
+                book.transaction_history[0] = original
+        book.audit()
+
 if __name__ == '__main__':
     unittest.main()
