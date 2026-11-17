@@ -562,3 +562,9 @@
 - IMPLEMENT: Extended existing `test_session_rejects_clock_corruption_before_harvest` to cover positive integer world.tick divergence and fractional world.tick, and to reject both `session.harvest` and `session.step` without changing canonical Book sequence/history. Regression commit `4477d0b7be5adeefa6955476cfaaffe116579b5f`. No new engine, clock or Book.
 - EXECUTE: GitHub commit confirmed. No local checkout/unittest and no new CI verification; regression PROVISIONAL. Numerical mass/energy audits not collected.
 - ECOLOGICAL/HANDOFF: No native WorldBox gameplay or long-horizon ecology. External writes disabled, M01 iteration3 lock and M02–M07 backlog preserved. NEXT: execute full clean-checkout headless workflow and repair failures before further changes.
+
+## 2026-11-17 13:00 CST — fail-closed Core151 partial-step quarantine
+- GROUND: Inspected live authority.py, tests/test_authority.py, ACTIVE_ENGINE.json and development ledger. Existing `step()` could propagate a mid-step exception and leave the session reusable after partial mutation.
+- IMPLEMENT: SingleEngineSession now quarantines after any exception during the real `world.step()`, clock increment check or post-step audit; a new seed-408 regression injects a partial tick mutation followed by OSError and requires all subsequent audit/step/harvest calls to reject until durable reload. Source 7ba8b0b281b2af98fcc9ecf3b5169f008020f7fc; test 073d94c537a2038f55b083ce7f39122debd62185. One canonical Book/clock/Founder registry unchanged.
+- EXECUTE: GitHub writes verified; new regression NOT RUN locally or in CI in this invocation. No new mass/energy residuals; no claim of verified behavioral acceptance.
+- ECOLOGICAL/HANDOFF: No WorldBox game test or long-horizon ecology. M01 iteration3 repair lock and M02–M07 backlog preserved. NEXT: clean-checkout authority and Book-history tests, fix failures, inspect CI before expanding mechanics.
