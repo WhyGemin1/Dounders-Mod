@@ -381,6 +381,14 @@ class WorldTree:
         self.counters['tree_population_tick']+=1
 
     def step(self):
+        # Archived Trees no longer run living ecology, but their already-funded
+        # physical food and fruit remain subject to maturity and decay. Advance
+        # measured age only; never grant fuel or produce new resources.
+        if self.state=='archived':
+            if self.provisioning is not None:
+                self.age+=1
+                self.provisioning.tick()
+            return
         if self.state not in ('active','germinating'):return
         if self.sim.seeds.plants[self.id]['status']!='stable' or self.sim.seeds.constructs.items[self.id].status!='stable':return
         if self.sim.seeds.constructs.items[self.realm_id].status!='stable':return
