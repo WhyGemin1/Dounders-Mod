@@ -7,6 +7,7 @@ All coefficients are synthetic hypotheses; enabled per experimental arm.
 """
 from __future__ import annotations
 from dataclasses import dataclass
+from math import isfinite
 
 @dataclass
 class ProvisionedLot:
@@ -25,7 +26,12 @@ class TreeProvisioningPolicy:
         if any(type(value) is not int or value <= 0 for value in periods):
             raise ValueError('periods and lifetimes must be positive integers')
         if maturity_days>=fruit_lifetime:raise ValueError('fruit lifetime must exceed maturity')
-        if minimum_plant<0:raise ValueError('negative plant reserve')
+        # Reserve thresholds are physical quantities, not Boolean switches.
+        # NaN silently bypasses comparisons and can authorize unfunded growth.
+        if (isinstance(minimum_plant, bool) or
+                not isinstance(minimum_plant, (int, float)) or
+                not isfinite(minimum_plant) or minimum_plant < 0):
+            raise ValueError('plant reserve must be finite and nonnegative')
         self.tree=tree
         self.food_period=int(food_period)
         self.fruit_period=int(fruit_period)
