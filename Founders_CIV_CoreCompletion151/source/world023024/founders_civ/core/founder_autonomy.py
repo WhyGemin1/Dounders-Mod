@@ -133,13 +133,19 @@ def value_proposals(sim, founder, proposals):
     scored = []
     for raw, action, target, meta in proposals:
         if action in CARE:
-            # Preserve real urgency as a *small* influence, not the 6+ hard
-            # priority that previously made stewardship near-mandatory.
+            # Keep urgent, locally observed parent upkeep competitive with
+            # other real actions. The old recentering suppressed even critical
+            # dependent-Realm care below ordinary tasks, after which all four
+            # G2 matched Trees collapsed. Preference still varies by Founder:
+            # these remain ranked *options*, never compulsory transfers.
             urgency = min(1., max(0., (raw - 3.0) / 4.5))
-            score = .95 + 1.25*urgency + 1.3*m.care_preference + \
-                1.25*m.believed_care_value + .42*m.believed_tree_value
+            score = 2.20 + 2.0*urgency + 1.1*m.care_preference + \
+                .75*m.believed_care_value + .65*m.believed_tree_value
         elif action == 'parent_inspect':
-            score = 1.75 + .75*m.learning_preference + .30*m.believed_tree_value
+            # Local inspection is necessary before any informed care proposal.
+            # It costs no invented time/energy and cannot reveal remote stock.
+            score = max(1.75, min(3.9, raw*.67)) + \
+                .75*m.learning_preference + .30*m.believed_tree_value
         elif action in ('tree_observe', 'tree_research', 'food_scan'):
             score = 1.30 + .72*m.learning_preference + .42*m.believed_tree_value
         elif action in MAKE:
