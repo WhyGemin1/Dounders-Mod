@@ -159,7 +159,14 @@ def value_proposals(sim, founder, proposals):
         else:
             score = raw  # preserve unrelated voluntary social and survival work
         scored.append((score, action, target, meta))
-    # No energy, action points, time tokens, reserve transfer or forced upkeep.
-    # A Founder can decline even when the Tree has virtually no reserve.
-    scored.append((.62 + .23*(1-m.care_preference), 'decline_investment', None, None))
+    # Keep refusal a competitive stochastic possibility even for a genuinely
+    # urgent, locally observed parent reserve. The previous C048 priority fix
+    # improved care ranking but made refusal unreachable under the chooser.
+    # This only changes personal choices; no action points, fuel, or time are
+    # minted, and the Book authorizes any actual maintenance transfer.
+    decline = .62 + .23*(1-m.care_preference)
+    care_scores = [score for score, action, _, _ in scored if action in CARE]
+    if care_scores:
+        decline = max(decline, max(care_scores) - .75)
+    scored.append((decline, 'decline_investment', None, None))
     return scored
