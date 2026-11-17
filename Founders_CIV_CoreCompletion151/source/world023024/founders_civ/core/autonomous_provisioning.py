@@ -18,8 +18,12 @@ class ProvisionedLot:
 class TreeProvisioningPolicy:
     def __init__(self,tree,food_period=8,fruit_period=12,maturity_days=5,
                  food_lifetime=20,fruit_lifetime=24,minimum_plant=2.5):
-        if min(food_period,fruit_period,maturity_days,food_lifetime,fruit_lifetime)<=0:
-            raise ValueError('periods and lifetimes must be positive')
+        # Reject fractional, Boolean and non-finite cadence values before
+        # integer conversion. Truncation previously permitted zero periods,
+        # producing a later modulo-by-zero after checkpoint advancement.
+        periods=(food_period,fruit_period,maturity_days,food_lifetime,fruit_lifetime)
+        if any(type(value) is not int or value <= 0 for value in periods):
+            raise ValueError('periods and lifetimes must be positive integers')
         if maturity_days>=fruit_lifetime:raise ValueError('fruit lifetime must exceed maturity')
         if minimum_plant<0:raise ValueError('negative plant reserve')
         self.tree=tree
