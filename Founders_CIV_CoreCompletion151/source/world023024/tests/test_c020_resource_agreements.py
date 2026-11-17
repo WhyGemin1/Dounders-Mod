@@ -393,3 +393,36 @@ def test_c021_reject_invalid_world_namespace_before_physical_production():
             sim.step()
     assert not tree.provisioning.lots
     audit(sim)
+
+
+def test_c022_world_qualified_creation_charge_reservations_do_not_collide():
+    """Two Worlds with matching local Tree IDs must not share CE operation IDs."""
+    from contextlib import nullcontext
+    from types import SimpleNamespace
+    from founders_civ.core.autonomous_provisioning import TreeProvisioningPolicy
+
+    def reserve_key(world_id):
+        reservations = []
+        book = SimpleNamespace(
+            energy={'ce:river': 0.0, 'river_pool': 2.0},
+            atomic_batch=nullcontext,
+            reserve_creation_charge=lambda amount, key: reservations.append((amount, key)),
+        )
+        tree = SimpleNamespace(
+            id='TREE-SHARED', age=12, world_id=world_id, book=book,
+            grow_creation_fruit=lambda biome, lot: None,
+        )
+        policy = TreeProvisioningPolicy(tree)
+        policy._reserve = lambda biome, need, food=False: True
+        assert policy._allocate('fruit', 'forest')
+        assert len(reservations) == 1
+        return reservations[0][1], next(iter(policy.lots))
+
+    a, lot_a = reserve_key('WORLD-A')
+    b, lot_b = reserve_key('WORLD-B')
+    assert a != b
+    assert lot_a != lot_b
+    assert a == 'ce:reserve:WORLD-A:TREE-SHARED:12'
+    assert b == 'ce:reserve:WORLD-B:TREE-SHARED:12'
+    legacy, _ = reserve_key(None)
+    assert legacy == 'ce:reserve:TREE-SHARED:12'
