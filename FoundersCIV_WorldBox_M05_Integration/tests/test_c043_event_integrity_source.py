@@ -33,7 +33,7 @@ class M05C043SafetyContract(unittest.TestCase):
 
     def test_phase3_rejects_loss_gap_partial_session_and_unverified_hooks(self):
         for token in (
-            "ReadLines(", "Sequence gap or duplicate", "'bridge_loss'",
+            "StreamReader(", "reader.Dispose()", "Sequence gap or duplicate", "'bridge_loss'",
             "Missing final session_close", "WorldBox assembly SHA mismatch",
             "'observer_heartbeat'", "No animal-behavior callbacks",
             "Missing or nonzero $counter", "Native hook not attached",
