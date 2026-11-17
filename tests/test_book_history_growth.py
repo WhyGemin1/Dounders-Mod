@@ -36,6 +36,19 @@ class BookHistoryGrowthTests(unittest.TestCase):
                 self.assertEqual(restored.book.transaction_history, book.transaction_history)
                 self.assertEqual(restored.book.seq, book.seq)
                 self.assertIs(restored.world.founders.book, restored.book)
+                # Replaying a durable claim after restart must not grow history.
+                if i:
+                    replay_session = SingleEngineSession(restored.world, tree_id)
+                    before_seq = restored.book.seq
+                    before_history = list(restored.book.transaction_history)
+                    before_audit = replay_session.audit()
+                    replay_session.harvest("F001", f"growth-{i}", "v1",
+                                           "forest", "plant", .01, .001)
+                    self.assertEqual(restored.book.seq, before_seq)
+                    self.assertEqual(restored.book.transaction_history, before_history)
+                    after_audit = replay_session.audit()
+                    self.assertEqual(after_audit.book_mass_error, before_audit.book_mass_error)
+                    self.assertEqual(after_audit.book_energy_error, before_audit.book_energy_error)
             self.assertEqual(counts[-1] - counts[0], 3)
             self.assertTrue(all(b > a for a, b in zip(sizes, sizes[1:])))
             print("BOOK_HISTORY_GROWTH", "sequences=", counts,
