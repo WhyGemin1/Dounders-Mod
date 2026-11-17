@@ -556,3 +556,9 @@
 - EXECUTE: GitHub connector commits confirmed. Local unittest **NOT RUN**; new CI **NOT VERIFIED**. Required: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_book_history_growth.py', then full configured headless workflow. No fresh numerical Book residuals.
 - ECOLOGICAL AUDIT: No native WorldBox gameplay, external writes or long-horizon ecology run. M01 iteration-3 lock, M02–M07 backlog unchanged; no main merge.
 - NEXT: Verify new live-clock regression in clean-checkout CI, repair any failures, then assess replay/Book growth and ecological behavior.
+
+## 2026-11-17 12:00 CST — live Core151 harvest/step clock guard regression
+- GROUND: Read live authority.py, checkpoint.py, Book-history tests, state and prior ledger. PR #1/#2 open and draft. Drive Cycle152 archive metadata verified. Commit-run lookup for preceding ledger SHA 98356939 returned no PR-triggered workflows; this is not a clean-checkout acceptance result.
+- IMPLEMENT: Extended existing `test_session_rejects_clock_corruption_before_harvest` to cover positive integer world.tick divergence and fractional world.tick, and to reject both `session.harvest` and `session.step` without changing canonical Book sequence/history. Regression commit `4477d0b7be5adeefa6955476cfaaffe116579b5f`. No new engine, clock or Book.
+- EXECUTE: GitHub commit confirmed. No local checkout/unittest and no new CI verification; regression PROVISIONAL. Numerical mass/energy audits not collected.
+- ECOLOGICAL/HANDOFF: No native WorldBox gameplay or long-horizon ecology. External writes disabled, M01 iteration3 lock and M02–M07 backlog preserved. NEXT: execute full clean-checkout headless workflow and repair failures before further changes.
