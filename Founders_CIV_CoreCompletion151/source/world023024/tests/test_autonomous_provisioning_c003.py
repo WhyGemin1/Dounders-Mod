@@ -17,6 +17,24 @@ class AutonomousProvisioningTests(unittest.TestCase):
     def advance(self,n):
         for _ in range(n):self.sim.step()
 
+    def test_c036_invalid_tree_clock_fails_closed(self):
+        # Invalid scheduler/checkpoint ages cannot create lots or mutate Book.
+        policy=self.tree.enable_provisioning(food_period=1,fruit_period=1)
+        self.advance(2)
+        valid_age=self.tree.age
+        for invalid_age in (-1, 2.5, True, '3'):
+            before=(policy.last_age,copy.deepcopy(policy.lots),list(policy.events),
+                    dict(self.book.mass),dict(self.book.energy),self.book.seq)
+            self.tree.age=invalid_age
+            try:
+                with self.assertRaisesRegex(ValueError,'nonnegative integer checkpoint'):
+                    policy.tick()
+            finally:
+                self.tree.age=valid_age
+            self.assertEqual(before,(policy.last_age,policy.lots,policy.events,
+                                     dict(self.book.mass),dict(self.book.energy),self.book.seq))
+        self.book.audit()
+
     def test_opt_in_preserves_control(self):
         self.advance(30)
         self.assertIsNone(self.tree.provisioning)
