@@ -47,7 +47,8 @@ class AdapterCompatibilityTests(unittest.TestCase):
         # Later G1 Book corrections also invalidate the old C004 approval.
         # Verify BOTH current drifts remain unapproved by the historical file.
         self.assertEqual(set(old['unapproved_files']),
-                         {'founders_civ/core/ledger.py',
+                         {'founders_civ/experimental/world_trees.py',
+                          'founders_civ/core/ledger.py',
                           'founders_civ/core/engine.py',
                           'founders_civ/experimental/social_agents.py',
                           'founders_civ/experimental/world_integration.py'})
