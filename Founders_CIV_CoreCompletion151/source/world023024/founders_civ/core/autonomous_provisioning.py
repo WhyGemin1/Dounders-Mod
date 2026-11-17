@@ -143,6 +143,16 @@ class TreeProvisioningPolicy:
         # Reject corrupted checkpoint clocks before changing lots or Book state.
         if type(tree.age) is not int or tree.age < 0:
             raise ValueError('Tree age must be a nonnegative integer checkpoint')
+        # Check restored lot chronology and habitat ownership before any
+        # refresh/decay transaction. Future-dated or foreign-habitat lots
+        # indicate a corrupt checkpoint, not goods eligible for recycling.
+        for lot, rec in self.lots.items():
+            if (type(rec.created) is not int or rec.created < 0 or
+                    rec.created > tree.age or rec.biome not in habitats or
+                    rec.kind not in ('food', 'fruit') or
+                    rec.state not in ('stored', 'mature', 'transferred', 'decayed') or
+                    (rec.kind == 'food' and rec.state == 'mature')):
+                raise ValueError('invalid Tree provisioned-lot checkpoint')
         if tree.age==self.last_age:return False
         if tree.age<self.last_age:raise ValueError('Tree age reversed; restore consistent checkpoint')
         self.last_age=tree.age
