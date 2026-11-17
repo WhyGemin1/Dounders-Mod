@@ -109,11 +109,19 @@ class SingleEngineSession:
                 quantity, chemical_energy=0.0):
         """Optional Book-funded tree inventory transfer, not measured game harvest."""
         self._assert_authority()
-        receipt = self.gateway.founder_harvest(
-            founder_id, source_id, revision, habitat, material,
-            quantity, chemical_energy)
-        self._expected_book_sequence = self.book.seq
-        self.audit()
+        before_sequence = self.book.seq
+        try:
+            receipt = self.gateway.founder_harvest(
+                founder_id, source_id, revision, habitat, material,
+                quantity, chemical_energy)
+            self._expected_book_sequence = self.book.seq
+            self.audit()
+        except Exception:
+            # Invalid pre-settlement requests may be retried, but an error
+            # after Book mutation leaves the transaction outcome uncertain.
+            if self.book.seq != before_sequence:
+                self._checkpoint_uncertain = True
+            raise
         return receipt
 
     def checkpointed_harvest(self, checkpoint_path, founder_id, source_id,
