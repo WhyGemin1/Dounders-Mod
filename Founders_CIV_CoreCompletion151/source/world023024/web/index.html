@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Founders–CIV · Observatory</title><link rel="stylesheet" href="/styles.css"></head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-symbol">◈</div><div><div class="brand-title">FOUNDERS<span>·</span>CIV</div><div class="brand-sub">SIMULATION OBSERVATORY / v0.18</div></div></div>
+  <div class="sidetopic">WORKSPACE</div>
+  <button class="nav active" data-view="overview"><span>▦</span> World monitor</button>
+  <button class="nav" data-view="systems"><span>◫</span> Canon register <small id="canon-count"></small></button>
+  <button class="nav" data-view="research"><span>◌</span> Test & methodology</button>
+  <div class="sidetopic second">SIMULATION</div>
+  <div class="field"><label for="seed">Seed</label><input id="seed" type="number" value="42" min="0" max="100000000"></div>
+  <div class="field"><label for="days">Days</label><select id="days"><option value="15">15 days · quick</option><option value="30" selected>30 days · pilot</option><option value="60">60 days</option><option value="120">120 days</option><option value="180">180 days · stress</option></select></div>
+  <div class="factor-title">MODEL FACTORS <span> S / F / B / I </span></div>
+  <label class="switchline"><input type="checkbox" class="factor" data-bit="0" checked><span>Social diversity</span><b>S</b></label>
+  <label class="switchline"><input type="checkbox" class="factor" data-bit="1" checked><span>Fear Logic</span><b>F</b></label>
+  <label class="switchline"><input type="checkbox" class="factor" data-bit="2" checked><span>Collective belief</span><b>B</b></label>
+  <label class="switchline"><input type="checkbox" class="factor" data-bit="3" checked><span>Institution feedback</span><b>I</b></label>
+  <button id="run-btn" class="run-button">▶ &nbsp; RUN NEW SIMULATION</button>
+  <div class="run-status" id="run-status"><span class="dot live"></span> Sample data loaded</div>
+  <div class="sidebar-foot"><div>LOCAL ENGINE <strong>PYTHON</strong></div><div>DATA SOURCE <strong id="data-source">SEEDED SAMPLE</strong></div><div>PHYSICS <strong>SYNTHETIC EU</strong></div></div>
+</aside>
+<main class="main">
+<header class="mast"><div><div class="eyebrow">MODEL OBSERVABILITY / CIVILIZATION SIMULATION</div><h1 id="view-title">World monitor</h1><p class="lede" id="view-subtitle">Observe two worlds sharing one House, and the actors who shape their histories.</p></div><div class="mast-right"><div class="status-chip"><span class="dot live"></span> ENGINE CONNECTED</div><button id="export-btn" class="soft-btn">↓ Export JSON</button></div></header>
+<section id="overview" class="view active">
+ <div class="metrics">
+  <div class="metric"><div class="metric-label">SIMULATED DAY</div><div class="metric-val" id="m-day">—</div><div class="metric-foot">of <span id="m-total">30</span> days</div></div>
+  <div class="metric"><div class="metric-label">LIVING ACTORS</div><div class="metric-val" id="m-actors">—</div><div class="metric-foot">all modeled species</div></div>
+  <div class="metric"><div class="metric-label">HOUSE RESERVE</div><div class="metric-val" id="m-house">—</div><div class="metric-foot">experimental energy units</div></div>
+  <div class="metric"><div class="metric-label">ACTIVE INSTITUTIONS</div><div class="metric-val" id="m-institutions">—</div><div class="metric-foot"><span id="m-norms">0</span> collective norms</div></div>
+ </div>
+ <div class="toprow">
+ <section class="panel world-panel"><div class="panel-head"><div><div class="eyebrow">LIVE SPATIAL VIEW</div><h2>Worlds & habitats</h2></div><div class="toggles"><button class="world-tab active" data-world="all">Both</button><button class="world-tab" data-world="Solara">Solara</button><button class="world-tab" data-world="Vespara">Vespara</button></div></div>
+ <div class="map-wrap"><canvas id="world-map" role="img" aria-label="Animated two dimensional map of two worlds and their habitat patches"></canvas><div class="map-hint">Select an actor or habitat · Hover for details</div><div class="map-tooltip" id="map-tooltip" hidden></div></div>
+ <div class="map-footer"><div class="legend"><span><i class="legend-dot creation"></i>Creations</span><span><i class="legend-dot herbivore"></i>Herbivores</span><span><i class="legend-dot predator"></i>Predators</span><span><i class="legend-dot scavenger"></i>Scavengers</span><span><i class="legend-dot decomposer"></i>Decomposers</span><span><i class="legend-dot founder"></i>Founders / Castors</span></div><label class="small-check"><input id="show-actors" type="checkbox" checked> actors</label><label class="small-check"><input id="show-energy" type="checkbox" checked> energy</label></div>
+ </section>
+ <aside class="panel inspect-panel"><div class="panel-head"><div><div class="eyebrow">SELECTED ENTITY</div><h2 id="inspect-title">Inspector</h2></div><button class="text-btn" id="clear-selection">Clear</button></div><div id="inspector"><p class="empty-state">Select an actor on the map to inspect its needs, memories, skills, and social ties, or select a habitat to inspect its material stocks.</p></div></aside>
+ </div>
+ <section class="panel timeline-panel"><div class="panel-head"><div><div class="eyebrow">TIME SERIES</div><h2>Simulation timeline</h2></div><select id="chart-mode"><option value="herbivores">Herbivore populations</option><option value="vegetation">Living plant stocks</option><option value="house">House energy reserve</option><option value="institutions">Institutions</option><option value="nodes">Soul Network Nodes</option></select></div>
+ <canvas id="trend-chart" role="img" aria-label="Time series chart"></canvas>
+ <div class="playback"><button id="play" class="play-button">▶</button><button id="prev" class="soft-btn mini">−1</button><input id="day-slider" type="range" min="0" max="30" value="0"><button id="next" class="soft-btn mini">+1</button><select id="speed"><option value="1200">0.5×</option><option value="620" selected>1×</option><option value="260">2×</option><option value="110">5×</option></select><span class="playback-day">DAY <strong id="day-label">0</strong></span></div>
+ </section>
+ <div class="bottomrow">
+ <section class="panel event-panel"><div class="panel-head"><div><div class="eyebrow">AUDITABLE HISTORY</div><h2>Event stream</h2></div><div class="event-tools"><select id="event-filter"><option value="all">All events</option><option value="social">Social & belief</option><option value="ecology">Ecology</option><option value="institution">Institutions</option><option value="decision">Decisions</option></select><input id="event-search" placeholder="Find actor or action"></div></div><div id="event-list" class="event-list"></div></section>
+ <section class="panel institution-panel"><div class="panel-head"><div><div class="eyebrow">RSW × PSW</div><h2>Institutions & rules</h2></div><span class="muted" id="inst-count">—</span></div><div id="institutions"></div><div class="section-note">An institution needs actual members, rules and pooled resources. Shared norms are separate from resource transactions.</div></section>
+ </div>
+ <div class="audit-bar" id="audit-bar"></div>
+</section>
+<section id="systems" class="view"><div class="panel system-panel"><div class="panel-head"><div><div class="eyebrow">CANONICAL RULES / IMPLEMENTATION AUDIT</div><h2>System registry</h2></div><select id="system-filter"><option value="all">All groups</option></select></div><div class="status-help"><span class="status operational">Operational</span> Implemented and tested in this core <span class="status partial">Partial</span> Implemented with major gaps <span class="status specified">Specified</span> Canon agreed, not yet simulated</div><div id="system-list"></div></div></section>
+<section id="research" class="view"><div class="panel research-panel"><div class="eyebrow">RESEARCH INTEGRITY</div><h2>Registered factorial experiment</h2><p>Four independent factors (social diversity, private Fear Logic, communicated collective beliefs, and institutional feedback) create sixteen configurations. Thirty matched seeds per configuration are planned for a 720-day study. <strong>That registered 480-run study has not been executed.</strong></p><div class="research-stats"><div><strong>16</strong><span>configurations</span></div><div><strong>30</strong><span>matched seeds</span></div><div><strong>480</strong><span>registered runs</span></div><div><strong>720</strong><span>days per run</span></div></div><h3>Integrity requirements</h3><div class="research-grid"><article><h4>Physical ledgers</h4><p>All matter and energy moves must debit an existing account; material state changes pay one registered toll. An unfunded transaction fails atomically.</p></article><article><h4>Belief causality</h4><p>Religion cannot directly improve rainfall or crop yields. An effect must be mediated by real actions, teaching, cooperation or resource management.</p></article><article><h4>Social provenance</h4><p>Source-tagged knowledge transmission cannot grant mastered practical skills without experience and practice.</p></article><article><h4>Institutional legitimacy</h4><p>Member count, operating resources, real rules, costs and dissent must be visible—not a free institution created by score alone.</p></article></div><h3>What this release does not claim</h3><p>The current code remains an abstract engineering prototype. It cannot establish empirical truths about historical religion or human societies, ecological sustainability across generations, or real chemical thermodynamics. A visually convincing animation is not validation of an unimplemented physical rule.</p></div></section>
+<footer class="app-foot">FOUNDERS–CIV / CANON & OBSERVATORY · SINGLE AUTHORITATIVE LEDGER · LOCAL-ONLY SIMULATION · ANIMATION POSITIONS ARE SCHEMATIC</footer>
+</main></div>
+<script src="/app.js"></script></body></html>

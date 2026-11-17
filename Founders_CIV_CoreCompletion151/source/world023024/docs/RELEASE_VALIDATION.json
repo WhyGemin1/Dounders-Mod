@@ -1,0 +1,46 @@
+{
+  "release": "0.18-canon-observatory",
+  "core": "0.17-first-integration",
+  "report_date": "2026-11-05",
+  "unit_tests": {
+    "passed": 46,
+    "failed": 0
+  },
+  "reproducibility": [
+    {
+      "seed": 42,
+      "arm": "1111",
+      "result": "exact match"
+    },
+    {
+      "seed": 42,
+      "arm": "0000",
+      "result": "exact match"
+    },
+    {
+      "seed": 1729,
+      "arm": "1111",
+      "result": "exact match"
+    }
+  ],
+  "stress": {
+    "days": 120,
+    "seed": 16,
+    "arm": "1111",
+    "result": "completed; material/energy audit passed"
+  },
+  "dashboard": {
+    "browser_render": "passed",
+    "actor_inspection": "passed",
+    "system_registry": "19 systems",
+    "local_POST_run": "passed"
+  },
+  "docx": {
+    "rendered_pages": 13,
+    "visual_QA": "inspected"
+  },
+  "registered_experiment": {
+    "design": "16 configurations \u00d7 30 seeds \u00d7 720 days",
+    "executed": false
+  }
+}

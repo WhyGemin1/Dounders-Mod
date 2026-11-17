@@ -1,0 +1,16 @@
+{
+  "release": "WORLD-024",
+  "adapter": "INTEGRATION-025",
+  "hashes": {
+    "founders_civ/core/ledger.py": "8c2e859c1227690a15bceb7504c69c3cfa44218a49e84e35b47505c25629112a",
+    "founders_civ/core/engine.py": "fdae8696db73222e129cf75b6450ca908f172a85397f141790eda94e823fa6bb",
+    "founders_civ/experimental/founders.py": "be33d310ebe6aaef4d7d5628ffd9dc3316ce9810025ac6b6c968c7da27aef844",
+    "founders_civ/experimental/social_agents.py": "f12d5a9af1b09522f947c1a33c9148d198bba18cb1308156e2dd6c63e1239d79",
+    "founders_civ/experimental/world_integration.py": "af2dcfa41965160a0b0366c6f014287873d34a449eac14ec39960d46405130be",
+    "founders_civ/experimental/world_trees.py": "9ab4ebf3b6d741e43a77c8b13cde627c7706b2af4ec84b3879a87aab15672616",
+    "founders_civ/experimental/world024.py": "d1856f9eaf8bc3ebbde41aed614253d07ac07beb7c6da55abd715f896341df39",
+    "knowledge_architecture.py": "dc53fb8994d74d17da85bd631da6f21fdee085e820901195b87ef38d4a9a7006",
+    "founder_world.html": "11a7c84b3f167feea2e03c6f8c4439cc5135e18a4b3713117e7d39956bc32b69",
+    "launch_world024.py": "a6b8207535c9d996b7a2a35dd8d2299360248a119956e52d296934c51a85f0e7"
+  }
+}

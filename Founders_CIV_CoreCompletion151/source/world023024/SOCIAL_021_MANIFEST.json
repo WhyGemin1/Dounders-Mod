@@ -1,0 +1,32 @@
+{
+  "name": "Founders-CIV SOCIAL-021 Autonomous Social Agency (experimental)",
+  "status": "working social subengine, NOT merged into core.engine.Simulation.step",
+  "base": "Founders_CIV_v020_Knowledge_Soul_Compatibility_Candidate.zip",
+  "seed_window": [
+    400,
+    424
+  ],
+  "ablation_arms": [
+    "full",
+    "no_partner",
+    "no_teach",
+    "no_faction",
+    "neutral_trust",
+    "isolated"
+  ],
+  "ticks_per_run": 30,
+  "founders_per_run": 100,
+  "total_runs": 150,
+  "regression_tests_passed": 85,
+  "additional_tests_passed": 15,
+  "core_engine_sha256": "fdae8696db73222e129cf75b6450ca908f172a85397f141790eda94e823fa6bb",
+  "ledger_sha256": "8c2e859c1227690a15bceb7504c69c3cfa44218a49e84e35b47505c25629112a",
+  "new_core_files": [
+    "founders_civ/experimental/social_agents.py",
+    "run_social_agents.py",
+    "build_social_dashboard.py",
+    "tests/test_social_agents.py"
+  ],
+  "reproduction_command": "python run_social_agents.py --seeds 25 --ticks 30 --workers 4 --out results/social_agents_25",
+  "scientific_disclaimer": "Coefficients, professional role-ID assignments, and outputs are synthetic; not human validation."
+}

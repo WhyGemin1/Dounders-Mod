@@ -1,0 +1,19 @@
+{
+  "schema": "founders-civ-reviewed-drift-v1",
+  "reference_release": "INTEGRATION-025 / WORLD-024",
+  "reviewed_source": "Core151 + U026-C002 Book resource operations",
+  "baseline_manifest": "BASELINE_HASHES.json (left immutable)",
+  "note": "U026-C002 exact reviewed source fingerprints; original INTEGRATION025 baseline and prior C001 attestation unchanged. Local tests cannot replace repository review.",
+  "approved_changes": {
+    "founders_civ/core/ledger.py": {
+      "baseline_sha256": "8c2e859c1227690a15bceb7504c69c3cfa44218a49e84e35b47505c25629112a",
+      "approved_sha256": "d2789540e8dda85dc23b2b340e4d47249369cfbc33334f939a469a8ebba19d1b",
+      "rationale": "C002: Book-owned operation journal, permanent fruit/seed IDs, finite river CE reservation, CE typing, portable food ingestion and fail-closed prevalidation."
+    },
+    "founders_civ/experimental/world_trees.py": {
+      "baseline_sha256": "9ab4ebf3b6d741e43a77c8b13cde627c7706b2af4ec84b3879a87aab15672616",
+      "approved_sha256": "3b5a74f232044783d998de3f3d7a962fd11c6cc6ea61d8490ec5dca7e64418c0",
+      "rationale": "C002: explicit WORLD-024 Tree method gateways to Book-backed food packaging and creation fruit; no automatic ecology replacement."
+    }
+  }
+}
