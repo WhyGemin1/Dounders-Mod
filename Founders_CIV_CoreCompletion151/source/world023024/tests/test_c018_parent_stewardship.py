@@ -127,6 +127,7 @@ def test_c049_remote_dependent_owner_may_return_to_inspect_without_free_care():
     owner = eligible_child_owner(sim, realm)
     person = sim.founders.people[owner]
     person.location = 'ridge'
+    sim.seeds.owner_reserve_knowledge.get(realm, {}).pop(owner, None)
     assert 'riverbank' in LINKS[person.location]
     from founders_civ.core.founder_parent_stewardship import OBSERVATION_SITES
     assert 'riverbank' in OBSERVATION_SITES
