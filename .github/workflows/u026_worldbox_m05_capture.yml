@@ -38,6 +38,15 @@ jobs:
         shell: pwsh
         run: |
           & ./FoundersCIV_WorldBox_M05_Integration/tests/Phase3-TestFixtures.ps1
+      - name: Compile real M05 observer source with test-only C# API stubs
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Run executable C# M05 queue overflow smoke
+        shell: pwsh
+        run: |
+          dotnet run --project FoundersCIV_WorldBox_M05_Integration/tests/offline_compiler/ObserverSmoke.csproj --configuration Release
+          if ($LASTEXITCODE -ne 0) { throw 'M05 C# smoke failed' }
       - name: State offline-only boundary
         shell: pwsh
         run: |
