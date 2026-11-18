@@ -101,12 +101,9 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "source_commit": "a152932f639a12fb9152309b040135247cd53d70",
-    "test_commit": "21da24bd16fd62f2b59ea712b3d945b0294ddc76",
-    "change": "Pin authoritative Founder registry object; reject registry replacement even when actors and Book are shared",
-    "regression": "seed423 committed; execution pending",
-    "previous_ci": "GitHub Actions #292 (44262883028) success on preceding seed422 head 5e484a134740e7158859779e672039dbac77f4ea",
-    "book_audit": "No fresh numerical mass/energy residuals collected"
+    "change": "Reject missing/malformed canonical Book audit payload before real Core151 step or M01 harvest",
+    "regression": "seed424 committed; exact-head execution pending",
+    "book_audit": "No new numerical mass/energy residuals collected"
   },
-  "next_task": "Verify seed423 clean-checkout CI on exact final commit and collect numerical Book and restart audits"
+  "next_task": "Verify seed424 exact-head CI; execute real tick, checkpoint restart and numerical conservation audit"
 }
