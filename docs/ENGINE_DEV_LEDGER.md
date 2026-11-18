@@ -661,3 +661,11 @@
 - Previous GitHub Actions run 44247894798: headless job SUCCESS, 16 substantive steps completed. This predates seed422.
 - Seed422 execution: NOT YET VERIFIED; fresh Book numerical mass/energy residuals NOT COLLECTED. No local clean-checkout test performed.
 - Next: obtain clean-checkout CI on final commit, fix failures, capture numerical Book audits and restart evidence.
+
+## 2026-11-18 03:00 CST — Founder registry object continuity (seed423)
+- Ground: inspected live main, PR #1/#2, authority source, regression source and state; main 26a02ba50a53770b14eae0368315ea01036d0b3c. GitHub Actions #292 on prior head 5e484a134740e7158859779e672039dbac77f4ea completed SUCCESS; this does not verify seed423.
+- Implementation: pinned original world.founders object, rejecting replacement even when a shallow copy shares canonical Book and all 100 actor objects. Source a152932f639a12fb9152309b040135247cd53d70.
+- Regression: seed423 real Core151 bootstrap, substitute shallow Founder registry, require audit/step/harvest to fail closed, restore original and audit. Test 21da24bd16fd62f2b59ea712b3d945b0294ddc76.
+- Execution: new test NOT locally executed at commit time; exact-commit CI pending. No new numerical Book residuals or checkpoint-restart audit collected. Status PROVISIONAL.
+- Ecology: no WorldBox game or long-horizon ecology test; read-only native boundary, one Book, one clock, 100 Founder identities and M01 iteration3 repair lock unchanged; no main merge.
+- Next: verify seed423 exact-head CI and numerical Book/restart evidence before further mechanics.
