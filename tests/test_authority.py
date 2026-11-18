@@ -285,6 +285,22 @@ class SingleAuthorityTests(unittest.TestCase):
             world.tick = original_tick
         session.audit()
 
+    def test_failed_preflight_book_audit_does_not_advance_world(self):
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(416)
+        session = SingleEngineSession(world, tree_id)
+        before_tick = world.tick
+        before_seq = world.book.seq
+        with patch.object(world.book, 'audit', return_value={
+            'mass_error': float('nan'), 'energy_error': 0.0,
+        }), patch.object(world, 'step') as advance:
+            with self.assertRaisesRegex(RuntimeError, 'non-finite canonical Book conservation audit'):
+                session.step()
+            advance.assert_not_called()
+        self.assertEqual(world.tick, before_tick)
+        self.assertEqual(world.book.seq, before_seq)
+        session.audit()
+
     def test_reject_invalid_canonical_book_sequence_types(self):
         world, _, tree_id = bootstrap(414)
         session = SingleEngineSession(world, tree_id)
