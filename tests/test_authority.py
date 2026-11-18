@@ -558,5 +558,29 @@ class SingleAuthorityTests(unittest.TestCase):
             world.world_trees = original
         session.audit()
 
+    def test_ecology_object_substitution_fails_closed(self):
+        """A copied ecology with the same day must not replace the live actor."""
+        from copy import copy
+        world, _, tree_id = bootstrap(426)
+        session = SingleEngineSession(world, tree_id)
+        original = world.ecology
+        before = (world.tick, world.book.seq)
+        try:
+            world.ecology = copy(original)
+            self.assertEqual(world.ecology.day, world.tick)
+            for operation in (
+                session.audit,
+                session.step,
+                lambda: session.harvest('FAKE', 'invalid-source', 'r1',
+                                        'forest', 'plant', .01, .001),
+            ):
+                with self.assertRaisesRegex(
+                        RuntimeError, 'authoritative ecology object replaced'):
+                    operation()
+            self.assertEqual((world.tick, world.book.seq), before)
+        finally:
+            world.ecology = original
+        session.audit()
+
 if __name__ == '__main__':
     unittest.main()
