@@ -241,7 +241,12 @@ class PhysiologyBridgeV2(GuildBridge138):
         # not a substitute for sleep and must not trap their pressure at 1.
         # Preserve immediate danger response and caregiver attachment.
         if a.stage=='dependent':
-            if not danger and (s.sleep_pressure>.82 or s.fatigue>.76):
+            # The underlying needs policy owns immediate danger response.
+            # Caregiver attachment must not suppress an actual escape/defense
+            # decision; nor may fatigue force sleep in danger.
+            if danger:
+                return action,hunger,danger
+            if s.sleep_pressure>.82 or s.fatigue>.76:
                 return 'sleep',hunger,danger
             return 'stay_with_caregiver',hunger,danger
         if not danger and (s.fatigue>.76 or s.readiness<.28 or s.sleep_pressure>.82):
