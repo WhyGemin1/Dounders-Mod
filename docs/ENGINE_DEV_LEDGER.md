@@ -768,3 +768,12 @@
 - Execute: exact-head seed433 regression not yet executed at commit time. Command: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_checkpoint.py'. Seed433 residuals unverified; preceding seed432 workflow success is verified.
 - Ecology/behavior: no ecology mechanics changed, no long-horizon or native WorldBox test; M01 iteration3 lock, M02-M07 backlog, M05 non-authoritative status and external read-only boundary preserved. No merge to main.
 - Next: verify seed433 exact-head CI and numerical CORE151_M01_FOUNDER_REPLAY output; repair failures before additional mechanics.
+
+## 2026-11-18 16:56 CST — M01 durable receipt delimiter collision hardening
+- Ground: inspected live Core151 M01 gateway, checkpoint suite, authority source, engine state, main README, and authorized Drive ZIP metadata (956121 bytes). Previous exact-head GitHub Actions #332 (44407081466) completed SUCCESS for seed433 commit 3377c942; checkpoint job step passed. Numerical seed433 residuals not extracted.
+- Risk: the canonical M01 Book receipt key is formed as m01:{tree_id}:{source_id}:{revision}. Without validation, distinct source/revision pairs containing ':' can produce identical durable receipt keys and potentially replay the wrong settled transaction.
+- Implementation: 5d0aafe6050fe506caa91a2ef4fbe8afbd67da3e rejects colon in M01 source_id and revision before invoking Book settlement. This preserves the existing receipt-key format for accepted requests, does not introduce any new authority, and leaves the M01 iteration3 repair lock intact. Compatibility of historical colon-containing identities is not established.
+- Regression: 22c2fcbc3fd7a875ad2b3b4261797a6254681232 adds seed434 checkpoint test asserting ambiguous identities fail without Book, receipt or clock mutation, original request remains idempotent, 100 Founders remain and numerical residuals are within 1e-6.
+- Execution: code and test committed; new test NOT EXECUTED in this invocation. Intended clean-checkout command: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_checkpoint.py'. Seed434 numerical Book audit pending. Prior CI #332 passed; not evidence for seed434.
+- Ecological audit: no ecology or Founder behavior modification, no second Book/clock, no WorldBox writes; M05 SQLite remains non-authoritative, M02-M07 backlog preserved, no main merge.
+- Next: execute exact-head CI and review historical receipt identifier compatibility; repair any failures before promoting the gateway.
