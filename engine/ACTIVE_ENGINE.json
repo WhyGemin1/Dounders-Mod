@@ -75,7 +75,8 @@
     "p0_finite_conservation_preflight": "Source and test committed; clean-checkout CI pending, no new numerical residuals",
     "p0_m01_harvest_preflight": "SOURCE/TEST COMMITTED; execution pending",
     "p0_tree_object_substitution": "SOURCE c0d87cf59d448f9a08fa011caefed518630dd212; seed419 TEST 7bde853069ef4eb12262f06b9c84337f3cc907b0; clean-checkout execution PENDING; no Book audit measured this cycle",
-    "p0_latest_ci_checked": "GitHub Actions #275 (44227842145) headless SUCCESS, 16 substantive steps, predates seed418/419"
+    "p0_latest_ci_checked": "GitHub Actions #275 (44227842145) headless SUCCESS, 16 substantive steps, predates seed418/419",
+    "p0_m01_gateway_binding": "SOURCE/TEST COMMITTED; clean-checkout CI pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -99,12 +100,12 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "focus": "Preflight canonical Book audit before M01 synthetic harvest",
-    "source_commit": "42cd098f1d4f959439c93b738509c6f0cef34247",
-    "test_commit": "a239ab4741876514357cd5f2a69d81affc352d9d",
-    "execution": "GitHub commits verified; local git checkout DNS blocked; seed-418 test not executed; new CI not yet accepted",
+    "focus": "M01 gateway object and Book/Tree/world binding integrity",
+    "source_commit": "c045c55f3e46da5eff34955f90d4d64440532b5b",
+    "test_commit": "956df05c87adca23950bf6bbbf6fbab2b0fa985e",
+    "execution": "CI #279 passed previous seed419; seed420 new test not yet verified",
     "status": "PROVISIONAL",
-    "next": "Execute clean-checkout seed-418 and complete suite; collect numerical conservation and restart audit"
+    "next": "Run seed420 in clean-checkout CI; obtain numerical conservation and checkpoint restart audit"
   },
-  "next_task": "Execute clean-checkout seed-418 and complete suite; collect numerical conservation and restart audit"
+  "next_task": "Run seed420 in clean-checkout CI; obtain numerical conservation and checkpoint restart audit"
 }
