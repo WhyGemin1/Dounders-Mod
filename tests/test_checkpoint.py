@@ -342,6 +342,43 @@ class IntegratedCheckpointTests(unittest.TestCase):
                   f'mass={proof.book_mass_error:.17g} '
                   f'energy={proof.book_energy_error:.17g}')
 
+    def test_seed_434_ambiguous_receipt_identity_rejected_after_restart(self):
+        """Colon-separated M01 source/revision aliases must not share a receipt."""
+        from run_world_tree_pilot import bootstrap
+        from founders_engine.authority import SingleEngineSession
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+
+        world, _, tree_id = bootstrap(434)
+        session = SingleEngineSession(world, tree_id)
+        original = session.harvest('F001', 'seed434-source', '1',
+                                   'forest', 'plant', .01, .001)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'seed434.cp'
+            save_checkpoint(world, tree_id, path)
+            durable = load_checkpoint(path, tree_id)
+            before = (durable.book.seq, durable.world.tick,
+                      dict(durable.book.mass), dict(durable.book.energy),
+                      dict(durable.book.request_receipts))
+            for source, revision in (('seed434:source', '1'),
+                                     ('seed434', 'source:1')):
+                with self.assertRaises(ValueError):
+                    durable.harvest('F001', source, revision,
+                                    'forest', 'plant', .01, .001)
+            self.assertEqual(
+                (durable.book.seq, durable.world.tick,
+                 dict(durable.book.mass), dict(durable.book.energy),
+                 dict(durable.book.request_receipts)), before)
+            self.assertEqual(durable.harvest('F001', 'seed434-source', '1',
+                                            'forest', 'plant', .01, .001), original)
+            proof = durable.audit()
+            self.assertEqual(proof.founder_count, 100)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+            print('CORE151_M01_IDENTITY_DELIMITER seed=434 '
+                  f'tick={proof.tick} seq={proof.book_sequence} '
+                  f'mass={proof.book_mass_error:.17g} '
+                  f'energy={proof.book_energy_error:.17g}')
+
     def test_restarted_and_uninterrupted_match(self):
         from founders_engine.checkpoint import save_checkpoint, load_checkpoint
         with tempfile.TemporaryDirectory() as tmp:
