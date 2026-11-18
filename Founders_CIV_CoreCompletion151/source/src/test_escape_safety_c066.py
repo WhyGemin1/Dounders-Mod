@@ -40,5 +40,28 @@ class EscapeSafetyTests(unittest.TestCase):
         self.assertFalse(PhysiologyBridgeV2._migrate(b,prey,"escape"))
         self.assertEqual(b.positions["prey"],("h",1,1))
 
+    def test_large_animal_escape_bypasses_routine_migration_cooldown(self):
+        from unittest.mock import patch
+        b,prey,_=self.make_bridge()
+        calls=[]
+        b._neighbors=lambda pos:(calls.append(pos) or [("h",0,1),("h",1,0),("h",2,1)])
+        # Force this actor into the large-animal policy without altering
+        # global species definitions; day 3 is outside its 9-day interval.
+        with patch("core_physiology_v2.MEGA", {prey.species}), patch(
+            "core_physiology_v2.ALLOWED_HABITATS", {prey.species: {"h"}}
+        ):
+            self.assertTrue(PhysiologyBridgeV2._migrate(b,prey,"escape"))
+        self.assertEqual(len(calls),1)
+        self.assertEqual(b.positions["prey"],("h",2,1))
+
+    def test_large_animal_routine_migration_still_obeys_cooldown(self):
+        from unittest.mock import patch
+        b,prey,_=self.make_bridge()
+        b._neighbors=lambda pos:self.fail("routine movement bypassed cooldown")
+        with patch("core_physiology_v2.MEGA", {prey.species}), patch(
+            "core_physiology_v2.ALLOWED_HABITATS", {prey.species: {"h"}}
+        ):
+            self.assertFalse(PhysiologyBridgeV2._migrate(b,prey,"search"))
+
 if __name__=="__main__":
     unittest.main()
