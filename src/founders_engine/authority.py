@@ -80,6 +80,9 @@ class SingleEngineSession:
                 self.gateway.sim is not self.world or
                 self.gateway.book is not self.book):
             raise RuntimeError('M01 gateway authority changed')
+        # Missing registry entry is authority loss, not an incidental KeyError.
+        if self.tree_id not in self.world.world_trees.worlds:
+            raise RuntimeError('authoritative World Tree removed')
         tree = self.world.world_trees.worlds[self.tree_id]
         if tree is not self._tree_object:
             raise RuntimeError('authoritative World Tree object replaced')
