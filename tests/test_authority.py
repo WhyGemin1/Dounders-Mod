@@ -36,6 +36,24 @@ class SingleAuthorityTests(unittest.TestCase):
             session.gateway = gateway
         session.audit()
 
+    def test_missing_authoritative_tree_fails_closed(self):
+        """Deleting the original Tree cannot silently fall through to KeyError."""
+        world, _, tree_id = bootstrap(421)
+        session = SingleEngineSession(world, tree_id)
+        original = world.world_trees.worlds.pop(tree_id)
+        try:
+            for operation in (
+                session.audit,
+                session.step,
+                lambda: session.harvest('F001', 'source', 'r1',
+                                        'forest', 'plant', .01, .001),
+            ):
+                with self.assertRaisesRegex(RuntimeError, 'authoritative World Tree removed'):
+                    operation()
+        finally:
+            world.world_trees.worlds[tree_id] = original
+        session.audit()
+
     def test_one_book_and_100_founders(self):
         state = self.session.audit()
         self.assertEqual(state.founder_count, 100)
