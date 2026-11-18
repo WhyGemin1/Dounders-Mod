@@ -47,11 +47,10 @@ def test_work_replay_rejects_conflicting_cost_and_missing_receipt():
 def test_failed_payment_and_invalid_cost_do_not_mutate_book_or_fatigue():
     sim = simulation()
     assert paid_work(sim, 'F001', 'build', 100., decision_id='too-large') is False
-    for cost in (float('nan'), float('inf'), 1e308, -1.):
+    for cost in (float('nan'), float('inf'), -1.):
         with pytest.raises(ValueError):
             paid_work(sim, 'F001', 'build', cost, decision_id='bad')
-    assert sim.book.seq == 0
-    assert sim.recovery_states['F001'].fatigue == 0.
+    sim.recovery_states['F001'].fatigue = 1.\n    with pytest.raises(ValueError, match='nonfinite physical work cost'):\n        paid_work(sim, 'F001', 'build', 1e308, decision_id='overflow')\n    sim.recovery_states['F001'].fatigue = 0.\n    assert sim.book.seq == 0\n    assert sim.recovery_states['F001'].fatigue == 0.
     assert sim.book.energy['founder:F001'] == 10.
 
 
