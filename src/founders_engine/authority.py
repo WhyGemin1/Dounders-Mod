@@ -93,6 +93,11 @@ class SingleEngineSession:
         self._assert_authority()
         proof = self.book.audit()
         # An undefined conservation audit must never be reported as healthy.
+        # Boolean and nonnumeric audit results are not measured conservation residuals.
+        # Reject them explicitly before tolerance comparisons or advancement.
+        if any(type(proof[key]) not in (int, float)
+               for key in ('mass_error', 'energy_error')):
+            raise RuntimeError('invalid canonical Book conservation audit type')
         if not all(isfinite(proof[key]) for key in ('mass_error', 'energy_error')):
             raise RuntimeError('non-finite canonical Book conservation audit')
         if any(abs(proof[key]) > 1e-6 for key in ('mass_error', 'energy_error')):
