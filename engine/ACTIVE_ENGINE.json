@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-17",
+  "updated_at": "2026-11-18",
   "repository": "WhyGemin1/Dounders-Mod",
   "active_engine": "Core151 IntegratedWorld (recovered Cycle152 source)",
   "authoritative_book": "IntegratedWorld.book (founders_civ.core.ledger.Book)",
@@ -101,12 +101,12 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "focus": "Fail closed on removal of canonical World Tree registry entry",
-    "source_commit": "a0754c6e71437d373a63b134bd8d590197741241",
-    "test_commit": "9e4aaaa9aca9e84d32a1af064ce60c1ec0e8549a",
-    "execution": "NOT RUN against clean checkout: local GitHub DNS resolution failed; CI not confirmed",
-    "status": "PROVISIONAL",
-    "next": "Execute seed421 and full headless suite on exact branch commit; obtain numerical Book and checkpoint replay audits"
+    "source_commit": "ee56073fbc4bbef4585d78eda99954f3a97b9c4b",
+    "test_commit": "8faa47c1528b9f5b0f3d12eb4aacc33480cf8e26",
+    "change": "Reject nonnumeric canonical Book mass/energy audit values before step and M01 harvest",
+    "regression": "seed422 committed, execution pending",
+    "previous_ci": "run 44247894798 headless success (prior seed420 commit)",
+    "book_audit": "No fresh numerical residual collected"
   },
   "next_task": "Execute seed421 and full headless suite on exact branch commit; obtain numerical Book and checkpoint replay audits"
 }
