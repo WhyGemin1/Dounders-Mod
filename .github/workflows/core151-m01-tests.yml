@@ -25,6 +25,10 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m unittest discover -v -s tests -p 'test_*authority*.py'
+      - name: Real Core151 numerical Book conservation evidence (seed 427)
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_book_residual_evidence.py'
       - name: M01 Book-funded harvest regression
         env:
           PYTHONPATH: src
