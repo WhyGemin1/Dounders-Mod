@@ -713,3 +713,11 @@
 - Implementation: committed dedicated CI workflow step executing `python -m unittest discover -v -s tests -p 'test_book_residual_evidence.py'` with `PYTHONPATH=src`, source commit `d005131d47d03e83e6969218737aca03f00bd678`. This makes numerical conservation evidence an independently named CI gate; the existing authority-suite delegation remains for compatibility.
 - Status: prior seed427 execution and numerical Book audit VERIFIED; new explicit workflow step PROVISIONAL until exact-head run. Durable checkpoint regression passed as a prior #309 step, but no new restart stress test or native WorldBox integration in this cycle. M01 iteration-3 lock, M02-M07 backlog, one world.book, one world.tick, 100 Founder identities, M05 non-authoritative, WorldBox read-only preserved. No merge or main modification.
 - Next: verify the new exact-head CI gate; then add a seed-controlled checkpoint/restart numerical conservation comparison, using the existing Core151 checkpoint implementation and one Book.
+
+## 2026-11-18 09:55 CST — seed-428 numerical checkpoint replay
+- Ground: exact-head prior commit 8b4b685a CI #312 (44331415328) SUCCESS; dedicated seed-427 Book conservation step included in workflow. Authorized Drive Cycle152 ZIP metadata verified (956121 bytes); no archive modification.
+- Implementation: committed `tests/test_checkpoint.py` at `6a8c192372d9e44eb9661546e7dd47f6d572f48f`. Seed-428 actual Core151 bootstrap: save to disk, load, compare uninterrupted and restored paths over two world steps with restart after each, exact Book mass/energy account maps, sequence, tick and 100 Founder identifiers; numerical conservation residuals bounded at 1e-6 and paired within 1e-9. Prints `CORE151_RESTART_AUDIT` values on execution.
+- Engine state updated at `84d6cd5f15f7f7ee4823e6133ec646f1e4818a9c`.
+- Test result: NOT EXECUTED for seed-428 at ledger write; GitHub CI exact-head pending. No numerical seed-428 values claimed. Previous seed-427 residuals are prior evidence only.
+- Book audit: no new transactions or actual game mutation this cycle; all assertions await execution. No native WorldBox write. M01 iteration3 lock and M02–M07 remain unchanged.
+- Next: verify exact-head CI and printed seed-428 residuals; repair failures before adding mechanics.
