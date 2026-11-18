@@ -518,7 +518,7 @@
     "Founders_CIV_CoreCompletion151/source/world_funding_141_results.csv": "24f6b734926f13fcb6f874f5c97337cefe46edd43c6841dbc1b735234b1fa38f",
     "tools/u026_g1_matched_acceptance.py": "2f51a17d478b1a7927417eabd3bd52d44cbf0287ba9c37bbaa64a8a432911af3",
     "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
-    "tools/u026_g2_matched_acceptance.py": "6cc54f3311416833ddfe64e6010fa4bc50c373d9d09563554abeaad83649bc9f",
+    "tools/u026_g2_matched_acceptance.py": "73942cd851569776fdb4848db52e29cd71bfa9b99cc30d06c0a4e87e640de728",
     ".github/workflows/u026_g2_acceptance.yml": "5427dae9b78cbcb48831815007df1156c3370ea7e507ece1682ff52def817a3a"
   },
   "excluded": [
@@ -617,6 +617,6 @@
     "tools/u026_g2_exact_source_audit.py",
     "tools/u026_g2_matched_acceptance.py"
   ],
-  "gate_decision": "C049_PENDING_FINAL_CI",
-  "candidate_note": "C049 remote dependent-Parent return-to-observe implemented, C018 four tests, and earlier G2 remote-specific regression updated to prohibit offsite stewardship while allowing normal Book-funded movement. Prior C049 run 333 pass / 1 fail solely old no-proposals assumption. Exact new source and matched ecology recheck pending; G2 cannot be promoted."
+  "gate_decision": "C053_PENDING_RECHECK_MECHANICAL_ONLY",
+  "candidate_note": "C053: exact-source candidate refreshed for C050 G2 mechanical/ecological gate separation. 334 Core151 regressions and G1 matched acceptance passed in prior CI; old fingerprint mismatch alone blocked CI. Extinction remains reported as G4 ecological evidence. G2 not promoted pending fresh CI."
 }
