@@ -47,6 +47,28 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertLess(abs(after.book_mass_error), 1e-6)
         self.assertLess(abs(after.book_energy_error), 1e-6)
 
+    def test_m01_harvest_preflight_rejects_finite_conservation_drift(self):
+        """A corrupt canonical Book cannot fund even a synthetic M01 harvest."""
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(418)
+        session = SingleEngineSession(world, tree_id)
+        valid = world.book.audit()
+        before_tick, before_seq = world.tick, world.book.seq
+        before_receipts = dict(world.book.request_receipts)
+        for key in ('mass_error', 'energy_error'):
+            broken = dict(valid)
+            broken[key] = 0.001
+            with self.subTest(key=key):
+                with patch.object(world.book, 'audit', return_value=broken):
+                    with patch.object(session.gateway, 'founder_harvest') as gateway:
+                        with self.assertRaisesRegex(RuntimeError, 'conservation drift exceeds tolerance'):
+                            session.harvest('F001', 'source', 'r1',
+                                            'forest', 'plant', .01, .001)
+                        gateway.assert_not_called()
+                self.assertEqual((world.tick, world.book.seq), (before_tick, before_seq))
+                self.assertEqual(world.book.request_receipts, before_receipts)
+        session.audit()
+
     def test_reject_invalid_founder_harvest_without_book_change(self):
         before = self.session.book.seq
         with self.assertRaises(ValueError):
