@@ -140,6 +140,38 @@ class SingleAuthorityTests(unittest.TestCase):
             session.harvest('FAKE', 'invalid-source', 'r1',
                             'forest', 'plant', .01, .001)
 
+    def test_failed_step_with_book_mutation_but_no_clock_advance_quarantines(self):
+        """An interrupted real step must fail closed even if its tick never advances."""
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(415)
+        session = SingleEngineSession(world, tree_id)
+        before_tick, before_seq = world.tick, world.book.seq
+        key = 'plant:injected-step-failure'
+        original = world.book.mass.get(key)
+
+        def partial_step():
+            world.book.mass[key] = world.book.mass.get(key, 0.0) + 0.25
+            raise OSError('injected pre-clock world-step failure')
+
+        try:
+            with patch.object(world, 'step', side_effect=partial_step):
+                with self.assertRaisesRegex(OSError, 'pre-clock world-step failure'):
+                    session.step()
+            self.assertEqual(world.tick, before_tick)
+            self.assertEqual(world.book.seq, before_seq)
+            with self.assertRaisesRegex(RuntimeError, 'step outcome uncertain'):
+                session.audit()
+            with self.assertRaisesRegex(RuntimeError, 'step outcome uncertain'):
+                session.step()
+            with self.assertRaisesRegex(RuntimeError, 'step outcome uncertain'):
+                session.harvest('FAKE', 'invalid-source', 'r1',
+                                'forest', 'plant', .01, .001)
+        finally:
+            if original is None:
+                world.book.mass.pop(key, None)
+            else:
+                world.book.mass[key] = original
+
     def test_failed_harvest_after_book_mutation_quarantines_session(self):
         from unittest.mock import patch
         world, _, tree_id = bootstrap(409)
