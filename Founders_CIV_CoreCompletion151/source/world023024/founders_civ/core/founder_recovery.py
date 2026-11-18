@@ -22,23 +22,53 @@ def state_for(sim, founder):
     return sim.recovery_states[founder]
 
 
-def paid_work(sim, founder, action, base_cost):
-    """Pay only for actual work; fatigue degrades fuel efficiency.
+def paid_work(sim, founder, action, base_cost, decision_id=None):
+    """Fund real work from embodied fuel, with optional exact-decision replay.
 
-    This opt-in policy does not alter the legacy SOCIAL-021 control arm.
-    Failed work payments do not change fatigue or Book accounts.
+    A decision identity prevents repeated physical fuel debits and fatigue
+    accumulation when the same work acknowledgement is delivered twice.
+    Legacy callers without a decision ID retain their previous behavior.
     """
-    if not isfinite(base_cost) or base_cost < 0:
+    if not isinstance(base_cost, (int, float)) or not isfinite(base_cost) or base_cost < 0:
         raise ValueError('invalid work cost')
     state = state_for(sim, founder)
+    if decision_id is not None:
+        if not isinstance(decision_id, str) or not 1 <= len(decision_id) <= 72:
+            raise ValueError('invalid work decision ID')
+        if not isinstance(action, str) or not 1 <= len(action) <= 40:
+            raise ValueError('invalid work action')
+        operation = f'founder:work:{founder}:{action}:{decision_id}'
+        if len(operation) > 128:
+            raise ValueError('work operation ID too long')
+        # A replay must match its original action and requested physical cost,
+        # even if fatigue has changed since the original debit.
+        receipts = getattr(sim, 'work_receipts', None)
+        if receipts is None:
+            receipts = sim.work_receipts = {}
+        if operation in receipts:
+            original_cost, txn = receipts[operation]
+            if original_cost != base_cost:
+                raise ValueError('conflicting work decision replay')
+            return txn
+        # Fail closed on a restored Book whose sidecar receipt was lost:
+        # a second fatigue update would diverge from the original checkpoint.
+        if operation in sim.book.operations:
+            raise ValueError('missing work replay receipt; restore checkpoint')
+    else:
+        operation = None
     cost = base_cost * (1.0 + 0.6 * state.fatigue)
+    if not isfinite(cost):
+        raise ValueError('nonfinite physical work cost')
     account = f'founder:{founder}'
     if sim.book.energy[account] + 1e-10 < cost:
         return False
     if cost <= 0:
         return None
-    txn = sim.book.move(energy=[(account, 'environment:heat', cost)])
+    txn = sim.book.move(energy=[(account, 'environment:heat', cost)],
+                        operation_id=operation)
     state.fatigue = min(1., state.fatigue + 0.03 + 0.16 * cost)
+    if operation is not None:
+        sim.work_receipts[operation] = (base_cost, txn)
     return txn
 
 
