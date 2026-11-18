@@ -254,6 +254,11 @@ class PhysiologyBridgeV2(GuildBridge138):
         if behavior in ('rest','stay_with_caregiver'):
             s.fatigue=max(0.,s.fatigue-.12)
             s.readiness=min(1.,s.readiness+.025)
+            # Quiet wakefulness conserves fuel and eases exertion, but it is
+            # not sleep: sleep pressure still accumulates. Dependent animals
+            # can remain with caregivers without acquiring free sleep.
+            s.sleep_pressure=min(1.,s.sleep_pressure+
+                                 (.020 if behavior=='stay_with_caregiver' else .012))
         elif behavior=='sleep':
             s.fatigue=max(0.,s.fatigue-.23)
             s.readiness=min(1.,s.readiness+.22)
