@@ -245,6 +245,10 @@ class PhysiologyBridgeV2(GuildBridge138):
             # Caregiver attachment must not suppress an actual escape/defense
             # decision; nor may fatigue force sleep in danger.
             if danger:
+                # Never let a passive caregiver/rest choice override an
+                # immediate threat. Preserve an active escape/defense policy.
+                if action in ('rest','sleep','stay_with_caregiver','care'):
+                    return 'hide',hunger,danger
                 return action,hunger,danger
             if s.sleep_pressure>.82 or s.fatigue>.76:
                 return 'sleep',hunger,danger
