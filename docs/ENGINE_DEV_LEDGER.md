@@ -652,3 +652,12 @@
 - Execution: `git ls-remote https://github.com/WhyGemin1/Dounders-Mod.git HEAD` FAILED (`Could not resolve host: github.com`); no exact-branch local unittest, no newly confirmed CI, no numerical Book audit this cycle. Authorized Drive ZIP SHA256 `29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8` independently matched. Status PROVISIONAL.
 - Ecological audit: no tick or resource transfer intentionally performed; WorldBox native writes and long-horizon ecology remain BLOCKED/unverified. One Book, one clock, 100 Founder identity policy and M01 iteration3 lock unchanged.
 - Next: execute seed421 plus full clean-checkout headless suite, collect numerical Book conservation and durable restart evidence; repair failures before adding mechanics.
+
+## 2026-11-18 — unified engine cycle: reject invalid conservation audit types
+- Branch: `feat/single-core151-authority`; source commit `ee56073fbc4bbef4585d78eda99954f3a97b9c4b`; test commit `8faa47c1528b9f5b0f3d12eb4aacc33480cf8e26`; state commit `4210876d499d0f2ae3890792a0c3920bcdfcea69`.
+- Inspected live authority source, test source, engine state, ledger and Drive ZIP metadata. Authorized archive: 956121-byte Cycle152 ZIP; not reimported this cycle.
+- Implemented in existing SingleEngineSession.audit(): reject Boolean and nonnumeric Book mass/energy residuals before isfinite/tolerance checks. No alternate Book, clock, world, or WorldBox write added.
+- Added seed422 regression: patched canonical Book audit returns True mass error or string energy error; assert real Core151 session step/harvest are rejected before mutation.
+- Previous GitHub Actions run 44247894798: headless job SUCCESS, 16 substantive steps completed. This predates seed422.
+- Seed422 execution: NOT YET VERIFIED; fresh Book numerical mass/energy residuals NOT COLLECTED. No local clean-checkout test performed.
+- Next: obtain clean-checkout CI on final commit, fix failures, capture numerical Book audits and restart evidence.
