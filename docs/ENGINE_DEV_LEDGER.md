@@ -761,3 +761,10 @@
 - Execution: new seed432 test NOT EXECUTED when committed; exact-head clean-checkout CI and numerical seed432 residuals PENDING. Intended command: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_checkpoint.py'. No local checkout or game tests claimed.
 - Ecological/behavioral audit: no ecological mechanics change, no second engine/Book/clock, no native WorldBox writes. M01 iteration3 repair lock, M02-M07 backlog and M05 non-authoritative restriction unchanged; no merge or main modification.
 - Next: verify exact-head CI and CORE151_M01_MATERIAL_REPLAY numerical evidence; repair any regression before new mechanics.
+
+## 2026-11-18 15:58 CST — seed433 Founder-bound M01 receipt replay
+- Ground: live PR #1 and #2 both draft/unmerged; current experimental head e89b0466. GitHub Actions run 44396565618 on seed432 head completed SUCCESS; numerical log output not independently extracted. Existing Core151 authority, M01 gateway and checkpoint suite inspected.
+- Implementation: 3e29d8f45f21aa8e8f7aee140dffb5b2dee83423 adds seed433 regression to the existing Core151 checkpoint suite. A real Book-funded F001 harvest survives a disk checkpoint, world tick and second checkpoint; replaying the same request as F002 must raise ValueError without changing canonical Book balances, sequence, receipts or world tick. Original F001 replay remains idempotent. No engine/Book/clock added.
+- Execute: exact-head seed433 regression not yet executed at commit time. Command: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_checkpoint.py'. Seed433 residuals unverified; preceding seed432 workflow success is verified.
+- Ecology/behavior: no ecology mechanics changed, no long-horizon or native WorldBox test; M01 iteration3 lock, M02-M07 backlog, M05 non-authoritative status and external read-only boundary preserved. No merge to main.
+- Next: verify seed433 exact-head CI and numerical CORE151_M01_FOUNDER_REPLAY output; repair failures before additional mechanics.
