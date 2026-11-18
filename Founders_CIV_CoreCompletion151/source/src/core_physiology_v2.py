@@ -244,8 +244,9 @@ class PhysiologyBridgeV2(GuildBridge138):
             return 'rest',hunger,danger
         # Short-term and reserve capacity inform feeding, but the old
         # policy remains a documented hybrid until fully recalibrated.
-        if s.last_behavior in ('rest','sleep') and self._fuel(a)>.016 and self.book.mass[self.physical.gut(a)]>.003:
-            return 'rest',hunger,danger
+        # Rest is driven by fatigue/readiness above, never by merely having
+        # food in the gut and fuel in reserve. The old last-rest condition
+        # could trap a nourished actor in perpetual rest even after recovery.
         return action,hunger,danger
 
     def _finish_behavior(self,a,behavior):
