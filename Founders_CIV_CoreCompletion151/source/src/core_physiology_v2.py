@@ -295,7 +295,9 @@ class PhysiologyBridgeV2(GuildBridge138):
         escaping = decision == 'escape'
         here=a.habitat;neighbors=[h for h in self.tree.habitats[here].neighbors]
         if a.species in MEGA:
-            if self.day%9:return False
+            # Routine large-animal relocation is periodic; an immediate
+            # predator escape must not wait for that migration interval.
+            if not escaping and self.day%9:return False
             neighbors=[h for h in neighbors if h in ALLOWED_HABITATS[a.species]]
         target=None
         if neighbors and not escaping:
