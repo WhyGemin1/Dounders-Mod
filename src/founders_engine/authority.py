@@ -42,6 +42,7 @@ class SingleEngineSession:
         # Pin the original living Tree object, not merely its registry key.
         self._tree_object = tree
         self.gateway = WorldBoxGatewayM01(tree)
+        self._gateway_object = self.gateway
         # If persistence fails after settlement, callers must discard this
         # in-memory session and recover from the last durable checkpoint.
         self._checkpoint_uncertain = False
@@ -74,6 +75,11 @@ class SingleEngineSession:
             raise RuntimeError('Founder registry Book authority changed')
         if self.world.book is not self.book:
             raise RuntimeError('Book authority changed')
+        if (self.gateway is not self._gateway_object or
+                self.gateway.tree is not self._tree_object or
+                self.gateway.sim is not self.world or
+                self.gateway.book is not self.book):
+            raise RuntimeError('M01 gateway authority changed')
         tree = self.world.world_trees.worlds[self.tree_id]
         if tree is not self._tree_object:
             raise RuntimeError('authoritative World Tree object replaced')
