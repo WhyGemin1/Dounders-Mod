@@ -128,6 +128,17 @@ class IntegratedCheckpointTests(unittest.TestCase):
                       f'replay_energy={replay.book_energy_error:.17g}')
                 save_checkpoint(restarted.world, tree_id, path)
                 restarted = load_checkpoint(path, tree_id)
+                durable = restarted.audit()
+                self.assertEqual((durable.tick, durable.book_sequence),
+                                 (direct.tick, direct.book_sequence))
+                self.assertEqual(dict(world.book.mass), dict(restarted.book.mass))
+                self.assertEqual(dict(world.book.energy), dict(restarted.book.energy))
+                self.assertEqual(frozenset(world.founders.people),
+                                 frozenset(restarted.world.founders.people))
+                self.assertAlmostEqual(durable.book_mass_error,
+                                       direct.book_mass_error, delta=1e-9)
+                self.assertAlmostEqual(durable.book_energy_error,
+                                       direct.book_energy_error, delta=1e-9)
 
     def test_restarted_and_uninterrupted_match(self):
         from founders_engine.checkpoint import save_checkpoint, load_checkpoint
