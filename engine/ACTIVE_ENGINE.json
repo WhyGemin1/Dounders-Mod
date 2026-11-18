@@ -14,7 +14,7 @@
   "source_status": "27 tracked Core151 modules: 26 archive matches, one reviewed-as-overlay ledger.py; current overlay blob 5993a9168d5b35e58c30761030d0444ad2ea551c (new direct replay guard awaiting CI)",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS GitHub Actions #318 (44353680221) on 6025fadd, including seed428 post-reload checkpoint assertions; seed429 new M01 tick/restart test not yet verified",
+    "github_ci": "PASS GitHub Actions #321 (44365892469) on seed429 final commit 33067839; seed430 new test unverified",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -105,10 +105,10 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "change": "Seed429 M01 Book-funded harvest receipt exactly-once across actual Core151 tick and two disk reloads",
-    "test_commit": "afc6ed8ab81cbeb9ad52961a418d82ed21d5f2d0",
-    "regression": "Authored, exact-head CI pending",
-    "book_audit": "Previous seed428 checkpoint CI #318 passed; new seed429 residuals not yet collected"
+    "change": "Seed430 replay request binding after two disk checkpoints: changed M01 quantity must fail without Book/clock/receipt mutation; original request remains idempotent",
+    "test_commit": "7ec0740990e4c28a4f1452e8a668e31db4276679",
+    "regression": "Committed; exact-head CI not yet verified",
+    "book_audit": "Seed429 CI #321 passed; seed430 residuals not yet collected"
   },
-  "next_task": "Run seed-427 real-tick conservation test on exact branch head; inspect CI stdout residuals and restart durability; fix failures before additional mechanics"
+  "next_task": "Verify seed430 CI on exact final branch head; repair any changed-request replay divergence before further mechanics."
 }
