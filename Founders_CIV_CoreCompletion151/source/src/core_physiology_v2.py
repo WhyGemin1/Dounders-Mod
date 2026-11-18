@@ -490,8 +490,10 @@ class PhysiologyBridgeV2(GuildBridge138):
                     if action=='feed' or (action=='search' and hunger>.55):
                         self._feed_herbivore(a)
                 if a.stage in ('adult','elder'):
-                    if action=='care':self._care(a,'primary')
-                    elif self.rng.random()<.40:self._care(a,'secondary')
+                    if action=='care' and not danger:
+                        self._care(a,'primary')
+                    elif not danger and action not in ('hide','escape','defend','rest','sleep'):
+                        if self.rng.random()<.40:self._care(a,'secondary')
                 self._finish_behavior(a,action)
                 st=self._state(a)
                 if (a.condition<=.06 or st.starvation_debt>=.98 or a.age>=PROFILES[a.species].max_age):
