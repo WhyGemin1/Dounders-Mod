@@ -752,3 +752,12 @@
 - Execute: seed431 test NOT EXECUTED at ledger write; exact-head CI pending. Command: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_checkpoint.py'. No fresh seed431 numerical residuals claimed. Previous CI #324 success is VERIFIED, seed431 behavior PROVISIONAL.
 - Ecology/behavior: no ecological mechanics or long-horizon experiment; native WorldBox remains read-only, M05 SQLite non-authoritative, M01 iteration3 lock and M02-M07 backlog preserved. No main merge.
 - Next: verify seed431 exact-head CI, extract CORE151_M01_ENERGY_REPLAY residuals, repair any failures before adding more mechanics.
+
+
+## 2026-11-18 14:57 CST — seed432 durable M01 material replay binding
+- Ground: inspected live PR #1 (draft, unmerged) and PR #2 (draft, unmerged), Core151 authority/gateway/checkpoint source and state. Authorized Drive Cycle152 archive metadata confirms 956121 bytes. GitHub Actions #327 (44386686921) on previous final head 8fd2919 completed SUCCESS; all substantive job steps passed, including 13 checkpoint tests.
+- Verified previous seed431 CI log: CORE151_M01_ENERGY_REPLAY seed=431 tick=4 seq=2953 mass=-8.7311491370201111e-11 energy=-9.9535100162029266e-09. Both within 1e-6. These are seed431 measurements, not seed432.
+- Implementation: commit fd59ad9a73f7be2e84ac57e390f3f2a9a4bd78d5 adds seed432 regression to existing tests/test_checkpoint.py. After real Book-funded M01 harvest, two disk checkpoints and a real Core151 tick, reuse of the same request identity with a different allowed material ('detritus' instead of 'plant') must fail without mutation of Book sequence, mass/energy maps, receipts, or world clock. Original request must still replay idempotently; 100 Founder identities and conservation tolerance are asserted.
+- Execution: new seed432 test NOT EXECUTED when committed; exact-head clean-checkout CI and numerical seed432 residuals PENDING. Intended command: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_checkpoint.py'. No local checkout or game tests claimed.
+- Ecological/behavioral audit: no ecological mechanics change, no second engine/Book/clock, no native WorldBox writes. M01 iteration3 repair lock, M02-M07 backlog and M05 non-authoritative restriction unchanged; no merge or main modification.
+- Next: verify exact-head CI and CORE151_M01_MATERIAL_REPLAY numerical evidence; repair any regression before new mechanics.
