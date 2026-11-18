@@ -30,10 +30,10 @@ def actual_choose():
 
 
 class G3RestChoiceTests(unittest.TestCase):
-    def actor(self, fatigue, readiness, last_behavior="sleep"):
+    def actor(self, fatigue, readiness, last_behavior="sleep", sleep_pressure=0.12):
         bridge = actual_choose()()
         state = SimpleNamespace(fatigue=fatigue, readiness=readiness,
-                                last_behavior=last_behavior)
+                                last_behavior=last_behavior, sleep_pressure=sleep_pressure)
         bridge._state = lambda a: state
         return bridge
 
@@ -48,6 +48,14 @@ class G3RestChoiceTests(unittest.TestCase):
     def test_moderate_fatigue_still_rests(self):
         bridge = self.actor(.60, .90)
         self.assertEqual(bridge._choose(SimpleNamespace(stage="adult"))[0], "rest")
+
+    def test_high_sleep_pressure_triggers_sleep_without_high_fatigue(self):
+        bridge = self.actor(.10, .90, sleep_pressure=.90)
+        self.assertEqual(bridge._choose(SimpleNamespace(stage="adult"))[0], "sleep")
+
+    def test_low_sleep_pressure_does_not_force_sleep(self):
+        bridge = self.actor(.10, .90, sleep_pressure=.20)
+        self.assertEqual(bridge._choose(SimpleNamespace(stage="adult"))[0], "feed")
 
     def test_dependents_stay_with_caregiver(self):
         bridge = self.actor(.10, .90)
