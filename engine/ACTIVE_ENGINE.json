@@ -14,7 +14,7 @@
   "source_status": "27 tracked Core151 modules: 26 archive matches, one reviewed-as-overlay ledger.py; current overlay blob 5993a9168d5b35e58c30761030d0444ad2ea551c (new direct replay guard awaiting CI)",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS #312 on 8b4b685a: dedicated numerical conservation gate executed; seed-428 checkpoint restart test newly committed at 6a8c1923, exact-head CI pending",
+    "github_ci": "PASS #315 on 836cc42c: 16 substantive headless steps; new post-reload test assertions at 8343e9d pending exact-head CI",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -80,7 +80,7 @@
     "p0_missing_tree_registry": "SOURCE and seed421 regression committed; execution unverified",
     "book_residual_seed427": "CI #306 (44308683831) headless SUCCESS but seed427 standalone test was not included in workflow's test discovery. Added delegated seed427 test to authority suite at d38e5361ed6bc96d5410b3d39368e8704e97db60; new CI execution pending; no numerical residuals yet.",
     "seed427_numeric_book_residuals": "PASS exact-head CI #309 (run 44319356052) commit 102c8cc3: tick 3->4, Book seq 2215->2942, mass -3.1832314562052488e-11 -> -8.9130480773746967e-11, energy -7.8580342233181e-09 -> -1.0244548320770264e-08; <=1e-6; dedicated CI step added at d005131d, pending new CI",
-    "seed428_checkpoint_numerical": "PROVISIONAL: 2 ticks, checkpoint reload after each, compare exact Book mass/energy balances, sequence, Founder IDs and residuals <=1e-6; committed but not executed"
+    "seed428_checkpoint_numerical": "VERIFIED GitHub Actions #315 run 44341382526 at 836cc42c: 10 checkpoint tests PASS; day1 tick4 seq2968 mass -9.0039975475519896e-11 energy -9.8953023552894592e-09; day2 tick5 seq3768 mass -2.0918378140777349e-11 energy -1.594889909029007e-08; direct/restarted exact match. New post-reload audit assertions committed at 8343e9d, execution pending."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -96,7 +96,7 @@
   "last_verified_code_commit": "26cf4afdf6c296cd9e712be53361d92a8a2b2407",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44099358010",
   "last_unverified_code_commit": "7ba8b0b281b2af98fcc9ecf3b5169f008020f7fc",
-  "next_engineering_task": "Execute seed421 and full headless suite on exact branch commit; obtain numerical Book and checkpoint replay audits",
+  "next_engineering_task": "Execute exact-head CI for seed428 post-disk-reload audit assertions; inspect conservation output and fix any divergence",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
