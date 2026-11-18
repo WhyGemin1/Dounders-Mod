@@ -101,9 +101,11 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "change": "Reject missing/malformed canonical Book audit payload before real Core151 step or M01 harvest",
-    "regression": "seed424 committed; exact-head execution pending",
+    "change": "Pin authoritative Core151 World Tree registry object; reject registry replacement even with same living Tree",
+    "source_commit": "dd325bfae6bafc8152712dcbd0f8c60481d9ba91",
+    "test_commit": "429bf79357978ed73a107506e9d44118d0f19f7e",
+    "regression": "seed425 committed; clean-checkout execution pending",
     "book_audit": "No new numerical mass/energy residuals collected"
   },
-  "next_task": "Verify seed424 exact-head CI; execute real tick, checkpoint restart and numerical conservation audit"
+  "next_task": "Verify exact-head seed425 CI, collect numerical Book conservation and durable checkpoint-restart evidence"
 }
