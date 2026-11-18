@@ -1,5 +1,5 @@
 {
-  "source": "U026 G2 exact-source candidate; incomplete matched pairs fail closed, candidate-only extinction is G4 evidence; G2 not promoted",
+  "source": "U026 G2 exact-source candidate including C058 dependent sleep; mechanical evidence only, not Core promoted",
   "files": 518,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
@@ -124,7 +124,7 @@
     "Founders_CIV_CoreCompletion151/source/src/core_completion_144.py": "8089dbac8cf5f56eeaf9627cbc8c3bab2dbeb6347968e40a48d5e066e88f739f",
     "Founders_CIV_CoreCompletion151/source/src/core_completion_145.py": "80b321dbe73fc72029063b7f430acc079ffd104b208a5723da96b35787dd5846",
     "Founders_CIV_CoreCompletion151/source/src/core_completion_146.py": "8a1a9ea4914233a616f1c80eff29ca7ec52d5eb6d392ec764d848208ac5aea42",
-    "Founders_CIV_CoreCompletion151/source/src/core_physiology_v2.py": "ea2bbb0ed883e42d0d73cb05a0260cd04df6c64f098526c394a99345acc2b593",
+    "Founders_CIV_CoreCompletion151/source/src/core_physiology_v2.py": "8c8615445a96939b13b19e117394fc9cd6c47e0003e374c5fcc9c0683d23f22d",
     "Founders_CIV_CoreCompletion151/source/src/digestion_02120.py": "f377b1671223af270cbb7310b1155198c78afcd0bc48849ad1447faf59fa6bcd",
     "Founders_CIV_CoreCompletion151/source/src/digestion_02121.py": "69b8474ad0e62e092058db599b21e91e2e16c76d186c8eb8896a816f94328303",
     "Founders_CIV_CoreCompletion151/source/src/eco_factorial_cycle138.py": "7659b7f9da6ac7bbdb78472dee28d32b86f767743315d17f192b2decfab29a4f",
