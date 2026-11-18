@@ -76,7 +76,8 @@
     "p0_m01_harvest_preflight": "SOURCE/TEST COMMITTED; execution pending",
     "p0_tree_object_substitution": "SOURCE c0d87cf59d448f9a08fa011caefed518630dd212; seed419 TEST 7bde853069ef4eb12262f06b9c84337f3cc907b0; clean-checkout execution PENDING; no Book audit measured this cycle",
     "p0_latest_ci_checked": "GitHub Actions #275 (44227842145) headless SUCCESS, 16 substantive steps, predates seed418/419",
-    "p0_m01_gateway_binding": "SOURCE/TEST COMMITTED; clean-checkout CI pending"
+    "p0_m01_gateway_binding": "SOURCE/TEST COMMITTED; clean-checkout CI pending",
+    "p0_missing_tree_registry": "SOURCE and seed421 regression committed; execution unverified"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -92,7 +93,7 @@
   "last_verified_code_commit": "26cf4afdf6c296cd9e712be53361d92a8a2b2407",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44099358010",
   "last_unverified_code_commit": "7ba8b0b281b2af98fcc9ecf3b5169f008020f7fc",
-  "next_engineering_task": "Execute clean-checkout seed-418 and complete suite; collect numerical conservation and restart audit",
+  "next_engineering_task": "Execute seed421 and full headless suite on exact branch commit; obtain numerical Book and checkpoint replay audits",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -100,12 +101,12 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "focus": "M01 gateway object and Book/Tree/world binding integrity",
-    "source_commit": "c045c55f3e46da5eff34955f90d4d64440532b5b",
-    "test_commit": "956df05c87adca23950bf6bbbf6fbab2b0fa985e",
-    "execution": "CI #279 passed previous seed419; seed420 new test not yet verified",
+    "focus": "Fail closed on removal of canonical World Tree registry entry",
+    "source_commit": "a0754c6e71437d373a63b134bd8d590197741241",
+    "test_commit": "9e4aaaa9aca9e84d32a1af064ce60c1ec0e8549a",
+    "execution": "NOT RUN against clean checkout: local GitHub DNS resolution failed; CI not confirmed",
     "status": "PROVISIONAL",
-    "next": "Run seed420 in clean-checkout CI; obtain numerical conservation and checkpoint restart audit"
+    "next": "Execute seed421 and full headless suite on exact branch commit; obtain numerical Book and checkpoint replay audits"
   },
-  "next_task": "Run seed420 in clean-checkout CI; obtain numerical conservation and checkpoint restart audit"
+  "next_task": "Execute seed421 and full headless suite on exact branch commit; obtain numerical Book and checkpoint replay audits"
 }
