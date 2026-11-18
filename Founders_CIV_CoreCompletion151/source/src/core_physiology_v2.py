@@ -487,7 +487,7 @@ class PhysiologyBridgeV2(GuildBridge138):
                 elif a.species=='carrion_bird':
                     if action in ('feed','search'):self._feed_scavenger(a)
                 elif a.stage!='dependent' and action not in ('rest','sleep'):
-                    if action=='feed' or hunger>.55 or (action=='hide' and hunger>.35):
+                    if action=='feed' or (action=='search' and hunger>.55):
                         self._feed_herbivore(a)
                 if a.stage in ('adult','elder'):
                     if action=='care':self._care(a,'primary')
