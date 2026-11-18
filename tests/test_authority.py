@@ -54,6 +54,29 @@ class SingleAuthorityTests(unittest.TestCase):
             world.world_trees.worlds[tree_id] = original
         session.audit()
 
+    def test_founder_registry_object_substitution_fails_closed(self):
+        """A shallow copy with the same actors and Book is not the authority."""
+        from copy import copy
+        world, _, tree_id = bootstrap(423)
+        session = SingleEngineSession(world, tree_id)
+        original = world.founders
+        replacement = copy(original)
+        self.assertIs(replacement.book, world.book)
+        self.assertIs(replacement.people, original.people)
+        try:
+            world.founders = replacement
+            for operation in (
+                session.audit,
+                session.step,
+                lambda: session.harvest('FAKE', 'invalid-source', 'r1',
+                                        'forest', 'plant', .01, .001),
+            ):
+                with self.assertRaisesRegex(RuntimeError, 'Founder registry object replaced'):
+                    operation()
+        finally:
+            world.founders = original
+        session.audit()
+
     def test_one_book_and_100_founders(self):
         state = self.session.audit()
         self.assertEqual(state.founder_count, 100)
