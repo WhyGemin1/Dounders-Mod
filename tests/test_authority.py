@@ -285,6 +285,25 @@ class SingleAuthorityTests(unittest.TestCase):
             world.tick = original_tick
         session.audit()
 
+    def test_finite_conservation_drift_blocks_real_world_step(self):
+        """A finite but materially unbalanced Book must fail before a real tick."""
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(417)
+        session = SingleEngineSession(world, tree_id)
+        before_tick, before_seq = world.tick, world.book.seq
+        for key in ('mass_error', 'energy_error'):
+            with self.subTest(key=key):
+                proof = dict(world.book.audit())
+                proof[key] = 0.25
+                with patch.object(world.book, 'audit', return_value=proof), \
+                     patch.object(world, 'step') as advance:
+                    with self.assertRaisesRegex(RuntimeError, 'conservation drift exceeds tolerance'):
+                        session.step()
+                    advance.assert_not_called()
+                self.assertEqual((world.tick, world.book.seq),
+                                 (before_tick, before_seq))
+        session.audit()
+
     def test_failed_preflight_book_audit_does_not_advance_world(self):
         from unittest.mock import patch
         world, _, tree_id = bootstrap(416)
