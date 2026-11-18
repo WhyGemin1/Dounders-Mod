@@ -70,7 +70,8 @@
     "p0_independent_world_clock": "SOURCE TEST committed 0315541388633fae25ffee70b73ba3a520adcdfd; clean-checkout CI pending",
     "p0_independent_positive_world_clock_divergence": "Committed test source 69cb0761a471dbc81186a38af1aab3efe03d1694; not locally executed or CI-verified. Reject world.tick=original_tick+1 while ecology.day unchanged; checkpoint bytes and Book history/seq must remain unchanged.",
     "p0_world_clock_tamper_ci": "Prior regression 03155413 has no PR workflow returned by commit-run lookup; CI acceptance unverified.",
-    "latest_cycle": "2026-11-17 16:00 CST: Book-balance mutation on rejected M01 ValueError guarded at commits 99f897f and 03badbe7; new regression NOT EXECUTED, CI unverified; prior results not evidence for this change."
+    "latest_cycle": "2026-11-17 16:00 CST: Book-balance mutation on rejected M01 ValueError guarded at commits 99f897f and 03badbe7; new regression NOT EXECUTED, CI unverified; prior results not evidence for this change.",
+    "p0_preclock_partial_step": "Regression committed 43fd04df; not executed; prior CI #266 success does not verify new test"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -80,13 +81,13 @@
     "Long-horizon ecological stability and in-game tests not run"
   ],
   "next_cycle": "Verify independent world.tick regression in CI, then evaluate larger Book history scaling",
-  "last_cycle": "2026-11-17 13:00 CST failed-step quarantine",
+  "last_cycle": "2026-11-17 19:00 CST: seed-415 pre-clock partial Book mutation failed-step quarantine regression",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "26cf4afdf6c296cd9e712be53361d92a8a2b2407",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44099358010",
   "last_unverified_code_commit": "7ba8b0b281b2af98fcc9ecf3b5169f008020f7fc",
-  "next_engineering_task": "Run clean-checkout authority and headless suite for Book sequence guard and prior M01 containment changes; repair failures before adding mechanics",
+  "next_engineering_task": "Run new seed-415 regression in clean-checkout CI and investigate failures; obtain fresh numerical Book residuals and restart evidence",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -94,12 +95,12 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "focus": "Reject Boolean, fractional and negative canonical Book sequence before audit, step or M01 harvest",
-    "source_commit": "1624d44035f9b77da5d56f3a5eea46aeaafe5756",
-    "test_commit": "c89e154bef76e10c1f5d767e3b32cfbf8bfa73cb",
-    "status": "PROVISIONAL: committed; no clean-checkout execution (container GitHub DNS failure)",
-    "book_audit": "No new mass/energy residuals",
-    "next": "Run full clean-checkout authority tests and CI, then validate restart and conservation"
+    "focus": "Regression: world.step fails after Book mass mutation but before world.tick advances",
+    "test_commit": "43fd04df2806ae07c4ddab42794e7603c9f09c10",
+    "prior_ci": "GitHub Actions #266 (44203708894) headless success, predates this new regression",
+    "execution": "New seed-415 regression NOT EXECUTED; no new numerical conservation audit",
+    "status": "PROVISIONAL",
+    "next": "Obtain fresh clean-checkout CI for seed-415 and verify actual Book conservation and durable restart"
   },
   "next_task": "Execute full clean-checkout CI for test_authority.py including seed-412 mutation regression; fix failures before expanding mechanics."
 }
