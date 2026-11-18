@@ -737,3 +737,11 @@
 - Execute/test: new seed429 test NOT EXECUTED at ledger write. Exact-head CI and numerical seed429 residuals PENDING; previous #318 success is verified only for prior head. No local clean checkout or WorldBox gameplay.
 - Ecological audit: no ecology behavior change or long-horizon test. M02-M07 remain backlog, M05 non-authoritative, WorldBox read-only. No merge or main modification.
 - Next: verify exact-head CI; if seed429 fails, fix receipt/restart semantics before additional mechanics.
+
+## 2026-11-18 12:56 CST — seed430 changed-quantity M01 replay binding
+- Ground: inspected tracked Core151 authority, checkpoint tests, active state and ledger. Exact seed429 final commit 33067839 CI #321 (44365892469) reports completed SUCCESS; prior acceptance only. Authorized Drive Cycle152 ZIP fetched, size 956121 bytes. Local git ls-remote failed DNS resolution; no local clean checkout.
+- Implementation: commit 7ec0740990e4c28a4f1452e8a668e31db4276679 adds seed430 real Core151 checkpoint regression. After M01 harvest, two disk checkpoints with a real tick between, a replay with identical request identity but different quantity must fail without altering Book sequence, mass/energy account maps, receipts, or world tick. Original request must remain idempotent and conservation audit finite within 1e-6. Existing single world.book, world.tick and 100 Founder identities remain authoritative.
+- State: engine/ACTIVE_ENGINE.json updated at 7be787667c9c7b0fbfe2d3746d47142f40545f71.
+- Execute/test: GitHub CI #321 SUCCESS on preceding seed429 code. New seed430 regression NOT YET EXECUTED at ledger write; no fresh numerical Book residuals and no local checkout tests. Intended command: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_checkpoint.py'.
+- Ecological/behavioral audit: no new ecological behavior or native WorldBox transactions; M01 iteration3 repair lock preserved, M02-M07 backlog unchanged, M05 non-authoritative. No merge or main change.
+- Next: inspect exact-head CI for seed430 and repair failures; collect numerical conservation output before another mechanics change.
