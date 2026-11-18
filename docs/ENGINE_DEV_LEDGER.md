@@ -644,3 +644,11 @@
 - Execution: connector commits verified; new regression not locally executed. Clean-checkout CI acceptance pending; no new numerical Book residuals or checkpoint-restart evidence collected.
 - Status: PROVISIONAL. No WorldBox native writes, no second Book or clock, no main merge. M01 iteration-3 repair lock and M02–M07 backlog unchanged.
 - Next: verify seed-420 and full clean-checkout suite, then collect numerical conservation and restart audits.
+
+
+### 2026-11-18 01:00 CST — Core151 authority missing-Tree fail-closed (seed 421)
+- Ground: live `authority.py`, `tests/test_authority.py`, PR #1/#2 and `ACTIVE_ENGINE.json` inspected; both PRs draft/open. Canonical `world.world_trees.worlds[tree_id]` lookup previously raised incidental `KeyError` if registry entry disappeared.
+- Implementation: on existing `feat/single-core151-authority`, source commit `a0754c6e71437d373a63b134bd8d590197741241` raises explicit `RuntimeError('authoritative World Tree removed')` before audit/step/harvest; seed421 regression commit `9e4aaaa9aca9e84d32a1af064ce60c1ec0e8549a` verifies all three paths and restoration.
+- Execution: `git ls-remote https://github.com/WhyGemin1/Dounders-Mod.git HEAD` FAILED (`Could not resolve host: github.com`); no exact-branch local unittest, no newly confirmed CI, no numerical Book audit this cycle. Authorized Drive ZIP SHA256 `29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8` independently matched. Status PROVISIONAL.
+- Ecological audit: no tick or resource transfer intentionally performed; WorldBox native writes and long-horizon ecology remain BLOCKED/unverified. One Book, one clock, 100 Founder identity policy and M01 iteration3 lock unchanged.
+- Next: execute seed421 plus full clean-checkout headless suite, collect numerical Book conservation and durable restart evidence; repair failures before adding mechanics.
