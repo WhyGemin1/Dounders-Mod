@@ -636,3 +636,11 @@
 - Execution: new regression NOT RUN at commit time; clean-checkout CI PENDING. No numerical Book conservation residuals collected this cycle; no WorldBox gameplay or ecological long-horizon tests.
 - Authority: no second engine, Book, clock, or Founder registry. M01 iteration-3 repair lock, M02–M07 backlog, and read-only WorldBox boundary unchanged. No merge to main.
 - Next: verify new headless CI for seed418 and seed419; repair failures before new mechanics; collect actual Book mass/energy residuals and checkpoint-restart evidence.
+
+## 2026-11-17 — M01 gateway binding integrity (seed 420)
+- Ground: PR #1/#2 remain draft; main remains 26a02ba; GitHub Actions #279 completed success on seed-419 head 7bde853, before this cycle.
+- Implemented: `SingleEngineSession` pins its original M01 gateway and verifies gateway identity, Tree, world and canonical Book bindings before audit, step or harvest. Source commit `c045c55f3e46da5eff34955f90d4d64440532b5b`.
+- Regression: seed-420 gateway Book and gateway-object substitution rejection, with restoration acceptance. Test commit `956df05c87adca23950bf6bbbf6fbab2b0fa985e`.
+- Execution: connector commits verified; new regression not locally executed. Clean-checkout CI acceptance pending; no new numerical Book residuals or checkpoint-restart evidence collected.
+- Status: PROVISIONAL. No WorldBox native writes, no second Book or clock, no main merge. M01 iteration-3 repair lock and M02–M07 backlog unchanged.
+- Next: verify seed-420 and full clean-checkout suite, then collect numerical conservation and restart audits.
