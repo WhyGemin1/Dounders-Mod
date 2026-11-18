@@ -684,3 +684,11 @@
 - Execution: source/test authored and committed; exact-head clean-checkout test not independently executed at commit time. No fresh numerical mass/energy audit, checkpoint replay or WorldBox game test. Status PROVISIONAL.
 - Authority: existing world.book, world.tick, 100 Founder identities, M01 iteration3 repair lock, M02-M07 backlog, and read-only WorldBox boundary unchanged. No main merge.
 - Next: verify seed425 exact-head CI, then collect real numerical Book residuals and durable checkpoint restart evidence.
+
+## 2026-11-18 05:55 CST — Core151 seed426 ecology identity authority
+- Ground: read actual branch authority.py, test_authority.py, ACTIVE_ENGINE.json, ledger, authorized Cycle152 Drive ZIP metadata; prior exact-head CI #299 (44291363809) headless job completed SUCCESS (16 substantive steps).
+- Implementation: pin `world.ecology` object reference at session construction and fail closed if swapped before audit, tick, or M01 harvest. Same original `world.book`, `world.tick`, 100 Founders, and original Tree/M01 gateway; no new engine or external writes.
+- Source commit: `d34c5796d373c7a030dec5210714c399d9bb14be`; seed426 test commit: `6bcf48170fe2a54f01ba8c1528f1cb427aefd6e7`. Regression copies live ecology with identical day, rejects all three operations, confirms clock/Book seq unchanged, restores original and audits.
+- Execute: prior GitHub Actions #299 passed; seed426 exact-head CI not yet verified at ledger-writing time. No local clone, native WorldBox test, fresh numerical mass/energy residual, or long-horizon ecology run claimed.
+- Status: source/test committed VERIFIED; seed426 behavioral acceptance PROVISIONAL; native ACK and ecological stability BLOCKED.
+- Next: check exact-head CI and collect numerical Book conservation plus checkpoint-restart evidence.
