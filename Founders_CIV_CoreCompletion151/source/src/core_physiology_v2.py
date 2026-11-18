@@ -290,12 +290,15 @@ class PhysiologyBridgeV2(GuildBridge138):
     def _migrate(self,a,decision=None):
         if a.species==ANTS or a.stage=='dependent' or decision in ('rest','sleep','care','mate','stay_with_caregiver','hide','defend'):
             return False
+        # Escape is not food-seeking migration. Keep threatened animals in their
+        # current habitat; below, spatial escape selects a safer nearby cell.
+        escaping = decision == 'escape'
         here=a.habitat;neighbors=[h for h in self.tree.habitats[here].neighbors]
         if a.species in MEGA:
             if self.day%9:return False
             neighbors=[h for h in neighbors if h in ALLOWED_HABITATS[a.species]]
         target=None
-        if neighbors:
+        if neighbors and not escaping:
             if a.species in PREY:
                 found=[h for h in neighbors if any(x.alive and x.habitat==h and x.species in PREY[a.species] for x in self.actors.values())]
                 if found and self.rng.random()<.55:target=self.rng.choice(found)
@@ -313,7 +316,18 @@ class PhysiologyBridgeV2(GuildBridge138):
             self._refresh_quota()
             old=self._pos(a);near=self._neighbors(old)
             if not near:return False
-            if a.species in PREY:
+            if escaping:
+                # A fleeing actor should not move toward prey or food. Choose
+                # the neighbor with the largest distance to local predators.
+                threats=[self._pos(x) for x in self.actors.values()
+                         if x.alive and x.id!=a.id and x.habitat==a.habitat
+                         and x.species in PREY and a.species in PREY[x.species]]
+                if not threats:return False
+                def safety(cell):
+                    return min(abs(cell[1]-p[1])+abs(cell[2]-p[2]) for p in threats)
+                if max(safety(cell) for cell in near)<=safety(old):return False
+                score=safety
+            elif a.species in PREY:
                 cells={self._pos(x) for x in self.actors.values() if x.alive and x.species in PREY[a.species] and x.habitat==a.habitat}
                 score=lambda cell:int(cell in cells)
             else:
