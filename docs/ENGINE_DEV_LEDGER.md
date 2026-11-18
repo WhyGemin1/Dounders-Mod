@@ -692,3 +692,10 @@
 - Execute: prior GitHub Actions #299 passed; seed426 exact-head CI not yet verified at ledger-writing time. No local clone, native WorldBox test, fresh numerical mass/energy residual, or long-horizon ecology run claimed.
 - Status: source/test committed VERIFIED; seed426 behavioral acceptance PROVISIONAL; native ACK and ecological stability BLOCKED.
 - Next: check exact-head CI and collect numerical Book conservation plus checkpoint-restart evidence.
+
+## 2026-11-18 — seed-427 numerical conservation evidence
+- Ground: live PR #1/#2 inspected; PR #2 head before change `09437d13e3c14904df6ef836e7e3103ab5d8562f`; previous exact-head GitHub Actions run `44299180854` concluded success. The 27 tracked Core151 modules were already imported in prior cycles; the original source ZIP was retrieved again, not reimported.
+- Implementation: committed `tests/test_book_residual_evidence.py` at `b1b9a9394fcd49715a9282a9495f1a208c379adc`. This executes real seed-427 Core151 bootstrap, asserts one Book, 100 Founders, one actual world tick and finite mass/energy residuals <= 1e-6, and prints numeric residuals and Book sequences to CI output. No new simulation authority or WorldBox writes.
+- Test status: test authored and committed, **NOT YET EXECUTED** at time of this entry. Prior run success does not attest this test. No numerical seed-427 results or durable restart evidence yet.
+- Safety: no main modification or merge; M01 iteration-3 lock, M02-M07 backlog, M05 read-only and WorldBox read-only restrictions unchanged.
+- Next: run exact-head CI, collect printed seed-427 mass/energy residuals, fix any failure, then verify durable checkpoint replay.
