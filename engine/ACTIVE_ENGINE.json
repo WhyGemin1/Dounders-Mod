@@ -73,7 +73,9 @@
     "latest_cycle": "2026-11-17 16:00 CST: Book-balance mutation on rejected M01 ValueError guarded at commits 99f897f and 03badbe7; new regression NOT EXECUTED, CI unverified; prior results not evidence for this change.",
     "p0_preclock_partial_step": "Regression committed 43fd04df; not executed; prior CI #266 success does not verify new test",
     "p0_finite_conservation_preflight": "Source and test committed; clean-checkout CI pending, no new numerical residuals",
-    "p0_m01_harvest_preflight": "SOURCE/TEST COMMITTED; execution pending"
+    "p0_m01_harvest_preflight": "SOURCE/TEST COMMITTED; execution pending",
+    "p0_tree_object_substitution": "SOURCE c0d87cf59d448f9a08fa011caefed518630dd212; seed419 TEST 7bde853069ef4eb12262f06b9c84337f3cc907b0; clean-checkout execution PENDING; no Book audit measured this cycle",
+    "p0_latest_ci_checked": "GitHub Actions #275 (44227842145) headless SUCCESS, 16 substantive steps, predates seed418/419"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
