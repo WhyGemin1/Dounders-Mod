@@ -745,3 +745,10 @@
 - Execute/test: GitHub CI #321 SUCCESS on preceding seed429 code. New seed430 regression NOT YET EXECUTED at ledger write; no fresh numerical Book residuals and no local checkout tests. Intended command: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_checkpoint.py'.
 - Ecological/behavioral audit: no new ecological behavior or native WorldBox transactions; M01 iteration3 repair lock preserved, M02-M07 backlog unchanged, M05 non-authoritative. No merge or main change.
 - Next: inspect exact-head CI for seed430 and repair failures; collect numerical conservation output before another mechanics change.
+
+## 2026-11-18 14:01 CST — seed431 durable M01 energy-only replay binding
+- Ground: inspected live draft PR #1/#2, current Core151 checkpoint tests and active engine state. Prior seed430 final head 798c486d GitHub Actions #324 (44375293250) completed SUCCESS; checkpoint job step passed. This verifies preceding seed430 regression only.
+- Integration: commit 3973a5f09fea2c268d2ead80599502d940af9f5e adds seed431 test to existing tests/test_checkpoint.py. After real Book-funded harvest, disk save/load, real world tick and second disk restart, replaying the same M01 request ID with unchanged mass but changed energy must raise ValueError without altering Book sequence, account maps, receipts or world clock. Original request remains idempotent; Founder count and conservation tolerance asserted. No new engine, Book, clock, external writer or WorldBox transaction.
+- Execute: seed431 test NOT EXECUTED at ledger write; exact-head CI pending. Command: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_checkpoint.py'. No fresh seed431 numerical residuals claimed. Previous CI #324 success is VERIFIED, seed431 behavior PROVISIONAL.
+- Ecology/behavior: no ecological mechanics or long-horizon experiment; native WorldBox remains read-only, M05 SQLite non-authoritative, M01 iteration3 lock and M02-M07 backlog preserved. No main merge.
+- Next: verify seed431 exact-head CI, extract CORE151_M01_ENERGY_REPLAY residuals, repair any failures before adding more mechanics.
