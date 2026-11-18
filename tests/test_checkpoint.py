@@ -140,6 +140,49 @@ class IntegratedCheckpointTests(unittest.TestCase):
                 self.assertAlmostEqual(durable.book_energy_error,
                                        direct.book_energy_error, delta=1e-9)
 
+    def test_seed_429_m01_receipt_survives_tick_and_second_restart(self):
+        """Real Core151 Book settlement must remain exactly-once across ticks and disk reloads."""
+        from run_world_tree_pilot import bootstrap
+        from founders_engine.authority import SingleEngineSession
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+
+        world, _, tree_id = bootstrap(429)
+        session = SingleEngineSession(world, tree_id)
+        args = ('F001', 'seed429-durable-harvest', '1',
+                'forest', 'plant', .01, .001)
+        original = session.harvest(*args)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'seed429.cp'
+            save_checkpoint(world, tree_id, path)
+            restored = load_checkpoint(path, tree_id)
+            seq_before_replay = restored.book.seq
+            self.assertEqual(restored.harvest(*args), original)
+            self.assertEqual(restored.book.seq, seq_before_replay)
+            before = restored.audit()
+            self.assertEqual(before.founder_count, 100)
+            restored.step()
+            after = restored.audit()
+            self.assertEqual(after.tick, before.tick + 1)
+            self.assertGreaterEqual(after.book_sequence, seq_before_replay)
+            save_checkpoint(restored.world, tree_id, path)
+            reloaded = load_checkpoint(path, tree_id)
+            seq_after_restart = reloaded.book.seq
+            self.assertEqual(reloaded.harvest(*args), original)
+            self.assertEqual(reloaded.book.seq, seq_after_restart)
+            durable = reloaded.audit()
+            self.assertEqual((durable.tick, durable.book_sequence),
+                             (after.tick, after.book_sequence))
+            self.assertEqual(dict(reloaded.book.mass), dict(restored.book.mass))
+            self.assertEqual(dict(reloaded.book.energy), dict(restored.book.energy))
+            for residual in (before.book_mass_error, before.book_energy_error,
+                             after.book_mass_error, after.book_energy_error,
+                             durable.book_mass_error, durable.book_energy_error):
+                self.assertLessEqual(abs(residual), 1e-6)
+            print('CORE151_M01_RESTART seed=429 '
+                  f'tick={durable.tick} seq={durable.book_sequence} '
+                  f'mass={durable.book_mass_error:.17g} '
+                  f'energy={durable.book_energy_error:.17g}')
+
     def test_restarted_and_uninterrupted_match(self):
         from founders_engine.checkpoint import save_checkpoint, load_checkpoint
         with tempfile.TemporaryDirectory() as tmp:
