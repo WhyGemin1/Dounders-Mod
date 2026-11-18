@@ -70,7 +70,7 @@
     "p0_independent_world_clock": "SOURCE TEST committed 0315541388633fae25ffee70b73ba3a520adcdfd; clean-checkout CI pending",
     "p0_independent_positive_world_clock_divergence": "Committed test source 69cb0761a471dbc81186a38af1aab3efe03d1694; not locally executed or CI-verified. Reject world.tick=original_tick+1 while ecology.day unchanged; checkpoint bytes and Book history/seq must remain unchanged.",
     "p0_world_clock_tamper_ci": "Prior regression 03155413 has no PR workflow returned by commit-run lookup; CI acceptance unverified.",
-    "latest_cycle": "2026-11-17 16:00 CST: Book-balance mutation on rejected M01 ValueError guarded at commits 99f897f and 03badbe7; new regression NOT EXECUTED, CI unverified; prior results not evidence for this change.",
+    "latest_cycle": "2026-11-18 08:00 CST: seed427 numerical conservation test wired into existing headless CI authority discovery; awaiting exact-head execution; no new engine or main merge.",
     "p0_preclock_partial_step": "Regression committed 43fd04df; not executed; prior CI #266 success does not verify new test",
     "p0_finite_conservation_preflight": "Source and test committed; clean-checkout CI pending, no new numerical residuals",
     "p0_m01_harvest_preflight": "SOURCE/TEST COMMITTED; execution pending",
@@ -78,7 +78,7 @@
     "p0_latest_ci_checked": "GitHub Actions #275 (44227842145) headless SUCCESS, 16 substantive steps, predates seed418/419",
     "p0_m01_gateway_binding": "SOURCE/TEST COMMITTED; clean-checkout CI pending",
     "p0_missing_tree_registry": "SOURCE and seed421 regression committed; execution unverified",
-    "book_residual_seed427": "Committed test at b1b9a9394fcd49715a9282a9495f1a208c379adc; actual clean-checkout execution and numerical residuals pending"
+    "book_residual_seed427": "CI #306 (44308683831) headless SUCCESS but seed427 standalone test was not included in workflow's test discovery. Added delegated seed427 test to authority suite at d38e5361ed6bc96d5410b3d39368e8704e97db60; new CI execution pending; no numerical residuals yet."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
