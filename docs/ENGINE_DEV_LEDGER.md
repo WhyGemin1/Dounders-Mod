@@ -669,3 +669,10 @@
 - Execution: new test NOT locally executed at commit time; exact-commit CI pending. No new numerical Book residuals or checkpoint-restart audit collected. Status PROVISIONAL.
 - Ecology: no WorldBox game or long-horizon ecology test; read-only native boundary, one Book, one clock, 100 Founder identities and M01 iteration3 repair lock unchanged; no main merge.
 - Next: verify seed423 exact-head CI and numerical Book/restart evidence before further mechanics.
+
+## 2026-11-18 04:00 CST — Incomplete Book audit fail-closed (seed424)
+- Ground: read live Core151 authority source, tests, engine state and ledger on existing experimental branch; inspected authorized Cycle152 Drive ZIP metadata (956121 bytes). Prior seed423 execution not independently verified this cycle.
+- Implementation: reject missing or non-dict canonical Book audit results explicitly before step or M01 harvest; no second simulation, Book, clock, or Founder registry.
+- Regression: seed424 real Core151 bootstrap; missing mass/energy fields or None must reject step and gateway settlement with no tick or Book sequence change.
+- Execution: commit recorded via GitHub connector; exact-head clean-checkout tests and numerical Book conservation pending. No native WorldBox write, gameplay or ecological long-horizon test.
+- Next: verify exact-head CI and gather real numerical conservation and restart evidence; preserve M01 iteration3 lock and M02–M07 backlog.
