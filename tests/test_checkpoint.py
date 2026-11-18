@@ -220,6 +220,47 @@ class IntegratedCheckpointTests(unittest.TestCase):
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
             self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+    def test_seed_431_replayed_receipt_cannot_change_energy_after_restart(self):
+        """A durable M01 request cannot change energy while preserving mass."""
+        from run_world_tree_pilot import bootstrap
+        from founders_engine.authority import SingleEngineSession
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+
+        world, _, tree_id = bootstrap(431)
+        session = SingleEngineSession(world, tree_id)
+        args = ('F001', 'seed431-energy-binding', '1',
+                'forest', 'plant', .01, .001)
+        original = session.harvest(*args)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'seed431.cp'
+            save_checkpoint(world, tree_id, path)
+            restarted = load_checkpoint(path, tree_id)
+            restarted.step()
+            save_checkpoint(restarted.world, tree_id, path)
+            durable = load_checkpoint(path, tree_id)
+            seq = durable.book.seq
+            tick = durable.world.tick
+            mass = dict(durable.book.mass)
+            energy = dict(durable.book.energy)
+            receipts = dict(durable.book.request_receipts)
+            with self.assertRaises(ValueError):
+                durable.harvest(*args[:-1], .002)
+            self.assertEqual(durable.book.seq, seq)
+            self.assertEqual(durable.world.tick, tick)
+            self.assertEqual(dict(durable.book.mass), mass)
+            self.assertEqual(dict(durable.book.energy), energy)
+            self.assertEqual(dict(durable.book.request_receipts), receipts)
+            self.assertEqual(durable.harvest(*args), original)
+            self.assertEqual(durable.book.seq, seq)
+            proof = durable.audit()
+            self.assertEqual(proof.founder_count, 100)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+            print('CORE151_M01_ENERGY_REPLAY seed=431 '
+                  f'tick={proof.tick} seq={proof.book_sequence} '
+                  f'mass={proof.book_mass_error:.17g} '
+                  f'energy={proof.book_energy_error:.17g}')
+
     def test_restarted_and_uninterrupted_match(self):
         from founders_engine.checkpoint import save_checkpoint, load_checkpoint
         with tempfile.TemporaryDirectory() as tmp:
