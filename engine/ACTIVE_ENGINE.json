@@ -11,7 +11,7 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules: 26 archive matches, one reviewed-as-overlay ledger.py; current overlay blob 5993a9168d5b35e58c30761030d0444ad2ea551c (new direct replay guard awaiting CI)",
+  "source_status": "27 tracked Core151 modules: 26 archive matches, one reviewed-as-overlay ledger.py; current overlay blob 5993a9168d5b35e58c30761030d0444ad2ea551c (new direct replay guard awaiting CI); M01 delimiter rejection source committed pending CI",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "PASS GitHub Actions #327 (44386686921) on prior final head 8fd2919427218de65783f1686d7936cc43e3a6dc; 13 checkpoint tests passed including seed431",
@@ -85,7 +85,8 @@
     "m01_seed430_replay": "VERIFIED CI #324 completed SUCCESS, including checkpoint suite; changed-mass request replay rejected after durable restart",
     "m01_seed431_energy_replay": "VERIFIED CI #327: seed431 tick=4 seq=2953 mass=-8.7311491370201111e-11 energy=-9.9535100162029266e-09; replay altered energy rejected; 13 checkpoint tests PASS",
     "m01_seed432_material_replay": "VERIFIED GitHub Actions #330 run 44396565618 on final head e89b0466; success (numerical log extraction not performed)",
-    "m01_seed433_founder_replay": "PROVISIONAL: test committed; exact-head execution pending"
+    "m01_seed433_founder_replay": "VERIFIED GitHub Actions #332 (44407081466) SUCCESS on 3377c942; checkpoint step PASS; numerical log not extracted",
+    "m01_seed434_identity_delimiter": "PROVISIONAL: source rejects ':' in M01 source_id/revision to prevent durable receipt key collisions; seed434 checkpoint regression committed but not executed"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -98,10 +99,10 @@
   "last_cycle": "2026-11-17 22:00 CST: M01 harvest conservation preflight, seed-418 regression",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "e89b0466ef19b51d27cf5ace1a548c041485fd3e",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44396565618",
-  "last_unverified_code_commit": "3e29d8f45f21aa8e8f7aee140dffb5b2dee83423",
-  "next_engineering_task": "Verify exact-head seed433 checkpoint CI and Founder replay rejection; repair failures before further mechanics",
+  "last_verified_code_commit": "3377c9424977c7dd87fee2fa7382be837f352a07",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44407081466",
+  "last_unverified_code_commit": "22c2fcbc3fd7a875ad2b3b4261797a6254681232",
+  "next_engineering_task": "Verify exact-head seed434 CI and Book audit; investigate whether historical M01 receipt source/revision identifiers contain ':' before promotion",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -109,10 +110,11 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "change": "Seed433 reject same M01 request reassigned from F001 to F002 after two checkpoints and a real tick",
-    "test_commit": "3e29d8f45f21aa8e8f7aee140dffb5b2dee83423",
-    "regression": "Committed, not yet executed",
-    "book_audit": "Seed433 numerical residuals pending"
+    "change": "M01 durable request identity delimiter collision prevention on existing Core151 gateway",
+    "source_commit": "5d0aafe6050fe506caa91a2ef4fbe8afbd67da3e",
+    "test_commit": "22c2fcbc3fd7a875ad2b3b4261797a6254681232",
+    "regression": "Committed, exact-head CI pending",
+    "book_audit": "seed434 numerical residuals not yet measured"
   },
-  "next_task": "Verify exact-head seed433 checkpoint CI and Founder replay rejection; repair failures before further mechanics"
+  "next_task": "Verify exact-head seed434 CI and Book audit; investigate whether historical M01 receipt source/revision identifiers contain ':' before promotion"
 }
