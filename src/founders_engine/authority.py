@@ -33,6 +33,7 @@ class SingleEngineSession:
         if tree.sim is not world or tree.book is not world.book:
             raise ValueError('World Tree uses different resource authority')
         self.world = world
+        self._founder_registry_object = world.founders
         self._founder_ids = frozenset(world.founders.people)
         self._founder_objects = dict(world.founders.people)
         self.book = world.book
@@ -66,6 +67,8 @@ class SingleEngineSession:
             raise RuntimeError('invalid canonical Book sequence')
         if self.book.seq != self._expected_book_sequence:
             raise RuntimeError('canonical Book sequence changed outside session')
+        if self.world.founders is not self._founder_registry_object:
+            raise RuntimeError('authoritative Founder registry object replaced')
         if frozenset(self.world.founders.people) != self._founder_ids:
             raise RuntimeError('authoritative Founder identities changed')
         if any(actor is not self._founder_objects[fid]
