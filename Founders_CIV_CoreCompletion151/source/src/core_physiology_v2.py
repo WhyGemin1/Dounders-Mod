@@ -247,7 +247,7 @@ class PhysiologyBridgeV2(GuildBridge138):
             if danger:
                 # Never let a passive caregiver/rest choice override an
                 # immediate threat. Preserve an active escape/defense policy.
-                if action in ('rest','sleep','stay_with_caregiver','care'):
+                if action in ('rest','sleep','stay_with_caregiver','care','feed','search','mate'):
                     return 'hide',hunger,danger
                 return action,hunger,danger
             if s.sleep_pressure>.82 or s.fatigue>.76:
