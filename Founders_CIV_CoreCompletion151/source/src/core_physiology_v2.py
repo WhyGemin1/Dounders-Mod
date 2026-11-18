@@ -238,7 +238,7 @@ class PhysiologyBridgeV2(GuildBridge138):
         action,hunger,danger=super().evaluate_needs(a)
         s=self._state(a)
         if a.stage=='dependent':return 'stay_with_caregiver',hunger,danger
-        if not danger and (s.fatigue>.76 or s.readiness<.28):
+        if not danger and (s.fatigue>.76 or s.readiness<.28 or s.sleep_pressure>.82):
             return 'sleep',hunger,danger
         if not danger and (s.fatigue>.52 or s.readiness<.43):
             return 'rest',hunger,danger
