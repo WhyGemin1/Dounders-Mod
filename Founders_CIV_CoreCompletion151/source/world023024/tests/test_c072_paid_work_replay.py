@@ -66,3 +66,27 @@ def test_two_distinct_work_decisions_consume_distinct_real_fuel():
     assert sim.book.seq == 2
     assert sim.book.energy['environment:heat'] > 2.
     assert sim.book.energy['founder:F001'] < 8.
+
+
+def test_same_decision_different_action_fails_closed_without_second_debit():
+    sim = simulation()
+    first = paid_work(sim, 'F001', 'build', 1., decision_id='one')
+    before = (sim.book.seq, sim.book.energy['founder:F001'],
+              sim.recovery_states['F001'].fatigue)
+    with pytest.raises(ValueError, match='conflicting work decision action'):
+        paid_work(sim, 'F001', 'harvest', 1., decision_id='one')
+    assert (sim.book.seq, sim.book.energy['founder:F001'],
+            sim.recovery_states['F001'].fatigue) == before
+    assert paid_work(sim, 'F001', 'build', 1., decision_id='one') is first
+
+
+def test_checkpoint_lost_sidecar_rejects_action_alias_replay():
+    sim = simulation()
+    paid_work(sim, 'F001', 'build', 1., decision_id='one')
+    before = (sim.book.seq, sim.book.energy['founder:F001'],
+              sim.recovery_states['F001'].fatigue)
+    sim.work_receipts.clear()
+    with pytest.raises(ValueError, match='conflicting work decision action'):
+        paid_work(sim, 'F001', 'harvest', 1., decision_id='one')
+    assert (sim.book.seq, sim.book.energy['founder:F001'],
+            sim.recovery_states['F001'].fatigue) == before
