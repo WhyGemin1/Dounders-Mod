@@ -33,6 +33,11 @@ class WorldBoxGatewayM01:
             raise ValueError('request source_id required')
         if not isinstance(revision, str) or not revision.strip():
             raise ValueError('request revision required')
+        # The durable receipt key uses ':' as a field delimiter. Reject ambiguous
+        # components rather than allowing two different source/revision pairs
+        # to alias the same Book transaction across checkpoint restarts.
+        if ':' in source_id or ':' in revision:
+            raise ValueError('request identity components cannot contain colon')
         request_id = f'm01:{self.tree.id}:{source_id}:{revision}'
         founder = self.sim.founders.people.get(founder_id)
         if founder is None or not founder.alive:
