@@ -1,0 +1,39 @@
+name: U026 C051 Phase 1 branch provenance
+
+on:
+  push:
+    branches: [Development]
+    paths:
+      - 'tools/u026_c051_branch_provenance.py'
+      - 'tests/test_u026_c051_branch_provenance.py'
+      - '.github/workflows/u026_c051_phase1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  provenance-read-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout all branch history for exact ancestry
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run fail-closed provenance unit tests
+        run: python -m unittest discover -s tests -p test_u026_c051_branch_provenance.py -v
+      - name: Record current remote branch provenance (no promotion)
+        run: python tools/u026_c051_branch_provenance.py --output "${{ runner.temp }}/u026_c051_phase1.json"
+      - name: Upload provenance record outside repository
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: u026-c051-phase1-provenance
+          path: ${{ runner.temp }}/u026_c051_phase1.json
+          if-no-files-found: ignore
+          retention-days: 7
