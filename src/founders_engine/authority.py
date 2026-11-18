@@ -82,6 +82,8 @@ class SingleEngineSession:
         # An undefined conservation audit must never be reported as healthy.
         if not all(isfinite(proof[key]) for key in ('mass_error', 'energy_error')):
             raise RuntimeError('non-finite canonical Book conservation audit')
+        if any(abs(proof[key]) > 1e-6 for key in ('mass_error', 'energy_error')):
+            raise RuntimeError('canonical Book conservation drift exceeds tolerance')
         return AuthoritySnapshot(
             tick=self.world.tick,
             founder_count=len(self.world.founders.people),
