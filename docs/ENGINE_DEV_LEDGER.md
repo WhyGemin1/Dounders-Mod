@@ -729,3 +729,11 @@
 - Execute/test: new assertions NOT EXECUTED at ledger write; previous #315 passing result applies only to prior head. No local clean checkout; exact-head CI pending. No new Book numbers claimed from changed test.
 - Boundaries: world.book only writer, world.tick clock, 100 Founders, M01 iteration3 lock, M02-M07 backlog, WorldBox read-only, no merge/main modification. Ecological stability and native game behavior unverified.
 - Next: verify exact-head CI of new post-reload assertions; resolve failures before adding mechanics.
+
+## 2026-11-18 12:04 CST — seed429 M01 receipt replay after actual Core151 tick and two disk reloads
+- Ground: inspected draft PR #1/#2, active checkpoint test, state and ledger. Authorized Drive archive metadata confirmed 956121 bytes. Exact prior head 6025fadd GitHub Actions #318 (44353680221) reports SUCCESS; this applies to seed428 post-reload assertions, not new seed429.
+- Integration: test commit afc6ed8ab81cbeb9ad52961a418d82ed21d5f2d0 adds a real Core151 seed429 regression to tests/test_checkpoint.py. It harvests through the existing M01 Book-funded session, persists/reloads, verifies identical receipt with no Book sequence advance, executes a real world step, persists/reloads again, verifies receipt idempotence, Founder count, exact account maps, clock/sequence and residuals <= 1e-6. No second engine, Book or clock; no M01 iteration3 lock change.
+- State: engine/ACTIVE_ENGINE.json updated at 110212cc67455ad9c3308d5d501129e6b613facf.
+- Execute/test: new seed429 test NOT EXECUTED at ledger write. Exact-head CI and numerical seed429 residuals PENDING; previous #318 success is verified only for prior head. No local clean checkout or WorldBox gameplay.
+- Ecological audit: no ecology behavior change or long-horizon test. M02-M07 remain backlog, M05 non-authoritative, WorldBox read-only. No merge or main modification.
+- Next: verify exact-head CI; if seed429 fails, fix receipt/restart semantics before additional mechanics.
