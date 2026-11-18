@@ -37,6 +37,10 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
             raise ValueError('invalid work decision ID')
         if not isinstance(action, str) or not 1 <= len(action) <= 40:
             raise ValueError('invalid work action')
+        # Colon is the Book operation field separator. Reject ambiguous IDs
+        # before any transfer, so action aliases cannot disguise a replay.
+        if ':' in action or ':' in decision_id or ':' in founder:
+            raise ValueError('ambiguous work operation identity')
         operation = f'founder:work:{founder}:{action}:{decision_id}'
         if len(operation) > 128:
             raise ValueError('work operation ID too long')
