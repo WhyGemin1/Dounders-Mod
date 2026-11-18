@@ -253,6 +253,11 @@ class PhysiologyBridgeV2(GuildBridge138):
             if s.sleep_pressure>.82 or s.fatigue>.76:
                 return 'sleep',hunger,danger
             return 'stay_with_caregiver',hunger,danger
+        # Adult and elder actors must not continue passive resource-seeking or
+        # mating when the needs policy reports an immediate threat. Preserve
+        # active hide, escape and defend decisions from the underlying policy.
+        if danger and action in ('rest','sleep','stay_with_caregiver','care','feed','search','mate'):
+            return 'hide',hunger,danger
         if not danger and (s.fatigue>.76 or s.readiness<.28 or s.sleep_pressure>.82):
             return 'sleep',hunger,danger
         if not danger and (s.fatigue>.52 or s.readiness<.43):
