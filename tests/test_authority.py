@@ -251,6 +251,26 @@ class SingleAuthorityTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, 'non-finite canonical Book'):
                     session.audit()
 
+    def test_incomplete_conservation_audit_fails_closed(self):
+        """Missing audit fields must reject both live mutations without KeyError."""
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(424)
+        session = SingleEngineSession(world, tree_id)
+        before = (world.tick, world.book.seq)
+        for proof in ({'mass_error': 0.0}, {'energy_error': 0.0}, None):
+            with self.subTest(proof=proof), patch.object(
+                    world.book, 'audit', return_value=proof), patch.object(
+                    world, 'step') as advance, patch.object(
+                    session.gateway, 'founder_harvest') as settle:
+                with self.assertRaisesRegex(RuntimeError, 'incomplete canonical Book'):
+                    session.step()
+                with self.assertRaisesRegex(RuntimeError, 'incomplete canonical Book'):
+                    session.harvest('F001', 'source', 'r1', 'forest', 'plant', .01, .001)
+                advance.assert_not_called()
+                settle.assert_not_called()
+            self.assertEqual((world.tick, world.book.seq), before)
+        session.audit()
+
     def test_failed_world_step_quarantines_session(self):
         from unittest.mock import patch
         world, _, tree_id = bootstrap(408)
