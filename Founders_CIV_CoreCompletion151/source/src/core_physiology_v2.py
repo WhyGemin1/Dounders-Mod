@@ -288,7 +288,7 @@ class PhysiologyBridgeV2(GuildBridge138):
         if s.sleep_pressure>.82:s.readiness=max(.05,s.readiness-.03)
 
     def _migrate(self,a,decision=None):
-        if a.species==ANTS or a.stage=='dependent' or decision in ('rest','sleep','care','mate','stay_with_caregiver'):
+        if a.species==ANTS or a.stage=='dependent' or decision in ('rest','sleep','care','mate','stay_with_caregiver','hide','defend'):
             return False
         here=a.habitat;neighbors=[h for h in self.tree.habitats[here].neighbors]
         if a.species in MEGA:
