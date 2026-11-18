@@ -93,6 +93,9 @@ class SingleEngineSession:
 
     def step(self):
         self._assert_authority()
+        # Preflight conservation before allowing the live engine to mutate.
+        # A failed audit must not consume a tick or touch actor resources.
+        self.audit()
         before = self.world.tick
         try:
             result = self.world.step()
