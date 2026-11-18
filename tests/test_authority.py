@@ -535,5 +535,28 @@ class SingleAuthorityTests(unittest.TestCase):
             book.request_receipts[key] = original
         book.audit()
 
+    def test_world_tree_registry_object_substitution_fails_closed(self):
+        """A copied registry is not the authoritative living Tree registry."""
+        from copy import copy
+        world, _, tree_id = bootstrap(425)
+        session = SingleEngineSession(world, tree_id)
+        original = world.world_trees
+        before = (world.tick, world.book.seq)
+        try:
+            world.world_trees = copy(original)
+            for operation in (
+                session.audit,
+                session.step,
+                lambda: session.harvest('F001', 'source', 'r1',
+                                        'forest', 'plant', .01, .001),
+            ):
+                with self.assertRaisesRegex(
+                        RuntimeError, 'authoritative World Tree registry object replaced'):
+                    operation()
+            self.assertEqual((world.tick, world.book.seq), before)
+        finally:
+            world.world_trees = original
+        session.audit()
+
 if __name__ == '__main__':
     unittest.main()
