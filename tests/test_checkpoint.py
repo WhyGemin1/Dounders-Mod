@@ -85,6 +85,50 @@ class IntegratedCheckpointTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'duplicate Book settlement sequence'):
                 save_checkpoint(self.world, self.tree_id, Path(tmp) / 'invalid.cp')
 
+    def test_seed_428_checkpoint_restart_preserves_numerical_book_audit(self):
+        """Compare real Core151 uninterrupted and disk-restored ticks and balances."""
+        from run_world_tree_pilot import bootstrap
+        from founders_engine.authority import SingleEngineSession
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+
+        world, _, tree_id = bootstrap(428)
+        uninterrupted = SingleEngineSession(world, tree_id)
+        initial = uninterrupted.audit()
+        self.assertEqual(initial.founder_count, 100)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'seed428.cp'
+            save_checkpoint(world, tree_id, path)
+            restarted = load_checkpoint(path, tree_id)
+            restored_initial = restarted.audit()
+            self.assertEqual(restored_initial.tick, initial.tick)
+            self.assertEqual(restored_initial.book_sequence, initial.book_sequence)
+            for day in range(2):
+                uninterrupted.step()
+                restarted.step()
+                direct = uninterrupted.audit()
+                replay = restarted.audit()
+                self.assertEqual((direct.tick, direct.book_sequence),
+                                 (replay.tick, replay.book_sequence))
+                self.assertEqual(dict(world.book.mass), dict(restarted.book.mass))
+                self.assertEqual(dict(world.book.energy), dict(restarted.book.energy))
+                self.assertEqual(frozenset(world.founders.people),
+                                 frozenset(restarted.world.founders.people))
+                for value in (direct.book_mass_error, direct.book_energy_error,
+                              replay.book_mass_error, replay.book_energy_error):
+                    self.assertLessEqual(abs(value), 1e-6)
+                self.assertAlmostEqual(direct.book_mass_error,
+                                       replay.book_mass_error, delta=1e-9)
+                self.assertAlmostEqual(direct.book_energy_error,
+                                       replay.book_energy_error, delta=1e-9)
+                print('CORE151_RESTART_AUDIT seed=428 '
+                      f'day={day + 1} tick={direct.tick} seq={direct.book_sequence} '
+                      f'direct_mass={direct.book_mass_error:.17g} '
+                      f'replay_mass={replay.book_mass_error:.17g} '
+                      f'direct_energy={direct.book_energy_error:.17g} '
+                      f'replay_energy={replay.book_energy_error:.17g}')
+                save_checkpoint(restarted.world, tree_id, path)
+                restarted = load_checkpoint(path, tree_id)
+
     def test_restarted_and_uninterrupted_match(self):
         from founders_engine.checkpoint import save_checkpoint, load_checkpoint
         with tempfile.TemporaryDirectory() as tmp:
