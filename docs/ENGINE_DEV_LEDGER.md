@@ -626,3 +626,13 @@
 - IMPLEMENT/INTEGRATE: Added self.audit() before gateway invocation in SingleEngineSession.harvest() (42cd098f1d4f959439c93b738509c6f0cef34247). Added seed-418 test for finite mass and energy drift that asserts gateway not called, tick/sequence/receipts unchanged (a239ab4741876514357cd5f2a69d81affc352d9). No new Book, clock, engine or external WorldBox writes.
 - EXECUTE/TEST: Source and test committed via GitHub connector. Local git ls-remote failed DNS (Could not resolve host: github.com). New unittest NOT RUN locally; clean-checkout acceptance for seed-418 PENDING. No fresh numerical conservation residuals collected. PROVISIONAL.
 - ECOLOGICAL/HANDOFF: Preflight blocks settlement on already-invalid canonical conservation but does not prove rollback, native game ACK or ecological stability. M01 iteration-3 lock, M02-M07 backlog, 100 Founders and WorldBox read-only policy retained; main unmodified. NEXT: run seed-418 and full clean-checkout headless suite, inspect numeric Book residuals and durable checkpoint replay.
+
+## 2026-11-17 23:00 CST — Pin canonical living World Tree identity (seed419)
+- Ground/design: read current Core151 authority source, seed400–418 authority tests, state, and authorized Drive Cycle152 archive. GitHub Actions #275 (44227842145) was SUCCESS for 16 substantive headless steps, but predates seed418/419. Direct `git ls-remote https://github.com/WhyGemin1/Dounders-Mod.git HEAD` failed DNS (`Could not resolve host: github.com`).
+- Defect: _assert_authority checked the Tree registry key and the replacement's sim/book references, but did not verify that the original World Tree object was still registered. A shallow-copied Tree could pass those checks.
+- Implementation: src/founders_engine/authority.py pins the Tree object in _tree_object and rejects substitutions. Source commit c0d87cf59d448f9a08fa011caefed518630dd212.
+- Test: tests/test_authority.py seed419 substitutes a copy at the same key, asserts audit/step/harvest reject it, restores the original and audits again. Test commit 7bde853069ef4eb12262f06b9c84337f3cc907b0.
+- State: ACTIVE_ENGINE.json updated at 4976b1b291b9fa13b9f29a5851376c11531523d0.
+- Execution: new regression NOT RUN at commit time; clean-checkout CI PENDING. No numerical Book conservation residuals collected this cycle; no WorldBox gameplay or ecological long-horizon tests.
+- Authority: no second engine, Book, clock, or Founder registry. M01 iteration-3 repair lock, M02–M07 backlog, and read-only WorldBox boundary unchanged. No merge to main.
+- Next: verify new headless CI for seed418 and seed419; repair failures before new mechanics; collect actual Book mass/energy residuals and checkpoint-restart evidence.
