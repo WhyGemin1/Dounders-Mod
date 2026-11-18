@@ -89,6 +89,29 @@ class SingleAuthorityTests(unittest.TestCase):
             world.founders.people.pop('F999', None)
             world.founders.people[founder_id] = founder
 
+    def test_reject_world_tree_object_substitution(self):
+        """Same registry key and shared Book must not permit a new Tree actor."""
+        from copy import copy
+        world, _, tree_id = bootstrap(419)
+        session = SingleEngineSession(world, tree_id)
+        original = world.world_trees.worlds[tree_id]
+        replacement = copy(original)
+        self.assertIsNot(replacement, original)
+        self.assertIs(replacement.book, world.book)
+        self.assertIs(replacement.sim, world)
+        try:
+            world.world_trees.worlds[tree_id] = replacement
+            with self.assertRaisesRegex(RuntimeError, 'World Tree object replaced'):
+                session.audit()
+            with self.assertRaisesRegex(RuntimeError, 'World Tree object replaced'):
+                session.step()
+            with self.assertRaisesRegex(RuntimeError, 'World Tree object replaced'):
+                session.harvest('FAKE', 'invalid-source', 'r1',
+                                'forest', 'plant', .01, .001)
+        finally:
+            world.world_trees.worlds[tree_id] = original
+        session.audit()
+
     def test_detect_founder_registry_book_swap(self):
         world, _, tree_id = bootstrap(402)
         session = SingleEngineSession(world, tree_id)
