@@ -98,6 +98,9 @@ class SingleEngineSession:
         # An undefined conservation audit must never be reported as healthy.
         # Boolean and nonnumeric audit results are not measured conservation residuals.
         # Reject them explicitly before tolerance comparisons or advancement.
+        if not isinstance(proof, dict) or any(
+                key not in proof for key in ('mass_error', 'energy_error')):
+            raise RuntimeError('incomplete canonical Book conservation audit')
         if any(type(proof[key]) not in (int, float)
                for key in ('mass_error', 'energy_error')):
             raise RuntimeError('invalid canonical Book conservation audit type')
