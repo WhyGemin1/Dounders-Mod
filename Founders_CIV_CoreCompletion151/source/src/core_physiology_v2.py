@@ -237,7 +237,13 @@ class PhysiologyBridgeV2(GuildBridge138):
     def _choose(self,a):
         action,hunger,danger=super().evaluate_needs(a)
         s=self._state(a)
-        # Dependent juveniles also need actual sleep. Caregiver proximity is\n        # not a substitute for sleep and must not trap their pressure at 1.\n        # Preserve immediate danger response and caregiver attachment.\n        if a.stage=='dependent':\n            if not danger and (s.sleep_pressure>.82 or s.fatigue>.76):\n                return 'sleep',hunger,danger\n            return 'stay_with_caregiver',hunger,danger
+        # Dependent juveniles also need actual sleep. Caregiver proximity is
+        # not a substitute for sleep and must not trap their pressure at 1.
+        # Preserve immediate danger response and caregiver attachment.
+        if a.stage=='dependent':
+            if not danger and (s.sleep_pressure>.82 or s.fatigue>.76):
+                return 'sleep',hunger,danger
+            return 'stay_with_caregiver',hunger,danger
         if not danger and (s.fatigue>.76 or s.readiness<.28 or s.sleep_pressure>.82):
             return 'sleep',hunger,danger
         if not danger and (s.fatigue>.52 or s.readiness<.43):
