@@ -117,6 +117,9 @@ class SingleEngineSession:
                 quantity, chemical_energy=0.0):
         """Optional Book-funded tree inventory transfer, not measured game harvest."""
         self._assert_authority()
+        # Reject pre-existing conservation drift before invoking the M01 adapter.
+        # A failed preflight must not create a new receipt or consume inventory.
+        self.audit()
         before_sequence = self.book.seq
         # Validation failures are retryable only when the canonical Book is unchanged.
         from copy import deepcopy
