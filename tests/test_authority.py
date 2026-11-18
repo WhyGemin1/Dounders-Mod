@@ -11,6 +11,31 @@ class SingleAuthorityTests(unittest.TestCase):
     def setUp(self):
         self.session = SingleEngineSession(self.world, self.tree_id)
 
+    def test_m01_gateway_authority_binding_cannot_be_replaced(self):
+        """The adapter must not be rebound to a different resource authority."""
+        world, _, tree_id = bootstrap(420)
+        session = SingleEngineSession(world, tree_id)
+        gateway = session.gateway
+        original_book = gateway.book
+        try:
+            gateway.book = object()
+            with self.assertRaisesRegex(RuntimeError, 'M01 gateway authority changed'):
+                session.audit()
+            with self.assertRaisesRegex(RuntimeError, 'M01 gateway authority changed'):
+                session.step()
+            with self.assertRaisesRegex(RuntimeError, 'M01 gateway authority changed'):
+                session.harvest('F001', 'source', 'r1', 'forest', 'plant', .01, .001)
+        finally:
+            gateway.book = original_book
+        session.audit()
+        try:
+            session.gateway = object()
+            with self.assertRaisesRegex(RuntimeError, 'M01 gateway authority changed'):
+                session.audit()
+        finally:
+            session.gateway = gateway
+        session.audit()
+
     def test_one_book_and_100_founders(self):
         state = self.session.audit()
         self.assertEqual(state.founder_count, 100)
