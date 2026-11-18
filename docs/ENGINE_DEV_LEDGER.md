@@ -721,3 +721,11 @@
 - Test result: NOT EXECUTED for seed-428 at ledger write; GitHub CI exact-head pending. No numerical seed-428 values claimed. Previous seed-427 residuals are prior evidence only.
 - Book audit: no new transactions or actual game mutation this cycle; all assertions await execution. No native WorldBox write. M01 iteration3 lock and M02–M07 remain unchanged.
 - Next: verify exact-head CI and printed seed-428 residuals; repair failures before adding mechanics.
+
+## 2026-11-18 10:59 CST — seed428 post-reload durable audit acceptance
+- Ground: inspected open draft PR #1/#2, active branch checkpoint source and state, authorized Drive archive metadata (956121 bytes). Exact prior head 836cc42c GitHub Actions #315 (44341382526) SUCCESS; all 16 substantive headless steps passed, including 10 checkpoint tests.
+- Actual prior seed428 CI output: day1 tick4 Book seq2968 direct/replay mass -9.0039975475519896e-11, energy -9.8953023552894592e-09; day2 tick5 seq3768 direct/replay mass -2.0918378140777349e-11, energy -1.594889909029007e-08. All residuals <1e-6, matching direct/restart; verified headless only.
+- Implementation: commit 8343e9d415b4d8b989fb0cbdf419b9d2d1dfe095 strengthens existing seed428 test: after EACH actual disk save/load, immediately audit reloaded session, assert tick, Book sequence, mass and energy accounts, Founder identity set, and numerical conservation against uninterrupted Core151. No alternate engine or writer.
+- Execute/test: new assertions NOT EXECUTED at ledger write; previous #315 passing result applies only to prior head. No local clean checkout; exact-head CI pending. No new Book numbers claimed from changed test.
+- Boundaries: world.book only writer, world.tick clock, 100 Founders, M01 iteration3 lock, M02-M07 backlog, WorldBox read-only, no merge/main modification. Ecological stability and native game behavior unverified.
+- Next: verify exact-head CI of new post-reload assertions; resolve failures before adding mechanics.
