@@ -45,11 +45,27 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
         receipts = getattr(sim, 'work_receipts', None)
         if receipts is None:
             receipts = sim.work_receipts = {}
+        # A decision identity is unique to a Founder, not to an action name.
+        # Otherwise a retried decision with a different action can spend twice.
+        prefix = f'founder:work:{founder}:'
+        for prior_operation in receipts:
+            if (prior_operation.startswith(prefix)
+                    and prior_operation.rsplit(':', 1)[-1] == decision_id
+                    and prior_operation != operation):
+                raise ValueError('conflicting work decision action')
         if operation in receipts:
             original_cost, txn = receipts[operation]
             if original_cost != base_cost:
                 raise ValueError('conflicting work decision replay')
             return txn
+        # Book operations remain authoritative across checkpoint boundaries:
+        # a lost sidecar receipt must not permit a second debit under a
+        # different action name for the same Founder decision.
+        for prior_operation in sim.book.operations:
+            if (prior_operation.startswith(prefix)
+                    and prior_operation.rsplit(':', 1)[-1] == decision_id
+                    and prior_operation != operation):
+                raise ValueError('conflicting work decision action')
         # Fail closed on a restored Book whose sidecar receipt was lost:
         # a second fatigue update would diverge from the original checkpoint.
         if operation in sim.book.operations:
