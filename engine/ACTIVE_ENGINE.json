@@ -77,7 +77,8 @@
     "p0_tree_object_substitution": "SOURCE c0d87cf59d448f9a08fa011caefed518630dd212; seed419 TEST 7bde853069ef4eb12262f06b9c84337f3cc907b0; clean-checkout execution PENDING; no Book audit measured this cycle",
     "p0_latest_ci_checked": "GitHub Actions #275 (44227842145) headless SUCCESS, 16 substantive steps, predates seed418/419",
     "p0_m01_gateway_binding": "SOURCE/TEST COMMITTED; clean-checkout CI pending",
-    "p0_missing_tree_registry": "SOURCE and seed421 regression committed; execution unverified"
+    "p0_missing_tree_registry": "SOURCE and seed421 regression committed; execution unverified",
+    "book_residual_seed427": "Committed test at b1b9a9394fcd49715a9282a9495f1a208c379adc; actual clean-checkout execution and numerical residuals pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -107,5 +108,5 @@
     "regression": "seed426 committed; exact-head CI pending",
     "book_audit": "Prior #299 headless success; fresh numerical residuals not collected"
   },
-  "next_task": "Verify exact-head seed426 CI, then measure numerical Book conservation and durable checkpoint replay"
+  "next_task": "Run seed-427 real-tick conservation test on exact branch head; inspect CI stdout residuals and restart durability; fix failures before additional mechanics"
 }
