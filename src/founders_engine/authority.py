@@ -42,6 +42,8 @@ class SingleEngineSession:
         self.tree_id = tree_id
         # Pin the original living Tree object, not merely its registry key.
         self._tree_object = tree
+        # Pin the Tree registry itself, not only the resident Tree entry.
+        self._tree_registry_object = world.world_trees
         self.gateway = WorldBoxGatewayM01(tree)
         self._gateway_object = self.gateway
         # If persistence fails after settlement, callers must discard this
@@ -83,6 +85,8 @@ class SingleEngineSession:
                 self.gateway.sim is not self.world or
                 self.gateway.book is not self.book):
             raise RuntimeError('M01 gateway authority changed')
+        if self.world.world_trees is not self._tree_registry_object:
+            raise RuntimeError('authoritative World Tree registry object replaced')
         # Missing registry entry is authority loss, not an incidental KeyError.
         if self.tree_id not in self.world.world_trees.worlds:
             raise RuntimeError('authoritative World Tree removed')
