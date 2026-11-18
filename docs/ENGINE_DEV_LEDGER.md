@@ -699,3 +699,10 @@
 - Test status: test authored and committed, **NOT YET EXECUTED** at time of this entry. Prior run success does not attest this test. No numerical seed-427 results or durable restart evidence yet.
 - Safety: no main modification or merge; M01 iteration-3 lock, M02-M07 backlog, M05 read-only and WorldBox read-only restrictions unchanged.
 - Next: run exact-head CI, collect printed seed-427 mass/energy residuals, fix any failure, then verify durable checkpoint replay.
+
+## 2026-11-18 08:00 CST — seed427 CI discovery integration
+- Ground: GitHub Actions run 44308683831 (#306) headless SUCCESS, but its 16 substantive steps only discover `test_*authority*.py` in the authority step. The standalone `tests/test_book_residual_evidence.py` was not executed; therefore the previous green workflow did not verify numerical seed427 residuals. Authorized Drive ZIP metadata confirmed (956121 bytes).
+- Implementation: added `test_seed427_numeric_book_residuals_in_ci` to the existing `tests/test_authority.py` suite, delegating to the real seed427 test and propagating failures/errors. Source commit `d38e5361ed6bc96d5410b3d39368e8704e97db60`. No simulation mechanic or second authority added.
+- Execution: previous CI #306 SUCCESS on earlier source; new exact-head CI PENDING. No numeric seed427 values or fresh checkpoint replay results collected this cycle. No local checkout claimed.
+- Audit: world.book/world.tick/100 Founders, M01 iteration3 repair lock, M05 read-only and external WorldBox read-only unchanged; main unmodified.
+- Next: inspect exact-head CI, extract `CORE151_BOOK_RESIDUAL` before/after values from job logs; if failing, repair on same branch.
