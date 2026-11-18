@@ -70,7 +70,7 @@
     "p0_independent_world_clock": "SOURCE TEST committed 0315541388633fae25ffee70b73ba3a520adcdfd; clean-checkout CI pending",
     "p0_independent_positive_world_clock_divergence": "Committed test source 69cb0761a471dbc81186a38af1aab3efe03d1694; not locally executed or CI-verified. Reject world.tick=original_tick+1 while ecology.day unchanged; checkpoint bytes and Book history/seq must remain unchanged.",
     "p0_world_clock_tamper_ci": "Prior regression 03155413 has no PR workflow returned by commit-run lookup; CI acceptance unverified.",
-    "latest_cycle": "2026-11-18 14:57 CST: seed432 changed-material durable replay regression committed; execution pending",
+    "latest_cycle": "2026-11-18 15:58 CST: seed433 Founder identity durable replay regression committed; execution pending",
     "p0_preclock_partial_step": "Regression committed 43fd04df; not executed; prior CI #266 success does not verify new test",
     "p0_finite_conservation_preflight": "Source and test committed; clean-checkout CI pending, no new numerical residuals",
     "p0_m01_harvest_preflight": "SOURCE/TEST COMMITTED; execution pending",
@@ -84,7 +84,8 @@
     "m01_seed429_restart": "PROVISIONAL: new test at afc6ed8 checks receipt exactly-once before and after real tick and second disk restart; CI pending",
     "m01_seed430_replay": "VERIFIED CI #324 completed SUCCESS, including checkpoint suite; changed-mass request replay rejected after durable restart",
     "m01_seed431_energy_replay": "VERIFIED CI #327: seed431 tick=4 seq=2953 mass=-8.7311491370201111e-11 energy=-9.9535100162029266e-09; replay altered energy rejected; 13 checkpoint tests PASS",
-    "m01_seed432_material_replay": "PROVISIONAL: seed432 changed-material durable replay regression committed fd59ad9a73f7be2e84ac57e390f3f2a9a4bd78d5; not yet executed"
+    "m01_seed432_material_replay": "VERIFIED GitHub Actions #330 run 44396565618 on final head e89b0466; success (numerical log extraction not performed)",
+    "m01_seed433_founder_replay": "PROVISIONAL: test committed; exact-head execution pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -97,10 +98,10 @@
   "last_cycle": "2026-11-17 22:00 CST: M01 harvest conservation preflight, seed-418 regression",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "8fd2919427218de65783f1686d7936cc43e3a6dc",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44386686921",
-  "last_unverified_code_commit": "fd59ad9a73f7be2e84ac57e390f3f2a9a4bd78d5",
-  "next_engineering_task": "Verify seed432 exact-head CI and CORE151_M01_MATERIAL_REPLAY residuals; repair any failure before adding further mechanics",
+  "last_verified_code_commit": "e89b0466ef19b51d27cf5ace1a548c041485fd3e",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44396565618",
+  "last_unverified_code_commit": "3e29d8f45f21aa8e8f7aee140dffb5b2dee83423",
+  "next_engineering_task": "Verify exact-head seed433 checkpoint CI and Founder replay rejection; repair failures before further mechanics",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -108,10 +109,10 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "change": "Seed432 material-only changed-request replay after two disk checkpoints and real tick; original request remains idempotent",
-    "test_commit": "fd59ad9a73f7be2e84ac57e390f3f2a9a4bd78d5",
-    "regression": "Committed, not executed",
-    "book_audit": "Prior seed431 CI #327 verified; seed432 residuals pending"
+    "change": "Seed433 reject same M01 request reassigned from F001 to F002 after two checkpoints and a real tick",
+    "test_commit": "3e29d8f45f21aa8e8f7aee140dffb5b2dee83423",
+    "regression": "Committed, not yet executed",
+    "book_audit": "Seed433 numerical residuals pending"
   },
-  "next_task": "Verify seed432 exact-head CI and CORE151_M01_MATERIAL_REPLAY residuals; repair any failure before adding further mechanics"
+  "next_task": "Verify exact-head seed433 checkpoint CI and Founder replay rejection; repair failures before further mechanics"
 }
