@@ -1,5 +1,5 @@
 {
-  "source": "U026 G2 proposed exact-source candidate with reviewed G1 atomic planting, social fuel preflight and failure-injection tests; G2 not promoted",
+  "source": "U026 G2 exact-source candidate; incomplete matched pairs fail closed, candidate-only extinction is G4 evidence; G2 not promoted",
   "files": 518,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
@@ -518,7 +518,7 @@
     "Founders_CIV_CoreCompletion151/source/world_funding_141_results.csv": "24f6b734926f13fcb6f874f5c97337cefe46edd43c6841dbc1b735234b1fa38f",
     "tools/u026_g1_matched_acceptance.py": "2f51a17d478b1a7927417eabd3bd52d44cbf0287ba9c37bbaa64a8a432911af3",
     "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
-    "tools/u026_g2_matched_acceptance.py": "73942cd851569776fdb4848db52e29cd71bfa9b99cc30d06c0a4e87e640de728",
+    "tools/u026_g2_matched_acceptance.py": "f9f61d8ead5e3db85a54fd3fba998e9f39dd265a8617b5febfa317415bbef148",
     ".github/workflows/u026_g2_acceptance.yml": "5427dae9b78cbcb48831815007df1156c3370ea7e507ece1682ff52def817a3a"
   },
   "excluded": [
