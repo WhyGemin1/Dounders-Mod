@@ -157,7 +157,7 @@ def _test_paired_regression_gate():
     rows[1] = row(42, "g2-voluntary-agency", 0)
     assert paired_collapse_regressions(rows) == []
     assert paired_collapse_regressions(rows[:1])[0]["reason"] == "missing_paired_arm"
-    print("G2 paired ecological regression gate negative controls PASS")
+    print("G2 paired ecological warning and missing-pair controls PASS")
 
 
 def main():
@@ -168,7 +168,7 @@ def main():
     p.add_argument("--factorial", action="store_true",
                    help="compare G2 options separately before promoting full agency")
     p.add_argument("--self-test", action="store_true",
-                   help="exercise promotion rejection with synthetic matched failures")
+                   help="exercise ecological-warning and missing-pair negative controls")
     args = p.parse_args()
     if args.self_test:
         _test_paired_regression_gate()
@@ -197,6 +197,12 @@ def main():
             "\n".join(json.dumps(x, sort_keys=True) for x in rows) + "\n",
             encoding="utf-8")
     paired_failures = paired_collapse_regressions(rows)
+    # An incomplete control/treatment comparison is an acceptance failure,
+    # unlike a real candidate-only extinction, which is G4 evidence.
+    incomplete = [item for item in paired_failures
+                  if item["reason"] == "missing_paired_arm"]
+    if incomplete:
+        raise RuntimeError(f"G2 incomplete matched comparison: {incomplete}")
     decision = "PASS_MECHANICAL_WITH_ECOLOGICAL_WARNING" if paired_failures else "PASS_MECHANICAL"
     print(json.dumps({"gate": "G2-candidate", "decision": decision,
                       "matched_seeds": args.seeds, "arms": len(profiles),
