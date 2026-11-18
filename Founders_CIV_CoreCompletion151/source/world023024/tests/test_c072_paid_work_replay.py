@@ -90,3 +90,25 @@ def test_checkpoint_lost_sidecar_rejects_action_alias_replay():
         paid_work(sim, 'F001', 'harvest', 1., decision_id='one')
     assert (sim.book.seq, sim.book.energy['founder:F001'],
             sim.recovery_states['F001'].fatigue) == before
+
+
+def test_ambiguous_colon_identifiers_fail_before_book_mutation():
+    sim = simulation()
+    initial = (sim.book.seq, sim.book.energy['founder:F001'],
+               sim.recovery_states['F001'].fatigue)
+    for action, decision in (('build:extra', 'same'),
+                             ('build', 'prefix:same'),
+                             ('build:prefix', 'same')):
+        with pytest.raises(ValueError, match='ambiguous work operation identity'):
+            paid_work(sim, 'F001', action, 1., decision_id=decision)
+    assert (sim.book.seq, sim.book.energy['founder:F001'],
+            sim.recovery_states['F001'].fatigue) == initial
+    assert not sim.book.operations
+
+
+def test_normal_work_identity_still_replays_exactly_once():
+    sim = simulation()
+    first = paid_work(sim, 'F001', 'build', 1., decision_id='same')
+    assert paid_work(sim, 'F001', 'build', 1., decision_id='same') is first
+    assert sim.book.seq == 1
+    assert sim.book.audit()['max_abs_energy_error'] <= 1e-7
