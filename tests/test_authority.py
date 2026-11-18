@@ -193,6 +193,28 @@ class SingleAuthorityTests(unittest.TestCase):
         finally:
             world.founders.people[founder_id] = original
 
+    def test_invalid_conservation_audit_types_block_step_and_harvest(self):
+        """A Boolean or string is not a physical Book conservation residual."""
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(422)
+        session = SingleEngineSession(world, tree_id)
+        valid = world.book.audit()
+        before = (world.tick, world.book.seq)
+        for key, value in (('mass_error', True), ('energy_error', '0.0')):
+            broken = dict(valid)
+            broken[key] = value
+            with self.subTest(key=key), patch.object(world.book, 'audit', return_value=broken):
+                with patch.object(world, 'step') as step:
+                    with self.assertRaisesRegex(RuntimeError, 'invalid canonical Book conservation audit type'):
+                        session.step()
+                    step.assert_not_called()
+                with patch.object(session.gateway, 'founder_harvest') as gateway:
+                    with self.assertRaisesRegex(RuntimeError, 'invalid canonical Book conservation audit type'):
+                        session.harvest('F001', 'source', 'r1', 'forest', 'plant', .01, .001)
+                    gateway.assert_not_called()
+            self.assertEqual((world.tick, world.book.seq), before)
+        session.audit()
+
     def test_nonfinite_book_audit_fails_closed(self):
         from unittest.mock import patch
         world, _, tree_id = bootstrap(405)
