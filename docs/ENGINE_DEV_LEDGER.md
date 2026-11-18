@@ -676,3 +676,11 @@
 - Regression: seed424 real Core151 bootstrap; missing mass/energy fields or None must reject step and gateway settlement with no tick or Book sequence change.
 - Execution: commit recorded via GitHub connector; exact-head clean-checkout tests and numerical Book conservation pending. No native WorldBox write, gameplay or ecological long-horizon test.
 - Next: verify exact-head CI and gather real numerical conservation and restart evidence; preserve M01 iteration3 lock and M02–M07 backlog.
+
+## 2026-11-18 05:00 CST — World Tree registry object continuity (seed425)
+- Ground: read live Core151 authority source, tests, state and ledger on existing branch; confirmed authorized Drive ZIP metadata (956121 bytes). No fresh archive extraction.
+- Implementation: pin original world.world_trees object and reject substitution even if a shallow copy retains the same Tree and Book. Source commit dd325bfae6bafc8152712dcbd0f8c60481d9ba91.
+- Regression: seed425 real Core151 bootstrap, replace Tree registry with shallow copy; audit/step/harvest must reject without advancing tick or Book sequence; restore original and audit. Test commit 429bf79357978ed73a107506e9d44118d0f19f7e.
+- Execution: source/test authored and committed; exact-head clean-checkout test not independently executed at commit time. No fresh numerical mass/energy audit, checkpoint replay or WorldBox game test. Status PROVISIONAL.
+- Authority: existing world.book, world.tick, 100 Founder identities, M01 iteration3 repair lock, M02-M07 backlog, and read-only WorldBox boundary unchanged. No main merge.
+- Next: verify seed425 exact-head CI, then collect real numerical Book residuals and durable checkpoint restart evidence.
