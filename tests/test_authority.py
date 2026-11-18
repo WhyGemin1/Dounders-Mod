@@ -582,5 +582,14 @@ class SingleAuthorityTests(unittest.TestCase):
             world.ecology = original
         session.audit()
 
+    def test_seed427_numeric_book_residuals_in_ci(self):
+        """Execute the actual seed-427 conservation test in the existing CI discovery pattern."""
+        from test_book_residual_evidence import BookResidualEvidenceTests
+        result = unittest.TestResult()
+        BookResidualEvidenceTests("test_real_tick_reports_finite_conservation_residuals").run(result)
+        self.assertEqual(result.testsRun, 1)
+        self.assertFalse(result.failures, result.failures)
+        self.assertFalse(result.errors, result.errors)
+
 if __name__ == '__main__':
     unittest.main()
