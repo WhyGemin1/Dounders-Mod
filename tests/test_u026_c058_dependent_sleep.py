@@ -42,10 +42,22 @@ class DependentSleepTests(unittest.TestCase):
         self.policy()
         self.assertEqual(self.bridge._choose(self.actor)[0], "stay_with_caregiver")
 
-    def test_danger_preserves_caregiver_attachment(self):
+    def test_danger_preserves_active_underlying_policy(self):
         self.policy(danger=True)
         self.bridge.functional[self.actor.id].sleep_pressure = 1.
-        self.assertEqual(self.bridge._choose(self.actor)[0], "stay_with_caregiver")
+        self.assertEqual(self.bridge._choose(self.actor)[0], "feed")
+
+    def test_danger_overrides_passive_caregiver_policy(self):
+        PhysiologyBridgeV2.__mro__[1].evaluate_needs = (
+            lambda _self, _actor: ("stay_with_caregiver", 0.7, True)
+        )
+        self.assertEqual(self.bridge._choose(self.actor)[0], "hide")
+
+    def test_danger_overrides_passive_sleep_policy(self):
+        PhysiologyBridgeV2.__mro__[1].evaluate_needs = (
+            lambda _self, _actor: ("sleep", 0.7, True)
+        )
+        self.assertEqual(self.bridge._choose(self.actor)[0], "hide")
 
     def test_actual_sleep_reduces_pressure_without_minting_fuel(self):
         self.policy()
