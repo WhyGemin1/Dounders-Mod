@@ -33,6 +33,7 @@ class SingleEngineSession:
         if tree.sim is not world or tree.book is not world.book:
             raise ValueError('World Tree uses different resource authority')
         self.world = world
+        self._ecology_object = world.ecology
         self._founder_registry_object = world.founders
         self._founder_ids = frozenset(world.founders.people)
         self._founder_objects = dict(world.founders.people)
@@ -57,6 +58,8 @@ class SingleEngineSession:
             raise RuntimeError('checkpoint outcome uncertain: reload durable world')
         if self._step_uncertain:
             raise RuntimeError('simulation step outcome uncertain: reload durable world')
+        if self.world.ecology is not self._ecology_object:
+            raise RuntimeError('authoritative ecology object replaced')
         # Equality alone accepts True == 1 and can miss ecology clock drift.
         # Reject invalid clocks before any session-mediated mutation.
         if (type(self.world.tick) is not int or self.world.tick < 0 or
