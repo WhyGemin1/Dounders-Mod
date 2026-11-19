@@ -11,7 +11,7 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules; seed437 test fixtures corrected to actual ASCII controls; exact-head CI pending",
+  "source_status": "27 tracked Core151 modules; M01 Unicode line-separator rejection committed; exact-head CI pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "FAIL #351 on 9dfe904: 5 seed437 fixture failures; preceding steps passed. Corrected fixture commit 76f6aab; exact-head CI pending",
@@ -89,7 +89,7 @@
     "m01_seed434_identity_delimiter": "VERIFIED: GitHub Actions #336 (44416371278) headless SUCCESS including authority and checkpoint steps; detailed numerical residuals not extracted",
     "m01_seed435_integer_precision": "PROVISIONAL: seed435 test committed; 2**53+1 and 10**1000 rejected before Book mutation; not yet executed",
     "seed436_float_bound": "SOURCE 93278f5b96cfb8da4c76ced9888a2c9a480a165f TEST 78b11aa61250a6b72823eced5b8c61f5a841dda0; tests not yet executed; no numerical residuals collected",
-    "m01_identity_controls": "CI #351 FAILED: 5 control-character subtests used literal backslash escapes, not actual controls; fixture corrected commit 76f6aab9; rerun pending"
+    "m01_identity_controls": "VERIFIED corrected seed437 CI #354 success at cef4833; Unicode separator extension committed ec633fea, exact-head CI pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -102,10 +102,10 @@
   "last_cycle": "2026-11-17 22:00 CST: M01 harvest conservation preflight, seed-418 regression",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
-  "last_verified_code_commit": "475c2ed60b9ad52eae4ad0db7eaa30e5a288b554",
-  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44416371278",
-  "last_unverified_code_commit": "6e5b8b4a728214d5319079ef5cea4657f6f2caa9",
-  "next_engineering_task": "Verify corrected seed437 exact-head CI, inspect historical receipt identifiers for compatibility; retain fail-closed M01",
+  "last_verified_code_commit": "cef4833210e0af0ac8ed32b75e1b5ee23eb2064a",
+  "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44448813016",
+  "last_unverified_code_commit": "ec633fea0f3bd29d92b600e833b0cc3d5a4aab00",
+  "next_engineering_task": "Verify Unicode separator exact-head CI and audit historical receipt identifiers before accepting additional restrictions",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -113,10 +113,11 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "change": "Corrected seed437 regression to use actual control characters (not literal backslash sequences)",
-    "source_commit": "76f6aab9f03123e8fcbe0374ccd046e1a7e09d48",
-    "regression": "CI #351 failed before correction; corrected CI pending",
-    "book_audit": "No new numerical residual from corrected test"
+    "change": "M01 reject Unicode NEL/line/paragraph separators in synthetic request source and revision",
+    "source_commit": "6e380b8662bc91e99e7d39651fa2b91025a18a9b",
+    "test_commit": "ec633fea0f3bd29d92b600e833b0cc3d5a4aab00",
+    "regression": "exact-head CI pending",
+    "book_audit": "no new numerical residuals"
   },
   "next_task": "Verify exact-head seed434 CI and Book audit; investigate whether historical M01 receipt source/revision identifiers contain ':' before promotion"
 }
