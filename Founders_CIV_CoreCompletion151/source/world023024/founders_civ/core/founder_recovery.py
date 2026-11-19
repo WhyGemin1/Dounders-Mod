@@ -122,7 +122,7 @@ def perform_rest(sim, founder, parent=None, decision_id=None):
     # Rest is a chosen physical action, not a purchase of elapsed time.
     # Replay identity comes from the exact decision, NOT the simulation tick.
     if decision_id is None:
-        decision_id = parent if parent is not None else f'manual:{sim.next_event + 1}'
+        decision_id = parent if parent is not None else f'manual-{sim.next_event + 1}'
     if (not isinstance(decision_id, str) or not 1 <= len(decision_id) <= 72
             or decision_id != decision_id.strip() or ':' in decision_id):
         raise ValueError('invalid recovery decision ID')
