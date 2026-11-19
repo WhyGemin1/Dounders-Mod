@@ -123,11 +123,20 @@ def perform_rest(sim, founder, parent=None, decision_id=None):
     # Replay identity comes from the exact decision, NOT the simulation tick.
     if decision_id is None:
         decision_id = parent if parent is not None else f'manual:{sim.next_event + 1}'
-    if not isinstance(decision_id, str) or not 1 <= len(decision_id) <= 72:
+    if (not isinstance(decision_id, str) or not 1 <= len(decision_id) <= 72
+            or decision_id != decision_id.strip() or ':' in decision_id):
         raise ValueError('invalid recovery decision ID')
+    if not isinstance(founder, str) or ':' in founder:
+        raise ValueError('ambiguous recovery Founder identity')
     operation = f'founder:rest:{founder}:{decision_id}'
+    if len(operation) > 128:
+        raise ValueError('recovery operation ID too long')
     if operation in sim.recovery_receipts:
         return sim.recovery_receipts[operation]
+    # A Book debit without its corresponding rest receipt indicates an
+    # incomplete checkpoint. Never repeat fatigue recovery on that identity.
+    if operation in sim.book.operations:
+        raise ValueError('missing recovery replay receipt; restore checkpoint')
     store = f'body_chemical:founder:{founder}'
     work = f'founder:{founder}'
     heat = f'body_heat:founder:{founder}'
