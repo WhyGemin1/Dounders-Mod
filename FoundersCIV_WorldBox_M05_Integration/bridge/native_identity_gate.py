@@ -78,6 +78,12 @@ def reconcile_epoch(snapshot, events, checkpoint=None):
         if (checkpoint.get("world_seed"), checkpoint.get("world_key"),
                 checkpoint.get("session_id")) != (seed, world, session):
             raise ValueError("epoch boundary requires explicit reset")
+        # C085: fail closed on replay or skipped sequences across batches.
+        prior_seq = checkpoint.get("last_seq")
+        if type(prior_seq) is not int or prior_seq < 1:
+            raise ValueError("legacy checkpoint lacks sequence continuity")
+        if type(events[0].get("seq")) is not int or events[0]["seq"] != prior_seq + 1:
+            raise ValueError("replayed or skipped event batch")
         prior = checkpoint.get("mapping")
         if not isinstance(prior, dict):
             raise ValueError("invalid checkpoint mapping")
@@ -91,4 +97,4 @@ def reconcile_epoch(snapshot, events, checkpoint=None):
     else:
         merged = dict(mapping)
     return {"schema": 1, "world_seed": seed, "world_key": world,
-            "session_id": session, "mapping": merged}
+            "session_id": session, "mapping": merged, "last_seq": events[-1]["seq"]}
