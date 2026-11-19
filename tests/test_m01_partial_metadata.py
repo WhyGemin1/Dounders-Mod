@@ -82,6 +82,19 @@ class PartialBookMutationTests(unittest.TestCase):
         self.assertLessEqual(abs(post.book_energy_error), 1e-6)
         self.assertIs(recovered.world.book, recovered.book)
         self.assertIs(recovered.world.founders.book, recovered.book)
+        # Verify replay stays equivalent beyond the first post-restart world tick.
+        baseline.step()
+        recovered.step()
+        self.assertEqual(recovered.world.tick, baseline.world.tick)
+        self.assertEqual(recovered.book.seq, baseline.book.seq)
+        self.assertEqual(dict(recovered.book.mass), dict(baseline.book.mass))
+        self.assertEqual(dict(recovered.book.energy), dict(baseline.book.energy))
+        self.assertEqual(recovered.book.transaction_history, baseline.book.transaction_history)
+        self.assertEqual(recovered.book.request_receipts, baseline.book.request_receipts)
+        second = recovered.audit()
+        self.assertEqual(second.founder_count, 100)
+        self.assertLessEqual(abs(second.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(second.book_energy_error), 1e-6)
         print(f"seed438 recovery field={field} tick={proof.tick}->{post.tick} "
               f"seq={proof.book_sequence}->{post.book_sequence} "
               f"mass={proof.book_mass_error:.17g}->{post.book_mass_error:.17g} "
