@@ -171,3 +171,14 @@ def test_whitespace_aliased_work_action_fails_closed():
     assert (sim.book.seq, dict(sim.book.energy), sim.recovery_states['F001'].fatigue) == before
     assert not sim.book.operations
     assert sim.book.audit()['max_abs_energy_error'] <= 1e-7
+
+
+def test_corrupt_fatigue_fails_closed_before_book_work_debit():
+    sim = simulation()
+    initial = (sim.book.seq, dict(sim.book.energy), dict(sim.book.operations))
+    for fatigue in (-1., 1.01, float('nan'), float('inf')):
+        sim.recovery_states['F001'].fatigue = fatigue
+        with pytest.raises(ValueError, match='invalid Founder fatigue'):
+            paid_work(sim, 'F001', 'build', 1., decision_id='corrupt-fatigue')
+        assert (sim.book.seq, dict(sim.book.energy), dict(sim.book.operations)) == initial
+    assert sim.book.audit()['max_abs_energy_error'] <= 1e-7
