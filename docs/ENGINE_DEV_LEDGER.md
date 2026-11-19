@@ -887,3 +887,11 @@
 - Execute/test: previous head CI #383 PASS; new exact-head CI is PENDING at ledger write. No local clean checkout or WorldBox execution; new residual values not collected. No claim that this regression has passed.
 - Audit: one `world.book`, one `world.tick`, 100 Founders and M01 read-only native boundary remain the acceptance contract. M05 independent Book is not authoritative. M01 iteration3 repair lock and M02-M07 backlog preserved. No merge or main change.
 - Next: inspect exact-head CI and actual seed438 three-field replay outputs; repair failures before accepting replay equivalence.
+
+## 2026-11-19 07:00 CST — repair seed438 CI coverage gap
+
+- **Ground/design:** PR #1 and #2 remain draft/unmerged; PR #2 started at `d6730463f475b23714d8e464950375d6931f552f`. GitHub Actions #387 (`44519421829`) passed all configured steps, but inspection of `.github/workflows/core151-m01-tests.yml` and the job logs showed **no invocation of `tests/test_m01_partial_metadata.py`**. Previous reports that passing CI established seed438 deterministic replay were unsupported; the test had never been included in that workflow.
+- **Implementation:** On existing `feat/single-core151-authority`, commit `67435a981882631aadfe383d9d1def189244f97c` adds a dedicated `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_partial_metadata.py'` workflow step. State updated in commit `007648d92ba5f345a8ad618106e0b04753482952`. No alternate engine, Book, clock or registry introduced.
+- **Execute/test:** Prior CI #387 **VERIFIED PASS for configured steps only**, not seed438. New dedicated step is committed, but its exact-head workflow execution and seed438 Book residual output are **PENDING**; no local clean checkout or native game test performed this cycle.
+- **Ecological/behavioral audit:** The seed438 test exercises actual Core151 bootstrap, three failed metadata mutations, durable checkpoint recovery, a real world tick and replay equivalence. These acceptance claims remain **PROVISIONAL** until new CI passes. Native WorldBox writes/ACK and long-horizon ecology **UNVERIFIED**. M01 iteration-3 repair lock, M02–M07 backlog and `main` unchanged.
+- **NEXT:** inspect new workflow run and its `seed438 recovery field=...` output; fix any failures before accepting replay equivalence or reporting numerical residuals.
