@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules; M01 partial metadata guard and expanded last/external/toll_count seed438 regression committed; latest exact-head CI pending",
+  "source_status": "27 tracked Core151 modules; seed438 three-field metadata regression previously passed CI #376; durable checkpoint recovery and post-restart real tick regression committed, exact-head execution pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS GitHub Actions #373 (44484340168) on prior 41ce5eccc391bc7057b1ab35617014fe0ce3de9c; expanded 3-field seed438 regression not yet CI verified",
+    "github_ci": "PASS GitHub Actions #376 (44493059109) on prior 6571c0d3a0b077094b022b922d711e756faf9979; new recovery test pending",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -70,7 +70,7 @@
     "p0_independent_world_clock": "SOURCE TEST committed 0315541388633fae25ffee70b73ba3a520adcdfd; clean-checkout CI pending",
     "p0_independent_positive_world_clock_divergence": "Committed test source 69cb0761a471dbc81186a38af1aab3efe03d1694; not locally executed or CI-verified. Reject world.tick=original_tick+1 while ecology.day unchanged; checkpoint bytes and Book history/seq must remain unchanged.",
     "p0_world_clock_tamper_ci": "Prior regression 03155413 has no PR workflow returned by commit-run lookup; CI acceptance unverified.",
-    "latest_cycle": "2026-11-18 19:03 CST: M01 finite-float quantity bound implementation and seed436 regression committed; exact-head execution pending",
+    "latest_cycle": "2026-11-19 03:56 CST: seed438 durable checkpoint recovery test for last/external/toll_count committed; prior CI #376 PASS",
     "p0_preclock_partial_step": "Regression committed 43fd04df; not executed; prior CI #266 success does not verify new test",
     "p0_finite_conservation_preflight": "Source and test committed; clean-checkout CI pending, no new numerical residuals",
     "p0_m01_harvest_preflight": "SOURCE/TEST COMMITTED; execution pending",
@@ -91,7 +91,8 @@
     "seed436_float_bound": "SOURCE 93278f5b96cfb8da4c76ced9888a2c9a480a165f TEST 78b11aa61250a6b72823eced5b8c61f5a841dda0; tests not yet executed; no numerical residuals collected",
     "m01_identity_controls": "VERIFIED preceding C1-boundary CI #361 (44462450731) SUCCESS on cc97c81; full 32-codepoint C1 regression committed aba794c, exact-head execution pending",
     "m01_identity_revision_c1": "32 revision-field C1 cases committed at 1ff57ecd69e3f8c9af0fa2a9babf4b690df539d2; exact-head execution pending",
-    "m01_partial_metadata": "Prior seed438 regression passed Actions #373; expanded last/external/toll_count regression committed 0d9545fe, exact-head CI pending"
+    "m01_partial_metadata": "Prior seed438 regression passed Actions #373; expanded last/external/toll_count regression committed 0d9545fe, exact-head CI pending",
+    "p0_seed438_recovery": "COMMITTED test at d8ad66d9fff76de36f39fa1886e47dc674193134; exact-head CI pending; no new numerical audit"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
