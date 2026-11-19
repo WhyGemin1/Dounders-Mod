@@ -829,3 +829,10 @@
 - Execute: new test NOT RUN locally; exact-head GitHub Actions CI pending. Required command `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_identity_controls.py'`. No new numerical Book residuals. Earlier CI success does not establish new regression acceptance.
 - Ecology/behavior: transaction identity input guard only; no ecological mechanics or long-horizon/native WorldBox tests. Preserve M01 iteration3 repair lock, M02–M07 backlog, M05 observer-only, one `world.book` and `world.tick`; no main merge.
 - Next: verify exact-head CI; inspect historical persisted receipt keys for compatibility before further restrictions.
+
+## 2026-11-19 00:02 CST — M01 full C1 control-range regression
+- Ground: inspected live canonical gateway, identity regression, ACTIVE_ENGINE and ledger; GitHub Actions #361 (44462450731) SUCCESS on preceding cc97c81, confirming prior C1 boundary test. Authorized Drive ZIP metadata accessible; no new ZIP extraction.
+- Implementation: test commit aba794c48db1348bab421487dba23c824d827891 expands existing real Core151 seed437 regression to every U+0080..U+009F source identifier (32 cases), retaining Book mass, energy, receipt, sequence, tick invariants and 100-Founder audit. No additional engine or production gateway change.
+- Execute: new full-range regression committed but NOT RUN locally; exact-head CI pending. Required command `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_identity_controls.py'`. No new numerical Book residuals measured.
+- Ecology/behavior: no ecological behavior change. Single Book/clock, 100 identities, M01 iteration3 repair lock, M02–M07 backlog, M05 observer-only, native WorldBox read-only and no-main-merge preserved.
+- Next: verify exact-head CI; audit historical persisted M01 receipt identities and collect conservation numbers.
