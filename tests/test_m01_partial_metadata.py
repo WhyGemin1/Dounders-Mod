@@ -1,5 +1,8 @@
 """Core151 regression: rejected M01 adapter calls must not mutate Book metadata."""
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from founders_engine.checkpoint import save_checkpoint, load_checkpoint
 from run_world_tree_pilot import bootstrap
 from founders_engine.authority import SingleEngineSession
 
@@ -11,26 +14,50 @@ class PartialBookMutationTests(unittest.TestCase):
                 world, _, tree_id = bootstrap(438)
                 session = SingleEngineSession(world, tree_id)
                 before = session.audit()
-                original = session.gateway.founder_harvest
-                previous = getattr(session.book, field)
+                with TemporaryDirectory() as directory:
+                    checkpoint = Path(directory) / 'core151.checkpoint'
+                    save_checkpoint(world, tree_id, checkpoint)
+                    checkpoint_bytes = checkpoint.read_bytes()
+                    self._assert_partial_mutation_recovery(session, world, tree_id, field,
+                                                           before, checkpoint, checkpoint_bytes)
 
-                def partial_failure(*args, **kwargs):
-                    if field == "last":
-                        session.book.last = None if previous is not None else "corrupt"
-                    else:
-                        setattr(session.book, field, previous + 1)
-                    raise ValueError("simulated partial Book metadata mutation")
+    def _assert_partial_mutation_recovery(self, session, world, tree_id, field,
+                                          before, checkpoint, checkpoint_bytes):
+            original = session.gateway.founder_harvest
+            previous = getattr(session.book, field)
 
-                session.gateway.founder_harvest = partial_failure
-                try:
-                    with self.assertRaisesRegex(ValueError, "simulated partial"):
-                        session.harvest("F001", "metadata-failure", "1",
-                                        "forest", "plant", .01, .001)
-                finally:
-                    session.gateway.founder_harvest = original
-                self.assertNotEqual(getattr(session.book, field), previous)
-                self.assertEqual(session.book.seq, before.book_sequence)
-                self.assertEqual(world.tick, before.tick)
-                with self.assertRaisesRegex(RuntimeError, "checkpoint outcome uncertain"):
-                    session.harvest("F001", "after-failure", "1",
+            def partial_failure(*args, **kwargs):
+                if field == "last":
+                    session.book.last = None if previous is not None else "corrupt"
+                else:
+                    setattr(session.book, field, previous + 1)
+                raise ValueError("simulated partial Book metadata mutation")
+
+            session.gateway.founder_harvest = partial_failure
+            try:
+                with self.assertRaisesRegex(ValueError, "simulated partial"):
+                    session.harvest("F001", "metadata-failure", "1",
                                     "forest", "plant", .01, .001)
+            finally:
+                session.gateway.founder_harvest = original
+            self.assertNotEqual(getattr(session.book, field), previous)
+            self.assertEqual(session.book.seq, before.book_sequence)
+            self.assertEqual(world.tick, before.tick)
+            with self.assertRaisesRegex(RuntimeError, "checkpoint outcome uncertain"):
+                session.harvest("F001", "after-failure", "1",
+                                "forest", "plant", .01, .001)
+
+        self.assertEqual(checkpoint.read_bytes(), checkpoint_bytes)
+        recovered = load_checkpoint(checkpoint, expected_tree_id=tree_id)
+        proof = recovered.audit()
+        self.assertEqual(proof.tick, before.tick)
+        self.assertEqual(proof.book_sequence, before.book_sequence)
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+        self.assertIs(recovered.world.book, recovered.book)
+        self.assertIs(recovered.world.founders.book, recovered.book)
+        self.assertEqual(getattr(recovered.book, field), previous)
+        recovered.step()
+        self.assertEqual(recovered.world.tick, before.tick + 1)
+        self.assertEqual(recovered.audit().founder_count, 100)
