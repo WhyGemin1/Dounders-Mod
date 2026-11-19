@@ -158,7 +158,13 @@ class Book:
         if (not isinstance(history, list) or len(history) != self.seq or
                 (history[-1] if history else None) != self.last):
             raise ValueError('inconsistent canonical Book transaction history')
-        # Refuse settlement when counters drift from the committed Book history.\n        # Otherwise a corrupted in-memory Book could accept another M01 move\n        # before checkpoint validation discovers the inconsistency.\n        if (type(self.transactions) is not int or self.transactions != len(history) or\n                type(self.toll_count) is not int or\n                self.toll_count != sum(tx.kind == 'transform' for tx in history)):\n            raise ValueError('canonical Book counters disagree with transaction history')\n        # apply prevalidates and commits the complete Book move. No receipt
+        # Refuse settlement when counters drift from committed Book history.
+        # This must execute before any new Book-funded M01 move.
+        if (type(self.transactions) is not int or self.transactions != len(history) or
+                type(self.toll_count) is not int or
+                self.toll_count != sum(tx.kind == 'transform' for tx in history)):
+            raise ValueError('canonical Book counters disagree with transaction history')
+        # apply prevalidates and commits the complete Book move. No receipt
         # is written if it rejects; no untracked second resource authority.
         receipt = self.move(material=legs[0], energy=legs[1])
         self.request_receipts[request_id] = (legs, receipt)
