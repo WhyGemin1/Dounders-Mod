@@ -820,3 +820,12 @@
 - Execute: source/test committed; new exact-head clean-checkout CI NOT YET VERIFIED; no local unittest run, no new numerical conservation residuals. Required command: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_identity_controls.py'`.
 - Ecological audit: no ecological behavior changes, WorldBox native writes remain read-only; M01 iteration3 repair lock, M02-M07 backlog, M05 non-authoritative policy, and no-main-merge preserved.
 - Next: verify exact-head CI, inspect historical receipt identifiers for Unicode separator compatibility, then repair any failure before more mechanics.
+
+## 2026-11-18 23:02 CST — M01 C1 Unicode control-range receipt identity guard
+- Ground: inspected live main-bound draft PR #1/#2, current M01 gateway, regression tests, state, ledger and authorized Cycle152 archive. ZIP SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified from downloaded archive. Archive text scan found no `m01:` or `worldbox_gateway_m01` tokens in .py/.json/.md entries; this does NOT prove historical receipts are compatible.
+- Prior verification: GitHub Actions #358 run 44455836736 completed SUCCESS for preceding Unicode-separator commit 485f1b43dc6acefab96ea2af547b02236cde6ca9.
+- Implementation: commit a050ee63d5ff26c769c752c2eed9a9b7c99382c1 extends the existing synthetic M01 identity validation to reject U+0080..U+009F (C1 controls) alongside ASCII C0/DEL and U+2028/U+2029; no second engine/Book/clock or native WorldBox writer.
+- Regression: commit 101f824628521a58e1db5d486a3c8fff00e4ba5d adds U+0080 and U+009F boundaries to existing real Core151 Book no-mutation and 100-Founder assertions. State commit 5af28e7899b63aa347e66dc85d0b52d207fb8df1.
+- Execute: new test NOT RUN locally; exact-head GitHub Actions CI pending. Required command `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_identity_controls.py'`. No new numerical Book residuals. Earlier CI success does not establish new regression acceptance.
+- Ecology/behavior: transaction identity input guard only; no ecological mechanics or long-horizon/native WorldBox tests. Preserve M01 iteration3 repair lock, M02–M07 backlog, M05 observer-only, one `world.book` and `world.tick`; no main merge.
+- Next: verify exact-head CI; inspect historical persisted receipt keys for compatibility before further restrictions.
