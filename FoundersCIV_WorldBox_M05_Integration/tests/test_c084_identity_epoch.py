@@ -25,9 +25,10 @@ class EpochTests(unittest.TestCase):
         c = reconcile_epoch(snapshot(), events())
         self.assertEqual(c["mapping"], {"17": "native-A"})
 
-    def test_checkpoint_replay_idempotent(self):
+    def test_checkpoint_replay_rejected(self):
         c = reconcile_epoch(snapshot(), events())
-        self.assertEqual(reconcile_epoch(snapshot(), events(), c), c)
+        with self.assertRaisesRegex(ValueError, "replayed or skipped"):
+            reconcile_epoch(snapshot(), events(), c)
 
     def test_changed_seed_fails_closed(self):
         c = reconcile_epoch(snapshot(), events())
@@ -63,7 +64,8 @@ class EpochTests(unittest.TestCase):
     def test_no_mutation_of_input_checkpoint(self):
         c = reconcile_epoch(snapshot(), events())
         before = dict(c["mapping"])
-        reconcile_epoch(snapshot(), events(), c)
+        with self.assertRaisesRegex(ValueError, "replayed or skipped"):
+            reconcile_epoch(snapshot(), events(), c)
         self.assertEqual(c["mapping"], before)
 
 
