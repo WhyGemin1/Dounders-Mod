@@ -945,3 +945,10 @@
 - Execute/test: previous CI #407 VERIFIED. Seed438 fields last/external/toll_count: tick3 seq2211, tick4 seq2950, tick5 seq3726; tick5 mass residual -1.6370904631912708e-11 and energy residual -1.594889909029007e-08, both within 1e-6. New assertion NOT YET EXECUTED at exact head. No local clean checkout or native WorldBox test this cycle.
 - Ecological/behavioral audit: no production behavior change. One world.book, world.tick, 100 Founder keys; M01 iteration3 repair lock, M02-M07 backlog, M05 observer-only and native read-only boundary unchanged. No long-horizon ecology evidence; main untouched.
 - NEXT: verify exact-head CI for first-tick checkpoint immutability, fix any failure, then prioritize production integration rather than indefinite replay assertion growth.
+
+## 2026-11-19 — Core151 canonical Book counter reconciliation
+- Grounded on live branch `feat/single-core151-authority`; preceding commit `dc17a62` CI run #410 succeeded. Draft PRs remain unmerged.
+- Production change `057ec30`: checkpoint validation now requires `Book.transactions == len(Book.transaction_history)` and `Book.toll_count == number of historical transform transactions`, rejecting booleans and forged counters. One Book, one clock, and 100 Founder identities retained.
+- Regression change `9b280674`: two actual Core151 checkpoint tests inject transaction and toll counter drift and require fail-closed rejection.
+- State commit `24f7a293`; tests at new head NOT EXECUTED at time of writing. Prior CI does not validate these new checks. No new mass/energy audit collected; no WorldBox gameplay or long-horizon ecology test.
+- Next: inspect exact-head CI, fix failures before further modifications; run clean-checkout regression and Book audits. Preserve M01 iteration-3 repair lock and M02–M07 backlog.
