@@ -931,3 +931,10 @@
 - Execute/test: prior exact-head CI #402 VERIFIED PASS; new first-tick assertion PROVISIONAL until new head CI. No local clean-checkout execution or new Book residual extraction this cycle.
 - Ecological/behavioral audit: no production behavior changes; single world.book, world.tick, 100 Founder keys; M01 iteration3 repair lock, M02-M07 backlog, M05 observer-only, WorldBox read-only remain. Long-horizon ecology and native gameplay UNVERIFIED. No main merge.
 - NEXT: inspect exact-head CI for first-tick identity assertions; repair failures before increasing replay horizon.
+
+## 2026-11-19 13:00 CST — immutable durable checkpoint after two-tick replay
+- Ground/design: live PR #1 and #2 both open, draft, unmerged. CI #404 (44583313130) SUCCESS on 9ff6a52f8893ad6464ebc23017fff568e026b129, including explicit seed438 partial mutation/recovery step and first-tick Founder identity assertions. Authorized private Cycle152 Drive archive metadata checked; no binary imported.
+- Implementation: 6a95bc3cb7bf0c4267e698412d02e51368fc5ebc extends existing real Core151 seed438 recovery regression: after two recovered simulation ticks, assert original checkpoint bytes unchanged, reload original checkpoint again, assert original tick/Book sequence/Founder keys, Book aliases and numerical conservation. No new simulation, clock, ledger or authority.
+- Execute/test: prior exact-head CI #404 VERIFIED PASS. Newly committed checkpoint immutability assertion PROVISIONAL pending exact-head CI; no local checkout test or fresh numerical residuals measured. GitHub Actions checkout remains the available clean-checkout test environment.
+- Ecological/behavioral audit: no production ecology change; M01 iteration3 repair lock, M02-M07 backlog, M05 observer-only and WorldBox native read-only boundary preserved. No WorldBox gameplay or long-horizon ecology test; main unchanged.
+- NEXT: inspect exact-head CI for durable checkpoint immutability; repair failures before any further regression expansion.
