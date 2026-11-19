@@ -952,3 +952,11 @@
 - Regression change `9b280674`: two actual Core151 checkpoint tests inject transaction and toll counter drift and require fail-closed rejection.
 - State commit `24f7a293`; tests at new head NOT EXECUTED at time of writing. Prior CI does not validate these new checks. No new mass/energy audit collected; no WorldBox gameplay or long-horizon ecology test.
 - Next: inspect exact-head CI, fix failures before further modifications; run clean-checkout regression and Book audits. Preserve M01 iteration-3 repair lock and M02–M07 backlog.
+
+## 2026-11-19 — live M01 counter-drift settlement guard
+- Ground: PR #1 and #2 remain draft; branch previously at 3ba4b5c. Exact-head GitHub Actions #413 (44614125525) succeeded for previous checkpoint-counter reconciliation change.
+- Implementation: `src/founders_civ/core/ledger.py` now rejects new `Book.move_once` settlements if transaction/toll counters disagree with canonical Book history. Added `test_book_move_once_rejects_counter_drift_before_new_settlement` in `tests/test_checkpoint.py`, asserting unchanged Book sequence, balances and receipts on rejection.
+- Commits: production f6d3b880eb24ccee7ac64272cdc44a6c5fe52a53; regression d299f63969cea32b511b14e624f2f5e94c677ae0; state c859183a26c50c9231157c8763c5ac9635d9b171.
+- Execute/test: prior CI #413 PASS on prior SHA; new exact-head tests and fresh numerical Book audits NOT YET VERIFIED at time of ledger update. No local clean checkout executed.
+- Ecological audit: no ecology/WorldBox behavior change; one world.book, world.tick, and 100 Founder registry remain canonical. No 30+ day ecological or native game test performed. M01 iteration-3 repair lock and M02-M07 backlog preserved. No merge or main write.
+- Next: inspect exact-head CI for this guard, fix failures, then validate the real Core151 live M01 settlement guard against an intentional in-memory counter fault with Book mass/energy audit.
