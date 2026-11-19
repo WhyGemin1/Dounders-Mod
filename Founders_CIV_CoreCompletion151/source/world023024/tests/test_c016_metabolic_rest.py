@@ -164,3 +164,34 @@ def test_distinct_rest_decisions_same_tick_do_not_treat_time_as_currency():
     assert perform_rest(sim,a,decision_id='choice-b')==second
     assert sim.book.seq==before
     audit(sim)
+
+
+def test_rest_rejects_ambiguous_decision_ids_without_book_or_fatigue_changes():
+    sim, founder = prepared()
+    before = (dict(sim.book.energy), sim.book.seq,
+              sim.recovery_states[founder].fatigue,
+              sim.recovery_states[founder].rest_decisions, len(sim.events))
+    for decision_id in ('alias:other', ' leading', 'trailing ', ''):
+        with pytest.raises(ValueError, match='invalid recovery decision ID'):
+            perform_rest(sim, founder, decision_id=decision_id)
+    assert (dict(sim.book.energy), sim.book.seq,
+            sim.recovery_states[founder].fatigue,
+            sim.recovery_states[founder].rest_decisions, len(sim.events)) == before
+    audit(sim)
+
+
+def test_rest_rejects_orphan_book_operation_without_recovering_twice():
+    sim, founder = prepared()
+    decision_id = 'checkpoint-rest-001'
+    operation = f'founder:rest:{founder}:{decision_id}'
+    assert perform_rest(sim, founder, decision_id=decision_id)
+    sim.recovery_receipts.pop(operation)
+    before = (dict(sim.book.energy), sim.book.seq,
+              sim.recovery_states[founder].fatigue,
+              sim.recovery_states[founder].rest_decisions, len(sim.events))
+    with pytest.raises(ValueError, match='missing recovery replay receipt'):
+        perform_rest(sim, founder, decision_id=decision_id)
+    assert (dict(sim.book.energy), sim.book.seq,
+            sim.recovery_states[founder].fatigue,
+            sim.recovery_states[founder].rest_decisions, len(sim.events)) == before
+    audit(sim)
