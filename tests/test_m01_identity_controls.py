@@ -16,7 +16,7 @@ class M01IdentityControlTests(unittest.TestCase):
             ('bad\nsource', '1'), ('source', 'bad\rrevision'),
             ('bad\tsource', '1'), ('source', 'bad\x00revision'),
             ('bad\x7fsource', '1'),
-            ('bad\u0080source', '1'), ('source', 'bad\u009frevision'),
+            *((f'bad{chr(code)}source', '1') for code in range(0x80, 0xA0)),
             ('bad\u0085source', '1'), ('source', 'bad\u2028revision'),
             ('bad\u2029source', '1'),
         ):
