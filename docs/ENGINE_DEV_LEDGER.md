@@ -924,3 +924,10 @@
 - Execute/test: preceding CI #399 VERIFIED PASS, including seed438; new Founder identity assertions NOT YET EXECUTED at exact head, hence PROVISIONAL. No local clean-checkout test, numerical residual extraction or native WorldBox gameplay this cycle.
 - Ecological/behavioral audit: production behavior unchanged; one Book, one clock, 100 Founder IDs required. M01 iteration3 repair lock, M02-M07 backlog, M05 observer-only, read-only native boundary and main unchanged. Long-horizon ecology UNVERIFIED.
 - NEXT: inspect exact-head Actions for new Founder identity-set replay assertion and fix any mismatch before expanding further.
+
+## 2026-11-19 12:00 CST — first-tick Founder identity replay gate
+- Ground/design: inspected existing seed438 Core151 regression and active state. GitHub Actions #402 (44573102120) SUCCESS on prior head f01fcbd0a51f0ed2b81310b49fbdebc236007d43; dedicated seed438 test step SUCCESS, verifying preceding two-tick Founder key-set checks.
+- Implementation: b7e83691ec2d700b037f24feeb80918b4685efa2 adds 100-Founder exact-key-set comparisons immediately after the first recovered tick, against both pre-failure world and clean checkpoint replay. Existing engine and Book writer unchanged. State update e37eebdb9e04a9f978d9992190c9a806e67aa537.
+- Execute/test: prior exact-head CI #402 VERIFIED PASS; new first-tick assertion PROVISIONAL until new head CI. No local clean-checkout execution or new Book residual extraction this cycle.
+- Ecological/behavioral audit: no production behavior changes; single world.book, world.tick, 100 Founder keys; M01 iteration3 repair lock, M02-M07 backlog, M05 observer-only, WorldBox read-only remain. Long-horizon ecology and native gameplay UNVERIFIED. No main merge.
+- NEXT: inspect exact-head CI for first-tick identity assertions; repair failures before increasing replay horizon.
