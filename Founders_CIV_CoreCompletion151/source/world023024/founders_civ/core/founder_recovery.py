@@ -36,7 +36,8 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
         if (not isinstance(decision_id, str) or not 1 <= len(decision_id) <= 72
                 or decision_id != decision_id.strip()):
             raise ValueError('invalid work decision ID')
-        if not isinstance(action, str) or not 1 <= len(action) <= 40:
+        if (not isinstance(action, str) or not 1 <= len(action) <= 40
+                or action != action.strip()):
             raise ValueError('invalid work action')
         # Colon is the Book operation field separator. Reject ambiguous IDs
         # before any transfer, so action aliases cannot disguise a replay.
