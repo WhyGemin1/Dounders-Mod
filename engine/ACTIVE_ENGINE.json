@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules; M01 control-character receipt identity preflight committed; seed437 regression committed; exact-head CI unverified",
+  "source_status": "27 tracked Core151 modules; seed437 test fixtures corrected to actual ASCII controls; exact-head CI pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS GitHub Actions run 44434030143 on preceding head 82d99cf1444478130db36b71fbf6712e12088903; seed437 exact-head CI pending",
+    "github_ci": "FAIL #351 on 9dfe904: 5 seed437 fixture failures; preceding steps passed. Corrected fixture commit 76f6aab; exact-head CI pending",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -89,7 +89,7 @@
     "m01_seed434_identity_delimiter": "VERIFIED: GitHub Actions #336 (44416371278) headless SUCCESS including authority and checkpoint steps; detailed numerical residuals not extracted",
     "m01_seed435_integer_precision": "PROVISIONAL: seed435 test committed; 2**53+1 and 10**1000 rejected before Book mutation; not yet executed",
     "seed436_float_bound": "SOURCE 93278f5b96cfb8da4c76ced9888a2c9a480a165f TEST 78b11aa61250a6b72823eced5b8c61f5a841dda0; tests not yet executed; no numerical residuals collected",
-    "m01_identity_controls": "seed437 regression committed; not yet executed"
+    "m01_identity_controls": "CI #351 FAILED: 5 control-character subtests used literal backslash escapes, not actual controls; fixture corrected commit 76f6aab9; rerun pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -105,7 +105,7 @@
   "last_verified_code_commit": "475c2ed60b9ad52eae4ad0db7eaa30e5a288b554",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44416371278",
   "last_unverified_code_commit": "6e5b8b4a728214d5319079ef5cea4657f6f2caa9",
-  "next_engineering_task": "Verify seed435 exact-head CI and audit, then inspect historical M01 identifiers for colon compatibility",
+  "next_engineering_task": "Verify corrected seed437 exact-head CI, inspect historical receipt identifiers for compatibility; retain fail-closed M01",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -113,11 +113,10 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "change": "M01 integer preflight rejects oversized imprecise/overflowing quantities before canonical Book settlement",
-    "source_commit": "5af89e9fee8e7f04bca843393f4f851d48831a22",
-    "test_commit": "6e5b8b4a728214d5319079ef5cea4657f6f2caa9",
-    "regression": "committed, CI pending",
-    "book_audit": "seed435 numerical residuals not collected"
+    "change": "Corrected seed437 regression to use actual control characters (not literal backslash sequences)",
+    "source_commit": "76f6aab9f03123e8fcbe0374ccd046e1a7e09d48",
+    "regression": "CI #351 failed before correction; corrected CI pending",
+    "book_audit": "No new numerical residual from corrected test"
   },
   "next_task": "Verify exact-head seed434 CI and Book audit; investigate whether historical M01 receipt source/revision identifiers contain ':' before promotion"
 }
