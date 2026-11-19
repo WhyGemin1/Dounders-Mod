@@ -795,3 +795,11 @@
 - Execute: new test NOT locally executed; exact-head clean-checkout CI pending. Required command: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_*authority*.py'`. No seed436 residuals collected. Previous successful CI is not evidence for this change.
 - Ecology/behavior: only M01 numerical validation changed. WorldBox remains read-only; no ecological horizon or native gameplay tested. M01 iteration3 repair lock, M02-M07 backlog, M05 non-authoritative status and no-main-merge policy preserved.
 - Next: verify exact-head CI for seed436, inspect Book numerical evidence, and audit compatibility of historical M01 receipt identifiers with colon delimiter restrictions.
+
+## 2026-11-18 19:57 CST — seed437 M01 control-character identity preflight
+- Ground: inspected live draft PR #1/#2, active gateway, authority/checkpoint tests, state and ledger. Exact-head prior CI #344 (run 44434030143) SUCCESS for 82d99cf; authorized Cycle152 ZIP metadata confirmed 956121 bytes.
+- Implementation: source commit 121ad3936c9b04a447397ca756d789372a2d8641 rejects ASCII control characters and DEL in synthetic M01 source/revision before Book settlement; legacy colon-free printable identifiers retain formatting. No native WorldBox write enabled.
+- Regression: tests/test_m01_identity_controls.py added at 7bc6eee and corrected to use canonical Book mass/energy maps at fe2c48b. Seed437 tests reject newline, carriage return, tab, NUL and DEL with unchanged Book and tick, and check ordinary receipt replay. New tests NOT YET EXECUTED.
+- State: ACTIVE_ENGINE.json updated at f7da6d28. Exact-head CI and numerical Book residuals PENDING. Command: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_identity_controls.py'`.
+- Ecological audit: no ecological change or horizon testing; 100-Founder and Book invariants are assertions awaiting execution. No new engine, Book, clock or SQLite authority; M01 iteration3 repair lock and M02-M07 backlog preserved. No main merge.
+- Next: verify exact-head CI, repair any test failures, and inspect historical receipt IDs for compatibility with identity restrictions.
