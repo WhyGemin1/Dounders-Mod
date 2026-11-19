@@ -149,3 +149,14 @@ def test_boolean_work_cost_fails_closed_without_book_or_fatigue_mutation():
     assert (sim.book.seq, sim.book.energy['founder:F001'],
             sim.recovery_states['F001'].fatigue) == before
     assert not sim.book.operations
+
+
+def test_whitespace_aliased_work_decision_fails_closed():
+    sim = simulation()
+    before = (sim.book.seq, dict(sim.book.energy), sim.recovery_states['F001'].fatigue)
+    for decision in (' leading', 'trailing ', ' both ', '\tbad', 'bad\n'):
+        with pytest.raises(ValueError, match='invalid work decision ID'):
+            paid_work(sim, 'F001', 'build', 1., decision_id=decision)
+    assert (sim.book.seq, dict(sim.book.energy), sim.recovery_states['F001'].fatigue) == before
+    assert not sim.book.operations
+    assert sim.book.audit()['max_abs_energy_error'] <= 1e-7
