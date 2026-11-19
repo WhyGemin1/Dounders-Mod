@@ -75,6 +75,11 @@ class PartialBookMutationTests(unittest.TestCase):
         self.assertEqual(recovered.book.toll_count, baseline.book.toll_count)
         post = recovered.audit()
         self.assertEqual(post.founder_count, 100)
+        # The first recovered tick must preserve every pre-failure Founder key.
+        self.assertEqual(len(recovered.world.founders.people), 100)
+        self.assertEqual(set(recovered.world.founders.people), set(world.founders.people))
+        self.assertEqual(set(recovered.world.founders.people),
+                         set(baseline.world.founders.people))
         self.assertEqual(post.book_mass_error, baseline_audit.book_mass_error)
         self.assertEqual(post.book_energy_error, baseline_audit.book_energy_error)
         self.assertEqual(post.book_sequence, recovered.book.seq)
