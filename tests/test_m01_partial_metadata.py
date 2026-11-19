@@ -91,6 +91,12 @@ class PartialBookMutationTests(unittest.TestCase):
         self.assertEqual(dict(recovered.book.energy), dict(baseline.book.energy))
         self.assertEqual(recovered.book.transaction_history, baseline.book.transaction_history)
         self.assertEqual(recovered.book.request_receipts, baseline.book.request_receipts)
+        # Replay equality must include settlement metadata, not only balances/history.
+        self.assertEqual(recovered.book.last, baseline.book.last)
+        self.assertEqual(recovered.book.external, baseline.book.external)
+        self.assertEqual(recovered.book.toll_count, baseline.book.toll_count)
+        self.assertIs(recovered.world.book, recovered.book)
+        self.assertIs(baseline.world.book, baseline.book)
         second = recovered.audit()
         self.assertEqual(second.founder_count, 100)
         self.assertLessEqual(abs(second.book_mass_error), 1e-6)
