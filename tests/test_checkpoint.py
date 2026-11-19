@@ -43,6 +43,28 @@ class IntegratedCheckpointTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'counters disagree'):
                 save_checkpoint(self.world, self.tree_id, Path(tmp) / 'state.cp')
 
+    def test_book_move_once_rejects_counter_drift_before_new_settlement(self):
+        # The live Book must fail closed before a corrupted checkpoint is saved.
+        book = self.session.book
+        for field in ('transactions', 'toll_count'):
+            with self.subTest(field=field):
+                prior = getattr(book, field)
+                seq = book.seq
+                mass = dict(book.mass)
+                energy = dict(book.energy)
+                receipts = dict(book.request_receipts)
+                try:
+                    setattr(book, field, prior + 1)
+                    with self.assertRaisesRegex(ValueError, 'counters disagree'):
+                        book.move_once('counter-drift-' + field)
+                    self.assertEqual(book.seq, seq)
+                    self.assertEqual(dict(book.mass), mass)
+                    self.assertEqual(dict(book.energy), energy)
+                    self.assertEqual(book.request_receipts, receipts)
+                finally:
+                    setattr(book, field, prior)
+        self.session.audit()
+
     def test_restart_replay_is_idempotent(self):
         from founders_engine.checkpoint import save_checkpoint, load_checkpoint
         first = self.session.harvest('F001', 'checkpoint-replay', '1',
