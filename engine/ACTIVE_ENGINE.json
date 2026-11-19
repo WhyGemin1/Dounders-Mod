@@ -109,7 +109,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Execute exact-head CI for first-tick durable checkpoint byte equality; repair any failure before accepting regression",
+  "next_engineering_task": "Verify exact-head CI and collect numerical mass/energy output for both corrupted Book counters; repair failures before accepting",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -117,11 +117,12 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "change": "Add checkpoint byte-immutability assertion immediately after first recovered tick (existing second-tick check retained)",
-    "code_commit": "b3a1c6f1ada199135dbb1e9f87c8d312587fa5c2",
-    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44593418188",
-    "regression": "Prior two-tick checkpoint integrity PASS CI #407; new first-tick assertion provisional",
-    "book_audit": "seed438 all three corruption fields: tick5 seq3726 mass=-1.6370904631912708e-11 energy=-1.594889909029007e-08"
+    "date": "2026-11-19",
+    "change": "Strengthen real Core151 live M01 Book counter-drift regression with unchanged clock, Founder identity keys, authoritative Book references, transaction history and printed mass/energy audits",
+    "code_commit": "13ae4fad1835ffd9c01f6bc9bae65b72c40734bb",
+    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44633980553",
+    "previous_ci_result": "SUCCESS on 0525b847; new regression not yet executed",
+    "status": "PROVISIONAL"
   },
   "next_task": "Verify exact-head CI for second-tick settlement metadata equivalence; fix failures before expanding replay horizon",
   "p0_seed438_recovery": "VERIFIED CI #393 two-tick deterministic replay; second-tick numerical output and explicit authority assertions committed 0803b419, pending exact-head CI"
