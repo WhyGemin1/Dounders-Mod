@@ -805,3 +805,10 @@
 - Next: verify exact-head CI, repair any test failures, and inspect historical receipt IDs for compatibility with identity restrictions.
 
 - CI integration follow-up: workflow commit 0cb1f8560d3d16a0f0d1789d6f907ff3a5c0f963 adds dedicated clean-checkout seed437 unittest step. No passing run confirmed at commit time; acceptance remains PROVISIONAL.
+
+## 2026-11-18 21:03 CST — seed437 actual-control fixture repair
+- Ground: inspected live draft PR #1/#2, Core151 M01 gateway, test fixture, state and ledger. CI #351 (run 44440923017) FAILED in dedicated seed437 step: five subtests passed printable backslash sequences (`\\n`, `\\r`, `\\t`, `\\x00`, `\\x7f`) rather than control characters. Ordinary legacy identity replay passed; earlier workflow steps including seed427 numerical residual passed.
+- Implementation: commit 76f6aab9f03123e8fcbe0374ccd046e1a7e09d48 corrects existing regression literals to Python escapes producing actual control bytes. No new engine, Book, clock, Founder identity authority, or gateway behavior introduced.
+- Execute: prior exact-head CI FAILED (2 tests, 5 subtest failures); corrected test not executed locally or yet verified in GitHub Actions. Command: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_identity_controls.py'`. No new Book numerical residuals collected for corrected fixture. Earlier CI log seed427 residual after tick mass -8.9130480773746967e-11 energy -1.0244548320770264e-08; not evidence of seed437 pass.
+- Ecology/behavior: no ecology change; WorldBox external writes still prohibited. M01 iteration3 repair lock, M02–M07 backlog and M05 observer-only status retained. No main merge.
+- Next: verify corrected exact-head CI, repair any real validation failure, audit historical M01 receipt IDs for compatibility.
