@@ -50,20 +50,36 @@ class IntegratedCheckpointTests(unittest.TestCase):
             with self.subTest(field=field):
                 prior = getattr(book, field)
                 seq = book.seq
+                tick = self.world.tick
+                founder_ids = set(self.world.founders.people)
+                self.assertEqual(len(founder_ids), 100)
                 mass = dict(book.mass)
                 energy = dict(book.energy)
                 receipts = dict(book.request_receipts)
+                history = list(book.transaction_history)
                 try:
                     setattr(book, field, prior + 1)
                     with self.assertRaisesRegex(ValueError, 'counters disagree'):
                         book.move_once('counter-drift-' + field)
                     self.assertEqual(book.seq, seq)
+                    self.assertEqual(self.world.tick, tick)
+                    self.assertEqual(set(self.world.founders.people), founder_ids)
+                    self.assertIs(self.world.book, book)
+                    self.assertIs(self.world.founders.book, book)
                     self.assertEqual(dict(book.mass), mass)
                     self.assertEqual(dict(book.energy), energy)
                     self.assertEqual(book.request_receipts, receipts)
+                    self.assertEqual(book.transaction_history, history)
                 finally:
                     setattr(book, field, prior)
-        self.session.audit()
+                proof = self.session.audit()
+                self.assertEqual(proof.founder_count, 100)
+                self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+                self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+                print('CORE151_LIVE_COUNTER_DRIFT '
+                      f'field={field} tick={proof.tick} seq={proof.book_sequence} '
+                      f'mass={proof.book_mass_error:.17g} '
+                      f'energy={proof.book_energy_error:.17g}')
 
     def test_restart_replay_is_idempotent(self):
         from founders_engine.checkpoint import save_checkpoint, load_checkpoint
