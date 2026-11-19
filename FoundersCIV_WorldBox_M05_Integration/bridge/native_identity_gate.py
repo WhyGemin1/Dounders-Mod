@@ -8,16 +8,21 @@ def reconcile(snapshot, events):
     for key, expected in (("paused", True), ("world_loading", False), ("has_more", False),
                           ("offset", 0), ("missing_identity_count", 0),
                           ("duplicate_identity_count", 0)):
-        if snapshot.get(key) != expected:
+        value = snapshot.get(key)
+        if type(value) is not type(expected) or value != expected:
             raise ValueError("incomplete M01 snapshot")
     rows = snapshot.get("items")
     if not isinstance(rows, list) or snapshot.get("returned") != len(rows) or snapshot.get("matched") != len(rows):
         raise ValueError("inconsistent M01 actor count")
     ids = []
     for row in rows:
-        if not isinstance(row, dict) or not str(row.get("native_actor_id", "")).strip() or not str(row.get("asset_id", "")).strip():
+        if not isinstance(row, dict):
             raise ValueError("invalid native actor identity")
-        ids.append(str(row["native_actor_id"]).strip())
+        native_id, asset_id = row.get("native_actor_id"), row.get("asset_id")
+        if (type(native_id) is not str or not native_id or native_id != native_id.strip()
+                or type(asset_id) is not str or not asset_id.strip()):
+            raise ValueError("invalid native actor identity")
+        ids.append(native_id)
     if len(set(ids)) != len(ids):
         raise ValueError("duplicate M01 identity")
     if snapshot.get("world_seed") is None:
@@ -44,9 +49,13 @@ def reconcile(snapshot, events):
             raise ValueError("mixed M05 session or world")
         if event.get("kind") not in ("nutrition_call", "resource_consume_call") or event.get("native_success") is not True:
             continue
-        callback_id = str(event.get("actor_id", "")).strip()
-        data_id = str(event.get("actor_data_id", "")).strip()
-        if callback_id in ("", "-1", "None") or data_id not in known:
+        callback_raw, data_raw = event.get("actor_id"), event.get("actor_data_id")
+        if type(callback_raw) is not int or callback_raw < 0:
+            raise ValueError("unresolved M01/M05 identity")
+        if type(data_raw) is not str or data_raw != data_raw.strip():
+            raise ValueError("unresolved M01/M05 identity")
+        callback_id, data_id = str(callback_raw), data_raw
+        if data_id not in known:
             raise ValueError("unresolved M01/M05 identity")
         if callback_id in mapping and mapping[callback_id] != data_id:
             raise ValueError("callback ID remapped")
