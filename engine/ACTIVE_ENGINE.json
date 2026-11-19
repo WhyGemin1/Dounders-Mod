@@ -116,11 +116,12 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "change": "Add missing CI execution for actual seed438 Book metadata corruption, checkpoint recovery and deterministic replay test",
-    "code_commit": "67435a981882631aadfe383d9d1def189244f97c",
-    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44519421829",
-    "regression": "PENDING new workflow run; preceding success did not execute test_m01_partial_metadata.py",
-    "book_audit": "No fresh seed438 numerical residuals"
+    "change": "Extend seed438 deterministic checkpoint recovery from one to two real world ticks",
+    "code_commit": "c86ac123e131a5495bc90e6ee0eb02d1b618c131",
+    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44529110822",
+    "regression": "VERIFIED previous seed438 one-tick test passed in CI #390; two-tick extension committed, exact-head CI pending",
+    "book_audit": "seed438 all last/external/toll_count: tick 3->4, seq 2211->2950, mass -3.1832314562052488e-11 -> -8.6401996668428183e-11; energy -7.5669959187507629e-09 -> -9.8370946943759918e-09"
   },
-  "next_task": "Run/inspect new exact-head CI with explicit seed438 step; repair any failure, capture three field-specific numerical residuals"
+  "next_task": "Verify exact-head two-tick seed438 CI; inspect replay and conservation assertions; fix failures before accepting extended recovery",
+  "p0_seed438_recovery": "VERIFIED one-tick deterministic recovery and 3 field-specific Book audits in CI #390; two-tick replay extension pending"
 }
