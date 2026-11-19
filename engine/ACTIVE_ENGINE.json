@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules; seed438 three-field metadata regression previously passed CI #376; durable checkpoint recovery and post-restart real tick regression committed, exact-head execution pending",
+  "source_status": "27 tracked Core151 modules; seed438 durable recovery regression passed exact-head CI #380; post-recovery numerical Book audit assertions committed, new CI pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS GitHub Actions #376 (44493059109) on prior 6571c0d3a0b077094b022b922d711e756faf9979; new recovery test pending",
+    "github_ci": "PASS GitHub Actions #380 (44501062513) at 696a04f; new post-tick numerical audit test pending",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -70,7 +70,7 @@
     "p0_independent_world_clock": "SOURCE TEST committed 0315541388633fae25ffee70b73ba3a520adcdfd; clean-checkout CI pending",
     "p0_independent_positive_world_clock_divergence": "Committed test source 69cb0761a471dbc81186a38af1aab3efe03d1694; not locally executed or CI-verified. Reject world.tick=original_tick+1 while ecology.day unchanged; checkpoint bytes and Book history/seq must remain unchanged.",
     "p0_world_clock_tamper_ci": "Prior regression 03155413 has no PR workflow returned by commit-run lookup; CI acceptance unverified.",
-    "latest_cycle": "2026-11-19 03:56 CST: seed438 durable checkpoint recovery test for last/external/toll_count committed; prior CI #376 PASS",
+    "latest_cycle": "2026-11-19 05:00 CST: added post-restart Book mass/energy audit to seed438 recovery test; CI #380 prior head passed",
     "p0_preclock_partial_step": "Regression committed 43fd04df; not executed; prior CI #266 success does not verify new test",
     "p0_finite_conservation_preflight": "Source and test committed; clean-checkout CI pending, no new numerical residuals",
     "p0_m01_harvest_preflight": "SOURCE/TEST COMMITTED; execution pending",
@@ -92,7 +92,7 @@
     "m01_identity_controls": "VERIFIED preceding C1-boundary CI #361 (44462450731) SUCCESS on cc97c81; full 32-codepoint C1 regression committed aba794c, exact-head execution pending",
     "m01_identity_revision_c1": "32 revision-field C1 cases committed at 1ff57ecd69e3f8c9af0fa2a9babf4b690df539d2; exact-head execution pending",
     "m01_partial_metadata": "Prior seed438 regression passed Actions #373; expanded last/external/toll_count regression committed 0d9545fe, exact-head CI pending",
-    "p0_seed438_recovery": "COMMITTED test at d8ad66d9fff76de36f39fa1886e47dc674193134; exact-head CI pending; no new numerical audit"
+    "p0_seed438_recovery": "VERIFIED GitHub Actions #380 run 44501062513 at 696a04f: headless success including trusted checkpoint/restart step; additional post-tick numerical audits committed df9ea1d, exact-head CI pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -108,7 +108,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify full C1-range regression exact-head CI; inspect persisted historical receipt IDs and extract numeric conservation audits",
+  "next_engineering_task": "Verify exact-head CI for seed438 post-restart numeric audit; extract field-specific mass/energy residuals and fix any failures",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
