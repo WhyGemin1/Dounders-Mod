@@ -14,12 +14,12 @@
   "source_status": "27 tracked Core151 modules; seed438 partial metadata/replay regression now explicitly wired into CI at 67435a9; execution pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS GitHub Actions #393 (44539752789) at 3fbd718 including seed438 two-tick test; new second-tick audit assertions not yet executed",
+    "github_ci": "PASS Actions #396 (44550125207) at e9168809, dedicated seed438 regression including second-tick numerical assertions",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #195 headless SUCCESS including direct Book Boolean replay regression; no separate local checkout",
-    "book_audit_this_cycle": "No new numerical residuals; preceding CI #387 omitted seed438 test, so three-field post-restart residuals and replay equivalence remain UNVERIFIED",
+    "book_audit_this_cycle": "VERIFIED seed438 for last/external/toll_count: second tick=5 seq=3726 mass=-1.6370904631912708e-11 energy=-1.594889909029007e-08; all 3 cases match clean checkpoint replay and within 1e-6",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -92,7 +92,7 @@
     "m01_identity_controls": "VERIFIED preceding C1-boundary CI #361 (44462450731) SUCCESS on cc97c81; full 32-codepoint C1 regression committed aba794c, exact-head execution pending",
     "m01_identity_revision_c1": "32 revision-field C1 cases committed at 1ff57ecd69e3f8c9af0fa2a9babf4b690df539d2; exact-head execution pending",
     "m01_partial_metadata": "Prior seed438 regression passed Actions #373; expanded last/external/toll_count regression committed 0d9545fe, exact-head CI pending",
-    "p0_seed438_recovery": "BLOCKED verification until dedicated CI seed438 step passes; workflow coverage fix commit 67435a981882631aadfe383d9d1def189244f97c"
+    "p0_seed438_recovery": "VERIFIED exact-head CI #396 at e9168809; new second-tick metadata and Book identity regression at 8a9c564 pending execution"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -108,7 +108,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify exact-head CI for seed438 post-restart numeric audit; extract field-specific mass/energy residuals and fix any failures",
+  "next_engineering_task": "Verify exact-head CI for second-tick settlement metadata equivalence; fix failures before expanding replay horizon",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -116,12 +116,12 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "change": "Add second-tick numerical residual and Book authority assertions to seed438 recovered-vs-baseline replay",
-    "code_commit": "0803b41944f9d2f66779e6fce92b6f3a9407acae",
-    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44539752789",
-    "regression": "VERIFIED prior two-tick regression passed CI #393 at 3fbd718; new second-tick residual assertions committed, exact-head CI pending",
-    "book_audit": "Prior one-tick seed438 mass -3.1832314562052488e-11 to -8.6401996668428183e-11; energy -7.5669959187507629e-09 to -9.8370946943759918e-09. Second-tick numeric values pending logs"
+    "change": "Add second-tick settlement metadata (last/external/toll_count) and Book identity replay assertions",
+    "code_commit": "8a9c564f3cb5692104c0ddf136fcc8c8917fa96d",
+    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44550125207",
+    "regression": "Prior second-tick numerical CI verified; new second-tick metadata assertions pending exact-head CI",
+    "book_audit": "Seed438 all three fields: tick5 seq3726 mass=-1.6370904631912708e-11 energy=-1.594889909029007e-08"
   },
-  "next_task": "Verify CI on second-tick audit commit; extract all three second-tick numerical residuals; repair mismatches before acceptance",
+  "next_task": "Verify exact-head CI for second-tick settlement metadata equivalence; fix failures before expanding replay horizon",
   "p0_seed438_recovery": "VERIFIED CI #393 two-tick deterministic replay; second-tick numerical output and explicit authority assertions committed 0803b419, pending exact-head CI"
 }
