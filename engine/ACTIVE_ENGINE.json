@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules; M01 partial Book metadata fail-closed guard committed with seed438 regression; exact-head CI pending",
+  "source_status": "27 tracked Core151 modules; M01 partial metadata guard and expanded last/external/toll_count seed438 regression committed; latest exact-head CI pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS GitHub Actions #367 (44476733044) on preceding commit 4fb641cfa7be44894c5c354b04c30e5b1948f741; seed438 metadata guard not yet executed",
+    "github_ci": "PASS GitHub Actions #373 (44484340168) on prior 41ce5eccc391bc7057b1ab35617014fe0ce3de9c; expanded 3-field seed438 regression not yet CI verified",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -91,7 +91,7 @@
     "seed436_float_bound": "SOURCE 93278f5b96cfb8da4c76ced9888a2c9a480a165f TEST 78b11aa61250a6b72823eced5b8c61f5a841dda0; tests not yet executed; no numerical residuals collected",
     "m01_identity_controls": "VERIFIED preceding C1-boundary CI #361 (44462450731) SUCCESS on cc97c81; full 32-codepoint C1 regression committed aba794c, exact-head execution pending",
     "m01_identity_revision_c1": "32 revision-field C1 cases committed at 1ff57ecd69e3f8c9af0fa2a9babf4b690df539d2; exact-head execution pending",
-    "m01_partial_metadata": "Production guard and seed438 regression committed; exact-head clean-checkout execution PENDING"
+    "m01_partial_metadata": "Prior seed438 regression passed Actions #373; expanded last/external/toll_count regression committed 0d9545fe, exact-head CI pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
