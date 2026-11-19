@@ -71,6 +71,9 @@ namespace FoundersCIV.WorldBoxM05
             public string observed_utc = "";
             public string source_method = "";
             public long actor_id = -1;
+            // Same native object as actor_id, read from Actor.data.id for M01 reconciliation.
+            // Blank means unresolved; never infer identity from name or location.
+            public string actor_data_id = "";
             public long target_id = -1;
             public string context_id = "";
             public int native_amount = 0;
@@ -176,6 +179,33 @@ namespace FoundersCIV.WorldBoxM05
             try { return _getId == null || actor == null ? -1 : Convert.ToInt64(_getId.Invoke(actor, null)); }
             catch { return -1; }
         }
+        // Read the identical Actor.data.id member used by the M01 identity bridge.
+        // Reflection is observational; a missing member returns an empty ID and
+        // prevents Soul practice certification. Never mutate the Actor or its data.
+        private static object ReadActorMember(object obj, string member)
+        {
+            if (obj == null) return null;
+            for (Type t = obj.GetType(); t != null; t = t.BaseType) {
+                const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public |
+                    BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+                var field = t.GetField(member, flags);
+                if (field != null) return field.GetValue(obj);
+                var property = t.GetProperty(member, flags);
+                if (property != null && property.GetIndexParameters().Length == 0)
+                    return property.GetValue(obj, null);
+            }
+            return null;
+        }
+        private static string ActorDataId(object actor)
+        {
+            try {
+                var data = ReadActorMember(actor, "data");
+                var id = ReadActorMember(data, "id");
+                return id == null ? "" :
+                    (Convert.ToString(id, System.Globalization.CultureInfo.InvariantCulture) ?? "").Trim();
+            } catch { return ""; }
+        }
+
         private static int SafeInt(object value)
         {
             try {return Convert.ToInt32(value);} catch {return 0;}
@@ -271,7 +301,7 @@ namespace FoundersCIV.WorldBoxM05
         {
             try {
             int after = Nutrition(__instance);
-            Send(new Event {kind="nutrition_call", actor_id=Id(__instance), source_method="Actor.addNutritionFromEating",
+            Send(new Event {kind="nutrition_call", actor_id=Id(__instance), actor_data_id=ActorDataId(__instance), source_method="Actor.addNutritionFromEating",
                 native_amount=__args.Length>0 ? SafeInt(__args[0]) : 0,
                 nutrition_before=__state,nutrition_after=after,
                 native_delta=(__state>=0&&after>=0) ? after-__state : 0,
@@ -316,7 +346,7 @@ namespace FoundersCIV.WorldBoxM05
             try {
             int after=Nutrition(__instance);
             Send(new Event {kind="resource_consume_call",source_method="Actor.consumeFoodResource",
-                actor_id=Id(__instance),nutrition_before=__state,nutrition_after=after,
+                actor_id=Id(__instance),actor_data_id=ActorDataId(__instance),nutrition_before=__state,nutrition_after=after,
                 native_delta=(__state>=0&&after>=0) ? after-__state : 0,
                 resource=__args.Length>0?ResourceLabel(__args[0]):"",
                 context_id=CurrentContext(),native_success=__exception==null,
