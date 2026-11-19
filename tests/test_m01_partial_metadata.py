@@ -63,6 +63,8 @@ class PartialBookMutationTests(unittest.TestCase):
         baseline.step()
         baseline_audit = baseline.audit()
         recovered.step()
+        # Recovery advances only in memory; never overwrite the source checkpoint.
+        self.assertEqual(checkpoint.read_bytes(), checkpoint_bytes)
         self.assertEqual(recovered.world.tick, before.tick + 1)
         self.assertEqual(recovered.world.tick, baseline.world.tick)
         self.assertEqual(recovered.book.seq, baseline.book.seq)
