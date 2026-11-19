@@ -856,3 +856,11 @@
 - **NEXT:** confirm exact-head CI for seed438, repair failures, extract Book mass/energy residuals and verify partial-failure recovery behavior before additional mechanics.
 
 - **Executed archived-source smoke (not clean GitHub checkout):** extracted authorized Cycle152 ZIP into a temporary directory; `python` imported `run_world_tree_pilot.bootstrap`, called `bootstrap(438)`, `world.book.audit()`, `world.step()`, and `world.book.audit()` again. 100 Founders; tick 3→4; Book seq 2211→2950; mass residual −1.8189894035458565e−12→−2.7284841053187847e−12; energy residual −7.62520357966423e−9→−1.1175870895385742e−8. This smoke does NOT exercise new seed438 M01 fail-closed code or demonstrate clean-checkout equivalence.
+
+## 2026-11-19 03:00 CST — seed438 three-field Book metadata regression
+
+- Ground/design: live PR #1 and #2 remain draft/unmerged; PR #2 prior head 41ce5eccc391bc7057b1ab35617014fe0ce3de9c. GitHub Actions #373 (run 44484340168) returned completed/success for that exact head, accepting the preceding seed438 test.
+- Implementation: updated existing tests/test_m01_partial_metadata.py in commit 0d9545fe4741dd9fd435c83367575274e76430e5. Each of Book.last, Book.external, Book.toll_count is now independently mutated by a simulated ValueError adapter failure without incrementing Book.seq; subsequent settlement must be blocked until durable recovery. No production code change, no new engine.
+- Execute: previous exact-head CI passed; expanded regression NOT executed locally and its own exact-head CI not yet confirmed. Required: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_partial_metadata.py'. No new numeric Book audit or WorldBox gameplay executed.
+- Audit: one Book, clock, 100 Founder identities and read-only WorldBox boundary unchanged; M01 iteration3 repair lock and M02-M07 backlog preserved. No main merge.
+- Next: verify expanded regression in clean-checkout CI, investigate failures if any, then test durable recovery after each partial-mutation case.
