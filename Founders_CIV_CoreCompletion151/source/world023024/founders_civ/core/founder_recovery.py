@@ -33,7 +33,8 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
         raise ValueError('invalid work cost')
     state = state_for(sim, founder)
     if decision_id is not None:
-        if not isinstance(decision_id, str) or not 1 <= len(decision_id) <= 72:
+        if (not isinstance(decision_id, str) or not 1 <= len(decision_id) <= 72
+                or decision_id != decision_id.strip()):
             raise ValueError('invalid work decision ID')
         if not isinstance(action, str) or not 1 <= len(action) <= 40:
             raise ValueError('invalid work action')
