@@ -60,4 +60,14 @@ class PartialBookMutationTests(unittest.TestCase):
         self.assertEqual(getattr(recovered.book, field), previous)
         recovered.step()
         self.assertEqual(recovered.world.tick, before.tick + 1)
-        self.assertEqual(recovered.audit().founder_count, 100)
+        post = recovered.audit()
+        self.assertEqual(post.founder_count, 100)
+        self.assertEqual(post.book_sequence, recovered.book.seq)
+        self.assertLessEqual(abs(post.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(post.book_energy_error), 1e-6)
+        self.assertIs(recovered.world.book, recovered.book)
+        self.assertIs(recovered.world.founders.book, recovered.book)
+        print(f"seed438 recovery field={field} tick={proof.tick}->{post.tick} "
+              f"seq={proof.book_sequence}->{post.book_sequence} "
+              f"mass={proof.book_mass_error:.17g}->{post.book_mass_error:.17g} "
+              f"energy={proof.book_energy_error:.17g}->{post.book_energy_error:.17g}")
