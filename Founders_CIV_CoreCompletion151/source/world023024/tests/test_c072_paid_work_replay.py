@@ -112,3 +112,28 @@ def test_normal_work_identity_still_replays_exactly_once():
     assert paid_work(sim, 'F001', 'build', 1., decision_id='same') is first
     assert sim.book.seq == 1
     assert sim.book.audit()['max_abs_energy_error'] <= 1e-7
+
+
+def test_receipt_without_authoritative_book_operation_fails_closed():
+    sim = simulation()
+    paid_work(sim, 'F001', 'build', 1., decision_id='orphan')
+    original = (sim.book.seq, sim.book.energy['founder:F001'],
+                sim.recovery_states['F001'].fatigue)
+    sim.book.operations.pop('founder:work:F001:build:orphan')
+    with pytest.raises(ValueError, match='work receipt/Book checkpoint mismatch'):
+        paid_work(sim, 'F001', 'build', 1., decision_id='orphan')
+    assert (sim.book.seq, sim.book.energy['founder:F001'],
+            sim.recovery_states['F001'].fatigue) == original
+
+
+def test_receipt_with_conflicting_book_transaction_fails_closed():
+    sim = simulation()
+    paid_work(sim, 'F001', 'build', 1., decision_id='first')
+    paid_work(sim, 'F001', 'build', 1., decision_id='second')
+    key = 'founder:work:F001:build:first'
+    signature, _ = sim.book.operations[key]
+    sim.book.operations[key] = (signature, sim.book.operations['founder:work:F001:build:second'][1])
+    before = sim.book.seq
+    with pytest.raises(ValueError, match='work receipt/Book checkpoint mismatch'):
+        paid_work(sim, 'F001', 'build', 1., decision_id='first')
+    assert sim.book.seq == before
