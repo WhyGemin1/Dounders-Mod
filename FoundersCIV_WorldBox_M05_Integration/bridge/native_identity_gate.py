@@ -102,6 +102,12 @@ def reconcile_epoch(snapshot, events, checkpoint=None):
                 type(k) is not str or not k.strip() or k in ("-1", "None") or
                 type(v) is not str or not v.strip() for k, v in prior.items()):
             raise ValueError("invalid checkpoint mapping")
+        # C089: a checkpoint may not resurrect identities absent from the complete paused snapshot.
+        snapshot_ids = {row["native_actor_id"] for row in snapshot["items"]}
+        if not set(prior.values()).issubset(snapshot_ids):
+            raise ValueError("checkpoint actor absent from M01 snapshot")
+        if any(not k.isascii() or not k.isdecimal() or str(int(k)) != k for k in prior):
+            raise ValueError("noncanonical callback identity")
         if len(set(prior.values())) != len(prior):
             raise ValueError("non-injective checkpoint mapping")
         if any(k != k.strip() or v != v.strip() for k, v in prior.items()):
