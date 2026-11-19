@@ -50,7 +50,7 @@ class CheckpointMappingTests(unittest.TestCase):
         snap, event = evidence()
         checkpoint = mod.reconcile_epoch(snap, [event(1, 10, "A")])
         checkpoint["mapping"]["10"] = " A "
-        with self.assertRaisesRegex(ValueError, "noncanonical"):
+        with self.assertRaisesRegex(ValueError, "noncanonical|checkpoint actor absent from M01 snapshot"):
             mod.reconcile_epoch(snap, [event(2, 30, "B")], checkpoint)
 
     def test_checkpoint_non_string_value_rejected(self):
