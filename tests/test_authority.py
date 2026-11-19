@@ -159,6 +159,30 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
         self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+    def test_seed436_oversized_finite_float_harvest_fails_without_book_mutation(self):
+        """Large finite floats cannot bypass the precise M01 quantity bound."""
+        world, _, tree_id = bootstrap(436)
+        session = SingleEngineSession(world, tree_id)
+        before = (world.tick, world.book.seq,
+                  dict(world.book.mass), dict(world.book.energy),
+                  dict(world.book.request_receipts))
+        for amount in (float(2**53 + 2), 1e100):
+            for position in ('mass', 'energy'):
+                with self.subTest(amount=amount, position=position):
+                    mass = amount if position == 'mass' else .01
+                    energy = amount if position == 'energy' else .001
+                    with self.assertRaises(ValueError):
+                        session.harvest('F001', 'seed436-oversized-float', '1',
+                                        'forest', 'plant', mass, energy)
+                    self.assertEqual(
+                        (world.tick, world.book.seq,
+                         dict(world.book.mass), dict(world.book.energy),
+                         dict(world.book.request_receipts)), before)
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
     def test_reject_invalid_founder_harvest_without_book_change(self):
         before = self.session.book.seq
         with self.assertRaises(ValueError):
