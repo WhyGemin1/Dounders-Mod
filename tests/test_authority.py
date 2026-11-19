@@ -135,6 +135,30 @@ class SingleAuthorityTests(unittest.TestCase):
                 self.assertEqual(world.book.request_receipts, before_receipts)
         session.audit()
 
+    def test_seed435_oversized_integer_harvest_fails_without_book_mutation(self):
+        """M01 rejects unbounded or imprecise integers without OverflowError."""
+        world, _, tree_id = bootstrap(435)
+        session = SingleEngineSession(world, tree_id)
+        before = (world.tick, world.book.seq,
+                  dict(world.book.mass), dict(world.book.energy),
+                  dict(world.book.request_receipts))
+        for amount in (2**53 + 1, 10**1000):
+            for position in ('mass', 'energy'):
+                with self.subTest(amount_digits=len(str(amount)), position=position):
+                    mass = amount if position == 'mass' else .01
+                    energy = amount if position == 'energy' else .001
+                    with self.assertRaises(ValueError):
+                        session.harvest('F001', 'seed435-oversized', '1',
+                                        'forest', 'plant', mass, energy)
+                    self.assertEqual(
+                        (world.tick, world.book.seq,
+                         dict(world.book.mass), dict(world.book.energy),
+                         dict(world.book.request_receipts)), before)
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
     def test_reject_invalid_founder_harvest_without_book_change(self):
         before = self.session.book.seq
         with self.assertRaises(ValueError):
