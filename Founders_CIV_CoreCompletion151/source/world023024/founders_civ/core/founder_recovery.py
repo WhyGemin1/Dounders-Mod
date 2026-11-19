@@ -61,7 +61,13 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
             original_cost, txn = receipts[operation]
             if original_cost != base_cost:
                 raise ValueError('conflicting work decision replay')
-            return txn
+            # A sidecar receipt alone is not authoritative. A partially
+            # restored checkpoint must not acknowledge work whose Book debit
+            # is absent or whose transaction identity has changed.
+            recorded = sim.book.operations.get(operation)
+            if recorded is None or recorded[1] != txn:
+                raise ValueError('work receipt/Book checkpoint mismatch')
+            return recorded[1]
         # Book operations remain authoritative across checkpoint boundaries:
         # a lost sidecar receipt must not permit a second debit under a
         # different action name for the same Founder decision.
