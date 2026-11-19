@@ -864,3 +864,11 @@
 - Execute: previous exact-head CI passed; expanded regression NOT executed locally and its own exact-head CI not yet confirmed. Required: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_partial_metadata.py'. No new numeric Book audit or WorldBox gameplay executed.
 - Audit: one Book, clock, 100 Founder identities and read-only WorldBox boundary unchanged; M01 iteration3 repair lock and M02-M07 backlog preserved. No main merge.
 - Next: verify expanded regression in clean-checkout CI, investigate failures if any, then test durable recovery after each partial-mutation case.
+
+## 2026-11-19 03:56 CST — seed438 durable recovery regression
+
+- Ground: PR #1 and PR #2 remain draft/unmerged; PR #2 prior head `6571c0d3a0b077094b022b922d711e756faf9979`. GitHub Actions #376 run `44493059109` succeeded on that prior head, including the earlier three-field seed438 test.
+- Integration: expanded `tests/test_m01_partial_metadata.py` on the SAME Core151 branch to save a trusted local checkpoint before each simulated `Book.last`, `Book.external`, and `Book.toll_count` partial mutation. The poisoned session must reject further settlement; the checkpoint must remain byte-identical; `load_checkpoint` must restore one Book, 100 Founders, original metadata, conserved balances, and permit one real tick. Test commits `988492f` and `d8ad66d`.
+- Execution: previous CI #376 PASS; newly added recovery regression has NOT been executed or verified at exact head. No fresh numerical Book residuals. Authorized Cycle152 ZIP metadata inspected; no new engine or WorldBox write.
+- Audit: durable-recovery behavior PROVISIONAL until exact-head CI; native WorldBox ACK and ecological long horizons BLOCKED/unverified. `main` untouched; M01 iteration3 repair lock and M02–M07 backlog preserved.
+- Next: run exact-head seed438 checkpoint recovery regression and full headless CI, repair failures, then capture numeric Book conservation after restart.
