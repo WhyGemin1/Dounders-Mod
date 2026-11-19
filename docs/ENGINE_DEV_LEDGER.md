@@ -872,3 +872,11 @@
 - Execution: previous CI #376 PASS; newly added recovery regression has NOT been executed or verified at exact head. No fresh numerical Book residuals. Authorized Cycle152 ZIP metadata inspected; no new engine or WorldBox write.
 - Audit: durable-recovery behavior PROVISIONAL until exact-head CI; native WorldBox ACK and ecological long horizons BLOCKED/unverified. `main` untouched; M01 iteration3 repair lock and M02–M07 backlog preserved.
 - Next: run exact-head seed438 checkpoint recovery regression and full headless CI, repair failures, then capture numeric Book conservation after restart.
+
+## 2026-11-19 05:00 CST — seed438 post-recovery numerical Book audit
+
+- Ground/design: live PR #1 and #2 are open drafts, PR #2 head was 696a04f874cf43222f555055b6b99e202174a4fd. Exact-head GitHub Actions #380 (44501062513) completed SUCCESS, all listed headless steps including checkpoint/restart. The authorized Drive Cycle152 ZIP was fetched and its original Core151 bootstrap inspected locally; no game binary imported.
+- Implementation: commit df9ea1d5d1d164043021075a1358ecba04d74aca expands existing tests/test_m01_partial_metadata.py, requiring numerical mass/energy residual <=1e-6 after each of three restored-world real ticks; also rechecks shared Book identity, Book sequence, and 100 Founders. Prints pre/post numeric residuals for subsequent CI review. No second engine, clock, or Book.
+- Execute/test: prior exact-head CI #380 VERIFIED PASS. New numerical assertions NOT YET EXECUTED at exact head. Local extracted archive bootstrap(438) Book audit inspected: initial tick=3, seq=2211, mass_error=-1.8189894035458565e-12, energy_error=-7.62520357966423e-09. This local bootstrap did NOT execute the newly committed regression or GitHub checkout. State update commit 00621440705d2e55b0f9015a5973306c9a77c4b2.
+- Ecological/behavioral audit: no ecological behavior change. M01 iteration3 repair lock, M02-M07 backlog, M05 observer-only policy, native WorldBox read-only policy unchanged; no main merge. Ecological long horizons and game tests remain unverified.
+- NEXT: confirm exact-head CI for numerical audit; capture the three field-specific post-restart residuals and repair any failures before accepting the expanded regression.
