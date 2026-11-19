@@ -195,3 +195,17 @@ def test_rest_rejects_orphan_book_operation_without_recovering_twice():
             sim.recovery_states[founder].fatigue,
             sim.recovery_states[founder].rest_decisions, len(sim.events)) == before
     audit(sim)
+
+
+def test_default_rest_identity_remains_valid_under_strict_separator_guard():
+    sim, founder = prepared()
+    sim.recovery_states[founder].fatigue = .55
+    before = sim.book.seq
+    event = perform_rest(sim, founder)
+    operation = f'founder:rest:{founder}:manual-{sim.next_event}'
+    # The fallback is generated from the next event before logging increments it.
+    assert event
+    assert operation in sim.recovery_receipts
+    assert sim.book.seq == before + 1
+    assert perform_rest(sim, founder, decision_id=f'manual-{sim.next_event}') == event
+    audit(sim)
