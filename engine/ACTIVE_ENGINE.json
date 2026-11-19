@@ -14,7 +14,7 @@
   "source_status": "27 tracked Core151 modules; seed438 partial metadata/replay regression now explicitly wired into CI at 67435a9; execution pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS run #387 (44519421829) at d6730463, but workflow OMITTED test_m01_partial_metadata.py; seed438 NOT verified by that run; dedicated CI step committed 67435a9, new execution pending",
+    "github_ci": "PASS GitHub Actions #393 (44539752789) at 3fbd718 including seed438 two-tick test; new second-tick audit assertions not yet executed",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -116,12 +116,12 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "change": "Extend seed438 deterministic checkpoint recovery from one to two real world ticks",
-    "code_commit": "c86ac123e131a5495bc90e6ee0eb02d1b618c131",
-    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44529110822",
-    "regression": "VERIFIED previous seed438 one-tick test passed in CI #390; two-tick extension committed, exact-head CI pending",
-    "book_audit": "seed438 all last/external/toll_count: tick 3->4, seq 2211->2950, mass -3.1832314562052488e-11 -> -8.6401996668428183e-11; energy -7.5669959187507629e-09 -> -9.8370946943759918e-09"
+    "change": "Add second-tick numerical residual and Book authority assertions to seed438 recovered-vs-baseline replay",
+    "code_commit": "0803b41944f9d2f66779e6fce92b6f3a9407acae",
+    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44539752789",
+    "regression": "VERIFIED prior two-tick regression passed CI #393 at 3fbd718; new second-tick residual assertions committed, exact-head CI pending",
+    "book_audit": "Prior one-tick seed438 mass -3.1832314562052488e-11 to -8.6401996668428183e-11; energy -7.5669959187507629e-09 to -9.8370946943759918e-09. Second-tick numeric values pending logs"
   },
-  "next_task": "Verify exact-head two-tick seed438 CI; inspect replay and conservation assertions; fix failures before accepting extended recovery",
-  "p0_seed438_recovery": "VERIFIED one-tick deterministic recovery and 3 field-specific Book audits in CI #390; two-tick replay extension pending"
+  "next_task": "Verify CI on second-tick audit commit; extract all three second-tick numerical residuals; repair mismatches before acceptance",
+  "p0_seed438_recovery": "VERIFIED CI #393 two-tick deterministic replay; second-tick numerical output and explicit authority assertions committed 0803b419, pending exact-head CI"
 }
