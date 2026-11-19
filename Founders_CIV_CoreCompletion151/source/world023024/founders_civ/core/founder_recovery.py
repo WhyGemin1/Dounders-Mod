@@ -32,6 +32,9 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
     if isinstance(base_cost, bool) or not isinstance(base_cost, (int, float)) or not isfinite(base_cost) or base_cost < 0:
         raise ValueError('invalid work cost')
     state = state_for(sim, founder)
+    # Corrupt checkpoint fatigue must not turn work into a negative fuel debit.
+    if not isfinite(state.fatigue) or not 0. <= state.fatigue <= 1.:
+        raise ValueError('invalid Founder fatigue')
     if decision_id is not None:
         if (not isinstance(decision_id, str) or not 1 <= len(decision_id) <= 72
                 or decision_id != decision_id.strip()):
