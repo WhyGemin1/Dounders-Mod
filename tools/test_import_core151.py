@@ -26,7 +26,7 @@ class ImportTests(unittest.TestCase):
 founders_civ/canon.py 7151876cfc8a6c11806fb28db49a1c8c2a562679
 founders_civ/core/__init__.py e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
 founders_civ/core/engine.py e9dd0a6820949c8d1685045e90330b3cddd851e3
-founders_civ/core/ledger.py 5993a9168d5b35e58c30761030d0444ad2ea551c
+founders_civ/core/ledger.py 534a50e1e8d2146ba711235b18524d3841f464a1
 founders_civ/experimental/__init__.py 59a77c176de59a7d128eb42da59c71ba9097d8c3
 founders_civ/experimental/constructs.py c334cb22ea7f1537819b1f39781349d109815e3c
 founders_civ/experimental/evolution.py 94b9b35660699b64ba9d4c5ae08256a157bdba2a
