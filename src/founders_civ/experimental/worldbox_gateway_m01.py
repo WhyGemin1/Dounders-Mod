@@ -47,7 +47,16 @@ class WorldBoxGatewayM01:
         if habitat not in self.tree.habitats or material not in self.ALLOWED:
             raise ValueError('unsupported harvest habitat/material')
         for value in (quantity, chemical_energy):
-            if isinstance(value, bool) or not isinstance(value, (int, float)) or not isfinite(value):
+            # Avoid float conversion of unbounded Python ints: math.isfinite(10**1000)
+            # raises OverflowError, and integers above 2**53 lose exact units.
+            if (isinstance(value, bool) or not isinstance(value, (int, float))
+                    or (isinstance(value, int) and abs(value) > 2**53)):
+                raise ValueError('finite precisely representable numeric amount required')
+            try:
+                finite = isfinite(value)
+            except (OverflowError, ValueError):
+                finite = False
+            if not finite:
                 raise ValueError('finite numeric amount required')
         if quantity <= 0 or chemical_energy < 0:
             raise ValueError('invalid harvest amount')
