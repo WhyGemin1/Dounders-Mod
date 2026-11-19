@@ -55,3 +55,40 @@ def reconcile(snapshot, events):
         mapping[callback_id] = data_id
         reverse[data_id] = callback_id
     return mapping
+
+
+def reconcile_epoch(snapshot, events, checkpoint=None):
+    """Bind a reconciled actor mapping to an explicit native-world epoch.
+
+    A changed world seed or session cannot silently inherit actor identities.
+    The caller must explicitly start a new epoch with checkpoint=None.
+    Checkpoint is JSON-compatible and contains no game mutation or Soul awards.
+    """
+    mapping = reconcile(snapshot, events)
+    if not events:
+        raise ValueError("epoch requires native events")
+    seed = snapshot["world_seed"]
+    if type(seed) not in (int, str) or str(seed).strip() == "":
+        raise ValueError("invalid world seed")
+    session = events[0]["session_id"]
+    world = events[0]["world_key"]
+    if checkpoint is not None:
+        if not isinstance(checkpoint, dict) or checkpoint.get("schema") != 1:
+            raise ValueError("invalid epoch checkpoint")
+        if (checkpoint.get("world_seed"), checkpoint.get("world_key"),
+                checkpoint.get("session_id")) != (seed, world, session):
+            raise ValueError("epoch boundary requires explicit reset")
+        prior = checkpoint.get("mapping")
+        if not isinstance(prior, dict):
+            raise ValueError("invalid checkpoint mapping")
+        for callback_id, native_id in mapping.items():
+            if callback_id in prior and prior[callback_id] != native_id:
+                raise ValueError("actor identity changed within epoch")
+            if native_id in prior.values() and prior.get(callback_id) != native_id:
+                raise ValueError("native identity reassigned within epoch")
+        merged = dict(prior)
+        merged.update(mapping)
+    else:
+        merged = dict(mapping)
+    return {"schema": 1, "world_seed": seed, "world_key": world,
+            "session_id": session, "mapping": merged}
