@@ -29,7 +29,7 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
     accumulation when the same work acknowledgement is delivered twice.
     Legacy callers without a decision ID retain their previous behavior.
     """
-    if not isinstance(base_cost, (int, float)) or not isfinite(base_cost) or base_cost < 0:
+    if isinstance(base_cost, bool) or not isinstance(base_cost, (int, float)) or not isfinite(base_cost) or base_cost < 0:
         raise ValueError('invalid work cost')
     state = state_for(sim, founder)
     if decision_id is not None:
