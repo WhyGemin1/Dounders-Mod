@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules; post-recovery numerical audit passed CI #383 at 5ad2d5d; clean-checkpoint vs recovered post-tick Book state equivalence regression committed, exact-head CI pending",
+  "source_status": "27 tracked Core151 modules; seed438 partial metadata/replay regression now explicitly wired into CI at 67435a9; execution pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS GitHub Actions #383 (44511144679) at 5ad2d5d; new deterministic replay equivalence regression pending",
+    "github_ci": "PASS run #387 (44519421829) at d6730463, but workflow OMITTED test_m01_partial_metadata.py; seed438 NOT verified by that run; dedicated CI step committed 67435a9, new execution pending",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #195 headless SUCCESS including direct Book Boolean replay regression; no separate local checkout",
-    "book_audit_this_cycle": "Previous seed438 post-recovery numerical assertions passed CI #383; this cycle adds exact mass, energy, receipt, transaction-history and sequence comparison against a pristine checkpoint replay; new exact-head output pending",
+    "book_audit_this_cycle": "No new numerical residuals; preceding CI #387 omitted seed438 test, so three-field post-restart residuals and replay equivalence remain UNVERIFIED",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -70,7 +70,7 @@
     "p0_independent_world_clock": "SOURCE TEST committed 0315541388633fae25ffee70b73ba3a520adcdfd; clean-checkout CI pending",
     "p0_independent_positive_world_clock_divergence": "Committed test source 69cb0761a471dbc81186a38af1aab3efe03d1694; not locally executed or CI-verified. Reject world.tick=original_tick+1 while ecology.day unchanged; checkpoint bytes and Book history/seq must remain unchanged.",
     "p0_world_clock_tamper_ci": "Prior regression 03155413 has no PR workflow returned by commit-run lookup; CI acceptance unverified.",
-    "latest_cycle": "2026-11-19 05:00 CST: added post-restart Book mass/energy audit to seed438 recovery test; CI #380 prior head passed",
+    "latest_cycle": "2026-11-19 07:00 CST: discovered seed438 regression omitted from passing CI #387; added explicit workflow step, awaiting new CI",
     "p0_preclock_partial_step": "Regression committed 43fd04df; not executed; prior CI #266 success does not verify new test",
     "p0_finite_conservation_preflight": "Source and test committed; clean-checkout CI pending, no new numerical residuals",
     "p0_m01_harvest_preflight": "SOURCE/TEST COMMITTED; execution pending",
@@ -92,7 +92,7 @@
     "m01_identity_controls": "VERIFIED preceding C1-boundary CI #361 (44462450731) SUCCESS on cc97c81; full 32-codepoint C1 regression committed aba794c, exact-head execution pending",
     "m01_identity_revision_c1": "32 revision-field C1 cases committed at 1ff57ecd69e3f8c9af0fa2a9babf4b690df539d2; exact-head execution pending",
     "m01_partial_metadata": "Prior seed438 regression passed Actions #373; expanded last/external/toll_count regression committed 0d9545fe, exact-head CI pending",
-    "p0_seed438_recovery": "VERIFIED GitHub Actions #380 run 44501062513 at 696a04f: headless success including trusted checkpoint/restart step; additional post-tick numerical audits committed df9ea1d, exact-head CI pending"
+    "p0_seed438_recovery": "BLOCKED verification until dedicated CI seed438 step passes; workflow coverage fix commit 67435a981882631aadfe383d9d1def189244f97c"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -116,11 +116,11 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "change": "Expand actual Core151 M01 identity regression from C1 boundaries to every U+0080..U+009F codepoint",
-    "test_commit": "aba794c48db1348bab421487dba23c824d827891",
-    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44462450731",
-    "regression": "exact-head CI pending",
-    "book_audit": "no fresh numerical residuals"
+    "change": "Add missing CI execution for actual seed438 Book metadata corruption, checkpoint recovery and deterministic replay test",
+    "code_commit": "67435a981882631aadfe383d9d1def189244f97c",
+    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44519421829",
+    "regression": "PENDING new workflow run; preceding success did not execute test_m01_partial_metadata.py",
+    "book_audit": "No fresh seed438 numerical residuals"
   },
-  "next_task": "Verify exact-head C1 identity CI; review historical synthetic M01 receipt identifiers and Book residuals"
+  "next_task": "Run/inspect new exact-head CI with explicit seed438 step; repair any failure, capture three field-specific numerical residuals"
 }
