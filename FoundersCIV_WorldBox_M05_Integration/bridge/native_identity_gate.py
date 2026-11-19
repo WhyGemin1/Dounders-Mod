@@ -85,8 +85,14 @@ def reconcile_epoch(snapshot, events, checkpoint=None):
         if type(events[0].get("seq")) is not int or events[0]["seq"] != prior_seq + 1:
             raise ValueError("replayed or skipped event batch")
         prior = checkpoint.get("mapping")
-        if not isinstance(prior, dict):
+        if not isinstance(prior, dict) or any(
+                type(k) is not str or not k.strip() or k in ("-1", "None") or
+                type(v) is not str or not v.strip() for k, v in prior.items()):
             raise ValueError("invalid checkpoint mapping")
+        if len(set(prior.values())) != len(prior):
+            raise ValueError("non-injective checkpoint mapping")
+        if any(k != k.strip() or v != v.strip() for k, v in prior.items()):
+            raise ValueError("noncanonical checkpoint mapping")
         for callback_id, native_id in mapping.items():
             if callback_id in prior and prior[callback_id] != native_id:
                 raise ValueError("actor identity changed within epoch")
