@@ -9,7 +9,8 @@ class M01IdentityControlTests(unittest.TestCase):
         world, _, tree_id = bootstrap(437)
         session = SingleEngineSession(world, tree_id)
         before = session.audit()
-        balances = dict(session.book.balances)
+        mass = dict(session.book.mass)
+        energy = dict(session.book.energy)
         receipts = dict(session.book.request_receipts)
         for source, revision in (
             ('bad\\nsource', '1'), ('source', 'bad\\rrevision'),
@@ -19,7 +20,8 @@ class M01IdentityControlTests(unittest.TestCase):
             with self.subTest(source=source, revision=revision):
                 with self.assertRaisesRegex(ValueError, 'control characters'):
                     session.harvest('F001', source, revision, 'forest', 'plant', .01, .001)
-                self.assertEqual(session.book.balances, balances)
+                self.assertEqual(session.book.mass, mass)
+                self.assertEqual(session.book.energy, energy)
                 self.assertEqual(session.book.request_receipts, receipts)
                 self.assertEqual(session.book.seq, before.book_sequence)
                 self.assertEqual(world.tick, before.tick)
