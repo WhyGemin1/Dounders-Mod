@@ -160,3 +160,14 @@ def test_whitespace_aliased_work_decision_fails_closed():
     assert (sim.book.seq, dict(sim.book.energy), sim.recovery_states['F001'].fatigue) == before
     assert not sim.book.operations
     assert sim.book.audit()['max_abs_energy_error'] <= 1e-7
+
+
+def test_whitespace_aliased_work_action_fails_closed():
+    sim = simulation()
+    before = (sim.book.seq, dict(sim.book.energy), sim.recovery_states['F001'].fatigue)
+    for action in (' build', 'build ', ' build ', '\tbuild', 'build\n'):
+        with pytest.raises(ValueError, match='invalid work action'):
+            paid_work(sim, 'F001', action, 1., decision_id='same')
+    assert (sim.book.seq, dict(sim.book.energy), sim.recovery_states['F001'].fatigue) == before
+    assert not sim.book.operations
+    assert sim.book.audit()['max_abs_energy_error'] <= 1e-7
