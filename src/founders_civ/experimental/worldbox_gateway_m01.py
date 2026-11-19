@@ -38,6 +38,10 @@ class WorldBoxGatewayM01:
         # to alias the same Book transaction across checkpoint restarts.
         if ':' in source_id or ':' in revision:
             raise ValueError('request identity components cannot contain colon')
+        # Control characters are not valid synthetic request identities: they can
+        # make durable receipt keys and audit logs ambiguous across restarts.
+        if any(ord(ch) < 32 or ord(ch) == 127 for ch in source_id + revision):
+            raise ValueError('request identity components cannot contain control characters')
         request_id = f'm01:{self.tree.id}:{source_id}:{revision}'
         founder = self.sim.founders.people.get(founder_id)
         if founder is None or not founder.alive:
