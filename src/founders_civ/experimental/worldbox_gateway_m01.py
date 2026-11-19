@@ -40,7 +40,7 @@ class WorldBoxGatewayM01:
             raise ValueError('request identity components cannot contain colon')
         # Control characters are not valid synthetic request identities: they can
         # make durable receipt keys and audit logs ambiguous across restarts.
-        if any(ord(ch) < 32 or ord(ch) == 127 for ch in source_id + revision):
+        if any(ord(ch) < 32 or ord(ch) == 127 or ch in '\u0085\u2028\u2029' for ch in source_id + revision):
             raise ValueError('request identity components cannot contain control characters')
         request_id = f'm01:{self.tree.id}:{source_id}:{revision}'
         founder = self.sim.founders.people.get(founder_id)
