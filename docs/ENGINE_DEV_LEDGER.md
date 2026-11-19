@@ -967,3 +967,10 @@
 - Tests: earlier #417 compilation passed but provenance failed; **no exact-head CI, local checkout test or fresh numerical Book audit yet** for this correction. No claims of test acceptance. Verify actual guard behavior and full suite in next workflow run.
 - Authority: original IntegratedWorld.book and world.tick remain sole writable Book and clock; 100 Founder registry unchanged. M01 iteration3 repair lock, M05 non-authoritative policy, WorldBox read-only boundary and M02–M07 backlog preserved. No main merge.
 - Next: inspect exact-head GitHub Actions after the correction, repair any failure, collect Book mass/energy residuals and confirm corrupt counters reject new settlements without mutation.
+
+## 2026-11-19 — Core151 live Book counter-drift audit expansion
+- Ground: live PR #1 draft at 17ad5e9, PR #2 draft at 0525b847. Exact-head GitHub Actions #421 (44633980553) SUCCESS on 0525b847, validating the previous executable Book counter guard and reviewed provenance pin.
+- Implementation: extended existing `tests/test_checkpoint.py::test_book_move_once_rejects_counter_drift_before_new_settlement` to check unchanged world.tick, exact 100 Founder keys, single Book object references, canonical transaction history, balances, receipts and sequence on each injected transactions/toll_count drift. Restored counters and assert mass/energy residual <=1e-6, emitting measured values to CI logs. Test source commit 13ae4fad1835ffd9c01f6bc9bae65b72c40734bb; state commit 326589a9247c1169535bca89aed20452cf17436d.
+- Execute/test: prior CI #421 SUCCESS, but expanded regression at new head NOT EXECUTED at ledger write. No new measured residuals; no local clean-checkout test. No claim of new test acceptance.
+- Audit: no production behavior change; one world.book, world.tick and 100 Founder identities remain authoritative. M01 iteration-3 lock, M05 non-authoritative restriction, M02–M07 backlog and WorldBox read-only boundary preserved. No game or long-horizon ecology run; no merge/main write.
+- Next: inspect exact-head CI, extract live drift mass/energy values for both corruption cases and repair any failure before promotion.
