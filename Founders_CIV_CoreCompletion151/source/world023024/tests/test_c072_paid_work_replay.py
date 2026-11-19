@@ -137,3 +137,15 @@ def test_receipt_with_conflicting_book_transaction_fails_closed():
     with pytest.raises(ValueError, match='work receipt/Book checkpoint mismatch'):
         paid_work(sim, 'F001', 'build', 1., decision_id='first')
     assert sim.book.seq == before
+
+
+def test_boolean_work_cost_fails_closed_without_book_or_fatigue_mutation():
+    sim = simulation()
+    before = (sim.book.seq, sim.book.energy['founder:F001'],
+              sim.recovery_states['F001'].fatigue)
+    for cost in (True, False):
+        with pytest.raises(ValueError, match='invalid work cost'):
+            paid_work(sim, 'F001', 'build', cost, decision_id='bool-cost')
+    assert (sim.book.seq, sim.book.energy['founder:F001'],
+            sim.recovery_states['F001'].fatigue) == before
+    assert not sim.book.operations
