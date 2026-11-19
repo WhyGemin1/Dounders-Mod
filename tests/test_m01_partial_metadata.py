@@ -23,29 +23,29 @@ class PartialBookMutationTests(unittest.TestCase):
 
     def _assert_partial_mutation_recovery(self, session, world, tree_id, field,
                                           before, checkpoint, checkpoint_bytes):
-            original = session.gateway.founder_harvest
-            previous = getattr(session.book, field)
+        original = session.gateway.founder_harvest
+        previous = getattr(session.book, field)
 
-            def partial_failure(*args, **kwargs):
-                if field == "last":
-                    session.book.last = None if previous is not None else "corrupt"
-                else:
-                    setattr(session.book, field, previous + 1)
-                raise ValueError("simulated partial Book metadata mutation")
+        def partial_failure(*args, **kwargs):
+            if field == "last":
+                session.book.last = None if previous is not None else "corrupt"
+            else:
+                setattr(session.book, field, previous + 1)
+            raise ValueError("simulated partial Book metadata mutation")
 
-            session.gateway.founder_harvest = partial_failure
-            try:
-                with self.assertRaisesRegex(ValueError, "simulated partial"):
-                    session.harvest("F001", "metadata-failure", "1",
-                                    "forest", "plant", .01, .001)
-            finally:
-                session.gateway.founder_harvest = original
-            self.assertNotEqual(getattr(session.book, field), previous)
-            self.assertEqual(session.book.seq, before.book_sequence)
-            self.assertEqual(world.tick, before.tick)
-            with self.assertRaisesRegex(RuntimeError, "checkpoint outcome uncertain"):
-                session.harvest("F001", "after-failure", "1",
+        session.gateway.founder_harvest = partial_failure
+        try:
+            with self.assertRaisesRegex(ValueError, "simulated partial"):
+                session.harvest("F001", "metadata-failure", "1",
                                 "forest", "plant", .01, .001)
+        finally:
+            session.gateway.founder_harvest = original
+        self.assertNotEqual(getattr(session.book, field), previous)
+        self.assertEqual(session.book.seq, before.book_sequence)
+        self.assertEqual(world.tick, before.tick)
+        with self.assertRaisesRegex(RuntimeError, "checkpoint outcome uncertain"):
+            session.harvest("F001", "after-failure", "1",
+                            "forest", "plant", .01, .001)
 
         self.assertEqual(checkpoint.read_bytes(), checkpoint_bytes)
         recovered = load_checkpoint(checkpoint, expected_tree_id=tree_id)
