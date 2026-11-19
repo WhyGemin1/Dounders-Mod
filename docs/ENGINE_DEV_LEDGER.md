@@ -777,3 +777,12 @@
 - Execution: code and test committed; new test NOT EXECUTED in this invocation. Intended clean-checkout command: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_checkpoint.py'. Seed434 numerical Book audit pending. Prior CI #332 passed; not evidence for seed434.
 - Ecological audit: no ecology or Founder behavior modification, no second Book/clock, no WorldBox writes; M05 SQLite remains non-authoritative, M02-M07 backlog preserved, no main merge.
 - Next: execute exact-head CI and review historical receipt identifier compatibility; repair any failures before promoting the gateway.
+
+## 2026-11-18 — seed435 M01 integer amount preflight
+
+- Ground: inspected PR #1/#2, active branch, Core151 M01 gateway, authority regression, and CI #336 (run 44416371278); headless job SUCCESS including 16 substantive steps. Prior seed434 delimiter regression is covered by the passing checkpoint step; no numerical log extracted.
+- Implementation: gateway now rejects Python integer harvest mass/energy amounts above 2**53 before `math.isfinite`, preventing OverflowError on 10**1000 and loss of integer precision before Book-funded settlement. No new Book, clock, engine, or Founder identity registry.
+- Commits: source `5af89e9fee8e7f04bca843393f4f851d48831a22`; seed435 test `6e5b8b4a728214d5319079ef5cea4657f6f2caa9`; state `a8d2c2429df3e49c06ed08248447f2a4b802ddfe`.
+- Test command for exact-head CI: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_*authority*.py'`. Seed435 checks 2**53+1 and 10**1000 in both material and chemical-energy positions and unchanged Book balances, sequence, receipts and tick. **NOT YET EXECUTED** on this new head; no local clean checkout. New behavior is PROVISIONAL.
+- Book audit: no new seed435 numerical residuals; previous CI #336 passed. WorldBox gameplay and long-horizon ecology NOT RUN.
+- Next: verify exact-head seed435 CI and numerical audit; check historical colon-containing M01 receipt identifiers for compatibility. No main merge; M01 iteration3 lock and M02–M07 backlog retained.
