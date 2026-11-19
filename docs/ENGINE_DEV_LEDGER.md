@@ -843,3 +843,14 @@
 - Execute: previous CI passed; new revision-field test NOT executed locally and exact-head CI not yet confirmed. Command: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_identity_controls.py'`. No new numerical Book residuals collected.
 - Ecological audit: no ecology mechanics changed; one world.book and world.tick, 100 Founder identities, M01 iteration3 lock, M02-M07 backlog, M05 non-authoritative and WorldBox read-only boundary preserved. No main merge.
 - Next: verify exact-head CI for revision-field C1 cases, then inspect persisted receipt identity compatibility and capture conservation residuals.
+
+## 2026-11-19 — seed438: fail-closed partial Book metadata mutation
+
+- Grounded against live PR #1 and #2, Core151 `Book.move_once`, M01 gateway, authority boundary and prior seed437 CI. PRs remain draft/unmerged; branch `feat/single-core151-authority` only.
+- Verified preceding exact-head CI: Actions #367 (run 44476733044) succeeded on `4fb641cfa7be44894c5c354b04c30e5b1948f741`.
+- **Functional change:** `SingleEngineSession.harvest` now includes canonical Book `last`, `external`, and `toll_count` in its pre/post failed-request snapshot, in addition to mass, energy, transaction count/history and receipts. A ValueError that mutates metadata without advancing `seq` must poison the session and require durable recovery. Existing Book `rejected` diagnostic counter remains intentionally excluded.
+- Added `tests/test_m01_partial_metadata.py` seed438 regression against actual `bootstrap(438)`: simulated adapter failure alters `Book.last` without changing sequence, then asserts the next harvest is blocked. No shadow Book or new clock.
+- **VERIFIED:** source and regression committed through GitHub connector; exact authorized Drive ZIP accessible, 956121 bytes, SHA256 `29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8` recomputed in container. Git clone unavailable locally (GitHub DNS resolution failed).
+- **PROVISIONAL:** seed438 test and new safeguard are not yet executed in a clean checkout; no new numerical Book residuals. Historical seed427 conservation values are not seed438 results.
+- **BLOCKED/UNVERIFIED:** native WorldBox writes/ACK, long-horizon ecology, historical persisted M01 identifier compatibility. M01 iteration3 repair lock and M02–M07 backlog unchanged; no main merge.
+- **NEXT:** confirm exact-head CI for seed438, repair failures, extract Book mass/energy residuals and verify partial-failure recovery behavior before additional mechanics.
