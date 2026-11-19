@@ -41,6 +41,10 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m unittest discover -v -s tests -p 'test_checkpoint.py'
+      - name: M01 partial Book mutation, durable recovery and deterministic replay (seed 438)
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_partial_metadata.py'
       - name: M01 multi-day uninterrupted versus restarted world
         env:
           PYTHONPATH: src
