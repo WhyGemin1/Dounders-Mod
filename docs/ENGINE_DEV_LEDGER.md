@@ -880,3 +880,10 @@
 - Execute/test: prior exact-head CI #380 VERIFIED PASS. New numerical assertions NOT YET EXECUTED at exact head. Local extracted archive bootstrap(438) Book audit inspected: initial tick=3, seq=2211, mass_error=-1.8189894035458565e-12, energy_error=-7.62520357966423e-09. This local bootstrap did NOT execute the newly committed regression or GitHub checkout. State update commit 00621440705d2e55b0f9015a5973306c9a77c4b2.
 - Ecological/behavioral audit: no ecological behavior change. M01 iteration3 repair lock, M02-M07 backlog, M05 observer-only policy, native WorldBox read-only policy unchanged; no main merge. Ecological long horizons and game tests remain unverified.
 - NEXT: confirm exact-head CI for numerical audit; capture the three field-specific post-restart residuals and repair any failures before accepting the expanded regression.
+
+## 2026-11-19 — unified engine cycle: deterministic checkpoint replay equivalence
+- Ground: inspected draft PR #1/#2, branch state and seed438 regression. Exact previous head `5ad2d5d3a0c257ad13fe3b50f7b52ee15686fc0b` passed GitHub Actions #383 (`44511144679`).
+- Integration: extended existing `tests/test_m01_partial_metadata.py` (no alternate engine) to compare a recovered post-failure simulation tick against an independently loaded clean checkpoint stepped once. Compare clock, Book sequence, mass, energy, request receipts, transaction history, `last`, external inflow, toll count, and numerical conservation residuals. Source commits `65cf259`, `4ad39c2`, `818b601`.
+- Execute/test: previous head CI #383 PASS; new exact-head CI is PENDING at ledger write. No local clean checkout or WorldBox execution; new residual values not collected. No claim that this regression has passed.
+- Audit: one `world.book`, one `world.tick`, 100 Founders and M01 read-only native boundary remain the acceptance contract. M05 independent Book is not authoritative. M01 iteration3 repair lock and M02-M07 backlog preserved. No merge or main change.
+- Next: inspect exact-head CI and actual seed438 three-field replay outputs; repair failures before accepting replay equivalence.
