@@ -59,6 +59,14 @@ def _validate_world(world, tree_id):
                 for i, tx in enumerate(history, 1)) or
             (history[-1] if history else None) != session.book.last):
         raise ValueError('inconsistent canonical Book transaction history')
+    # Counters must be derived from the one committed transaction history.
+    # A valid checksum cannot turn fabricated transform/toll metadata into
+    # canonical resource authority after a restart.
+    if (type(session.book.transactions) is not int or
+            session.book.transactions != len(history) or
+            type(session.book.toll_count) is not int or
+            session.book.toll_count != sum(tx.kind == 'transform' for tx in history)):
+        raise ValueError('canonical Book counters disagree with transaction history')
     # Historical transaction metadata is part of the canonical Book proof.
     # A valid checkpoint checksum cannot legitimize NaN/negative tolls or
     # forged external inflows. Only Wellspring may add external energy.
