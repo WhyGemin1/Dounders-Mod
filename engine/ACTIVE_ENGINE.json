@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules; M01 C1 full-range regression committed; exact-head CI pending",
+  "source_status": "27 tracked Core151 modules; M01 C1 controls tested in source and revision identities; exact-head CI pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "FAIL #351 on 9dfe904: 5 seed437 fixture failures; preceding steps passed. Corrected fixture commit 76f6aab; exact-head CI pending",
+    "github_ci": "PASS GitHub Actions #364 (44469327118) on prior commit 7e77d5cbb0b75a74e2d6b2d70d38dde327934463; current revision-field C1 expansion not yet executed",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -89,7 +89,8 @@
     "m01_seed434_identity_delimiter": "VERIFIED: GitHub Actions #336 (44416371278) headless SUCCESS including authority and checkpoint steps; detailed numerical residuals not extracted",
     "m01_seed435_integer_precision": "PROVISIONAL: seed435 test committed; 2**53+1 and 10**1000 rejected before Book mutation; not yet executed",
     "seed436_float_bound": "SOURCE 93278f5b96cfb8da4c76ced9888a2c9a480a165f TEST 78b11aa61250a6b72823eced5b8c61f5a841dda0; tests not yet executed; no numerical residuals collected",
-    "m01_identity_controls": "VERIFIED preceding C1-boundary CI #361 (44462450731) SUCCESS on cc97c81; full 32-codepoint C1 regression committed aba794c, exact-head execution pending"
+    "m01_identity_controls": "VERIFIED preceding C1-boundary CI #361 (44462450731) SUCCESS on cc97c81; full 32-codepoint C1 regression committed aba794c, exact-head execution pending",
+    "m01_identity_revision_c1": "32 revision-field C1 cases committed at 1ff57ecd69e3f8c9af0fa2a9babf4b690df539d2; exact-head execution pending"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
