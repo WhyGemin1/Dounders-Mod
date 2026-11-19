@@ -29,6 +29,20 @@ class IntegratedCheckpointTests(unittest.TestCase):
         self.world, _, self.tree_id = bootstrap(400)
         self.session = SingleEngineSession(self.world, self.tree_id)
 
+    def test_reject_book_transaction_counter_drift(self):
+        from founders_engine.checkpoint import save_checkpoint
+        self.session.book.transactions += 1
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(ValueError, 'counters disagree'):
+                save_checkpoint(self.world, self.tree_id, Path(tmp) / 'state.cp')
+
+    def test_reject_book_toll_counter_drift(self):
+        from founders_engine.checkpoint import save_checkpoint
+        self.session.book.toll_count += 1
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(ValueError, 'counters disagree'):
+                save_checkpoint(self.world, self.tree_id, Path(tmp) / 'state.cp')
+
     def test_restart_replay_is_idempotent(self):
         from founders_engine.checkpoint import save_checkpoint, load_checkpoint
         first = self.session.harvest('F001', 'checkpoint-replay', '1',
