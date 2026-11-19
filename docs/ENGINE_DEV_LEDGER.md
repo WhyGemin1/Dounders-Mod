@@ -909,3 +909,11 @@
 - **Execute/test:** Previous CI #393 VERIFIED PASS. New assertions committed but NOT YET EXECUTED or accepted at exact head. Prior one-tick residuals mass -3.1832314562052488e-11 -> -8.6401996668428183e-11, energy -7.5669959187507629e-09 -> -9.8370946943759918e-09; new second-tick residuals NOT COLLECTED.
 - **Ecological/behavioral audit:** One world.book, world.tick, 100 Founder IDs and M01 adapter authority remain required; M01 iteration3 repair lock and M02-M07 backlog unchanged. M05 not an independent authority; external WorldBox remains read-only. No ecological stability or native gameplay claim. Main unchanged; no merge.
 - **NEXT:** Verify new exact-head CI, extract three field-specific second-tick residual lines, repair failures before accepting numerical equivalence.
+
+## 2026-11-19 10:00 CST — seed438 second-tick settlement metadata replay
+- **Ground/design:** Inspected live PR #1/#2, exact head e9168809, seed438 regression, state, and GitHub Actions #396 (44550125207). The headless job and dedicated seed438 test step both passed on e9168809.
+- **Verified execution evidence:** seed438 for each of last/external/toll_count: recovered tick 3->4->5; Book sequence 2211->2950->3726. Second-tick mass residual -1.6370904631912708e-11 and energy residual -1.594889909029007e-08 for each case; within 1e-6. These values are from the actual CI log, not simulated.
+- **Implementation:** commit 8a9c564f3cb5692104c0ddf136fcc8c8917fa96d adds second-tick comparisons for Book.last, Book.external, Book.toll_count, and Book object identity against clean checkpoint replay in the existing Core151 seed438 test. State updated at c2c5f569fe41f29981eaf28562e1b867b15e0d2a.
+- **Test status:** prior second-tick numerical replay VERIFIED CI #396. New metadata/identity assertions committed but **PROVISIONAL** until exact-head CI. No local clean checkout, native WorldBox gameplay, or long-horizon ecological run this cycle.
+- **Authority/ecological audit:** single world.book, world.tick and 100 Founder identities preserved by unchanged production code. M01 iteration3 lock, M02-M07 backlog, M05 observer-only boundary and read-only native WorldBox preserved; main unmodified.
+- **NEXT:** inspect exact-head CI for new metadata equivalence assertions and repair any mismatch before expanding replay horizon.
