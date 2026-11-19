@@ -854,3 +854,5 @@
 - **PROVISIONAL:** seed438 test and new safeguard are not yet executed in a clean checkout; no new numerical Book residuals. Historical seed427 conservation values are not seed438 results.
 - **BLOCKED/UNVERIFIED:** native WorldBox writes/ACK, long-horizon ecology, historical persisted M01 identifier compatibility. M01 iteration3 repair lock and M02–M07 backlog unchanged; no main merge.
 - **NEXT:** confirm exact-head CI for seed438, repair failures, extract Book mass/energy residuals and verify partial-failure recovery behavior before additional mechanics.
+
+- **Executed archived-source smoke (not clean GitHub checkout):** extracted authorized Cycle152 ZIP into a temporary directory; `python` imported `run_world_tree_pilot.bootstrap`, called `bootstrap(438)`, `world.book.audit()`, `world.step()`, and `world.book.audit()` again. 100 Founders; tick 3→4; Book seq 2211→2950; mass residual −1.8189894035458565e−12→−2.7284841053187847e−12; energy residual −7.62520357966423e−9→−1.1175870895385742e−8. This smoke does NOT exercise new seed438 M01 fail-closed code or demonstrate clean-checkout equivalence.
