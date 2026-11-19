@@ -938,3 +938,10 @@
 - Execute/test: prior exact-head CI #404 VERIFIED PASS. Newly committed checkpoint immutability assertion PROVISIONAL pending exact-head CI; no local checkout test or fresh numerical residuals measured. GitHub Actions checkout remains the available clean-checkout test environment.
 - Ecological/behavioral audit: no production ecology change; M01 iteration3 repair lock, M02-M07 backlog, M05 observer-only and WorldBox native read-only boundary preserved. No WorldBox gameplay or long-horizon ecology test; main unchanged.
 - NEXT: inspect exact-head CI for durable checkpoint immutability; repair failures before any further regression expansion.
+
+## 2026-11-19 14:00 CST — first-recovery-tick durable checkpoint integrity
+- Ground/design: PR #1 and #2 remain open/draft/unmerged. GitHub Actions #407 (44593418188), job 135805240368, SUCCESS on prior head 741dd8d; explicit seed438 regression step SUCCESS. Authorized private Cycle152 ZIP metadata verified; no archive or binary imported.
+- Implementation: b3a1c6f1ada199135dbb1e9f87c8d312587fa5c2 adds immediate byte-equality check for the original durable checkpoint after the first recovered Core151 simulation tick, retaining existing second-tick and reload checks. No production engine change or second authority.
+- Execute/test: previous CI #407 VERIFIED. Seed438 fields last/external/toll_count: tick3 seq2211, tick4 seq2950, tick5 seq3726; tick5 mass residual -1.6370904631912708e-11 and energy residual -1.594889909029007e-08, both within 1e-6. New assertion NOT YET EXECUTED at exact head. No local clean checkout or native WorldBox test this cycle.
+- Ecological/behavioral audit: no production behavior change. One world.book, world.tick, 100 Founder keys; M01 iteration3 repair lock, M02-M07 backlog, M05 observer-only and native read-only boundary unchanged. No long-horizon ecology evidence; main untouched.
+- NEXT: verify exact-head CI for first-tick checkpoint immutability, fix any failure, then prioritize production integration rather than indefinite replay assertion growth.
