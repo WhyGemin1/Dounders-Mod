@@ -118,6 +118,20 @@ class PartialBookMutationTests(unittest.TestCase):
         self.assertEqual(second.book_sequence, recovered.book.seq)
         self.assertIs(recovered.world.book, recovered.book)
         self.assertIs(recovered.world.founders.book, recovered.book)
+        # A recovered session must never rewrite its original durable checkpoint.
+        self.assertEqual(checkpoint.read_bytes(), checkpoint_bytes)
+        durable_again = load_checkpoint(checkpoint, expected_tree_id=tree_id)
+        durable_audit = durable_again.audit()
+        self.assertEqual(durable_audit.tick, before.tick)
+        self.assertEqual(durable_audit.book_sequence, before.book_sequence)
+        self.assertEqual(set(durable_again.world.founders.people),
+                         set(world.founders.people))
+        self.assertIs(durable_again.world.book, durable_again.book)
+        self.assertIs(durable_again.world.founders.book, durable_again.book)
+        self.assertLessEqual(abs(durable_audit.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(durable_audit.book_energy_error), 1e-6)
+        print(f"seed438 durable_unchanged field={field} "
+              f"tick={durable_audit.tick} seq={durable_audit.book_sequence}")
         print(f"seed438 second_tick field={field} tick={second.tick} "
               f"seq={second.book_sequence} mass={second.book_mass_error:.17g} "
               f"energy={second.book_energy_error:.17g}")
