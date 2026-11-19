@@ -19,7 +19,7 @@
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #195 headless SUCCESS including direct Book Boolean replay regression; no separate local checkout",
-    "book_audit_this_cycle": "No new numerical Book audit executed in this cycle; previous seed427 residuals are historical",
+    "book_audit_this_cycle": "Seed438 exact authorized archive smoke (NOT new gateway code): 100 Founders, tick 3->4, seq 2211->2950; mass -1.8189894035458565e-12 -> -2.7284841053187847e-12; energy -7.62520357966423e-9 -> -1.1175870895385742e-8",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -91,7 +91,7 @@
     "seed436_float_bound": "SOURCE 93278f5b96cfb8da4c76ced9888a2c9a480a165f TEST 78b11aa61250a6b72823eced5b8c61f5a841dda0; tests not yet executed; no numerical residuals collected",
     "m01_identity_controls": "VERIFIED preceding C1-boundary CI #361 (44462450731) SUCCESS on cc97c81; full 32-codepoint C1 regression committed aba794c, exact-head execution pending",
     "m01_identity_revision_c1": "32 revision-field C1 cases committed at 1ff57ecd69e3f8c9af0fa2a9babf4b690df539d2; exact-head execution pending",
-    "m01_partial_metadata": "seed438 production guard and test committed; NOT YET EXECUTED against GitHub checkout"
+    "m01_partial_metadata": "Production guard and seed438 regression committed; exact-head clean-checkout execution PENDING"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
