@@ -156,7 +156,8 @@ class SingleEngineSession:
         from copy import deepcopy
         before_book = deepcopy((self.book.mass, self.book.energy,
                                 self.book.transactions, self.book.transaction_history,
-                                self.book.request_receipts))
+                                self.book.request_receipts, self.book.last,
+                                self.book.external, self.book.toll_count))
         try:
             receipt = self.gateway.founder_harvest(
                 founder_id, source_id, revision, habitat, material,
@@ -174,7 +175,8 @@ class SingleEngineSession:
             failure = sys.exc_info()[1]
             after_book = deepcopy((self.book.mass, self.book.energy,
                                    self.book.transactions, self.book.transaction_history,
-                                   self.book.request_receipts))
+                                   self.book.request_receipts, self.book.last,
+                                   self.book.external, self.book.toll_count))
             if (self.book.seq != before_sequence or before_book != after_book or
                     not isinstance(failure, ValueError)):
                 self._checkpoint_uncertain = True
