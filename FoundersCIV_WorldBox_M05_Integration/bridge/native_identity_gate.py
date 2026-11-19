@@ -12,7 +12,9 @@ def reconcile(snapshot, events):
         if type(value) is not type(expected) or value != expected:
             raise ValueError("incomplete M01 snapshot")
     rows = snapshot.get("items")
-    if not isinstance(rows, list) or snapshot.get("returned") != len(rows) or snapshot.get("matched") != len(rows):
+    if (not isinstance(rows, list) or type(snapshot.get("returned")) is not int
+            or type(snapshot.get("matched")) is not int
+            or snapshot["returned"] != len(rows) or snapshot["matched"] != len(rows)):
         raise ValueError("inconsistent M01 actor count")
     ids = []
     for row in rows:
@@ -25,7 +27,7 @@ def reconcile(snapshot, events):
         ids.append(native_id)
     if len(set(ids)) != len(ids):
         raise ValueError("duplicate M01 identity")
-    if snapshot.get("world_seed") is None:
+    if type(snapshot.get("world_seed")) not in (int, str) or not str(snapshot["world_seed"]).strip():
         raise ValueError("missing world seed")
     known = set(ids)
     mapping, reverse = {}, {}
@@ -41,7 +43,9 @@ def reconcile(snapshot, events):
             raise ValueError("M05 sequence gap or duplicate")
         last_seq = seq
         sid, wid = event.get("session_id"), event.get("world_key")
-        if not sid or not wid or wid == "UNBOUND":
+        if (type(sid) is not str or not sid or sid != sid.strip()
+                or type(wid) is not str or not wid or wid != wid.strip()
+                or wid == "UNBOUND"):
             raise ValueError("unbound M05 event")
         if session is None:
             session, world = sid, wid
@@ -82,7 +86,7 @@ def reconcile_epoch(snapshot, events, checkpoint=None):
     session = events[0]["session_id"]
     world = events[0]["world_key"]
     if checkpoint is not None:
-        if not isinstance(checkpoint, dict) or checkpoint.get("schema") != 1:
+        if not isinstance(checkpoint, dict) or type(checkpoint.get("schema")) is not int or checkpoint["schema"] != 1:
             raise ValueError("invalid epoch checkpoint")
         if (checkpoint.get("world_seed"), checkpoint.get("world_key"),
                 checkpoint.get("session_id")) != (seed, world, session):
