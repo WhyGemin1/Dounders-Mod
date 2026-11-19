@@ -50,7 +50,7 @@ class WorldBoxGatewayM01:
             # Avoid float conversion of unbounded Python ints: math.isfinite(10**1000)
             # raises OverflowError, and integers above 2**53 lose exact units.
             if (isinstance(value, bool) or not isinstance(value, (int, float))
-                    or (isinstance(value, int) and abs(value) > 2**53)):
+                    or abs(value) > 2**53):
                 raise ValueError('finite precisely representable numeric amount required')
             try:
                 finite = isfinite(value)
