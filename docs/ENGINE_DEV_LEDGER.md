@@ -812,3 +812,11 @@
 - Execute: prior exact-head CI FAILED (2 tests, 5 subtest failures); corrected test not executed locally or yet verified in GitHub Actions. Command: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_identity_controls.py'`. No new Book numerical residuals collected for corrected fixture. Earlier CI log seed427 residual after tick mass -8.9130480773746967e-11 energy -1.0244548320770264e-08; not evidence of seed437 pass.
 - Ecology/behavior: no ecology change; WorldBox external writes still prohibited. M01 iteration3 repair lock, M02–M07 backlog and M05 observer-only status retained. No main merge.
 - Next: verify corrected exact-head CI, repair any real validation failure, audit historical M01 receipt IDs for compatibility.
+
+## 2026-11-18 22:04 CST — M01 Unicode line-separator receipt identity guard
+- Ground: confirmed corrected seed437 exact-head GitHub Actions #354 (run 44448813016) SUCCESS on cef4833. Authorized Cycle152 archive Drive metadata still 956121 bytes; no fresh archive extraction this cycle.
+- Implementation: existing Core151 M01 gateway commit 6e380b8662bc91e99e7d39651fa2b91025a18a9b rejects Unicode NEL U+0085, line separator U+2028 and paragraph separator U+2029 in source/revision identifiers before Book settlement. No new simulation authority or native WorldBox write.
+- Regression: ec633fea0f3bd29d92b600e833b0cc3d5a4aab00 extends seed437 Core151 tests with all three Unicode separators, unchanged Book mass/energy/receipt/sequence/tick assertions and 100 Founder audit.
+- Execute: source/test committed; new exact-head clean-checkout CI NOT YET VERIFIED; no local unittest run, no new numerical conservation residuals. Required command: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_identity_controls.py'`.
+- Ecological audit: no ecological behavior changes, WorldBox native writes remain read-only; M01 iteration3 repair lock, M02-M07 backlog, M05 non-authoritative policy, and no-main-merge preserved.
+- Next: verify exact-head CI, inspect historical receipt identifiers for Unicode separator compatibility, then repair any failure before more mechanics.
