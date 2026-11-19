@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules; seed438 partial metadata/replay regression now explicitly wired into CI at 67435a9; execution pending",
+  "source_status": "27 tracked Core151 modules; seed438 two-tick settlement metadata regression PASS CI #399 at 69c8d36; Founder identity-set replay assertions committed cc6ccee, exact-head CI pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "PASS Actions #396 (44550125207) at e9168809, dedicated seed438 regression including second-tick numerical assertions",
+    "github_ci": "PASS Actions #399 (44560865011) at 69c8d36; dedicated seed438 two-tick settlement metadata regression",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #195 headless SUCCESS including direct Book Boolean replay regression; no separate local checkout",
-    "book_audit_this_cycle": "VERIFIED seed438 for last/external/toll_count: second tick=5 seq=3726 mass=-1.6370904631912708e-11 energy=-1.594889909029007e-08; all 3 cases match clean checkpoint replay and within 1e-6",
+    "book_audit_this_cycle": "Previous CI #399 success, seed438 step passed; new Founder identity-set assertions not yet executed, no new numerical residuals",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -92,7 +92,8 @@
     "m01_identity_controls": "VERIFIED preceding C1-boundary CI #361 (44462450731) SUCCESS on cc97c81; full 32-codepoint C1 regression committed aba794c, exact-head execution pending",
     "m01_identity_revision_c1": "32 revision-field C1 cases committed at 1ff57ecd69e3f8c9af0fa2a9babf4b690df539d2; exact-head execution pending",
     "m01_partial_metadata": "Prior seed438 regression passed Actions #373; expanded last/external/toll_count regression committed 0d9545fe, exact-head CI pending",
-    "p0_seed438_recovery": "VERIFIED exact-head CI #396 at e9168809; new second-tick metadata and Book identity regression at 8a9c564 pending execution"
+    "p0_seed438_recovery": "VERIFIED exact-head CI #396 at e9168809; new second-tick metadata and Book identity regression at 8a9c564 pending execution",
+    "founder_identity_replay": "PROVISIONAL: added actual 100-Founder key-set equivalence against baseline and pre-corruption world after two ticks; pending exact-head CI"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
