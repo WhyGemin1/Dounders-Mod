@@ -99,6 +99,13 @@ class PartialBookMutationTests(unittest.TestCase):
         self.assertIs(baseline.world.book, baseline.book)
         second = recovered.audit()
         self.assertEqual(second.founder_count, 100)
+        # Check actual Founder identities, not just their aggregate count.
+        self.assertEqual(set(recovered.world.founders.people),
+                         set(baseline.world.founders.people))
+        self.assertEqual(set(recovered.world.founders.people),
+                         set(world.founders.people))
+        self.assertIs(recovered.world.founders.book, recovered.book)
+        self.assertIs(baseline.world.founders.book, baseline.book)
         self.assertLessEqual(abs(second.book_mass_error), 1e-6)
         self.assertLessEqual(abs(second.book_energy_error), 1e-6)
         self.assertEqual(second.book_mass_error, baseline.audit().book_mass_error)
