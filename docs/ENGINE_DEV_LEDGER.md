@@ -786,3 +786,12 @@
 - Test command for exact-head CI: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_*authority*.py'`. Seed435 checks 2**53+1 and 10**1000 in both material and chemical-energy positions and unchanged Book balances, sequence, receipts and tick. **NOT YET EXECUTED** on this new head; no local clean checkout. New behavior is PROVISIONAL.
 - Book audit: no new seed435 numerical residuals; previous CI #336 passed. WorldBox gameplay and long-horizon ecology NOT RUN.
 - Next: verify exact-head seed435 CI and numerical audit; check historical colon-containing M01 receipt identifiers for compatibility. No main merge; M01 iteration3 lock and M02–M07 backlog retained.
+
+## 2026-11-18 19:03 CST — seed436 M01 finite-float quantity boundary
+- Ground: live draft PR #1 and #2 inspected; PR #2 head was 82b0cb4. GitHub Actions run 44425505410 on prior head completed SUCCESS. Authorized Drive Cycle152 ZIP metadata verified (956121 bytes). Core151 M01 gateway, authority tests and active state inspected.
+- Risk: seed435 rejected Python integers above 2**53, but finite Python floats greater than 2**53 could still pass numeric preflight and reach the canonical Book. Such floats cannot represent unit increments reliably.
+- Implementation: source commit 93278f5b96cfb8da4c76ced9888a2c9a480a165f extends the same M01 gateway amount bound to both int and float, before any Book settlement. No second Book, clock, Founder registry or simulation added.
+- Regression: test commit 78b11aa61250a6b72823eced5b8c61f5a841dda0 adds seed436 test of finite floats 2**53+2 and 1e100 in both mass and chemical-energy positions, asserting ValueError, no Book balances/sequence/receipts or clock changes, 100 Founders and <=1e-6 conservation residuals.
+- Execute: new test NOT locally executed; exact-head clean-checkout CI pending. Required command: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_*authority*.py'`. No seed436 residuals collected. Previous successful CI is not evidence for this change.
+- Ecology/behavior: only M01 numerical validation changed. WorldBox remains read-only; no ecological horizon or native gameplay tested. M01 iteration3 repair lock, M02-M07 backlog, M05 non-authoritative status and no-main-merge policy preserved.
+- Next: verify exact-head CI for seed436, inspect Book numerical evidence, and audit compatibility of historical M01 receipt identifiers with colon delimiter restrictions.
