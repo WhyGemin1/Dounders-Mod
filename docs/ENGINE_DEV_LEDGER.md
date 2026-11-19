@@ -803,3 +803,5 @@
 - State: ACTIVE_ENGINE.json updated at f7da6d28. Exact-head CI and numerical Book residuals PENDING. Command: `PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_m01_identity_controls.py'`.
 - Ecological audit: no ecological change or horizon testing; 100-Founder and Book invariants are assertions awaiting execution. No new engine, Book, clock or SQLite authority; M01 iteration3 repair lock and M02-M07 backlog preserved. No main merge.
 - Next: verify exact-head CI, repair any test failures, and inspect historical receipt IDs for compatibility with identity restrictions.
+
+- CI integration follow-up: workflow commit 0cb1f8560d3d16a0f0d1789d6f907ff3a5c0f963 adds dedicated clean-checkout seed437 unittest step. No passing run confirmed at commit time; acceptance remains PROVISIONAL.
