@@ -11,7 +11,7 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules; seed438 first-tick Founder identity preservation PASS CI #404 at 9ff6a52; durable checkpoint immutability after two-tick recovery committed 6a95bc3, exact-head CI pending",
+  "source_status": "27 tracked Core151 modules; seed438 durable checkpoint immutability after two ticks PASS CI #407 at 741dd8d; first-tick immutability assertion committed b3a1c6f, exact-head CI pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "PASS Actions #404 (44583313130) at 9ff6a52; dedicated seed438 first-tick Founder identity replay",
@@ -19,7 +19,7 @@
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #195 headless SUCCESS including direct Book Boolean replay regression; no separate local checkout",
-    "book_audit_this_cycle": "Prior CI #404 seed438 step passed; new post-replay durable checkpoint immutability assertions committed but not yet executed; no new numerical residual extraction",
+    "book_audit_this_cycle": "CI #407 successful seed438 for last/external/toll_count: tick3 seq2211 -> tick4 seq2950 -> tick5 seq3726; second tick mass -1.6370904631912708e-11, energy -1.594889909029007e-08; new first-tick checkpoint byte-equality assertion committed, execution pending",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -109,7 +109,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify exact-head CI for second-tick settlement metadata equivalence; fix failures before expanding replay horizon",
+  "next_engineering_task": "Execute exact-head CI for first-tick durable checkpoint byte equality; repair any failure before accepting regression",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -117,11 +117,11 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "change": "Add second-tick settlement metadata (last/external/toll_count) and Book identity replay assertions",
-    "code_commit": "8a9c564f3cb5692104c0ddf136fcc8c8917fa96d",
-    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44550125207",
-    "regression": "Prior second-tick numerical CI verified; new second-tick metadata assertions pending exact-head CI",
-    "book_audit": "Seed438 all three fields: tick5 seq3726 mass=-1.6370904631912708e-11 energy=-1.594889909029007e-08"
+    "change": "Add checkpoint byte-immutability assertion immediately after first recovered tick (existing second-tick check retained)",
+    "code_commit": "b3a1c6f1ada199135dbb1e9f87c8d312587fa5c2",
+    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44593418188",
+    "regression": "Prior two-tick checkpoint integrity PASS CI #407; new first-tick assertion provisional",
+    "book_audit": "seed438 all three corruption fields: tick5 seq3726 mass=-1.6370904631912708e-11 energy=-1.594889909029007e-08"
   },
   "next_task": "Verify exact-head CI for second-tick settlement metadata equivalence; fix failures before expanding replay horizon",
   "p0_seed438_recovery": "VERIFIED CI #393 two-tick deterministic replay; second-tick numerical output and explicit authority assertions committed 0803b419, pending exact-head CI"
