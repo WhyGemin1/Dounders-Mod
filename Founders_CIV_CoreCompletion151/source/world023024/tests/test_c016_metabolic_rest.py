@@ -241,3 +241,24 @@ def test_corrupt_fatigue_cannot_rank_rest_proposal_or_mutate_book():
     sim.recovery_states[founder].fatigue = .5
     assert propose_rest(sim, founder)
     audit(sim)
+
+
+def test_funded_rest_receipt_rejects_missing_or_changed_book_checkpoint():
+    sim, founder = prepared()
+    operation = f'founder:rest:{founder}:funded-restore'
+    event = perform_rest(sim, founder, decision_id='funded-restore')
+    assert event
+    assert operation in sim.recovery_book_receipts
+    original = sim.book.operations[operation]
+    before = (dict(sim.book.energy), sim.book.seq,
+              sim.recovery_states[founder].fatigue,
+              sim.recovery_states[founder].rest_decisions, len(sim.events))
+    sim.book.operations.pop(operation)
+    with pytest.raises(ValueError, match='recovery receipt/Book checkpoint mismatch'):
+        perform_rest(sim, founder, decision_id='funded-restore')
+    assert (dict(sim.book.energy), sim.book.seq,
+            sim.recovery_states[founder].fatigue,
+            sim.recovery_states[founder].rest_decisions, len(sim.events)) == before
+    sim.book.operations[operation] = original
+    assert perform_rest(sim, founder, decision_id='funded-restore') == event
+    audit(sim)
