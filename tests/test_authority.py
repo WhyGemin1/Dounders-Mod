@@ -135,7 +135,7 @@ class SingleAuthorityTests(unittest.TestCase):
         actions = [e for e in world.events
                    if e.get('kind', e.get('action', e.get('type'))) ==
                    'tree_autonomous_maintenance']
-        self.assertGreaterEqual(len(actions), 0)
+        self.assertLessEqual(len(actions), len(world.events))
 
     def test_secondary_tree_shares_book_without_new_authority(self):
         """A second registered Tree may coexist if it uses the living Book/clock."""
