@@ -341,3 +341,22 @@ def test_rest_proposal_rejects_corrupt_book_fuel_without_mutation():
         sim.book.energy[account] = original
     assert propose_rest(sim, founder)
     audit(sim)
+
+
+def test_paid_work_rejects_corrupt_book_fuel_without_mutation():
+    sim, founder = prepared()
+    account = f'founder:{founder}'
+    original = sim.book.energy[account]
+    for invalid in (-0.01, float('nan'), float('inf'), True):
+        sim.book.energy[account] = invalid
+        before = (sim.book.seq, dict(sim.book.operations),
+                  sim.recovery_states[founder].fatigue,
+                  sim.recovery_states[founder].rest_decisions, len(sim.events))
+        with pytest.raises(ValueError, match='invalid Founder work fuel'):
+            paid_work(sim, founder, 'practice', .01, decision_id='corrupt-fuel')
+        assert (sim.book.seq, dict(sim.book.operations),
+                sim.recovery_states[founder].fatigue,
+                sim.recovery_states[founder].rest_decisions, len(sim.events)) == before
+    sim.book.energy[account] = original
+    assert paid_work(sim, founder, 'practice', .01, decision_id='corrupt-fuel')
+    audit(sim)
