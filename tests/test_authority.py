@@ -132,10 +132,24 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertGreater(world.book.seq, initial_seq)
         # Events are observations, not an artificial minimum quota:
         # zero voluntary tend actions is a valid autonomous outcome.
-        actions = [e for e in world.events
-                   if e.get('kind', e.get('action', e.get('type'))) ==
-                   'tree_autonomous_maintenance']
-        self.assertLessEqual(len(actions), len(world.events))
+        # Count actual events, not merely the existence of an event list.
+        # No minimum participation: a Founder can decline without failure.
+        kinds = [e.get('kind', e.get('action', e.get('type')))
+                 for e in world.events]
+        maintenance = [e for e in world.events
+                       if e.get('kind', e.get('action', e.get('type'))) ==
+                       'tree_autonomous_maintenance']
+        self.assertEqual(len(maintenance),
+                         sum(kind == 'tree_autonomous_maintenance'
+                             for kind in kinds))
+        for event in maintenance:
+            self.assertIn(event['actor'], initial_ids)
+            self.assertEqual(event['creation'], tree_id)
+            self.assertAlmostEqual(event['amount'], .65, places=6)
+        proof = session.audit()
+        print('seed444 unforced ticks=%d maintenance=%d mass=%0.12g energy=%0.12g' %
+              (proof.tick - initial_tick, len(maintenance),
+               proof.book_mass_error, proof.book_energy_error))
 
     def test_secondary_tree_shares_book_without_new_authority(self):
         """A second registered Tree may coexist if it uses the living Book/clock."""
