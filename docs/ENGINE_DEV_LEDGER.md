@@ -981,3 +981,11 @@
 - Execute: exact-head GitHub CI pending; no local clean-checkout execution and no fresh numerical residuals claimed for new assertions.
 - Audit: no new Book, clock, Founder registry, ecological mechanics or WorldBox write permission. M01 iteration-3 repair lock and M02–M07 backlog preserved; no main modification or merge.
 - Next: inspect exact-head CI, repair failures, extract replay corruption mass/energy residuals, then return to production integration.
+
+## 2026-11-19 — Core151 M01 truncated-history regression repair
+- Ground: PR #1 draft at 17ad5e9; PR #2 draft at c071685. GitHub Actions #427 (44650966534) FAILED on c071685: compile, provenance, authority, numerical seed427, seed437, harvest, checkpoint, seed438, and multitick steps succeeded; durable harvest suite 20/21 passed and downstream steps skipped.
+- Root cause: `test_new_book_move_rejects_truncated_history_without_resource_mutation` expected `inconsistent canonical Book transaction history`, but new live production guard correctly raised `canonical Book counters disagree with transaction history` before mutation. Failure was exception-message mismatch, not unauthorized settlement.
+- Implementation: updated only the targeted regression's expected exception to the new precise counter-drift error; test commit 9e6c0888e02958de9d81a110da7cd17cce19f8e8. No new engine or production behavior change.
+- Execute: prior CI #427 FAILED; corrected test NOT YET EXECUTED on clean checkout; exact-head CI pending. CI #427 Book audit output: before mass -2.9103830456733704e-11 energy -7.799826562404633e-09 seq2213; settled/restored mass -2.8194335754960775e-11 energy -7.799826562404633e-09 seq2214; stepped mass -9.00399754755199e-11 energy -1.0302755981683731e-08 seq2952. These are from earlier passing tests in FAILED workflow, not proof of final head.
+- Audit: single world.book/world.tick, 100 Founders, M01 iteration3 lock, M05 observer-only, WorldBox read-only and M02–M07 backlog preserved. No main changes or merges; ecology long horizon and native gameplay unverified.
+- Next: inspect exact-head CI for corrected regression and all previously skipped steps; fix failures before accepting replay-path counter guard.
