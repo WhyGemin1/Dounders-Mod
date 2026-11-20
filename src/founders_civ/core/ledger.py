@@ -133,6 +133,15 @@ class Book:
             raise ValueError('nonempty request id required')
         legs = (tuple(tuple(x) for x in material),
                 tuple(tuple(x) for x in energy))
+        # Validate counters even for replay: a previously committed receipt
+        # must not mask corruption of the canonical Book metadata.
+        history = getattr(self, 'transaction_history', None)
+        if (not isinstance(history, list) or
+                type(self.transactions) is not int or
+                self.transactions != len(history) or
+                type(self.toll_count) is not int or
+                self.toll_count != sum(tx.kind == 'transform' for tx in history)):
+            raise ValueError('canonical Book counters disagree with transaction history')
         previous = self.request_receipts.get(request_id)
         if previous is not None:
             prior_legs, receipt = previous
