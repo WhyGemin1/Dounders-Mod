@@ -225,3 +225,19 @@ def test_corrupt_fatigue_rejects_rest_before_book_or_event_mutation():
                 sim.recovery_states[founder].rest_decisions) == before
     assert 'founder:rest:F001:corrupt-rest' not in sim.recovery_receipts
     audit(sim)
+
+
+def test_corrupt_fatigue_cannot_rank_rest_proposal_or_mutate_book():
+    from founders_civ.core.founder_recovery import propose_rest
+    sim, founder = prepared()
+    before = (dict(sim.book.energy), sim.book.seq, dict(sim.book.operations),
+              len(sim.events), sim.recovery_states[founder].rest_decisions)
+    for fatigue in (-0.01, 1.01, float('nan'), float('inf')):
+        sim.recovery_states[founder].fatigue = fatigue
+        with pytest.raises(ValueError, match='invalid Founder fatigue'):
+            propose_rest(sim, founder)
+        assert (dict(sim.book.energy), sim.book.seq, dict(sim.book.operations),
+                len(sim.events), sim.recovery_states[founder].rest_decisions) == before
+    sim.recovery_states[founder].fatigue = .5
+    assert propose_rest(sim, founder)
+    audit(sim)
