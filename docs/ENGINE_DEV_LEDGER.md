@@ -989,3 +989,12 @@
 - Execute: prior CI #427 FAILED; corrected test NOT YET EXECUTED on clean checkout; exact-head CI pending. CI #427 Book audit output: before mass -2.9103830456733704e-11 energy -7.799826562404633e-09 seq2213; settled/restored mass -2.8194335754960775e-11 energy -7.799826562404633e-09 seq2214; stepped mass -9.00399754755199e-11 energy -1.0302755981683731e-08 seq2952. These are from earlier passing tests in FAILED workflow, not proof of final head.
 - Audit: single world.book/world.tick, 100 Founders, M01 iteration3 lock, M05 observer-only, WorldBox read-only and M02–M07 backlog preserved. No main changes or merges; ecology long horizon and native gameplay unverified.
 - Next: inspect exact-head CI for corrected regression and all previously skipped steps; fix failures before accepting replay-path counter guard.
+
+## 2026-11-19 — Core151 typed-counter replay regression
+
+- Ground: live PR #1 and #2 inspected; PR #2 head was `af7e68efe35e94f00985822fe46e44bf3667e59d`. GitHub Actions run #430 (`44657268539`) for that head completed **successfully**. Authorized Cycle152 archive metadata verified (956121-byte ZIP); no archive reimport required, since 27 Core151 text modules are already tracked.
+- Integration: committed `tests/test_checkpoint.py` regression `e1469959de4f5941a7087f165b94f109adeb95cd`. It exercises existing real Core151 M01 receipt replay after corrupting each Book counter to boolean `True` or negative `-1`; asserts rejection without changing sequence, tick, balances, receipts, transaction history or Founder identity set, then restores counter and audits successful idempotent replay. No new engine or production mechanics introduced.
+- State: updated `engine/ACTIVE_ENGINE.json` at `732d0c056c962bbfc31ffaa6612fe213955c2996`.
+- Execute/test: previous-head GitHub Actions #430 **PASS**; new test **NOT EXECUTED** on its exact head in this invocation. No local clean-checkout run or fresh numeric Book residuals. No native WorldBox game test or long-horizon ecology test.
+- Audit: one `world.book`, one `world.tick`, 100 Founder identities remain the enforced contract. M01 iteration-3 repair lock, M05 non-authoritative SQLite, M02–M07 backlog and read-only WorldBox boundary unchanged. Both PRs remain drafts; no main merge.
+- Next: verify exact-head CI for this test, fix any failure, then prioritize behavior/source integration over repetitive replay assertions.
