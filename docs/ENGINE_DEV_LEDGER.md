@@ -1076,3 +1076,10 @@
 - Execute/test: previous CI #463 SUCCESS; new test NOT EXECUTED; exact-head CI PENDING. No fresh numerical conservation residuals, local clean-checkout tests or WorldBox gameplay.
 - Audit: one world.book, world.tick, 100 Founders remain required. M01 iteration3 repair lock, M05 SQLite nonauthority, M02-M07 backlog and external WorldBox read-only preserved. PRs draft; main unchanged.
 - Next: execute exact-head seed444 CI, repair failures, then quantify unforced Founder observations, voluntary tending and Tree survival over matched seeds.
+
+## 2026-11-20 09:00 CST — seed444 event integrity and conservation output
+- Ground: live PR #1 remains draft at 17ad5e9; PR #2 draft head 91f8b93 at inspection; authorized Cycle152 ZIP metadata confirmed. GitHub Actions #467 (44749240921) SUCCESS on 91f8b93, all 15 substantive headless stages passed.
+- Integration: updated existing seed444 Core151 three-tick regression at 8ade288. Count actual autonomous Tree-maintenance events without imposing a quota, verify each recorded actor belongs to the authoritative 100-Founder registry, creation matches the selected Tree, and maintenance amount equals .65. Print seed444 conservation residuals for future exact-head CI evidence. No new engine, Book, clock, native writer or production behavior introduced.
+- Execute/test: preceding CI #467 VERIFIED SUCCESS. New test commit NOT EXECUTED in this cycle; no fresh numeric residuals. State updated at 504021f. Exact-head CI pending. No local clean checkout or WorldBox gameplay.
+- Audit: one world.book and world.tick, 100 Founders, M01 iteration3 repair lock, M05 non-authoritative SQLite, M02-M07 backlog and WorldBox read-only restriction preserved. Main untouched; both PRs remain draft.
+- Next: verify exact-head CI and fix any event-shape regression; then matched-seed unforced stewardship and Tree survival comparisons.
