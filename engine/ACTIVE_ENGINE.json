@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules; M01 replay counter guard in production; new boolean/negative replay-counter regression committed e146995, exact-head CI pending",
+  "source_status": "27 tracked Core151 modules; M01 receipt replay guard retained; session preflight now rejects Book history metadata drift before real world tick",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "GitHub Actions #430 SUCCESS at af7e68e (prior head); new boolean/negative replay-counter regression e146995 unverified",
+    "github_ci": "GitHub Actions #433 SUCCESS at 642c7f1 (previous head); seed439 metadata preflight regression at 78823e3 not yet executed",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -94,7 +94,8 @@
     "m01_partial_metadata": "Prior seed438 regression passed Actions #373; expanded last/external/toll_count regression committed 0d9545fe, exact-head CI pending",
     "p0_seed438_recovery": "VERIFIED exact-head CI #396 at e9168809; new second-tick metadata and Book identity regression at 8a9c564 pending execution",
     "founder_identity_replay": "PROVISIONAL: added actual 100-Founder key-set equivalence against baseline and pre-corruption world after two ticks; pending exact-head CI",
-    "p0_boolean_negative_replay_counter": "COMMITTED e146995; exact-head CI pending; no new Book residuals collected"
+    "p0_boolean_negative_replay_counter": "COMMITTED e146995; exact-head CI pending; no new Book residuals collected",
+    "p0_seed439_preflight": "PROVISIONAL: source 57e83abe, test 78823e36 committed; exact-head CI pending; no new numerical residuals"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -110,7 +111,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify exact-head CI for test fix and downstream skipped steps; repair any remaining failures before accepting M01 replay guard",
+  "next_engineering_task": "Execute exact-head CI for seed439 Book metadata preflight; repair failures and record numerical conservation audit",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -119,10 +120,11 @@
   },
   "latest_cycle": {
     "date": "2026-11-19",
-    "change": "Repair stale truncated-history regression exception expectation to match new fail-closed production Book counter guard",
-    "code_commit": "9e6c0888e02958de9d81a110da7cd17cce19f8e8",
-    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44650966534",
-    "previous_ci_result": "FAILURE due to assertRaisesRegex mismatch; actual guard rejected mutation",
+    "change": "Reject canonical Book history/counter drift in SingleEngineSession.audit before Core151 tick or M01 harvest",
+    "code_commit": "57e83abe0876f2dd6f04f3e079001c1a401c0cd0",
+    "test_commit": "78823e367cf904175444694322455dc3ea87a326",
+    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44664195806",
+    "previous_ci_result": "SUCCESS at previous head 642c7f1",
     "status": "PROVISIONAL"
   },
   "next_task": "Verify exact-head CI for second-tick settlement metadata equivalence; fix failures before expanding replay horizon",
