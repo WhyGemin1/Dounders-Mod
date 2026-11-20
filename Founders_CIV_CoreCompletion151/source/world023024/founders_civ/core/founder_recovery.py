@@ -97,6 +97,12 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
     if (isinstance(available, bool) or not isinstance(available, (int, float))
             or not isfinite(available) or available < 0):
         raise ValueError('invalid Founder work fuel')
+    # The destination is authoritative too: a damaged heat account must not
+    # turn a legitimate work debit into an invalid conservation transaction.
+    heat_balance = sim.book.energy.get('environment:heat', 0.)
+    if (isinstance(heat_balance, bool) or not isinstance(heat_balance, (int, float))
+            or not isfinite(heat_balance) or heat_balance < 0):
+        raise ValueError('invalid work heat destination')
     if available + 1e-10 < cost:
         return False
     if cost <= 0:
