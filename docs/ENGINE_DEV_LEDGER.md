@@ -1069,3 +1069,10 @@
 - Added `test_voluntary_stewardship_survives_real_ticks` in `tests/test_authority.py` at commit `90c6d14ffbb6110e7ab77e6464855948374b5999`. Seed443 exercises one nonowner Book-funded tend action, a decliner's unchanged balance at settlement, then two actual `SingleEngineSession.step()` calls with one clock, 100 Founders and conservation assertions. It does not prove autonomous selection frequency.
 - Test source committed, **NOT EXECUTED** this cycle. No fresh numerical Book residuals, native WorldBox game tests, or long-horizon ecology. New regression acceptance PROVISIONAL until exact-head CI.
 - Next: inspect exact-head CI, repair any seed443 failure; then measure ordinary-tick voluntary stewardship decisions across matched seeds without forcing Founder choices.
+
+## 2026-11-20 08:00 CST — unforced Founder decisions, seed444
+- Ground: live PR #1 draft 17ad5e9 and PR #2 draft 4a819a5 inspected; previous exact-head Actions #463 (44740586275) SUCCESS on 4a819a5. Authorized Cycle152 ZIP metadata confirmed; no reimport or binary commit.
+- Integration: added seed444 3-tick ordinary Core151 session regression in tests/test_authority.py at d861f756819194352b71ab38da1d88a47ca8ede2. No forced tend action, no second engine, clock or Book. Captures optional maintenance events without imposing a success quota. No production mechanics modified.
+- Execute/test: previous CI #463 SUCCESS; new test NOT EXECUTED; exact-head CI PENDING. No fresh numerical conservation residuals, local clean-checkout tests or WorldBox gameplay.
+- Audit: one world.book, world.tick, 100 Founders remain required. M01 iteration3 repair lock, M05 SQLite nonauthority, M02-M07 backlog and external WorldBox read-only preserved. PRs draft; main unchanged.
+- Next: execute exact-head seed444 CI, repair failures, then quantify unforced Founder observations, voluntary tending and Tree survival over matched seeds.
