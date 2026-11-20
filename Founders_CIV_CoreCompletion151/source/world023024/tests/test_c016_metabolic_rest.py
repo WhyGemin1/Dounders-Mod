@@ -323,3 +323,21 @@ def test_corrupt_stored_fuel_rejects_rest_without_fatigue_or_book_mutation():
     sim.book.energy[store] = original
     assert perform_rest(sim, founder, decision_id='corrupt-store')
     audit(sim)
+
+
+def test_rest_proposal_rejects_corrupt_book_fuel_without_mutation():
+    from founders_civ.core.founder_recovery import propose_rest
+    sim, founder = prepared()
+    for account in (f'founder:{founder}', f'body_chemical:founder:{founder}'):
+        original = sim.book.energy[account]
+        for invalid in (-0.01, float('nan'), float('inf'), True):
+            sim.book.energy[account] = invalid
+            before = (sim.book.seq, dict(sim.book.operations), len(sim.events),
+                      sim.recovery_states[founder].rest_decisions)
+            with pytest.raises(ValueError, match='invalid Founder proposal fuel'):
+                propose_rest(sim, founder)
+            assert (sim.book.seq, dict(sim.book.operations), len(sim.events),
+                    sim.recovery_states[founder].rest_decisions) == before
+        sim.book.energy[account] = original
+    assert propose_rest(sim, founder)
+    audit(sim)
