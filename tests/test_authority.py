@@ -216,6 +216,39 @@ class SingleAuthorityTests(unittest.TestCase):
         print('seed447 replay days=3 final_maintenance=%d final_book_seq=%d' %
               (len(first[-1][2]), first[-1][1]))
 
+    def test_unforced_stewardship_five_day_event_growth(self):
+        """Five real ticks preserve event history and canonical settlement authority."""
+        world, _, tree_id = bootstrap(448)
+        session = SingleEngineSession(world, tree_id)
+        founder_ids = frozenset(world.founders.people)
+        start_tick = world.tick
+        previous_events = tuple(world.events)
+        previous_seq = world.book.seq
+        for day in range(1, 6):
+            session.step()
+            proof = session.audit()
+            self.assertEqual(world.tick, start_tick + day)
+            self.assertEqual(world.ecology.day, world.tick)
+            self.assertEqual(proof.founder_count, 100)
+            self.assertEqual(frozenset(world.founders.people), founder_ids)
+            self.assertIs(session.book, world.book)
+            self.assertGreaterEqual(world.book.seq, previous_seq)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+            events = tuple(world.events)
+            self.assertEqual(events[:len(previous_events)], previous_events)
+            for event in events[len(previous_events):]:
+                if event.get('kind', event.get('action', event.get('type'))) == 'tree_autonomous_maintenance':
+                    self.assertIn(event['actor'], founder_ids)
+                    self.assertEqual(event['creation'], tree_id)
+                    self.assertGreater(event['amount'], 0)
+            previous_events, previous_seq = events, world.book.seq
+        count = sum(e.get('kind', e.get('action', e.get('type'))) ==
+                    'tree_autonomous_maintenance' for e in world.events)
+        print('seed448 unforced days=5 tending=%d seq=%d mass=%0.12g energy=%0.12g' %
+              (count, proof.book_sequence, proof.book_mass_error,
+               proof.book_energy_error))
+
     def test_secondary_tree_shares_book_without_new_authority(self):
         """A second registered Tree may coexist if it uses the living Book/clock."""
         from copy import copy
