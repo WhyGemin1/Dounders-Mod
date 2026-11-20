@@ -81,6 +81,33 @@ class IntegratedCheckpointTests(unittest.TestCase):
                       f'mass={proof.book_mass_error:.17g} '
                       f'energy={proof.book_energy_error:.17g}')
 
+    def test_replay_receipt_rejects_counter_drift_without_mutation(self):
+        book = self.session.book
+        args = ('F001', 'counter-replay-guard', '1', 'forest', 'plant', .01, .001)
+        original = self.session.harvest(*args)
+        for field in ('transactions', 'toll_count'):
+            with self.subTest(field=field):
+                prior = getattr(book, field)
+                snapshot = (book.seq, self.world.tick, dict(book.mass),
+                            dict(book.energy), dict(book.request_receipts),
+                            list(book.transaction_history),
+                            frozenset(self.world.founders.people))
+                try:
+                    setattr(book, field, prior + 1)
+                    with self.assertRaisesRegex(ValueError, 'counters disagree'):
+                        self.session.harvest(*args)
+                    self.assertEqual(snapshot, (book.seq, self.world.tick,
+                        dict(book.mass), dict(book.energy),
+                        dict(book.request_receipts), list(book.transaction_history),
+                        frozenset(self.world.founders.people)))
+                finally:
+                    setattr(book, field, prior)
+                self.assertEqual(self.session.harvest(*args), original)
+                proof = self.session.audit()
+                self.assertEqual(proof.founder_count, 100)
+                self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+                self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
     def test_restart_replay_is_idempotent(self):
         from founders_engine.checkpoint import save_checkpoint, load_checkpoint
         first = self.session.harvest('F001', 'checkpoint-replay', '1',
