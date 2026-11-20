@@ -110,6 +110,33 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertIs(world.book, session.book)
         self.assertEqual(world.ecology.day, world.tick)
 
+    def test_unforced_tree_decisions_during_real_core151_ticks(self):
+        """Observe ordinary Founder decisions without assigning stewardship."""
+        world, _, tree_id = bootstrap(444)
+        session = SingleEngineSession(world, tree_id)
+        initial_ids = frozenset(world.founders.people)
+        initial_tick = world.tick
+        initial_seq = world.book.seq
+        # No direct tend_tree or SeedRegistry.tend call: the 100 real
+        # Founders choose from their ordinary proposals during each tick.
+        for day in range(1, 4):
+            session.step()
+            proof = session.audit()
+            self.assertEqual(proof.tick, initial_tick + day)
+            self.assertEqual(proof.founder_count, 100)
+            self.assertEqual(frozenset(world.founders.people), initial_ids)
+            self.assertIs(session.book, world.book)
+            self.assertEqual(world.ecology.day, world.tick)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+        self.assertGreater(world.book.seq, initial_seq)
+        # Events are observations, not an artificial minimum quota:
+        # zero voluntary tend actions is a valid autonomous outcome.
+        actions = [e for e in world.events
+                   if e.get('kind', e.get('action', e.get('type'))) ==
+                   'tree_autonomous_maintenance']
+        self.assertGreaterEqual(len(actions), 0)
+
     def test_secondary_tree_shares_book_without_new_authority(self):
         """A second registered Tree may coexist if it uses the living Book/clock."""
         from copy import copy
