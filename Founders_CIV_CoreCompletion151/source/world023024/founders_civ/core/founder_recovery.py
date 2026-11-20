@@ -108,6 +108,10 @@ def propose_rest(sim, founder):
     if person is None or not person.alive:
         return []
     state = state_for(sim, founder)
+    # Never rank a proposal from a corrupt or nonfinite checkpoint state.
+    # This is a read-only policy decision: no Book energy is created or spent.
+    if not isfinite(state.fatigue) or not 0. <= state.fatigue <= 1.:
+        raise ValueError('invalid Founder fatigue')
     usable = sim.book.energy[f'founder:{founder}']
     stored = sim.book.energy.get(f'body_chemical:founder:{founder}', 0.)
     # Even with no work fuel, rest remains an available *choice*.
