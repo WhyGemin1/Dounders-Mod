@@ -1097,3 +1097,10 @@
 - Execution: test code committed, but seed447 test NOT executed this cycle; exact-head CI pending. No fresh mass/energy residuals or ecology survival data. No native WorldBox test.
 - Safety: no alternate engine, second Book, second clock, merge, or `main` change. M01 iteration3 repair lock, M05 read-only, M02–M07 backlog preserved.
 - Next: inspect exact-head CI for seed447, repair deterministic mismatch if any, then evaluate multi-seed longer horizons and actual voluntary participation counts.
+
+## 2026-11-20 12:00 CST — seed448 five-day unforced event-continuity regression
+- Ground/design: live PR #1 draft at 17ad5e9, PR #2 draft at f2f9bb9; exact-head prior GitHub Actions #475 (44778310113) SUCCESS on f2f9bb9. Authorized Cycle152 Drive ZIP metadata confirmed; not downloaded or reimported this cycle.
+- Implementation: test_authority.py adds seed448 five-day real Core151 session regression at 45298f4. Each tick checks one canonical Book, clock synchronization, 100 Founder identities, nondecreasing Book sequence, conservation tolerance <=1e-6, append-only event history and provenance of newly observed voluntary Tree maintenance. No forced tending quota or new engine authority.
+- Execute/test: prior-head CI verified; new seed448 test NOT EXECUTED and exact-head CI pending. No fresh numerical Book residuals or survival measurements. No local clean checkout or native WorldBox test.
+- Audit: preserve M01 iteration3 repair lock, M05 SQLite nonauthority, M02-M07 backlog, WorldBox read-only, draft PRs and unchanged main.
+- Next: verify final-head CI, fix any seed448 failure, extract per-day event counts and Book residuals before interpreting behavioral or ecological impact.
