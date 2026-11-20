@@ -98,6 +98,11 @@ class SingleEngineSession:
             raise RuntimeError('authoritative World Tree object replaced')
         if tree.book is not self.book or tree.sim is not self.world:
             raise RuntimeError('World Tree authority changed')
+        # Every registered Tree shares the same Book, not only the M01 target.
+        # Otherwise a second Tree could introduce an untracked resource writer.
+        if any(other.book is not self.book or other.sim is not self.world
+               for other in self.world.world_trees.worlds.values()):
+            raise RuntimeError('noncanonical World Tree resource authority')
 
     def audit(self):
         self._assert_authority()
