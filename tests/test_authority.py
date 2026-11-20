@@ -126,6 +126,42 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
         self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+    def test_checkpointed_underfunded_tending_never_writes_checkpoint(self):
+        """Rejected local upkeep cannot overwrite a durable canonical checkpoint."""
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+
+        world, _, tree_id = bootstrap(453)
+        session = SingleEngineSession(world, tree_id)
+        founder = next(iter(world.founders.people))
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'canonical.cp'
+            save_checkpoint(world, tree_id, path)
+            before_bytes = path.read_bytes()
+            before = (world.tick, world.book.seq,
+                      dict(world.book.mass), dict(world.book.energy))
+            insufficient = world.book.energy[f'founder:{founder}'] + 1.0
+            with self.assertRaisesRegex(ValueError, 'Founder lacks upkeep energy'):
+                session.checkpointed_tend_tree(path, founder, tree_id, insufficient)
+            self.assertEqual(path.read_bytes(), before_bytes)
+            self.assertEqual(
+                (world.tick, world.book.seq,
+                 dict(world.book.mass), dict(world.book.energy)), before)
+            self.assertEqual(session.audit().founder_count, 100)
+            # The same session may still settle an affordable, voluntary action.
+            settled = session.checkpointed_tend_tree(path, founder, tree_id, .01)
+            self.assertGreater(settled.book_sequence, before[1])
+            recovered = load_checkpoint(path, tree_id)
+            self.assertEqual(recovered.book.seq, world.book.seq)
+            self.assertEqual(recovered.world.tick, world.tick)
+            self.assertEqual(dict(recovered.book.mass), dict(world.book.mass))
+            self.assertEqual(dict(recovered.book.energy), dict(world.book.energy))
+            proof = recovered.audit()
+            self.assertEqual(proof.founder_count, 100)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
     def test_voluntary_stewardship_survives_real_ticks(self):
         """One elected Book-funded transfer survives two real Core151 days."""
         world, _, tree_id = bootstrap(443)
