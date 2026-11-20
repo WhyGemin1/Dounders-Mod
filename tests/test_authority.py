@@ -151,6 +151,37 @@ class SingleAuthorityTests(unittest.TestCase):
               (proof.tick - initial_tick, len(maintenance),
                proof.book_mass_error, proof.book_energy_error))
 
+    def test_unforced_stewardship_two_seed_comparison(self):
+        """Compare real autonomous outcomes without assigning maintenance quotas."""
+        observations = []
+        for seed in (445, 446):
+            with self.subTest(seed=seed):
+                world, _, tree_id = bootstrap(seed)
+                session = SingleEngineSession(world, tree_id)
+                founder_ids = frozenset(world.founders.people)
+                start_tick = world.tick
+                for _ in range(2):
+                    session.step()
+                    proof = session.audit()
+                    self.assertEqual(proof.founder_count, 100)
+                    self.assertEqual(frozenset(world.founders.people), founder_ids)
+                    self.assertIs(session.book, world.book)
+                    self.assertEqual(world.ecology.day, world.tick)
+                    self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+                    self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+                maintenance = [e for e in world.events
+                               if e.get('kind', e.get('action', e.get('type'))) ==
+                               'tree_autonomous_maintenance']
+                for event in maintenance:
+                    self.assertIn(event['actor'], founder_ids)
+                    self.assertEqual(event['creation'], tree_id)
+                    self.assertGreater(event['amount'], 0)
+                observations.append((seed, len(maintenance), proof.tick - start_tick,
+                                     proof.book_mass_error, proof.book_energy_error))
+        for seed, count, days, mass, energy in observations:
+            print('seed%d unforced days=%d tending=%d mass=%0.12g energy=%0.12g' %
+                  (seed, days, count, mass, energy))
+
     def test_secondary_tree_shares_book_without_new_authority(self):
         """A second registered Tree may coexist if it uses the living Book/clock."""
         from copy import copy
