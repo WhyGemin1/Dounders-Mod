@@ -39,6 +39,10 @@ def _validate_world(world, tree_id):
         raise ValueError('invalid canonical world clock')
     if world.tick != world.ecology.day:
         raise ValueError('ecology and Founder clocks disagree')
+    # Preserve the explicit legacy-migration failure before the generic
+    # session metadata preflight. Never reconstruct missing Book history.
+    if getattr(session.book, 'transaction_history', None) is None:
+        raise ValueError('legacy checkpoint missing canonical Book transaction history; reviewed migration required')
     session.audit()
     # Fail closed on Book receipt corruption before saving or accepting a
     # restored world. A receipt must refer to a real committed Book move.
