@@ -150,7 +150,7 @@ def perform_rest(sim, founder, parent=None, decision_id=None):
     if (isinstance(state.fatigue, bool) or not isinstance(state.fatigue, (int, float))
             or not isfinite(state.fatigue) or not 0. <= state.fatigue <= 1.):
         raise ValueError('invalid Founder fatigue')
-    # Rest is a chosen physical action, not a purchase of elapsed time.
+    # The checkpoint counter is an identity-bearing recovery record, not a\n    # quantity that may be repaired implicitly during replay.\n    if (isinstance(state.rest_decisions, bool) or not isinstance(state.rest_decisions, int)\n            or state.rest_decisions < 0):\n        raise ValueError('invalid recovery decision counter')\n    # Rest is a chosen physical action, not a purchase of elapsed time.
     # Replay identity comes from the exact decision, NOT the simulation tick.
     if decision_id is None:
         decision_id = parent if parent is not None else f'manual-{sim.next_event + 1}'
