@@ -304,3 +304,22 @@ def test_orphan_funded_rest_sidecar_rejects_reuse_when_book_and_event_missing():
     sim.recovery_receipts[operation] = original_event
     assert perform_rest(sim, founder, decision_id='orphan-sidecar') == event
     audit(sim)
+
+
+def test_corrupt_stored_fuel_rejects_rest_without_fatigue_or_book_mutation():
+    sim, founder = prepared()
+    store = f'body_chemical:founder:{founder}'
+    original = sim.book.energy[store]
+    for invalid in (-0.01, float('nan'), float('inf')):
+        sim.book.energy[store] = invalid
+        before = (sim.book.seq, dict(sim.book.operations),
+                  sim.recovery_states[founder].fatigue,
+                  sim.recovery_states[founder].rest_decisions, len(sim.events))
+        with pytest.raises(ValueError, match='invalid stored chemical fuel'):
+            perform_rest(sim, founder, decision_id='corrupt-store')
+        assert (sim.book.seq, dict(sim.book.operations),
+                sim.recovery_states[founder].fatigue,
+                sim.recovery_states[founder].rest_decisions, len(sim.events)) == before
+    sim.book.energy[store] = original
+    assert perform_rest(sim, founder, decision_id='corrupt-store')
+    audit(sim)
