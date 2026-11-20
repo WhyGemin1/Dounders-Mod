@@ -125,6 +125,11 @@ def propose_rest(sim, founder):
     if (isinstance(state.fatigue, bool) or not isinstance(state.fatigue, (int, float))
             or not isfinite(state.fatigue) or not 0. <= state.fatigue <= 1.):
         raise ValueError('invalid Founder fatigue')
+    # A restored decision counter is part of the Founder's replay identity.
+    # Do not offer an autonomous rest action from a corrupt checkpoint.
+    if (isinstance(state.rest_decisions, bool) or not isinstance(state.rest_decisions, int)
+            or state.rest_decisions < 0):
+        raise ValueError('invalid recovery decision counter')
     usable = sim.book.energy[f'founder:{founder}']
     stored = sim.book.energy.get(f'body_chemical:founder:{founder}', 0.)
     # Invalid checkpoint accounts must not influence autonomous priorities.
