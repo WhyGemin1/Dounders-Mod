@@ -1111,3 +1111,10 @@
 - Execute/test: previous-head CI #477 verified success. New daily-count assertions not executed at commit time; exact-head CI pending. No new numerical Book residuals extracted, no native WorldBox game tests and no long-horizon ecology claim.
 - Audit: 100 canonical Founders, world.book, world.tick, M01 iteration3 lock, M05 SQLite nonauthority, M02–M07 backlog and read-only WorldBox boundary preserved. Main untouched, both PRs draft.
 - Next: verify exact-head CI, retrieve daily count and conservation output, then decide whether participation is nonzero before modifying production behavior.
+
+## 2026-11-20 14:00 CST — seed449 invalid voluntary tending rollback regression
+- Ground: live draft PR #1/#2 inspected; preceding-head GitHub Actions 44797668017 completed SUCCESS on a1e5e5e. Core151 source and session tending method inspected.
+- Implementation: test commit 13a08a8304f6db0c1ae86eeff3ef01d15adc750f adds seed449 rejection cases for fake Founder, missing Tree, zero/negative/nonfinite/boolean energy. Checks unchanged Book mass, energy, sequence and clock after each rejection, then audits 100 Founders and conservation <=1e-6. No production authority or alternate engine introduced.
+- Execute/test: prior-head CI success VERIFIED. New test NOT EXECUTED; exact-head CI pending. No fresh numeric residuals. Authorized Drive archive retrieved; no new import required because 27 modules already tracked.
+- Ecological audit: invalid transfer safety coverage only; no participation or survival conclusions. M01 iteration3 repair lock, M05 nonauthority, WorldBox read-only and M02-M07 backlog preserved. PRs remain draft; main untouched.
+- Next: execute exact-head CI for seed449, repair failure if present, then test successful/failed tending across durable restart.
