@@ -476,3 +476,31 @@ def test_c123_disabled_recovery_does_not_propose_rest_or_mutate_book():
              sim.recovery_states[founder].fatigue,
              sim.recovery_states[founder].rest_decisions)
     assert after == before
+
+
+def test_c124_autonomous_rest_skips_noop_but_preserves_unfunded_fatigue_recovery():
+    sim, founder = bootstrap(seed=820)[0], 'F001'
+    sim.founder_recovery_enabled = True
+    state = sim.recovery_states[founder]
+    before = (dict(sim.book.energy), dict(sim.book.operations), sim.book.seq,
+              state.rest_decisions, len(sim.events))
+    state.fatigue = 0.
+    assert propose_rest(sim, founder) == []
+    assert (dict(sim.book.energy), dict(sim.book.operations), sim.book.seq,
+            state.rest_decisions, len(sim.events)) == before
+    state.fatigue = .5
+    assert propose_rest(sim, founder)
+    assert perform_rest(sim, founder, decision_id='c124-unfunded')
+    assert state.fatigue == pytest.approx(.3)
+    assert dict(sim.book.energy) == before[0]
+    audit(sim)
+
+
+def test_c124_stored_fuel_still_makes_zero_fatigue_rest_available():
+    sim, founder = prepared()
+    sim.recovery_states[founder].fatigue = 0.
+    assert sim.book.energy[f'body_chemical:founder:{founder}'] >= .001
+    before = (dict(sim.book.energy), sim.book.seq)
+    assert propose_rest(sim, founder)
+    assert (dict(sim.book.energy), sim.book.seq) == before
+    audit(sim)
