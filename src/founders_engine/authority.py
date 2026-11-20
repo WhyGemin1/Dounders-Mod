@@ -101,6 +101,17 @@ class SingleEngineSession:
 
     def audit(self):
         self._assert_authority()
+        # Reject metadata drift before stepping the real world, even when
+        # mass/energy totals still happen to balance. The Book is authoritative.
+        history = getattr(self.book, 'transaction_history', None)
+        if (not isinstance(history, list) or
+                type(self.book.transactions) is not int or
+                self.book.transactions != len(history) or
+                type(self.book.toll_count) is not int or
+                self.book.toll_count != sum(tx.kind == 'transform' for tx in history) or
+                len(history) != self.book.seq or
+                (history[-1] if history else None) != self.book.last):
+            raise RuntimeError('canonical Book history metadata drift')
         proof = self.book.audit()
         # An undefined conservation audit must never be reported as healthy.
         # Boolean and nonnumeric audit results are not measured conservation residuals.
