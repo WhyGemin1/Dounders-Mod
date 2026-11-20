@@ -1,6 +1,6 @@
 {
-  "source": "U026 G2 exact-source candidate including C058 dependent sleep; mechanical evidence only, not Core promoted",
-  "files": 518,
+  "source": "U026 C118 candidate snapshot; NOT promoted, requires review",
+  "files": 519,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
     "Founders_CIV_CoreCompletion151/source/capacity_dose_021131.py": "fc9800b1846604edfd1bee305bc866030748f109929825b4422671127808e036",
@@ -124,7 +124,7 @@
     "Founders_CIV_CoreCompletion151/source/src/core_completion_144.py": "8089dbac8cf5f56eeaf9627cbc8c3bab2dbeb6347968e40a48d5e066e88f739f",
     "Founders_CIV_CoreCompletion151/source/src/core_completion_145.py": "80b321dbe73fc72029063b7f430acc079ffd104b208a5723da96b35787dd5846",
     "Founders_CIV_CoreCompletion151/source/src/core_completion_146.py": "8a1a9ea4914233a616f1c80eff29ca7ec52d5eb6d392ec764d848208ac5aea42",
-    "Founders_CIV_CoreCompletion151/source/src/core_physiology_v2.py": "8c8615445a96939b13b19e117394fc9cd6c47e0003e374c5fcc9c0683d23f22d",
+    "Founders_CIV_CoreCompletion151/source/src/core_physiology_v2.py": "509720b35df0ef8c478bdaad2c4b50e76b07ba8f781873c6f2167e1d85e83a31",
     "Founders_CIV_CoreCompletion151/source/src/digestion_02120.py": "f377b1671223af270cbb7310b1155198c78afcd0bc48849ad1447faf59fa6bcd",
     "Founders_CIV_CoreCompletion151/source/src/digestion_02121.py": "69b8474ad0e62e092058db599b21e91e2e16c76d186c8eb8896a816f94328303",
     "Founders_CIV_CoreCompletion151/source/src/eco_factorial_cycle138.py": "7659b7f9da6ac7bbdb78472dee28d32b86f767743315d17f192b2decfab29a4f",
@@ -423,7 +423,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "60f171a4080a1ff0c46e763e5b513ca9c328db254bc958831a39f4a45c1953f3",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "26bfd626285919faeb32bd1fdcbf9fe16ebf3e99cfb419d36fb883296660920a",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "4468dae8555504aa413411929cb89eddd6f4f1099426b7365495e54f55f088c1",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "058b9cb09cbcf8dcdc7f1b22583b93bc1a2e43efe45134fe239a85e925dd8adb",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "0631bae8c8cfa9cc71ed17c43b9ca11a6f9a9b07fa7eee65ed561a35b383f638",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py": "41fd892f3d9d1ffcd72c4a353a5c30d77c155fe356e206261babc1d2b47d9745",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/living_assets.py": "5fb57c92e243b2b95850f70ccac3b98c467b40482ae4da7b17ff24927c535853",
@@ -480,7 +480,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c010_digestion_fuel.py": "6dda563c953750894d41ea5ccf1727c4d70cdd8ce61ecb892721e9f8023ed3ef",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c013_lot_isolation.py": "79f0693cbdf86a81233977dd08c9ed9010ca107661b069cffc58d8bb8f273264",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c015_founder_nutrition.py": "734eae6a59ff4d03f330db15351ca04d4dec5a98039fbe2d50f8210837605202",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c016_metabolic_rest.py": "f01568be81a906f8a36895c8c2f071f2ece6d634b87eeb6023f08806765b4e5c",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c016_metabolic_rest.py": "b7056c49f4fea68a09afab341bca7b237ab394b08caa08d832a8aa670a088570",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_community_foraging.py": "a2f6b63ed7b7971ebada3f1cf901966e874abc9bfb97a7ad02d1a35066807d30",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "8dd29f551248fdfa5d8841918c37e8751639209ea459af776bb09d96496aff53",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "5175102b1ff13eeb6f8947feec323f2c3897193c0edd2736c6dbb04fce883e36",
@@ -519,7 +519,8 @@
     "tools/u026_g1_matched_acceptance.py": "2f51a17d478b1a7927417eabd3bd52d44cbf0287ba9c37bbaa64a8a432911af3",
     "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
     "tools/u026_g2_matched_acceptance.py": "f9f61d8ead5e3db85a54fd3fba998e9f39dd265a8617b5febfa317415bbef148",
-    ".github/workflows/u026_g2_acceptance.yml": "5427dae9b78cbcb48831815007df1156c3370ea7e507ece1682ff52def817a3a"
+    ".github/workflows/u026_g2_acceptance.yml": "5427dae9b78cbcb48831815007df1156c3370ea7e507ece1682ff52def817a3a",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c072_paid_work_replay.py": "74e50e1db95335cb29edaeccc0818ddc4d15c1826920f4ae6419ac0c90a308c0"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
@@ -579,7 +580,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "f26628ceacdc3cdf7817b351db8fd1c5ef1ecb11",
+  "source_commit": "2bda781121e51bdca547d01a356a453eb0ea82ac",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
