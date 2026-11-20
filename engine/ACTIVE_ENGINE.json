@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules; M01 Book replay guard committed; CI #427 failed on stale test exception text, production guard correctly rejected corrupted history",
+  "source_status": "27 tracked Core151 modules; M01 replay counter guard in production; new boolean/negative replay-counter regression committed e146995, exact-head CI pending",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "CI #427 FAILURE at c071685: 12 prior steps passed, durable harvest step failed solely because test expected old exception text; targeted test correction 9e6c088 committed, exact-head CI pending",
+    "github_ci": "GitHub Actions #430 SUCCESS at af7e68e (prior head); new boolean/negative replay-counter regression e146995 unverified",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -93,7 +93,8 @@
     "m01_identity_revision_c1": "32 revision-field C1 cases committed at 1ff57ecd69e3f8c9af0fa2a9babf4b690df539d2; exact-head execution pending",
     "m01_partial_metadata": "Prior seed438 regression passed Actions #373; expanded last/external/toll_count regression committed 0d9545fe, exact-head CI pending",
     "p0_seed438_recovery": "VERIFIED exact-head CI #396 at e9168809; new second-tick metadata and Book identity regression at 8a9c564 pending execution",
-    "founder_identity_replay": "PROVISIONAL: added actual 100-Founder key-set equivalence against baseline and pre-corruption world after two ticks; pending exact-head CI"
+    "founder_identity_replay": "PROVISIONAL: added actual 100-Founder key-set equivalence against baseline and pre-corruption world after two ticks; pending exact-head CI",
+    "p0_boolean_negative_replay_counter": "COMMITTED e146995; exact-head CI pending; no new Book residuals collected"
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
