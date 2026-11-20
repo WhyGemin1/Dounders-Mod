@@ -1083,3 +1083,10 @@
 - Execute/test: preceding CI #467 VERIFIED SUCCESS. New test commit NOT EXECUTED in this cycle; no fresh numeric residuals. State updated at 504021f. Exact-head CI pending. No local clean checkout or WorldBox gameplay.
 - Audit: one world.book and world.tick, 100 Founders, M01 iteration3 repair lock, M05 non-authoritative SQLite, M02-M07 backlog and WorldBox read-only restriction preserved. Main untouched; both PRs remain draft.
 - Next: verify exact-head CI and fix any event-shape regression; then matched-seed unforced stewardship and Tree survival comparisons.
+
+## 2026-11-20 10:00 CST — matched-seed unforced stewardship regression
+- Ground: inspected live draft PR #1 (17ad5e9), PR #2 (9c26558), authority test source and ACTIVE_ENGINE. GitHub Actions #470 (44758326195) SUCCESS on prior head 9c26558; authorized Cycle152 ZIP metadata verified, archive not downloaded this cycle.
+- Integration: committed seed445/446 two-day ordinary Core151 session regression at 83694da; no direct tending calls, no participation quota. Checks one Book, clock alignment, 100 Founder identities, event provenance and conservation <=1e-6; prints per-seed observed maintenance counts and numerical residuals.
+- Execute/test: preceding exact-head CI #470 VERIFIED SUCCESS. New regression NOT EXECUTED; final-head CI PENDING. No fresh numerical Book residuals or clean local checkout; no native WorldBox gameplay.
+- Audit: one authoritative world.book and world.tick, M01 iteration3 repair lock, M05 SQLite nonauthority, M02–M07 backlog and WorldBox read-only remain unchanged. Both PRs draft; main unchanged.
+- Next: verify exact-head CI, extract observed counts and residuals, repair failures; extend matched-seed behavioral comparison only after acceptance.
