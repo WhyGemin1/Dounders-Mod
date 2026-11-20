@@ -33,7 +33,8 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
         raise ValueError('invalid work cost')
     state = state_for(sim, founder)
     # Corrupt checkpoint fatigue must not turn work into a negative fuel debit.
-    if not isfinite(state.fatigue) or not 0. <= state.fatigue <= 1.:
+    if (isinstance(state.fatigue, bool) or not isinstance(state.fatigue, (int, float))
+            or not isfinite(state.fatigue) or not 0. <= state.fatigue <= 1.):
         raise ValueError('invalid Founder fatigue')
     if decision_id is not None:
         if (not isinstance(decision_id, str) or not 1 <= len(decision_id) <= 72
@@ -115,7 +116,8 @@ def propose_rest(sim, founder):
     state = state_for(sim, founder)
     # Never rank a proposal from a corrupt or nonfinite checkpoint state.
     # This is a read-only policy decision: no Book energy is created or spent.
-    if not isfinite(state.fatigue) or not 0. <= state.fatigue <= 1.:
+    if (isinstance(state.fatigue, bool) or not isinstance(state.fatigue, (int, float))
+            or not isfinite(state.fatigue) or not 0. <= state.fatigue <= 1.):
         raise ValueError('invalid Founder fatigue')
     usable = sim.book.energy[f'founder:{founder}']
     stored = sim.book.energy.get(f'body_chemical:founder:{founder}', 0.)
@@ -139,7 +141,8 @@ def perform_rest(sim, founder, parent=None, decision_id=None):
         raise ValueError('active Founder required')
     state = state_for(sim, founder)
     # A corrupt checkpoint must not turn rest into nonfinite fatigue recovery.
-    if not isfinite(state.fatigue) or not 0. <= state.fatigue <= 1.:
+    if (isinstance(state.fatigue, bool) or not isinstance(state.fatigue, (int, float))
+            or not isfinite(state.fatigue) or not 0. <= state.fatigue <= 1.):
         raise ValueError('invalid Founder fatigue')
     # Rest is a chosen physical action, not a purchase of elapsed time.
     # Replay identity comes from the exact decision, NOT the simulation tick.
