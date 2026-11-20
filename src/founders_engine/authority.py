@@ -218,6 +218,17 @@ class SingleEngineSession:
         # Validate the requested amount before entering the mutable registry.
         if type(energy) not in (int, float) or not isfinite(energy) or energy <= 0:
             raise ValueError('invalid stewardship energy')
+        # Core151 SeedRegistry.tend validates these before touching the Book.
+        # Mirror those rejection checks here so a declined/underfunded action
+        # does not quarantine an otherwise healthy authoritative session.
+        founder = self.world.founders.people[founder_id]
+        if not founder.alive:
+            raise ValueError('active Founder required')
+        creation = self.world.seeds.plants.get(tree_id)
+        if creation is None or creation['status'] != 'stable':
+            raise ValueError('stable planted World Tree required')
+        if self.book.energy[f'founder:{founder_id}'] < energy:
+            raise ValueError('Founder lacks upkeep energy')
         try:
             result = self.world.seeds.tend(founder_id, tree_id, energy)
             self._expected_book_sequence = self.book.seq
