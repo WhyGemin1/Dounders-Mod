@@ -77,6 +77,31 @@ class SingleAuthorityTests(unittest.TestCase):
             world.founders = original
         session.audit()
 
+    def test_seed439_book_metadata_drift_blocks_world_step(self):
+        """Balanced resources cannot conceal a corrupted authoritative Book counter."""
+        world, _, tree_id = bootstrap(439)
+        session = SingleEngineSession(world, tree_id)
+        original = world.book.transactions
+        before = (world.tick, world.book.seq,
+                  dict(world.book.mass), dict(world.book.energy),
+                  frozenset(world.founders.people))
+        try:
+            world.book.transactions = original + 1
+            for operation in (session.audit, session.step,
+                              lambda: session.harvest('F001', 'seed439', '1',
+                                                      'forest', 'plant', .01, .001)):
+                with self.assertRaisesRegex(RuntimeError, 'Book history metadata drift'):
+                    operation()
+            self.assertEqual((world.tick, world.book.seq,
+                              dict(world.book.mass), dict(world.book.energy),
+                              frozenset(world.founders.people)), before)
+        finally:
+            world.book.transactions = original
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
     def test_one_book_and_100_founders(self):
         state = self.session.audit()
         self.assertEqual(state.founder_count, 100)
