@@ -429,3 +429,20 @@ def test_c114_work_rejects_corrupt_heat_destination_without_mutation():
         del sim.book.energy[account]
     assert paid_work(sim, founder, 'practice', .01, decision_id='c114-heat')
     audit(sim)
+
+
+def test_c115_corrupt_recovery_counter_rejected_without_book_or_event_mutation():
+    sim, founder = prepared()
+    state = sim.recovery_states[founder]
+    original = state.rest_decisions
+    before = (dict(sim.book.energy), sim.book.seq, dict(sim.book.operations),
+              len(sim.events), state.fatigue, dict(sim.recovery_receipts))
+    for invalid in (-1, True, 0.5, None, '1'):
+        state.rest_decisions = invalid
+        with pytest.raises(ValueError, match='invalid recovery decision counter'):
+            perform_rest(sim, founder, decision_id='c115-counter')
+        assert (dict(sim.book.energy), sim.book.seq, dict(sim.book.operations),
+                len(sim.events), state.fatigue, dict(sim.recovery_receipts)) == before
+    state.rest_decisions = original
+    assert perform_rest(sim, founder, decision_id='c115-counter')
+    audit(sim)
