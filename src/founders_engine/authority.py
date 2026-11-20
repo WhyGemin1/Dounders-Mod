@@ -238,6 +238,24 @@ class SingleEngineSession:
             raise
         return result
 
+    def checkpointed_tend_tree(self, checkpoint_path, founder_id, tree_id, energy):
+        """Settle voluntary tending and durably save the same canonical world.
+
+        This is a trusted-local checkpoint, NOT an idempotent external request
+        protocol or native WorldBox ACK. If saving fails after settlement, the
+        session is quarantined; reload the last durable checkpoint before any
+        further action. Callers must not blindly retry a successful tend.
+        """
+        from founders_engine.checkpoint import save_checkpoint
+        self._assert_authority()
+        self.tend_tree(founder_id, tree_id, energy)
+        try:
+            save_checkpoint(self.world, self.tree_id, checkpoint_path)
+        except Exception:
+            self._checkpoint_uncertain = True
+            raise
+        return self.audit()
+
     def checkpointed_harvest(self, checkpoint_path, founder_id, source_id,
                              revision, habitat, material, quantity,
                              chemical_energy=0.0):
