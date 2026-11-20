@@ -124,6 +124,9 @@ def perform_rest(sim, founder, parent=None, decision_id=None):
     if person is None or not person.alive:
         raise ValueError('active Founder required')
     state = state_for(sim, founder)
+    # A corrupt checkpoint must not turn rest into nonfinite fatigue recovery.
+    if not isfinite(state.fatigue) or not 0. <= state.fatigue <= 1.:
+        raise ValueError('invalid Founder fatigue')
     # Rest is a chosen physical action, not a purchase of elapsed time.
     # Replay identity comes from the exact decision, NOT the simulation tick.
     if decision_id is None:
