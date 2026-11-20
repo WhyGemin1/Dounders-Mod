@@ -281,3 +281,26 @@ def test_funded_rest_rejects_lost_sidecar_receipt_without_mutation():
     sim.recovery_book_receipts[operation] = original
     assert perform_rest(sim, founder, decision_id='lost-sidecar') == event
     audit(sim)
+
+
+def test_orphan_funded_rest_sidecar_rejects_reuse_when_book_and_event_missing():
+    sim, founder = prepared()
+    operation = f'founder:rest:{founder}:orphan-sidecar'
+    event = perform_rest(sim, founder, decision_id='orphan-sidecar')
+    assert event and operation in sim.recovery_book_receipts
+    original_book = sim.book.operations.pop(operation)
+    original_event = sim.recovery_receipts.pop(operation)
+    before = (dict(sim.book.energy), sim.book.seq, dict(sim.book.operations),
+              dict(sim.recovery_book_receipts),
+              sim.recovery_states[founder].fatigue,
+              sim.recovery_states[founder].rest_decisions, len(sim.events))
+    with pytest.raises(ValueError, match='missing recovery replay receipt'):
+        perform_rest(sim, founder, decision_id='orphan-sidecar')
+    assert (dict(sim.book.energy), sim.book.seq, dict(sim.book.operations),
+            dict(sim.recovery_book_receipts),
+            sim.recovery_states[founder].fatigue,
+            sim.recovery_states[founder].rest_decisions, len(sim.events)) == before
+    sim.book.operations[operation] = original_book
+    sim.recovery_receipts[operation] = original_event
+    assert perform_rest(sim, founder, decision_id='orphan-sidecar') == event
+    audit(sim)
