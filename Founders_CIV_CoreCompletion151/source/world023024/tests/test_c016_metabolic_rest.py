@@ -360,3 +360,26 @@ def test_paid_work_rejects_corrupt_book_fuel_without_mutation():
     sim.book.energy[account] = original
     assert paid_work(sim, founder, 'practice', .01, decision_id='corrupt-fuel')
     audit(sim)
+
+
+def test_c112_boolean_and_nonnumeric_fatigue_fail_closed_across_work_rest_and_proposal():
+    from founders_civ.core.founder_recovery import propose_rest
+    sim, founder = prepared()
+    state = sim.recovery_states[founder]
+    original = state.fatigue
+    before = (dict(sim.book.energy), sim.book.seq, dict(sim.book.operations),
+              len(sim.events), state.rest_decisions)
+    for invalid in (True, False, None, '0.5'):
+        state.fatigue = invalid
+        with pytest.raises(ValueError, match='invalid Founder fatigue'):
+            propose_rest(sim, founder)
+        with pytest.raises(ValueError, match='invalid Founder fatigue'):
+            perform_rest(sim, founder, decision_id='c112-invalid-rest')
+        with pytest.raises(ValueError, match='invalid Founder fatigue'):
+            paid_work(sim, founder, 'practice', .01, decision_id='c112-invalid-work')
+        assert (dict(sim.book.energy), sim.book.seq, dict(sim.book.operations),
+                len(sim.events), state.rest_decisions) == before
+    state.fatigue = original
+    assert propose_rest(sim, founder)
+    assert paid_work(sim, founder, 'practice', .01, decision_id='c112-valid-work')
+    audit(sim)
