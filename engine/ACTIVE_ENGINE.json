@@ -112,7 +112,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify CI for f4bc6ee and repair any remaining failures; then return to substantive Core151 integration.",
+  "next_engineering_task": "Run exact-head CI and behavioral regression verifying nonowner choices and Book conservation; do not infer ecological stability",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -120,12 +120,12 @@
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI"
   },
   "latest_cycle": {
-    "date": "2026-11-19",
-    "change": "Align checkpoint and M01 replay test expectations with earlier fail-closed SingleEngineSession.audit preflight",
-    "code_commit": "f4bc6ee1588b84a425f5f86469b68e565ac7b786",
-    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44671889917",
-    "previous_ci_result": "FAILURE: 8 exception expectation mismatches",
-    "status": "PROVISIONAL"
+    "date": "2026-11-20",
+    "change": "Allow allied and solidarity-motivated nonowner Founders to observe and voluntarily fund World Tree upkeep through existing Book-funded SeedRegistry.tend",
+    "code_commit": "cfdeb85e196da6f6934b0154e7f9173f4b012d06",
+    "previous_ci": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44699235475",
+    "previous_ci_result": "SUCCESS on previous head 65f6396",
+    "status": "PROVISIONAL: new behavioral change not yet CI tested"
   },
   "next_task": "Verify exact-head CI for second-tick settlement metadata equivalence; fix failures before expanding replay horizon",
   "p0_seed438_recovery": "VERIFIED CI #393 two-tick deterministic replay; second-tick numerical output and explicit authority assertions committed 0803b419, pending exact-head CI"
