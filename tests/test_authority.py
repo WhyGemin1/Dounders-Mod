@@ -104,6 +104,28 @@ class SingleAuthorityTests(unittest.TestCase):
                 self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
                 self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+    def test_underfunded_stewardship_is_retryable_without_book_mutation(self):
+        """An ordinary inability to pay must not poison the one-world session."""
+        world, _, tree_id = bootstrap(450)
+        session = SingleEngineSession(world, tree_id)
+        founder = next(iter(world.founders.people))
+        available = world.book.energy[f'founder:{founder}']
+        before = (world.tick, world.book.seq,
+                  dict(world.book.mass), dict(world.book.energy),
+                  len(world.book.transaction_history))
+        with self.assertRaisesRegex(ValueError, 'Founder lacks upkeep energy'):
+            session.tend_tree(founder, tree_id, available + 1.0)
+        self.assertEqual((world.tick, world.book.seq,
+                          dict(world.book.mass), dict(world.book.energy),
+                          len(world.book.transaction_history)), before)
+        self.assertEqual(session.audit().founder_count, 100)
+        # A legitimate retry can still settle through the canonical Book.
+        session.tend_tree(founder, tree_id, .01)
+        self.assertGreater(world.book.seq, before[1])
+        proof = session.audit()
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
     def test_voluntary_stewardship_survives_real_ticks(self):
         """One elected Book-funded transfer survives two real Core151 days."""
         world, _, tree_id = bootstrap(443)
