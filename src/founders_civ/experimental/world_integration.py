@@ -304,7 +304,13 @@ class IntegratedWorld(SocialSimulation):
 
         for cid,tree in self.world_trees.worlds.items():
             if tree.state!='active' or self.seeds.plants[cid]['status']!='stable':continue
-            if tree.owner!=a:continue  # first slice: the creator is the responsible steward
+            # Nonowners may voluntarily learn about and support a Tree.
+            # This is an opportunity, never a forced upkeep assignment.
+            owner=tree.owner
+            allied=(state.faction_id is not None and
+                    state.faction_id==self.states[owner].faction_id)
+            willing=(owner==a or allied or agenda=='solidarity')
+            if not willing:continue
             intel=tree.observations.get(a)
             if founder.location in ('house','riverbank') and self._energy(a)>.12:
                 if intel is None or self.tick-intel['seen_tick']>=5:
@@ -319,7 +325,8 @@ class IntegratedWorld(SocialSimulation):
                 # Reserve is a cached *model estimate*, not perfect live knowledge.
                 last=intel['seen_tick']; prior=intel.get('maintenance_reserve',plant['reserve'])
                 estimate=max(0.,prior-(self.tick-last)*plant['upkeep'])
-                if estimate < plant['upkeep']*5 and self._energy(a)>.68:
+                if (estimate < plant['upkeep']*5 and self._energy(a)>.68 and
+                        (owner==a or allied or agenda=='solidarity')):
                     props.append((3.70+.4*(agenda in ('security','solidarity')),
                                   'tree_tend',None,cid))
         return props
