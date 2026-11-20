@@ -1062,3 +1062,10 @@
 - Execute/test: prior-head CI #457 confirmed failure and seed427 conservation log: tick 3->4, seq 2215->2938, mass -8.9130480773746967e-11, energy -1.0244548320770264e-08. New source/test commits not yet executed; exact-head CI pending. No local clean-checkout run, no seed442 numerical audit, no native gameplay.
 - Audit/handoff: one `world.book`, `world.tick`, 100 Founder identities required; M01 iteration3 repair lock, M05 SQLite nonauthority, M02-M07 backlog and WorldBox read-only boundary preserved. Both PRs remain draft, main unchanged.
 - Next: verify CI at final ledger head, repair any seed442 failure, then test autonomous decisions across multiple real Core151 ticks.
+
+## 2026-11-20 07:00 CST — seed443 voluntary stewardship across real ticks
+- Existing branch `feat/single-core151-authority`; main and draft PRs untouched.
+- Verified previous-head GitHub Actions #461 (run 44732453451) SUCCESS for `4e9beb1`.
+- Added `test_voluntary_stewardship_survives_real_ticks` in `tests/test_authority.py` at commit `90c6d14ffbb6110e7ab77e6464855948374b5999`. Seed443 exercises one nonowner Book-funded tend action, a decliner's unchanged balance at settlement, then two actual `SingleEngineSession.step()` calls with one clock, 100 Founders and conservation assertions. It does not prove autonomous selection frequency.
+- Test source committed, **NOT EXECUTED** this cycle. No fresh numerical Book residuals, native WorldBox game tests, or long-horizon ecology. New regression acceptance PROVISIONAL until exact-head CI.
+- Next: inspect exact-head CI, repair any seed443 failure; then measure ordinary-tick voluntary stewardship decisions across matched seeds without forcing Founder choices.
