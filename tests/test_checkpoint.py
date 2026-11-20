@@ -33,14 +33,14 @@ class IntegratedCheckpointTests(unittest.TestCase):
         from founders_engine.checkpoint import save_checkpoint
         self.session.book.transactions += 1
         with tempfile.TemporaryDirectory() as tmp:
-            with self.assertRaisesRegex(ValueError, 'counters disagree'):
+            with self.assertRaisesRegex(RuntimeError, 'canonical Book history metadata drift'):
                 save_checkpoint(self.world, self.tree_id, Path(tmp) / 'state.cp')
 
     def test_reject_book_toll_counter_drift(self):
         from founders_engine.checkpoint import save_checkpoint
         self.session.book.toll_count += 1
         with tempfile.TemporaryDirectory() as tmp:
-            with self.assertRaisesRegex(ValueError, 'counters disagree'):
+            with self.assertRaisesRegex(RuntimeError, 'canonical Book history metadata drift'):
                 save_checkpoint(self.world, self.tree_id, Path(tmp) / 'state.cp')
 
     def test_book_move_once_rejects_counter_drift_before_new_settlement(self):
@@ -94,7 +94,7 @@ class IntegratedCheckpointTests(unittest.TestCase):
                             frozenset(self.world.founders.people))
                 try:
                     setattr(book, field, prior + 1)
-                    with self.assertRaisesRegex(ValueError, 'counters disagree'):
+                    with self.assertRaisesRegex(RuntimeError, 'canonical Book history metadata drift'):
                         self.session.harvest(*args)
                     self.assertEqual(snapshot, (book.seq, self.world.tick,
                         dict(book.mass), dict(book.energy),
@@ -124,7 +124,7 @@ class IntegratedCheckpointTests(unittest.TestCase):
                                 frozenset(self.world.founders.people))
                     try:
                         setattr(book, field, corrupt)
-                        with self.assertRaisesRegex(ValueError, 'counters disagree'):
+                        with self.assertRaisesRegex(RuntimeError, 'canonical Book history metadata drift'):
                             self.session.harvest(*args)
                         self.assertEqual(snapshot, (
                             book.seq, self.world.tick, dict(book.mass),
