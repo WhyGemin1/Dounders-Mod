@@ -144,6 +144,13 @@ def perform_rest(sim, founder, parent=None, decision_id=None):
     if len(operation) > 128:
         raise ValueError('recovery operation ID too long')
     if operation in sim.recovery_receipts:
+        # A receipt is not proof that the authoritative Book survived restore.
+        # New funded rests record their exact Book transaction identity.
+        expected = getattr(sim, 'recovery_book_receipts', {}).get(operation)
+        if expected is not None:
+            recorded = sim.book.operations.get(operation)
+            if recorded is None or recorded[1] != expected:
+                raise ValueError('recovery receipt/Book checkpoint mismatch')
         return sim.recovery_receipts[operation]
     # A Book debit without its corresponding rest receipt indicates an
     # incomplete checkpoint. Never repeat fatigue recovery on that identity.
@@ -167,4 +174,8 @@ def perform_rest(sim, founder, parent=None, decision_id=None):
                     txn=txn, mobilized=mobilized, fatigue=state.fatigue,
                     recovery_decision_id=decision_id)
     sim.recovery_receipts[operation] = event
+    if txn is not None:
+        if not hasattr(sim, 'recovery_book_receipts'):
+            sim.recovery_book_receipts = {}
+        sim.recovery_book_receipts[operation] = txn
     return event
