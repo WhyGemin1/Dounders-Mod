@@ -36,6 +36,48 @@ class SingleAuthorityTests(unittest.TestCase):
             session.gateway = gateway
         session.audit()
 
+    def test_nonowner_tree_stewardship_is_optional_and_book_funded(self):
+        """Nonowners can choose to tend, but unrelated Founders need not do so."""
+        world, _, tree_id = bootstrap(442)
+        session = SingleEngineSession(world, tree_id)
+        tree = world.world_trees.worlds[tree_id]
+        owner = tree.owner
+        others = [fid for fid in world.founders.people if fid != owner]
+        helper, decliner = others[:2]
+        helper_state, decliner_state = world.states[helper], world.states[decliner]
+        helper_state.main_goal = 'solidarity'
+        decliner_state.main_goal = 'exploration'
+        decliner_state.faction_id = None
+        helper_state.faction_id = None
+        self.assertNotEqual(helper, owner)
+        self.assertNotEqual(decliner, owner)
+        world.founders.people[helper].location = 'house'
+        world.founders.people[decliner].location = 'house'
+        helper_choices = world._proposals(helper, [])
+        decliner_choices = world._proposals(decliner, [])
+        self.assertTrue(any(p[1] == 'tree_observe' and p[3] == tree_id
+                            for p in helper_choices))
+        self.assertFalse(any(p[1] in ('tree_observe', 'tree_tend') and p[3] == tree_id
+                             for p in decliner_choices))
+        before_tick = world.tick
+        before_seq = world.book.seq
+        before_helper = world.book.energy[f'founder:{helper}']
+        before_reserve = world.book.energy[f'reserve:{tree_id}']
+        before_decliner = world.book.energy[f'founder:{decliner}']
+        # A voluntary action uses the existing SeedRegistry and canonical Book.
+        world.seeds.tend(helper, tree_id, .65)
+        self.assertEqual(world.tick, before_tick)
+        self.assertGreater(world.book.seq, before_seq)
+        self.assertAlmostEqual(world.book.energy[f'founder:{helper}'],
+                               before_helper - .65, places=6)
+        self.assertAlmostEqual(world.book.energy[f'reserve:{tree_id}'],
+                               before_reserve + .65, places=6)
+        self.assertEqual(world.book.energy[f'founder:{decliner}'], before_decliner)
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
     def test_secondary_tree_shares_book_without_new_authority(self):
         """A second registered Tree may coexist if it uses the living Book/clock."""
         from copy import copy
