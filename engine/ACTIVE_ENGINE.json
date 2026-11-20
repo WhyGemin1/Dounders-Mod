@@ -11,7 +11,7 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "27 tracked Core151 modules; single Book and clock retained; secondary World Tree foreign-Book preflight added (pending exact-head CI).",
+  "source_status": "27 tracked Core151 modules; one Book/clock. Secondary Tree foreign-Book rejection passed CI #447; shared-Book secondary Tree compatibility regression committed, exact-head CI pending.",
   "tests": {
     "local_targeted": "6/6 passed headless",
     "github_ci": "GitHub Actions #443 (44684525566) SUCCESS on prior exact head 6483432, all 18 substantive workflow stages passed. New secondary-Tree guard at 1710c1c and regression at 4f12aaf NOT EXECUTED on exact head.",
@@ -75,7 +75,7 @@
     "p0_finite_conservation_preflight": "Source and test committed; clean-checkout CI pending, no new numerical residuals",
     "p0_m01_harvest_preflight": "SOURCE/TEST COMMITTED; execution pending",
     "p0_tree_object_substitution": "SOURCE c0d87cf59d448f9a08fa011caefed518630dd212; seed419 TEST 7bde853069ef4eb12262f06b9c84337f3cc907b0; clean-checkout execution PENDING; no Book audit measured this cycle",
-    "p0_latest_ci_checked": "GitHub Actions #275 (44227842145) headless SUCCESS, 16 substantive steps, predates seed418/419",
+    "p0_latest_ci_checked": "GitHub Actions #447 (44691853829) SUCCESS on previous head 92f3437173528e5a3c6bda5626f342584e62784d; new seed441 test at db5fcc3 unexecuted.",
     "p0_m01_gateway_binding": "SOURCE/TEST COMMITTED; clean-checkout CI pending",
     "p0_missing_tree_registry": "SOURCE and seed421 regression committed; execution unverified",
     "book_residual_seed427": "CI #306 (44308683831) headless SUCCESS but seed427 standalone test was not included in workflow's test discovery. Added delegated seed427 test to authority suite at d38e5361ed6bc96d5410b3d39368e8704e97db60; new CI execution pending; no numerical residuals yet.",
@@ -95,7 +95,8 @@
     "p0_seed438_recovery": "VERIFIED exact-head CI #396 at e9168809; new second-tick metadata and Book identity regression at 8a9c564 pending execution",
     "founder_identity_replay": "PROVISIONAL: added actual 100-Founder key-set equivalence against baseline and pre-corruption world after two ticks; pending exact-head CI",
     "p0_boolean_negative_replay_counter": "COMMITTED e146995; exact-head CI pending; no new Book residuals collected",
-    "p0_seed439_preflight": "PROVISIONAL: source 57e83abe, test 78823e36 committed; exact-head CI pending; no new numerical residuals"
+    "p0_seed439_preflight": "PROVISIONAL: source 57e83abe, test 78823e36 committed; exact-head CI pending; no new numerical residuals",
+    "secondary_tree_shared_book": "PROVISIONAL: seed441 regression committed db5fcc3; audit-only shared-Book secondary Tree, exact-head CI pending; no ecology tick or native game test."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
