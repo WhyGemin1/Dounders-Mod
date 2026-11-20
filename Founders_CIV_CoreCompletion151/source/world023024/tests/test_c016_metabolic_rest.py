@@ -209,3 +209,19 @@ def test_default_rest_identity_remains_valid_under_strict_separator_guard():
     assert sim.book.seq == before + 1
     assert perform_rest(sim, founder, decision_id=f'manual-{sim.next_event}') == event
     audit(sim)
+
+
+def test_corrupt_fatigue_rejects_rest_before_book_or_event_mutation():
+    sim, founder = prepared()
+    before = (dict(sim.book.energy), sim.book.seq,
+              dict(sim.book.operations), len(sim.events),
+              sim.recovery_states[founder].rest_decisions)
+    for fatigue in (-0.01, 1.01, float('nan'), float('inf')):
+        sim.recovery_states[founder].fatigue = fatigue
+        with pytest.raises(ValueError, match='invalid Founder fatigue'):
+            perform_rest(sim, founder, decision_id='corrupt-rest')
+        assert (dict(sim.book.energy), sim.book.seq,
+                dict(sim.book.operations), len(sim.events),
+                sim.recovery_states[founder].rest_decisions) == before
+    assert 'founder:rest:F001:corrupt-rest' not in sim.recovery_receipts
+    audit(sim)
