@@ -36,6 +36,35 @@ class SingleAuthorityTests(unittest.TestCase):
             session.gateway = gateway
         session.audit()
 
+    def test_secondary_tree_cannot_bind_foreign_book(self):
+        """An additional Tree must not become a hidden second resource authority."""
+        from copy import copy
+        world, _, tree_id = bootstrap(440)
+        session = SingleEngineSession(world, tree_id)
+        tree = world.world_trees.worlds[tree_id]
+        other = copy(tree)
+        other.book = object()
+        key = 'UNAUTHORIZED-SECONDARY-TREE'
+        before = (world.tick, world.book.seq, dict(world.book.mass),
+                  dict(world.book.energy), frozenset(world.founders.people))
+        world.world_trees.worlds[key] = other
+        try:
+            for operation in (session.audit, session.step,
+                              lambda: session.harvest('F001', 'secondary-tree', '1',
+                                                      'forest', 'plant', .01, .001)):
+                with self.assertRaisesRegex(RuntimeError,
+                                            'noncanonical World Tree resource authority'):
+                    operation()
+            self.assertEqual(before, (world.tick, world.book.seq,
+                                      dict(world.book.mass), dict(world.book.energy),
+                                      frozenset(world.founders.people)))
+        finally:
+            del world.world_trees.worlds[key]
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
     def test_missing_authoritative_tree_fails_closed(self):
         """Deleting the original Tree cannot silently fall through to KeyError."""
         world, _, tree_id = bootstrap(421)
