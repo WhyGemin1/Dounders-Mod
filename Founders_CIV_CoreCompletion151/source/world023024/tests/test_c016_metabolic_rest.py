@@ -2,7 +2,7 @@
 import pickle
 import pytest
 from run_world_tree_pilot import bootstrap
-from founders_civ.core.founder_recovery import perform_rest, paid_work
+from founders_civ.core.founder_recovery import perform_rest, paid_work, propose_rest
 from founders_civ.core.founder_harvesting import observed_lots, perform_harvest
 from founders_civ.core.founder_nutrition import perform_nutrition
 
