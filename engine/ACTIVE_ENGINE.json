@@ -14,12 +14,12 @@
   "source_status": "27 tracked Core151 modules; single Book/clock. Voluntary nonowner Tree stewardship at cfdeb85, provenance pin repaired at 54d25ac; behavioral CI acceptance pending.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "VERIFIED GitHub Actions #461 run 44732453451 SUCCESS on previous head 4e9beb1; new seed443 two-real-tick stewardship regression at 90c6d14 pending exact-head CI.",
+    "github_ci": "VERIFIED GitHub Actions #463 run 44740586275 SUCCESS on previous head 4a819a5; seed444 unforced 3-tick regression at d861f75 NOT EXECUTED; exact-head CI pending.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #443 SUCCESS on previous head; local clean checkout attempted 2026-11-20 but git clone failed: github.com DNS resolution unavailable.",
-    "book_audit_this_cycle": "No new seed443 numerical residuals yet; new test asserts <=1e-6 after two real ticks. Prior seed427 residuals remain historical.",
+    "book_audit_this_cycle": "No fresh numerical residuals; seed444 test asserts <=1e-6 for 3 ticks but remains unexecuted.",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -112,7 +112,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify exact-head CI of session-mediated seed442 tending; fix any failures, then measure multi-tick autonomous stewardship decisions.",
+  "next_engineering_task": "Verify exact-head CI for seed444; correct failures; measure actual unforced tree observation and tending event frequencies across matched seeds without quota.",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
