@@ -974,3 +974,10 @@
 - Execute/test: prior CI #421 SUCCESS, but expanded regression at new head NOT EXECUTED at ledger write. No new measured residuals; no local clean-checkout test. No claim of new test acceptance.
 - Audit: no production behavior change; one world.book, world.tick and 100 Founder identities remain authoritative. M01 iteration-3 lock, M05 non-authoritative restriction, M02–M07 backlog and WorldBox read-only boundary preserved. No game or long-horizon ecology run; no merge/main write.
 - Next: inspect exact-head CI, extract live drift mass/energy values for both corruption cases and repair any failure before promotion.
+
+## 2026-11-19 — Core151 M01 receipt replay counter integrity
+- Ground: PR #1 and #2 draft and unmerged; GitHub Actions #424 (44641775672) SUCCESS on previous head 06b5bd3, including checkpoint and authority steps. Previous CI does not validate this new change.
+- Implementation: actual Core151 Book.move_once now validates transactions and toll_count against committed history before either new settlement or existing receipt replay. This closes a replay-path bypass where corrupted counters could return a receipt. Added targeted test with 100 Founder identities, unchanged tick, Book balances, history, receipts, and restored mass/energy audit. Source commit 215f9553e96f66257630c928214d6e2f5a02d51e; test commit 6314b6a3e0c67c6d72a5c73178bffbdcad0d2b58; reviewed ledger blob 9e766e176e05ce34b3ca8172d21b068659803849.
+- Execute: exact-head GitHub CI pending; no local clean-checkout execution and no fresh numerical residuals claimed for new assertions.
+- Audit: no new Book, clock, Founder registry, ecological mechanics or WorldBox write permission. M01 iteration-3 repair lock and M02–M07 backlog preserved; no main modification or merge.
+- Next: inspect exact-head CI, repair failures, extract replay corruption mass/energy residuals, then return to production integration.
