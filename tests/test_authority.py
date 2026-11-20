@@ -224,6 +224,7 @@ class SingleAuthorityTests(unittest.TestCase):
         start_tick = world.tick
         previous_events = tuple(world.events)
         previous_seq = world.book.seq
+        daily_counts = []
         for day in range(1, 6):
             session.step()
             proof = session.audit()
@@ -242,11 +243,15 @@ class SingleAuthorityTests(unittest.TestCase):
                     self.assertIn(event['actor'], founder_ids)
                     self.assertEqual(event['creation'], tree_id)
                     self.assertGreater(event['amount'], 0)
+            daily_counts.append(sum(e.get('kind', e.get('action', e.get('type'))) ==
+                                    'tree_autonomous_maintenance' for e in events))
+            self.assertGreaterEqual(daily_counts[-1], daily_counts[-2] if len(daily_counts) > 1 else 0)
             previous_events, previous_seq = events, world.book.seq
         count = sum(e.get('kind', e.get('action', e.get('type'))) ==
                     'tree_autonomous_maintenance' for e in world.events)
-        print('seed448 unforced days=5 tending=%d seq=%d mass=%0.12g energy=%0.12g' %
-              (count, proof.book_sequence, proof.book_mass_error,
+        self.assertEqual(daily_counts[-1], count)
+        print('seed448 unforced daily_cumulative_tending=%s seq=%d mass=%0.12g energy=%0.12g' %
+              (daily_counts, proof.book_sequence, proof.book_mass_error,
                proof.book_energy_error))
 
     def test_secondary_tree_shares_book_without_new_authority(self):
