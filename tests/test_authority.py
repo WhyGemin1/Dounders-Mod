@@ -78,6 +78,38 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
         self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+    def test_voluntary_stewardship_survives_real_ticks(self):
+        """One elected Book-funded transfer survives two real Core151 days."""
+        world, _, tree_id = bootstrap(443)
+        session = SingleEngineSession(world, tree_id)
+        tree = world.world_trees.worlds[tree_id]
+        helper = next(fid for fid in world.founders.people if fid != tree.owner)
+        decliner = next(fid for fid in world.founders.people
+                        if fid not in (tree.owner, helper))
+        before = session.audit()
+        before_decliner = world.book.energy[f'founder:{decliner}']
+        before_helper = world.book.energy[f'founder:{helper}']
+        before_reserve = world.book.energy[f'reserve:{tree_id}']
+        session.tend_tree(helper, tree_id, .25)
+        after_tend = session.audit()
+        self.assertEqual(after_tend.tick, before.tick)
+        self.assertGreater(after_tend.book_sequence, before.book_sequence)
+        self.assertAlmostEqual(world.book.energy[f'founder:{helper}'],
+                               before_helper - .25, places=6)
+        self.assertAlmostEqual(world.book.energy[f'reserve:{tree_id}'],
+                               before_reserve + .25, places=6)
+        self.assertEqual(world.book.energy[f'founder:{decliner}'],
+                         before_decliner)
+        for day in range(1, 3):
+            session.step()
+            snapshot = session.audit()
+            self.assertEqual(snapshot.tick, before.tick + day)
+            self.assertEqual(snapshot.founder_count, 100)
+            self.assertLessEqual(abs(snapshot.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(snapshot.book_energy_error), 1e-6)
+        self.assertIs(world.book, session.book)
+        self.assertEqual(world.ecology.day, world.tick)
+
     def test_secondary_tree_shares_book_without_new_authority(self):
         """A second registered Tree may coexist if it uses the living Book/clock."""
         from copy import copy
