@@ -1048,3 +1048,10 @@
 - Execute/test: inspected actual CI #452 job logs. No new local clean-checkout unittest or simulation executed. Exact-head CI after repair PENDING; no new mass/energy residuals. Authorized Drive ZIP metadata retrieved, no duplicate import or binary commit.
 - Audit: one world.book, world.tick and 100 Founders remain the contract; M01 iteration3 lock, M05 SQLite nonauthority, M02–M07 backlog, external WorldBox read-only unchanged. No main modification or merge; nonowner behavior remains PROVISIONAL.
 - Next: confirm exact-head CI passes provenance and runtime stages, then add a deterministic nonowner observe/tend/decline behavioral regression with canonical Book conservation checks.
+
+## 2026-11-20 05:02 CST — Nonowner Tree stewardship behavioral regression
+- Ground: inspected draft PR #1/#2, live Core151 proposals, existing authority tests and state. GitHub Actions run 44714904322 SUCCESS at prior head d38561f, accepting provenance repair and prior headless stages.
+- Integration: committed seed442 test at 215a62848626edd53fdf321896ec5f5e627a93e6 on existing branch. It checks solidarity-motivated nonowner observation opportunity, unrelated Founder's ability to decline, and a voluntary SeedRegistry.tend transfer through world.book with 100-Founder and conservation assertions. No second Book, clock, or engine; no production behavior modified.
+- Execute/test: test source committed but NOT EXECUTED locally; exact-head CI pending. No fresh numerical Book residuals, gameplay or long-horizon ecology evidence.
+- Audit: WorldBox remains read-only; M01 iteration3 lock, M05 SQLite nonauthority and M02–M07 backlog preserved. PRs draft; main untouched.
+- Next: verify exact-head CI seed442, fix any failure and then measure autonomous stewardship decisions over multiple actual ticks.
