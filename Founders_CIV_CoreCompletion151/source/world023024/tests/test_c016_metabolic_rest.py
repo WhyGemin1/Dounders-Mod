@@ -262,3 +262,22 @@ def test_funded_rest_receipt_rejects_missing_or_changed_book_checkpoint():
     sim.book.operations[operation] = original
     assert perform_rest(sim, founder, decision_id='funded-restore') == event
     audit(sim)
+
+
+def test_funded_rest_rejects_lost_sidecar_receipt_without_mutation():
+    sim, founder = prepared()
+    operation = f'founder:rest:{founder}:lost-sidecar'
+    event = perform_rest(sim, founder, decision_id='lost-sidecar')
+    assert event and operation in sim.book.operations
+    original = sim.recovery_book_receipts.pop(operation)
+    before = (dict(sim.book.energy), sim.book.seq,
+              dict(sim.book.operations), sim.recovery_states[founder].fatigue,
+              sim.recovery_states[founder].rest_decisions, len(sim.events))
+    with pytest.raises(ValueError, match='recovery receipt/Book checkpoint mismatch'):
+        perform_rest(sim, founder, decision_id='lost-sidecar')
+    assert (dict(sim.book.energy), sim.book.seq,
+            dict(sim.book.operations), sim.recovery_states[founder].fatigue,
+            sim.recovery_states[founder].rest_decisions, len(sim.events)) == before
+    sim.recovery_book_receipts[operation] = original
+    assert perform_rest(sim, founder, decision_id='lost-sidecar') == event
+    audit(sim)
