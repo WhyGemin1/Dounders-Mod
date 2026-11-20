@@ -406,3 +406,26 @@ def test_c113_rest_rejects_corrupt_destination_balances_without_mutation():
             del sim.book.energy[account]
     assert perform_rest(sim, founder, decision_id='c113-destination')
     audit(sim)
+
+
+def test_c114_work_rejects_corrupt_heat_destination_without_mutation():
+    sim, founder = prepared()
+    account = 'environment:heat'
+    existed = account in sim.book.energy
+    original = sim.book.energy.get(account, 0.)
+    for invalid in (-0.01, float('nan'), float('inf'), True, '0.5'):
+        sim.book.energy[account] = invalid
+        before = (sim.book.seq, dict(sim.book.operations),
+                  sim.recovery_states[founder].fatigue,
+                  sim.recovery_states[founder].rest_decisions, len(sim.events))
+        with pytest.raises(ValueError, match='invalid work heat destination'):
+            paid_work(sim, founder, 'practice', .01, decision_id='c114-heat')
+        assert (sim.book.seq, dict(sim.book.operations),
+                sim.recovery_states[founder].fatigue,
+                sim.recovery_states[founder].rest_decisions, len(sim.events)) == before
+    if existed:
+        sim.book.energy[account] = original
+    else:
+        del sim.book.energy[account]
+    assert paid_work(sim, founder, 'practice', .01, decision_id='c114-heat')
+    audit(sim)
