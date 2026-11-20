@@ -1041,3 +1041,10 @@
 - Execute/test: previous-head CI success; new change not yet executed in exact-head CI or local clean checkout. No fresh mass/energy residuals; behavioral improvement PROVISIONAL.
 - Audit: one world.book, world.tick, 100 Founder identities required. M01 iteration3 lock, M05 nonauthority, M02–M07 backlog, WorldBox read-only unchanged. No native gameplay or long-horizon stability validation. No main write/merge.
 - Next: run exact-head CI, add a behavior-level regression for voluntary nonowner tending and verify numerical Book audits before accepting change.
+
+## 2026-11-20 03:55 CST — Restore provenance gate for voluntary nonowner Tree behavior
+- Ground: inspected live draft PR #1 (17ad5e9) and PR #2 (fc89d403), source, authority tests, state and ledger. Exact-head GitHub Actions #452 (44706567370) FAILED in `Source provenance drift verifier regression`: 1 failure, 2 skips in 8 importer tests; downstream runtime/Book steps SKIPPED. `world_integration.py` Git blob db74ffc1439ae690ec662221ade1ff0cb6d4d305 did not match pinned 3a6991330b2a516ce838368790afffba87bcd88f.
+- Integration: updated reviewed checkout fingerprint for the previously committed voluntary nonowner Tree integration in tools/test_import_core151.py; commit 54d25ac01c391339fc4cd6ae216d78f97c22f86d. This pins the current source for drift detection; it does not establish archive-byte identity or approve ecological behavior. Updated ACTIVE_ENGINE.json at c2c4420fb1ce2abb3f22a6256c8fd6622f62d111.
+- Execute/test: inspected actual CI #452 job logs. No new local clean-checkout unittest or simulation executed. Exact-head CI after repair PENDING; no new mass/energy residuals. Authorized Drive ZIP metadata retrieved, no duplicate import or binary commit.
+- Audit: one world.book, world.tick and 100 Founders remain the contract; M01 iteration3 lock, M05 SQLite nonauthority, M02–M07 backlog, external WorldBox read-only unchanged. No main modification or merge; nonowner behavior remains PROVISIONAL.
+- Next: confirm exact-head CI passes provenance and runtime stages, then add a deterministic nonowner observe/tend/decline behavioral regression with canonical Book conservation checks.
