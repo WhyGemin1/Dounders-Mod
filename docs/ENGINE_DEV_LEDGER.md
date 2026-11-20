@@ -1034,3 +1034,10 @@
 - Execute/test: previous-head CI #447 SUCCESS; new seed441 test NOT EXECUTED in this invocation; no local clean-checkout execution or new numerical residuals collected. GitHub CI for final head remains pending. No native WorldBox or long-horizon ecology tests.
 - Audit: M01 iteration3 repair lock, 100 Founder identities, one world.book, one world.tick, M05 SQLite non-authoritative, M02–M07 backlog, and external WorldBox read-only preserved. No main modification or merge.
 - Next: verify exact-head CI including seed441, then implement an actual voluntary Founder-to-Tree resource-choice mechanism using Book-funded transfers and matched tests rather than more metadata-only guards.
+
+## 2026-11-20 02:55 CST — Voluntary nonowner World Tree stewardship
+- Ground: live PR #1 draft 17ad5e9, PR #2 draft 65f6396, both unmerged. Exact-head Actions run 44699235475 SUCCESS for prior head 65f6396; no numerical log extraction. Authorized Cycle152 Drive ZIP accessed, no new archive import (source already tracked).
+- Implementation: modified existing src/founders_civ/experimental/world_integration.py in commit cfdeb85e196da6f6934b0154e7f9173f4b012d06. Nonowner Founders with shared faction or solidarity agenda may voluntarily observe a Tree and consider upkeep from their own energy; existing SeedRegistry.tend transfers through world.book. No compulsory maintenance, no additional Book/clock/engine.
+- Execute/test: previous-head CI success; new change not yet executed in exact-head CI or local clean checkout. No fresh mass/energy residuals; behavioral improvement PROVISIONAL.
+- Audit: one world.book, world.tick, 100 Founder identities required. M01 iteration3 lock, M05 nonauthority, M02–M07 backlog, WorldBox read-only unchanged. No native gameplay or long-horizon stability validation. No main write/merge.
+- Next: run exact-head CI, add a behavior-level regression for voluntary nonowner tending and verify numerical Book audits before accepting change.
