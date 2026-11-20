@@ -114,6 +114,11 @@ def propose_rest(sim, founder):
         raise ValueError('invalid Founder fatigue')
     usable = sim.book.energy[f'founder:{founder}']
     stored = sim.book.energy.get(f'body_chemical:founder:{founder}', 0.)
+    # Invalid checkpoint accounts must not influence autonomous priorities.
+    # Proposal evaluation is read-only and cannot repair authoritative fuel.
+    for value in (usable, stored):
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not isfinite(value) or value < 0:
+            raise ValueError('invalid Founder proposal fuel')
     # Even with no work fuel, rest remains an available *choice*.
     score = .03 + 1.25 * state.fatigue
     if stored >= .001 - 1e-9 and usable < .7:
