@@ -108,6 +108,34 @@ class IntegratedCheckpointTests(unittest.TestCase):
                 self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
                 self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+    def test_replay_rejects_boolean_and_negative_book_counters(self):
+        """A bool is not an integer counter; replay must fail before receipt return."""
+        book = self.session.book
+        args = ('F001', 'typed-counter-replay', '1', 'forest', 'plant', .01, .001)
+        receipt = self.session.harvest(*args)
+        for field in ('transactions', 'toll_count'):
+            for corrupt in (True, -1):
+                with self.subTest(field=field, corrupt=corrupt):
+                    original = getattr(book, field)
+                    snapshot = (book.seq, self.world.tick,
+                                dict(book.mass), dict(book.energy),
+                                dict(book.request_receipts),
+                                list(book.transaction_history),
+                                frozenset(self.world.founders.people))
+                    try:
+                        setattr(book, field, corrupt)
+                        with self.assertRaisesRegex(ValueError, 'counters disagree'):
+                            self.session.harvest(*args)
+                        self.assertEqual(snapshot, (
+                            book.seq, self.world.tick, dict(book.mass),
+                            dict(book.energy), dict(book.request_receipts),
+                            list(book.transaction_history),
+                            frozenset(self.world.founders.people)))
+                    finally:
+                        setattr(book, field, original)
+                    self.assertEqual(self.session.harvest(*args), receipt)
+                    self.session.audit()
+
     def test_restart_replay_is_idempotent(self):
         from founders_engine.checkpoint import save_checkpoint, load_checkpoint
         first = self.session.harvest('F001', 'checkpoint-replay', '1',
