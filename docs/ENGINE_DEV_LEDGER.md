@@ -1055,3 +1055,10 @@
 - Execute/test: test source committed but NOT EXECUTED locally; exact-head CI pending. No fresh numerical Book residuals, gameplay or long-horizon ecology evidence.
 - Audit: WorldBox remains read-only; M01 iteration3 lock, M05 SQLite nonauthority and M02–M07 backlog preserved. PRs draft; main untouched.
 - Next: verify exact-head CI seed442, fix any failure and then measure autonomous stewardship decisions over multiple actual ticks.
+
+## 2026-11-20 06:01 CST — Route voluntary tending through canonical session
+- Ground: live PR #1 draft 17ad5e9 and PR #2 draft fa90b5b inspected. Exact-head GitHub Actions #457 (44724306337) FAILED: 40 authority tests, 1 error in seed442. Direct `world.seeds.tend` changed `world.book.seq` outside `SingleEngineSession`, and `session.audit()` correctly rejected it. Provenance stage 8 tests OK (2 archive-dependent skips).
+- Integration: added `SingleEngineSession.tend_tree` to the existing Core151 authority adapter (9cbb043) with authority/conservation preflight, Founder/Tree/energy validation, existing `world.seeds.tend` Book-funded transfer, expected Book sequence refresh and fail-closed quarantine on settlement error. Updated seed442 test to invoke session-mediated tending (fece905b). No new engine, Book, clock or external WorldBox writer.
+- Execute/test: prior-head CI #457 confirmed failure and seed427 conservation log: tick 3->4, seq 2215->2938, mass -8.9130480773746967e-11, energy -1.0244548320770264e-08. New source/test commits not yet executed; exact-head CI pending. No local clean-checkout run, no seed442 numerical audit, no native gameplay.
+- Audit/handoff: one `world.book`, `world.tick`, 100 Founder identities required; M01 iteration3 repair lock, M05 SQLite nonauthority, M02-M07 backlog and WorldBox read-only boundary preserved. Both PRs remain draft, main unchanged.
+- Next: verify CI at final ledger head, repair any seed442 failure, then test autonomous decisions across multiple real Core151 ticks.
