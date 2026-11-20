@@ -169,6 +169,10 @@ def perform_rest(sim, founder, parent=None, decision_id=None):
     work = f'founder:{founder}'
     heat = f'body_heat:founder:{founder}'
     available = sim.book.energy.get(store, 0.)
+    # A damaged checkpoint must not allow free fatigue recovery while the
+    # authoritative stored-fuel account contains an invalid quantity.
+    if not isinstance(available, (int, float)) or not isfinite(available) or available < 0:
+        raise ValueError('invalid stored chemical fuel')
     mobilized = min(.012, available) if available >= .001 - 1e-9 else 0.
     txn = None
     if mobilized:
