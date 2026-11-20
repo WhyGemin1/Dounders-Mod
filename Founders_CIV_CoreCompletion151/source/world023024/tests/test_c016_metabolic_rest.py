@@ -463,3 +463,16 @@ def test_c120_rest_proposal_rejects_corrupt_replay_counter_without_mutation():
     state.rest_decisions = original
     assert propose_rest(sim, founder)
     audit(sim)
+
+
+def test_c123_disabled_recovery_does_not_propose_rest_or_mutate_book():
+    sim, founder = prepared()
+    sim.founder_recovery_enabled = False
+    before = (dict(sim.book.energy), dict(sim.book.operations),
+              sim.recovery_states[founder].fatigue,
+              sim.recovery_states[founder].rest_decisions)
+    assert propose_rest(sim, founder) == []
+    after = (dict(sim.book.energy), dict(sim.book.operations),
+             sim.recovery_states[founder].fatigue,
+             sim.recovery_states[founder].rest_decisions)
+    assert after == before
