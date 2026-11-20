@@ -383,3 +383,26 @@ def test_c112_boolean_and_nonnumeric_fatigue_fail_closed_across_work_rest_and_pr
     assert propose_rest(sim, founder)
     assert paid_work(sim, founder, 'practice', .01, decision_id='c112-valid-work')
     audit(sim)
+
+
+def test_c113_rest_rejects_corrupt_destination_balances_without_mutation():
+    sim, founder = prepared()
+    for account in (f'founder:{founder}', f'body_heat:founder:{founder}'):
+        original = sim.book.energy.get(account, 0.)
+        existed = account in sim.book.energy
+        for invalid in (-0.01, float('nan'), float('inf'), True, '0.5'):
+            sim.book.energy[account] = invalid
+            before = (sim.book.seq, dict(sim.book.operations),
+                      sim.recovery_states[founder].fatigue,
+                      sim.recovery_states[founder].rest_decisions, len(sim.events))
+            with pytest.raises(ValueError, match='invalid recovery destination fuel'):
+                perform_rest(sim, founder, decision_id='c113-destination')
+            assert (sim.book.seq, dict(sim.book.operations),
+                    sim.recovery_states[founder].fatigue,
+                    sim.recovery_states[founder].rest_decisions, len(sim.events)) == before
+        if existed:
+            sim.book.energy[account] = original
+        else:
+            del sim.book.energy[account]
+    assert perform_rest(sim, founder, decision_id='c113-destination')
+    audit(sim)
