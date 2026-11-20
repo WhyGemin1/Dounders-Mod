@@ -16,7 +16,7 @@ ARCHIVE = os.environ.get("CORE151_ARCHIVE")
 
 class ImportTests(unittest.TestCase):
     def test_current_core151_source_matches_reviewed_fingerprints(self):
-        """Exact source fingerprints: 26 archive matches; ledger overlay observed, NOT approved.
+        """Exact source fingerprints: reviewed checkout pins, including ledger and voluntary Tree behavior overlays; archive originals remain distinct.
 
         Baseline Git blob hashes were independently computed from the authorized
         Cycle152 ZIP (SHA256 29c6bc0a...); current checkout blobs were read
@@ -34,7 +34,7 @@ founders_civ/experimental/founders.py 72df20511378246de639e0b2e706651ab50ecbe7
 founders_civ/experimental/social_agents.py 308a724d45afa3d412d46b66c6655524a57aa862
 founders_civ/experimental/soul.py cef09d29a570310de1c280f53e740f30678cc8d0
 founders_civ/experimental/world024.py 4a045794d22a18f41524b3f29ddba607571d0b2b
-founders_civ/experimental/world_integration.py 3a6991330b2a516ce838368790afffba87bcd88f
+founders_civ/experimental/world_integration.py db74ffc1439ae690ec662221ade1ff0cb6d4d305
 founders_civ/experimental/world_trees.py 54cf3b426ad52eedbdcef9873160ef6c71e50d20
 founders_civ/integration/__init__.py cd5942fdc5a052c2d786acd83d510f71a69b508e
 founders_civ/integration/branches.py 28fbc5549c0879ad0d864b24cf05f8934c514ae9
@@ -56,7 +56,7 @@ run_world_tree_pilot.py 2866b99e7ebf5b325e17b5091eae4806de0e7b45""".splitlines()
                 data = (checkout / name).read_bytes()
                 blob = b"blob " + str(len(data)).encode("ascii") + b"\0" + data
                 self.assertEqual(hashlib.sha1(blob).hexdigest(), fingerprint)
-        # The sole observed divergence from authorized ZIP is ledger.py.
+        # The approved working-tree fingerprints include the ledger and world-integration overlays; archive provenance remains historical.
         # Its historical Git blob was 2899f8eba59ded15ea5e7ce64fea2e6044f98398.
         # Pinning the current blob detects drift; it does NOT approve behavior.
         self.assertNotEqual(
