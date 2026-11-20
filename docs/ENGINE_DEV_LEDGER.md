@@ -1104,3 +1104,10 @@
 - Execute/test: prior-head CI verified; new seed448 test NOT EXECUTED and exact-head CI pending. No fresh numerical Book residuals or survival measurements. No local clean checkout or native WorldBox test.
 - Audit: preserve M01 iteration3 repair lock, M05 SQLite nonauthority, M02-M07 backlog, WorldBox read-only, draft PRs and unchanged main.
 - Next: verify final-head CI, fix any seed448 failure, extract per-day event counts and Book residuals before interpreting behavioral or ecological impact.
+
+## 2026-11-20 13:00 CST — seed448 per-day voluntary tending audit
+- Ground/design: inspected live draft PR #1 and #2, existing seed448 regression and ACTIVE_ENGINE.json. GitHub Actions #477 (44788551501) SUCCESS on prior head 4bfc0ddcfa91201ebaecfb9c83e26fb19a5f1709; this accepts the prior five-day regression, not this enhancement.
+- Implementation: e4d28dd13ce657f2f9ad52629a731a289ede6da1 updates existing real Core151 seed448 test to retain five daily cumulative counts of actual tree_autonomous_maintenance events, assert monotonic event totals, and print the counts alongside Book residuals. No artificial participation quota, second Book or new engine.
+- Execute/test: previous-head CI #477 verified success. New daily-count assertions not executed at commit time; exact-head CI pending. No new numerical Book residuals extracted, no native WorldBox game tests and no long-horizon ecology claim.
+- Audit: 100 canonical Founders, world.book, world.tick, M01 iteration3 lock, M05 SQLite nonauthority, M02–M07 backlog and read-only WorldBox boundary preserved. Main untouched, both PRs draft.
+- Next: verify exact-head CI, retrieve daily count and conservation output, then decide whether participation is nonzero before modifying production behavior.
