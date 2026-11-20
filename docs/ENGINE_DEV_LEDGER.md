@@ -1090,3 +1090,10 @@
 - Execute/test: preceding exact-head CI #470 VERIFIED SUCCESS. New regression NOT EXECUTED; final-head CI PENDING. No fresh numerical Book residuals or clean local checkout; no native WorldBox gameplay.
 - Audit: one authoritative world.book and world.tick, M01 iteration3 repair lock, M05 SQLite nonauthority, M02–M07 backlog and WorldBox read-only remain unchanged. Both PRs draft; main unchanged.
 - Next: verify exact-head CI, extract observed counts and residuals, repair failures; extend matched-seed behavioral comparison only after acceptance.
+
+## 2026-11-20 — unified engine hourly cycle: seed447 repeatability
+- Grounded live draft PR #1/#2 and exact-head GitHub Actions run 44768612526: SUCCESS on prior head `58f7d65da9bfdd48042ffe5e0d5deb72f15c19db`.
+- Implemented `test_unforced_stewardship_repeatability_same_seed` in existing `tests/test_authority.py` at `6847f6f03bf5966c21c35ac7571c70ac780d38d4`. Runs the real Core151 session twice for three days with identical seed 447, compares per-tick Book sequence and voluntary maintenance event provenance, checks 100 Founder IDs, canonical Book, clock and conservation tolerance. No compulsory stewardship quota.
+- Execution: test code committed, but seed447 test NOT executed this cycle; exact-head CI pending. No fresh mass/energy residuals or ecology survival data. No native WorldBox test.
+- Safety: no alternate engine, second Book, second clock, merge, or `main` change. M01 iteration3 repair lock, M05 read-only, M02–M07 backlog preserved.
+- Next: inspect exact-head CI for seed447, repair deterministic mismatch if any, then evaluate multi-seed longer horizons and actual voluntary participation counts.
