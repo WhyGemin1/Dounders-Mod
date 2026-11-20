@@ -36,6 +36,30 @@ class SingleAuthorityTests(unittest.TestCase):
             session.gateway = gateway
         session.audit()
 
+    def test_secondary_tree_shares_book_without_new_authority(self):
+        """A second registered Tree may coexist if it uses the living Book/clock."""
+        from copy import copy
+        world, _, tree_id = bootstrap(441)
+        session = SingleEngineSession(world, tree_id)
+        secondary = copy(world.world_trees.worlds[tree_id])
+        key = 'SHARED-BOOK-SECONDARY-TREE'
+        self.assertIs(secondary.book, world.book)
+        self.assertIs(secondary.sim, world)
+        before = (world.tick, world.book.seq, dict(world.book.mass),
+                  dict(world.book.energy), frozenset(world.founders.people))
+        world.world_trees.worlds[key] = secondary
+        try:
+            snapshot = session.audit()
+            self.assertEqual(snapshot.tree_count, 2)
+            self.assertEqual((world.tick, world.book.seq,
+                              dict(world.book.mass), dict(world.book.energy),
+                              frozenset(world.founders.people)), before)
+            self.assertLessEqual(abs(snapshot.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(snapshot.book_energy_error), 1e-6)
+        finally:
+            del world.world_trees.worlds[key]
+        session.audit()
+
     def test_secondary_tree_cannot_bind_foreign_book(self):
         """An additional Tree must not become a hidden second resource authority."""
         from copy import copy
