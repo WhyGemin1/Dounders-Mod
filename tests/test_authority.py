@@ -78,6 +78,32 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
         self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+    def test_invalid_stewardship_rejected_without_book_or_clock_mutation(self):
+        """Invalid voluntary transfers never reach the canonical Book writer."""
+        world, _, tree_id = bootstrap(449)
+        session = SingleEngineSession(world, tree_id)
+        founder = next(iter(world.founders.people))
+        before = (world.tick, world.book.seq,
+                  dict(world.book.mass), dict(world.book.energy))
+        for actor, target, amount in (
+                ('FAKE', tree_id, .25),
+                (founder, 'unknown-tree', .25),
+                (founder, tree_id, 0),
+                (founder, tree_id, -1),
+                (founder, tree_id, float('nan')),
+                (founder, tree_id, float('inf')),
+                (founder, tree_id, True)):
+            with self.subTest(actor=actor, target=target, amount=amount):
+                with self.assertRaises(ValueError):
+                    session.tend_tree(actor, target, amount)
+                self.assertEqual(
+                    (world.tick, world.book.seq,
+                     dict(world.book.mass), dict(world.book.energy)), before)
+                proof = session.audit()
+                self.assertEqual(proof.founder_count, 100)
+                self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+                self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
     def test_voluntary_stewardship_survives_real_ticks(self):
         """One elected Book-funded transfer survives two real Core151 days."""
         world, _, tree_id = bootstrap(443)
