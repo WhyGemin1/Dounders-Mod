@@ -1125,3 +1125,10 @@
 - Execute/test: preceding exact-head CI #482 SUCCESS verified. New source/test not executed locally; exact-head CI for new changes pending. No fresh numerical Book conservation residuals, clean local checkout or native WorldBox game execution. Assertions require <=1e-6 residuals when executed.
 - Ecological/behavioral audit: does not prove autonomous maintenance participation or long-horizon ecological stability. M01 iteration3 repair lock, M05 non-authority, M02–M07 backlog and read-only external WorldBox preserved. Both PRs remain draft; main untouched.
 - Next: verify final-head CI and repair seed450 failures; then exercise checkpointed successful/failed voluntary tending with restart and exactly-once local Book settlement.
+
+## 2026-11-20 16:00 CST — durable voluntary tending checkpoint integration
+- Ground/design: inspected live draft PR #1/#2, authority and checkpoint implementation, test bootstrap, state and ledger; preceding-head Actions #485 (44816309244) SUCCESS on 2c67427. Authorized Drive Cycle152 ZIP metadata checked. Existing tracked source preserved.
+- Implementation: 2bd7342 adds `SingleEngineSession.checkpointed_tend_tree` using the existing canonical `SeedRegistry.tend` and trusted-local atomic checkpoint. fb02ea0 adds seed451 successful restart and seed452 injected save-failure quarantine/recovery tests. No new Book, clock, engine, external ACK or forced stewardship.
+- Execute/test: new tests committed but NOT executed at report time; exact-head CI pending. No fresh numeric residuals, native WorldBox game or ecological horizon executed. Previous-head CI success is not proof of new changes.
+- Audit: local checkpoint persistence does NOT provide exactly-once native WorldBox transactions or replay IDs for tending; never blindly retry uncertain successful tending. M01 iteration3 lock, M05 nonauthority, M02–M07 backlog and WorldBox read-only maintained. Main untouched; both PRs draft.
+- Next: verify exact-head CI, repair any test failures, then design idempotent local tending request receipts before any external ACK.
