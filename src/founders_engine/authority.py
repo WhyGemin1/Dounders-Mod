@@ -204,6 +204,29 @@ class SingleEngineSession:
             raise
         return receipt
 
+    def tend_tree(self, founder_id, tree_id, energy):
+        """Voluntary Founder stewardship through the one canonical Book.
+
+        This is an in-memory Core151 action, not an external WorldBox ACK.
+        A failed settlement quarantines the session until durable recovery.
+        """
+        self.audit()
+        if founder_id not in self._founder_ids:
+            raise ValueError('unknown authoritative Founder')
+        if tree_id not in self.world.world_trees.worlds:
+            raise ValueError('unknown living World Tree')
+        # Validate the requested amount before entering the mutable registry.
+        if type(energy) not in (int, float) or not isfinite(energy) or energy <= 0:
+            raise ValueError('invalid stewardship energy')
+        try:
+            result = self.world.seeds.tend(founder_id, tree_id, energy)
+            self._expected_book_sequence = self.book.seq
+            self.audit()
+        except Exception:
+            self._checkpoint_uncertain = True
+            raise
+        return result
+
     def checkpointed_harvest(self, checkpoint_path, founder_id, source_id,
                              revision, habitat, material, quantity,
                              chemical_energy=0.0):
