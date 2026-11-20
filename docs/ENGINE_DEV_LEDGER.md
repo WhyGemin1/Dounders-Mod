@@ -998,3 +998,10 @@
 - Execute/test: previous-head GitHub Actions #430 **PASS**; new test **NOT EXECUTED** on its exact head in this invocation. No local clean-checkout run or fresh numeric Book residuals. No native WorldBox game test or long-horizon ecology test.
 - Audit: one `world.book`, one `world.tick`, 100 Founder identities remain the enforced contract. M01 iteration-3 repair lock, M05 non-authoritative SQLite, M02–M07 backlog and read-only WorldBox boundary unchanged. Both PRs remain drafts; no main merge.
 - Next: verify exact-head CI for this test, fix any failure, then prioritize behavior/source integration over repetitive replay assertions.
+
+## 2026-11-19 22:00 CST — Core151 canonical Book history preflight
+- Ground: live PR #1 draft head 17ad5e9 and PR #2 draft head 642c7f1, both unmerged. GitHub Actions #433 (44664195806) SUCCESS on previous exact head 642c7f1; all headless job steps passed. Authorized Cycle152 Drive ZIP metadata confirmed; 27 tracked Core151 modules reported in active state.
+- Implementation: strengthened existing SingleEngineSession.audit() in src/founders_engine/authority.py to reject counter/history/last-receipt drift before any real Core151 step or M01 harvest, even when mass and energy totals still balance. Production source 57e83abe0876f2dd6f04f3e079001c1a401c0cd0. Added seed439 regression asserting no tick, Book balances, sequence, or Founder identities mutate under corrupt transaction count; test 78823e367cf904175444694322455dc3ea87a326. No second engine or ledger.
+- Execute/test: previous CI #433 SUCCESS; new source and test NOT YET EXECUTED at handoff. No fresh numerical Book residuals; exact-head CI must be checked. No local clean checkout or native WorldBox test performed.
+- Audit: single world.book, world.tick, 100 Founders remain authority contract. M01 iteration3 lock, M02–M07 backlog, M05 SQLite non-authority and WorldBox read-only restriction unchanged. No merge or main write; ecological stability and long horizons unverified.
+- Next: run exact-head CI, fix any seed439 regression failures, and collect mass/energy residuals from the live test before acceptance.
