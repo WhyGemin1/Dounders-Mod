@@ -141,7 +141,11 @@ def propose_rest(sim, founder):
     for value in (usable, stored):
         if isinstance(value, bool) or not isinstance(value, (int, float)) or not isfinite(value) or value < 0:
             raise ValueError('invalid Founder proposal fuel')
-    # Even with no work fuel, rest remains an available *choice*.
+    # Avoid repeatedly selecting a no-op rest: with no fatigue and no
+    # mobilizable stored fuel, the action cannot improve physical state.
+    # Rest remains freely available whenever fatigue exists, even unfunded.
+    if state.fatigue == 0. and stored < .001 - 1e-9:
+        return []
     score = .03 + 1.25 * state.fatigue
     if stored >= .001 - 1e-9 and usable < .7:
         score += 3.5
