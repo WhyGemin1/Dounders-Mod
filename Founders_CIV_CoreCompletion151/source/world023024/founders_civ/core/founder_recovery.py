@@ -182,6 +182,13 @@ def perform_rest(sim, founder, parent=None, decision_id=None):
     work = f'founder:{founder}'
     heat = f'body_heat:founder:{founder}'
     available = sim.book.energy.get(store, 0.)
+    # All participants in a funded transfer must be valid before Book.move.
+    # A corrupt destination balance must not create or destroy chemical fuel.
+    for account in (work, heat):
+        balance = sim.book.energy.get(account, 0.)
+        if (isinstance(balance, bool) or not isinstance(balance, (int, float))
+                or not isfinite(balance) or balance < 0):
+            raise ValueError('invalid recovery destination fuel')
     # A damaged checkpoint must not allow free fatigue recovery while the
     # authoritative stored-fuel account contains an invalid quantity.
     if isinstance(available, bool) or not isinstance(available, (int, float)) or not isfinite(available) or available < 0:
