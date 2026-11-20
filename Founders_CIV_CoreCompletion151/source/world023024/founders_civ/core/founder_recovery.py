@@ -156,6 +156,11 @@ def perform_rest(sim, founder, parent=None, decision_id=None):
         if expected is not None and recorded[1] != expected:
             raise ValueError('recovery receipt/Book checkpoint mismatch')
         return sim.recovery_receipts[operation]
+    # A funded sidecar without its event receipt is also an incomplete
+    # checkpoint, even when the Book operation was lost during restore.
+    # Never silently create another rest under that identity.
+    if operation in getattr(sim, 'recovery_book_receipts', {}):
+        raise ValueError('missing recovery replay receipt; restore checkpoint')
     # A Book debit without its corresponding rest receipt indicates an
     # incomplete checkpoint. Never repeat fatigue recovery on that identity.
     if operation in sim.book.operations:
