@@ -91,7 +91,12 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
     if not isfinite(cost):
         raise ValueError('nonfinite physical work cost')
     account = f'founder:{founder}'
-    if sim.book.energy[account] + 1e-10 < cost:
+    available = sim.book.energy[account]
+    # Fail closed on corrupted authoritative fuel before any work debit.
+    if (isinstance(available, bool) or not isinstance(available, (int, float))
+            or not isfinite(available) or available < 0):
+        raise ValueError('invalid Founder work fuel')
+    if available + 1e-10 < cost:
         return False
     if cost <= 0:
         return None
