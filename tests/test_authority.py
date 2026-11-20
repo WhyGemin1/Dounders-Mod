@@ -65,7 +65,7 @@ class SingleAuthorityTests(unittest.TestCase):
         before_reserve = world.book.energy[f'reserve:{tree_id}']
         before_decliner = world.book.energy[f'founder:{decliner}']
         # A voluntary action uses the existing SeedRegistry and canonical Book.
-        world.seeds.tend(helper, tree_id, .65)
+        session.tend_tree(helper, tree_id, .65)
         self.assertEqual(world.tick, before_tick)
         self.assertGreater(world.book.seq, before_seq)
         self.assertAlmostEqual(world.book.energy[f'founder:{helper}'],
