@@ -116,6 +116,10 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
 
 
 def propose_rest(sim, founder):
+    # Disabled recovery must not enter autonomous action selection.
+    # Keep this read-only: policy toggles never spend or mint Book energy.
+    if not getattr(sim, 'founder_recovery_enabled', False):
+        return []
     person = sim.founders.people.get(founder)
     if person is None or not person.alive:
         return []
