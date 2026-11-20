@@ -265,7 +265,7 @@ class DurableHarvestTests(unittest.TestCase):
         seq, mass, energy = book.seq, dict(book.mass), dict(book.energy)
         try:
             book.transaction_history = original_history[:-1]
-            with self.assertRaisesRegex(ValueError, 'inconsistent canonical Book transaction history'):
+            with self.assertRaisesRegex(ValueError, 'canonical Book counters disagree with transaction history'):
                 book.move_once('m01:damaged-history', material=(('plant:forest', 'plant:founder:F001', .001),))
             self.assertNotIn('m01:damaged-history', book.request_receipts)
             self.assertEqual(book.seq, seq)
