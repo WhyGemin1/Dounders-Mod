@@ -201,7 +201,13 @@ class SeedRegistry:
         if c['status']!='stable':raise ValueError('cannot maintain collapsed creation')
         if amount<=0 or not isfinite(float(amount)):raise ValueError('invalid amount')
         # Unlike the old scripted top-up, named Founder must actively fund upkeep.
-        if self.sim.book.energy[f'founder:{actor}']<amount:raise ValueError('Founder lacks upkeep energy')
+        # A settled request is validated against the canonical Book receipt
+        # before checking the Founder's *current* balance. Replay is read-only;
+        # a mismatched ID still fails via Book.move_once without a new debit.
+        if request_id is not None and request_id in self.sim.book.request_receipts:
+            self.sim.book.move_once(request_id, energy=[(f'founder:{actor}',f'reserve:{creation_id}',amount)])
+        elif self.sim.book.energy[f'founder:{actor}']<amount:
+            raise ValueError('Founder lacks upkeep energy')
         fresh=self.constructs.top_up(creation_id,amount,source=f'founder:{actor}',request_id=request_id)
         if fresh:
             self.owner_reserve_knowledge.setdefault(creation_id,{})[actor]={'tick':self.sim.tick,'reserve':self.sim.book.energy[f'reserve:{creation_id}']}
