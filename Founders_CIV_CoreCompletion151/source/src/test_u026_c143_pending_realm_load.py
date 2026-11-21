@@ -33,3 +33,11 @@ def test_parent_selection_is_independent_of_blueprint_iteration_order():
     a = _sim([('realm-a', 'draft'), ('realm-b', 'draft')])
     b = _sim([('realm-b', 'draft'), ('realm-a', 'draft')])
     assert _realm_to_develop(a) == _realm_to_develop(b) == 'realm-a'
+
+
+def test_abandoned_or_failed_world_proposals_do_not_block_parent():
+    # Abandoned plans are not physical Trees or live reservations.
+    for terminal in ('abandoned', 'failed', 'cancelled', 'rejected'):
+        assert _realm_to_develop(_sim([('realm-a', terminal)])) == 'realm-a'
+    assert _realm_to_develop(_sim([('realm-a', 'validated'),
+                                   ('realm-b', 'abandoned')])) == 'realm-b'
