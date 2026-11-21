@@ -223,3 +223,21 @@ def test_realm_owner_with_real_fruit_can_propose_first_personal_world():
     assert any(p[1] == 'seed_design' and p[3] == ('world', realm) for p in proposals)
     assert len(sim.founders.people) == 100
     assert sim.book.audit()['energy_error'] < 1e-6
+
+
+def test_c138_tree_proposals_never_use_epsilon_fuel_overdraft(monkeypatch):
+    """A near-funded voluntary design is not an executable funded proposal."""
+    from types import SimpleNamespace
+    import founders_civ.core.founder_tree_agency as agency
+    monkeypatch.setattr(agency, '_own_fruit', lambda sim, founder: iter([('T1', 'fruit1')]))
+    person = SimpleNamespace(alive=True, location='riverbank')
+    sim = SimpleNamespace(
+        founder_tree_independence_enabled=True,
+        founders=SimpleNamespace(people={'F002': person}),
+        seeds=SimpleNamespace(blueprints={}, plants={'R1': {
+            'kind': 'realm', 'status': 'stable', 'id': 'R1'}}),
+        book=SimpleNamespace(energy={'founder:F002': .08 - 5e-11}),
+    )
+    assert agency.propose_self_trees(sim, 'F002', []) == []
+    sim.book.energy['founder:F002'] = .08
+    assert any(p[1] == 'seed_design' for p in agency.propose_self_trees(sim, 'F002', []))
