@@ -105,7 +105,9 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
     if (isinstance(heat_balance, bool) or not isinstance(heat_balance, (int, float))
             or not isfinite(heat_balance) or heat_balance < 0):
         raise ValueError('invalid work heat destination')
-    if available + 1e-10 < cost:
+    # No epsilon overdraft: the Book must never fund work from fuel that
+    # does not physically exist, even when the shortfall is very small.
+    if available < cost:
         return False
     if cost <= 0:
         return None
