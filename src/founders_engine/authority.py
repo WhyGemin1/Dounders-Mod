@@ -234,7 +234,8 @@ class SingleEngineSession:
         if not founder.alive:
             raise ValueError('active Founder required')
         creation = self.world.seeds.plants.get(tree_id)
-        if creation is None or creation['status'] != 'stable':
+        if (creation is None or creation.get('status') != 'stable' or
+                creation.get('kind') != 'world' or creation.get('id') != tree_id):
             raise ValueError('stable planted World Tree required')
         if self.book.energy.get(f'founder:{founder_id}', 0.0) < energy:
             raise ValueError('Founder lacks upkeep energy')
