@@ -1293,5 +1293,32 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
             self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+
+    def test_seed462_direct_tending_rejects_forged_receipt_before_settlement(self):
+        """Direct voluntary tending must reject forged Book replay metadata."""
+        world, _, tree_id = bootstrap(462)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        before = (world.tick, world.book.seq,
+                  dict(world.book.mass), dict(world.book.energy),
+                  list(world.book.transaction_history))
+        key = 'm01:forged:seed462'
+        self.assertNotIn(key, world.book.request_receipts)
+        try:
+            # Receipt refers to a transaction that never existed.
+            world.book.request_receipts[key] = 10**9
+            with self.assertRaises((RuntimeError, ValueError)):
+                session.tend_tree(founder_id, tree_id, .01)
+            self.assertEqual((world.tick, world.book.seq,
+                              dict(world.book.mass), dict(world.book.energy),
+                              list(world.book.transaction_history)), before)
+            self.assertFalse(session._checkpoint_uncertain)
+        finally:
+            world.book.request_receipts.pop(key, None)
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
 if __name__ == '__main__':
     unittest.main()
