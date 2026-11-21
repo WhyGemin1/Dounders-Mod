@@ -241,3 +241,26 @@ def test_c138_tree_proposals_never_use_epsilon_fuel_overdraft(monkeypatch):
     assert agency.propose_self_trees(sim, 'F002', []) == []
     sim.book.energy['founder:F002'] = .08
     assert any(p[1] == 'seed_design' for p in agency.propose_self_trees(sim, 'F002', []))
+
+
+def test_c140_review_selects_funded_peer_regardless_of_contact_order():
+    """An unfunded first peer cannot block a funded, colocated reviewer."""
+    from types import SimpleNamespace
+    owner = SimpleNamespace(alive=True, location='riverbank')
+    weak = SimpleNamespace(alive=True, location='riverbank')
+    funded = SimpleNamespace(alive=True, location='riverbank')
+    blueprint = SimpleNamespace(id='B1', author='F002', kind='world',
+                                parent_id='R1', stage='researching',
+                                research_ticks={1, 2})
+    sim = SimpleNamespace(
+        founder_tree_independence_enabled=True, tick=3,
+        founders=SimpleNamespace(people={'F002': owner, 'F003': weak, 'F004': funded}),
+        seeds=SimpleNamespace(blueprints={'B1': blueprint},
+                              plants={'R1': {'kind': 'realm', 'status': 'stable'}}),
+        book=SimpleNamespace(energy={'founder:F002': 1., 'founder:F003': .10,
+                                     'founder:F004': .11}))
+    expected = [(5.1, 'seed_request_review', 'F004', 'B1')]
+    assert propose_self_trees(sim, 'F002', ['F003', 'F004']) == expected
+    assert propose_self_trees(sim, 'F002', ['F004', 'F003', 'F004']) == expected
+    sim.book.energy['founder:F004'] = .11 - 5e-11
+    assert propose_self_trees(sim, 'F002', ['F003', 'F004']) == []
