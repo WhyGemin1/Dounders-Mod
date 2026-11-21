@@ -91,9 +91,9 @@ class WorldTree:
         """Call BEFORE planting; all source amounts required for an initial tree."""
         for p in BIOMES:
             for typ, amount in START.items():
-                if book.mass[f'{typ}:Solara:{p}'] + 1e-8 < amount:
+                if book.mass[f'{typ}:Solara:{p}'] < amount:
                     raise ValueError(f'World Tree initial {typ} unavailable in Solara:{p}')
-            if book.energy[f'chem:Solara:{p}'] + 1e-8 < START_CHEM:
+            if book.energy[f'chem:Solara:{p}'] < START_CHEM:
                 raise ValueError('World Tree biochemical energy unavailable')
         if book.energy['house'] < 4 * START_SUN:
             raise ValueError('World Tree initial sunlight energy unavailable')
@@ -128,9 +128,9 @@ class WorldTree:
             raise ValueError('Species Seed not eligible for introduction')
         for p in BIOMES:
             n=INITIAL_RESIDENTS_PER_HABITAT
-            if (self.book.mass[self.acct('plant',p)]+1e-9<n*(.11+.19) or
-                self.book.energy[self.acct('sun',p)]+1e-9<n*.018 or
-                self.book.energy[self.acct('chem',p)]+1e-9<n*.045):
+            if (self.book.mass[self.acct('plant',p)]<n*(.11+.19) or
+                self.book.energy[self.acct('sun',p)]<n*.018 or
+                self.book.energy[self.acct('chem',p)]<n*.045):
                 raise ValueError(f'Species Seed lacks living habitat resources: {p}')
 
     def admit_species(self, species_creation, species_blueprint):
