@@ -1321,5 +1321,37 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
         self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+    def test_seed463_tending_request_replay_survives_checkpoint(self):
+        """Same local request must not debit twice or repeat creation events."""
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        from founders_engine.checkpoint import load_checkpoint, save_checkpoint
+        world, _, tree_id = bootstrap(463)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        request_id = 'local:tend:seed463'
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'world.checkpoint'
+            save_checkpoint(world, tree_id, path)
+            session.checkpointed_tend_tree(
+                path, founder_id, tree_id, .01, request_id=request_id)
+            before = (world.book.seq, dict(world.book.energy),
+                      len(world.seeds.events), len(world.constructs.events)
+                      if hasattr(world, 'constructs') else
+                      len(world.seeds.constructs.events))
+            restored = load_checkpoint(path, expected_tree_id=tree_id)
+            restored.checkpointed_tend_tree(
+                path, founder_id, tree_id, .01, request_id=request_id)
+            w = restored.world
+            after = (w.book.seq, dict(w.book.energy),
+                     len(w.seeds.events), len(w.seeds.constructs.events))
+            self.assertEqual(before, after)
+            self.assertEqual(restored.audit().founder_count, 100)
+            with self.assertRaises(ValueError):
+                restored.checkpointed_tend_tree(
+                    path, founder_id, tree_id, .02, request_id=request_id)
+            self.assertEqual(w.book.seq, before[0])
+            self.assertLessEqual(abs(restored.audit().book_energy_error), 1e-6)
+
 if __name__ == '__main__':
     unittest.main()
