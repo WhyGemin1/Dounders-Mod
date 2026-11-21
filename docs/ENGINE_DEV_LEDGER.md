@@ -1153,3 +1153,10 @@
 - Execute/test: previous-head CI verified; seed454 test not executed locally, exact-head CI pending; no fresh numerical Book residuals, clean-checkout or WorldBox game test in this cycle.
 - Ecological/behavioral audit: M01 iteration3 repair lock, M05 read-only/nonauthority, M02–M07 backlog, WorldBox read-only boundary and voluntary Tree choices preserved. Ecological stability and local exactly-once tending remain unverified. Draft PRs unmerged; main untouched.
 - Next: verify exact-head CI for seed454, repair any failure, then implement durable Book-backed local tending request receipts.
+
+## 2026-11-20 20:00 CST — oversized stewardship energy rejection
+- Ground/design: inspected live draft PR #1/#2, canonical authority and Book code, seed454 regression, active state and append-only ledger. Previous-head seed454 GitHub Actions #497 (44847374028) completed SUCCESS on 7b1966d. Authorized Cycle152 Drive ZIP metadata verified; no duplicate source import.
+- Implementation: existing `SingleEngineSession.tend_tree` now converts `isfinite(10**1000)` OverflowError into an ordinary pre-settlement ValueError, commit 50fe27da. Seed455 real Core151 regression at 386284e checks Book mass/energy, transaction history, sequence, clock and healthy-session audit after rejection. State update 7bff7b7. No second engine/Book/clock.
+- Execute/test: previous-head CI verified; seed455 test NOT executed locally and exact-head CI pending. No new numerical mass/energy residuals or native WorldBox gameplay. Source and test are PROVISIONAL pending execution.
+- Ecological/behavioral audit: rejects impossible voluntary energy requests without charging Founders; does not prove autonomous stewardship rate, ecological stability or exactly-once tending. M01 iteration3 lock, M05 nonauthority, M02–M07 backlog and read-only native boundary retained. Main untouched, both PRs draft/unmerged.
+- Next: verify exact-head seed455 CI; then implement durable idempotent local tending receipts through the existing canonical Book and checkpoint validator.
