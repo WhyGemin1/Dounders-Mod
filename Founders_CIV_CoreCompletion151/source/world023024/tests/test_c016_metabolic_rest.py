@@ -504,3 +504,31 @@ def test_c124_stored_fuel_still_makes_zero_fatigue_rest_available():
     assert propose_rest(sim, founder)
     assert (dict(sim.book.energy), sim.book.seq) == before
     audit(sim)
+
+
+def test_c129_rejected_work_does_not_create_checkpoint_receipt_sidecar():
+    sim, founder = bootstrap(seed=820)[0], 'F001'
+    # A fresh simulator must not gain replay state for an unfunded decision.
+    assert not hasattr(sim, 'work_receipts')
+    before = (dict(sim.book.energy), dict(sim.book.operations), sim.book.seq,
+              sim.recovery_states[founder].fatigue, len(sim.events))
+    assert paid_work(sim, founder, 'craft', 1e9, decision_id='c129-unfunded') is False
+    assert not hasattr(sim, 'work_receipts')
+    assert (dict(sim.book.energy), dict(sim.book.operations), sim.book.seq,
+            sim.recovery_states[founder].fatigue, len(sim.events)) == before
+    audit(sim)
+
+
+def test_c129_successful_work_still_records_replay_receipt():
+    sim, founder = prepared()
+    assert not hasattr(sim, 'work_receipts')
+    txn = paid_work(sim, founder, 'craft', .001, decision_id='c129-funded')
+    assert txn
+    operation = f'founder:work:{founder}:craft:c129-funded'
+    assert sim.work_receipts[operation] == (.001, txn)
+    before = (dict(sim.book.energy), sim.book.seq,
+              sim.recovery_states[founder].fatigue)
+    assert paid_work(sim, founder, 'craft', .001, decision_id='c129-funded') == txn
+    assert (dict(sim.book.energy), sim.book.seq,
+            sim.recovery_states[founder].fatigue) == before
+    audit(sim)
