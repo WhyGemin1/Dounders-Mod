@@ -1271,6 +1271,15 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(path.read_bytes(), original_bytes)
             with self.assertRaisesRegex(RuntimeError, 'checkpoint outcome uncertain'):
                 session.step()
+            # An ambiguous RAM-only settlement must also block another tend,
+            # even when the Founder still has enough energy to pay twice.
+            poisoned_seq = world.book.seq
+            poisoned_energy = dict(world.book.energy)
+            with self.assertRaisesRegex(RuntimeError, 'checkpoint outcome uncertain'):
+                session.checkpointed_tend_tree(path, founder_id, tree_id, .01)
+            self.assertEqual(world.book.seq, poisoned_seq)
+            self.assertEqual(dict(world.book.energy), poisoned_energy)
+            self.assertEqual(path.read_bytes(), original_bytes)
             recovered = load_checkpoint(path, expected_tree_id=tree_id)
             self.assertEqual(recovered.book.seq, original_seq)
             self.assertEqual(dict(recovered.book.energy), original_energy)
