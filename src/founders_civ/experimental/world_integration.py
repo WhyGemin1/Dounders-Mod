@@ -194,7 +194,7 @@ class SeedRegistry:
                     binding=round(binding,3),reserve=round(reserve,3),host_parent=b.parent_id)
         return item
 
-    def tend(self,actor,creation_id,amount=.6):
+    def tend(self,actor,creation_id,amount=.6,request_id=None):
         self._need_actor(actor)
         if creation_id not in self.plants:raise ValueError('unknown creation')
         c=self.plants[creation_id]
@@ -202,9 +202,10 @@ class SeedRegistry:
         if amount<=0 or not isfinite(float(amount)):raise ValueError('invalid amount')
         # Unlike the old scripted top-up, named Founder must actively fund upkeep.
         if self.sim.book.energy[f'founder:{actor}']<amount:raise ValueError('Founder lacks upkeep energy')
-        self.constructs.top_up(creation_id,amount,source=f'founder:{actor}')
-        self.owner_reserve_knowledge.setdefault(creation_id,{})[actor]={'tick':self.sim.tick,'reserve':self.sim.book.energy[f'reserve:{creation_id}']}
-        self.sim.log('creation_tended',actor,txn=self.sim.book.last,creation=creation_id,amount=round(amount,5))
+        fresh=self.constructs.top_up(creation_id,amount,source=f'founder:{actor}',request_id=request_id)
+        if fresh:
+            self.owner_reserve_knowledge.setdefault(creation_id,{})[actor]={'tick':self.sim.tick,'reserve':self.sim.book.energy[f'reserve:{creation_id}']}
+            self.sim.log('creation_tended',actor,txn=self.sim.book.last,creation=creation_id,amount=round(amount,5))
         return c
 
     def advance(self):
