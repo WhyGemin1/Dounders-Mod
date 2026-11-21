@@ -1220,3 +1220,10 @@
 - No production mechanics altered. This does NOT establish exactly-once tending; a caller still needs a durable request-ID protocol to prevent ambiguous repeated local requests.
 - Tests: previous-head CI #524 passed; seed461 NOT RUN at time of ledger write, exact-head CI pending. No local clean checkout, fresh measured Book residuals, ecological horizon or native WorldBox gameplay in this cycle.
 - Next: verify exact-head CI and fix failures; implement durable Book-backed idempotent tending IDs without duplicating SeedRegistry side effects.
+
+## 2026-11-21 05:00 CST — reject repeated tending after ambiguous checkpoint save
+- Ground/design: inspected live PR #1/#2, branch head c3ee828, actual authority session, seed461 regression, canonical state and ledger. Previous exact-head Actions #527 (44891958253) SUCCESS on c3ee828. Authorized private Cycle152 ZIP metadata verified (956121 bytes); source import already recorded at 7f96cba, no duplicate import.
+- Implementation: extended seed461 regression at 93d321d to attempt a second checkpointed_tend_tree on the poisoned in-memory session after injected save failure. Requires RuntimeError, no further Book sequence/energy mutation and unchanged durable checkpoint. Existing production quarantine logic is exercised; no new engine or resource writer.
+- Execute/test: previous-head CI #527 SUCCESS; new assertion not executed in this run; no local clean-checkout or fresh numerical Book residuals. PROVISIONAL until exact-head CI passes.
+- Ecological/behavioral audit: one world.book, world.tick, 100 Founder IDs, M01 iteration3 lock, M05 nonauthority and WorldBox read-only contract preserved. Exactly-once tending request IDs, native gameplay and ecological horizons unverified.
+- Next: verify exact-head CI and fix any regression, then implement durable canonical Book-backed local tending request IDs with restart/replay and SeedRegistry side-effect tests.
