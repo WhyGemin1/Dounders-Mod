@@ -227,7 +227,7 @@ class SingleEngineSession:
         creation = self.world.seeds.plants.get(tree_id)
         if creation is None or creation['status'] != 'stable':
             raise ValueError('stable planted World Tree required')
-        if self.book.energy[f'founder:{founder_id}'] < energy:
+        if self.book.energy.get(f'founder:{founder_id}', 0.0) < energy:
             raise ValueError('Founder lacks upkeep energy')
         try:
             result = self.world.seeds.tend(founder_id, tree_id, energy)
