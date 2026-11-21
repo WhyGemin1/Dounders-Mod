@@ -1067,5 +1067,35 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertFalse(result.failures, result.failures)
         self.assertFalse(result.errors, result.errors)
 
+    def test_seed456_rejects_inconsistent_tree_metadata_without_settlement(self):
+        """A planted non-world or mismatched creation cannot receive Tree upkeep."""
+        world, _, tree_id = bootstrap(456)
+        session = SingleEngineSession(world, tree_id)
+        creation = world.seeds.plants[tree_id]
+        original = dict(creation)
+        before = (world.tick, world.book.seq,
+                  dict(world.book.mass), dict(world.book.energy),
+                  list(world.book.transaction_history))
+        founder_id = next(iter(world.founders.people))
+        try:
+            for key, bad in (('kind', 'species'), ('id', 'CRE-INVALID'),
+                             ('status', 'collapsed')):
+                with self.subTest(field=key):
+                    creation[key] = bad
+                    with self.assertRaisesRegex(ValueError, 'stable planted World Tree'):
+                        session.tend_tree(founder_id, tree_id, .01)
+                    creation[key] = original[key]
+                    self.assertEqual(before, (world.tick, world.book.seq,
+                        dict(world.book.mass), dict(world.book.energy),
+                        list(world.book.transaction_history)))
+        finally:
+            creation.clear()
+            creation.update(original)
+        self.assertFalse(session._checkpoint_uncertain)
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
 if __name__ == '__main__':
     unittest.main()
