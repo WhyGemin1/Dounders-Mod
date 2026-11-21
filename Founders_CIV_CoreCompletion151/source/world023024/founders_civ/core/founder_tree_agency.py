@@ -30,8 +30,14 @@ def _realm_to_develop(sim):
     if not realms:
         return None
     def load(realm):
-        return sum(p['kind'] == 'world' and p['status'] == 'stable'
-                   and p['parent'] == realm['id'] for p in sim.seeds.plants.values())
+        # Include unfinished World proposals so simultaneous autonomous
+        # Founders do not all select the same apparently empty parent.
+        # Proposals are not physical Worlds and confer no resources.
+        planted = sum(p['kind'] == 'world' and p['status'] == 'stable'
+                      and p['parent'] == realm['id'] for p in sim.seeds.plants.values())
+        pending = sum(b.kind == 'world' and b.parent_id == realm['id']
+                      and b.stage != 'planted' for b in sim.seeds.blueprints.values())
+        return planted + pending
     return min(realms, key=lambda r: (load(r), r['id']))['id']
 
 
