@@ -1,5 +1,5 @@
 {
-  "source": "U026 C138 exact voluntary Tree proposal affordability; regression and independent review pending",
+  "source": "U026 C144 C143 realm-load source and regression fingerprint reconciliation; CI pending",
   "files": 520,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
@@ -424,7 +424,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "26bfd626285919faeb32bd1fdcbf9fe16ebf3e99cfb419d36fb883296660920a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "2e8ae65991be68a37ce099a32ff63d401e1b1d327bf051d50996c4b43cb1e938",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "ece89c8e68d0a5e7c036dd52b2d89a90e59e96238514f441034f64a792829dc2",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "e32364de9af5fee25a8f31b394d96848683758230da1232b7ea14c4742e14d98",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py": "41fd892f3d9d1ffcd72c4a353a5c30d77c155fe356e206261babc1d2b47d9745",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/living_assets.py": "5fb57c92e243b2b95850f70ccac3b98c467b40482ae4da7b17ff24927c535853",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/__init__.py": "e40f61d7c61986c018aba343681265a3d221c8b4b0db7c6fd9c101010551af25",
@@ -521,7 +521,8 @@
     "tools/u026_g2_matched_acceptance.py": "f9f61d8ead5e3db85a54fd3fba998e9f39dd265a8617b5febfa317415bbef148",
     ".github/workflows/u026_g2_acceptance.yml": "5427dae9b78cbcb48831815007df1156c3370ea7e507ece1682ff52def817a3a",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c072_paid_work_replay.py": "74e50e1db95335cb29edaeccc0818ddc4d15c1826920f4ae6419ac0c90a308c0",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c136_exact_tree_preflight.py": "44b25959c7a09641579113209763dc596f063a7787c47d27282e74f7fa8bb853"
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c136_exact_tree_preflight.py": "44b25959c7a09641579113209763dc596f063a7787c47d27282e74f7fa8bb853",
+    "Founders_CIV_CoreCompletion151/source/src/test_u026_c143_pending_realm_load.py": "f29eae029b02bc71a9fd229e8b40c2918d8e4f63ffe3ebab4bf0271e72a5ebd8"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
