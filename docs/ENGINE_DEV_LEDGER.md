@@ -1181,3 +1181,12 @@
 - Execute/test: prior-head CI verified; seed458 test not executed in this run. No new numerical Book conservation measurements or native gameplay. New regression PROVISIONAL pending exact-head CI.
 - Ecological/behavioral audit: ensures corrupt receipts cannot be silently persisted after local voluntary tending; does not establish exactly-once local tending, ecological stability or native WorldBox ACK. M01 iteration3 repair lock, M05 nonauthority, M02-M07 backlog and WorldBox read-only remain. Main untouched.
 - Next: verify seed458 CI and repair failures; then implement durable Book-backed idempotent tending request IDs and restart/replay tests.
+
+## 2026-11-21 00:00 CST — Core151 checkpoint receipt preflight
+- Branch: `feat/single-core151-authority`; draft PR #2; main untouched.
+- Grounding: inspected live PR #1/#2, authority, canonical Book move_once, checkpoint validator, seed458 test and active state. Authorized Cycle152 ZIP metadata confirmed (956121 bytes); no new archive import.
+- Production integration `b5cc7b5`: `checkpointed_tend_tree` invokes the existing canonical checkpoint validator before mutable stewardship settlement. This rejects forged Book receipts without charging a Founder or quarantining a still-clean session. No second Book or clock.
+- Regression `68c0130`: seed458 now asserts unchanged Book energy/sequence and checkpoint bytes on corrupted receipt, then successful retry after corruption is removed. Prior expectation of post-settlement quarantine was updated to reflect preflight rejection.
+- State `cf70b76`: records provisional acceptance. No WorldBox write access, M01 iteration3 lock unchanged, M02-M07 backlog unchanged.
+- Tests: source changes committed; exact-head GitHub Actions outcome pending inspection. No local clean-checkout unittest, numerical Book audit or WorldBox gameplay performed this invocation. Assertions are NOT executed evidence.
+- Next: verify CI for this head, fix any failure, then implement Book-backed durable idempotent local tending request IDs and restart/replay tests without bypassing SeedRegistry side effects.
