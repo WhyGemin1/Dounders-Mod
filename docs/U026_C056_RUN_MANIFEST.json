@@ -1,0 +1,54 @@
+{
+  "cycle": "U026-C056",
+  "assignment": "G3 embodied physiology: sleep-pressure choice",
+  "decision": "REVISE",
+  "branch": "Development",
+  "implementation_commits": [
+    "4b5350a14533ab778ba3aa914f32ddda655b330c",
+    "046b1026f94eac62f74f3785dbdbbd4f7e8baebf",
+    "8c4a99b4f963fce6f1fa2d48b764434b3b3aa6fa"
+  ],
+  "changed_files": [
+    "Founders_CIV_CoreCompletion151/source/src/core_physiology_v2.py",
+    "tests/test_u026_c055_g3_rest_choice.py",
+    "docs/U026_G2_CANDIDATE_SOURCE_FINGERPRINT.json"
+  ],
+  "source_sha256": "ea2bbb0ed883e42d0d73cb05a0260cd04df6c64f098526c394a99345acc2b593",
+  "hypothesis": "An adult with high accumulated sleep pressure should choose sleep even when acute fatigue is low; danger and dependent-caregiver precedence remain unchanged.",
+  "falsifier": "Focused tests fail, source fingerprint mismatch, Book conservation or checkpoint replay regression, or recovered actors cannot resume feeding.",
+  "control": "Existing recovered adult with low sleep pressure chooses the original feeding action.",
+  "tests": {
+    "new_focused_cases": 2,
+    "committed": true,
+    "executed_this_cycle": false,
+    "ci": "PENDING_NOT_CONFIRMED",
+    "prior_core151_workflow": "44229835599 full regression step success, overall failed due source drift",
+    "prior_g2_workflow": "44229835652 factorial completed, overall failed due source drift"
+  },
+  "simulation": {
+    "seeds": [],
+    "horizons": [],
+    "new_matched_runs": 0,
+    "conservation": "NOT_RETESTED",
+    "identity": "NOT_RETESTED",
+    "checkpoint_replay": "NOT_RETESTED"
+  },
+  "branches": {
+    "Core": "c935c9a7066d6fe8d122a46edd2d8ce223343be2",
+    "Integration": "c935c9a7066d6fe8d122a46edd2d8ce223343be2",
+    "Outer": "c935c9a7066d6fe8d122a46edd2d8ce223343be2",
+    "main": "26a02ba50a53770b14eae0368315ea01036d0b3c",
+    "Development": "8c4a99b4f963fce6f1fa2d48b764434b3b3aa6fa_before_manifest"
+  },
+  "promotion": "NONE",
+  "gates": {
+    "G0": "remote promotion unverified",
+    "G1": "Core promotion unverified",
+    "G2": "mechanical acceptance pending",
+    "G3": "candidate change committed, acceptance pending",
+    "G4": "unverified",
+    "G5": "not integrated",
+    "WB_PKG": "incomplete"
+  },
+  "next": "Obtain CI at current source, repair any provenance failures, run focused G3 choice tests and full Core151 regression; then implement actual rest/fuel integration with matched replay."
+}

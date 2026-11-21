@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace FoundersCIV.WorldBoxM05
 {
-    [BepInPlugin("org.foundersciv.worldbox.m05.events", "FoundersCIV M05 Native Event Observer", "0.5.2")]
+    [BepInPlugin("org.foundersciv.worldbox.m05.events", "FoundersCIV M05 Native Event Observer", "0.5.4")]
     public sealed class M05EventBridge : BaseUnityPlugin
     {
         internal static M05EventBridge Current;
@@ -28,20 +28,27 @@ namespace FoundersCIV.WorldBoxM05
         private string _worldKey;
         private string _output;
         private string _projectionPath;
+        private string _disablePath;
+        private bool _observerDisabled;
+        private float _nextDisableCheck;
         private float _nextProjectionRead;
+        private float _nextDiagnosticRead;
+        private long _updateFrames;
+        private static long _hitNutrition, _hitPrey, _hitFood, _hitKill, _hitDeath, _hitBaby, _hitBirth;
+        private static long _callbackErrors, _emitErrors;
         private LiveState _live;
         [Serializable] private sealed class LiveTree {
             public string tree_id = "";
-            public float health;
-            public bool alive;
-            public int unharvested_fruit;
+            public float health = 0f;
+            public bool alive = false;
+            public int unharvested_fruit = 0;
             public string native_status = "";
         }
         [Serializable] private sealed class LiveState {
             public string world_key = "";
             public string projection_kind = "";
-            public int period;
-            public int shared_river_remaining;
+            public int period = 0;
+            public int shared_river_remaining = 0;
             public LiveTree[] trees = new LiveTree[0];
         }
         private readonly List<string> _activeHooks = new List<string>();
@@ -64,6 +71,9 @@ namespace FoundersCIV.WorldBoxM05
             public string observed_utc = "";
             public string source_method = "";
             public long actor_id = -1;
+            // Same native object as actor_id, read from Actor.data.id for M01 reconciliation.
+            // Blank means unresolved; never infer identity from name or location.
+            public string actor_data_id = "";
             public long target_id = -1;
             public string context_id = "";
             public int native_amount = 0;
@@ -89,6 +99,10 @@ namespace FoundersCIV.WorldBoxM05
             if (string.IsNullOrWhiteSpace(_worldKey)) _worldKey = "UNBOUND";
             _output = Path.Combine(baseDir, "m05_" + _session + ".jsonl");
             _projectionPath = Path.Combine(baseDir, "live_state.json");
+            // A user-controlled kill switch: create disable.flag to unpatch on
+            // the next Update (within one second). Re-enabling requires restart.
+            _disablePath = Path.Combine(baseDir, "disable.flag");
+            _observerDisabled = File.Exists(_disablePath);
             _writer = new StreamWriter(new FileStream(_output, FileMode.CreateNew, FileAccess.Write,
                 FileShare.Read, 65536), new UTF8Encoding(false), 65536);
 
@@ -105,8 +119,8 @@ namespace FoundersCIV.WorldBoxM05
                 using (var fs = File.OpenRead(actor.Assembly.Location))
                     detectedSha = BitConverter.ToString(sha.ComputeHash(fs)).Replace("-", "").ToLowerInvariant();
             } catch (Exception ex) { Logger.LogWarning("Assembly hash unavailable: " + ex.Message); }
-            bool mayPatch = _worldKey != "UNBOUND" && detectedSha == ExpectedAssemblySha;
-            if (!mayPatch) Logger.LogError("M05 observer fail-closed: bind a unique world_key and use the verified WorldBox build. Assembly SHA=" + detectedSha);
+            bool mayPatch = !_observerDisabled && _worldKey != "UNBOUND" && detectedSha == ExpectedAssemblySha;
+            if (!mayPatch) Logger.LogWarning("M05 observer disabled/fail-closed: check disable.flag, world_key and assembly hash. SHA=" + detectedSha);
             if (mayPatch) {
 
             TryPatch("Actor", "addNutritionFromEating", 3, "Actor.addNutritionFromEating",
@@ -142,8 +156,10 @@ namespace FoundersCIV.WorldBoxM05
                 var binding = BindingFlags.Static|BindingFlags.NonPublic;
                 var prefix = prefixName == null ? null : typeof(M05EventBridge).GetMethod(prefixName, binding);
                 var finalizer = finalizerName == null ? null : typeof(M05EventBridge).GetMethod(finalizerName, binding);
+                // HarmonyX marks the five-argument overload obsolete with error=true.
+                // Explicit sixth argument resolves to the supported overload.
                 _harmony.Patch(found[0], prefix == null ? null : new HarmonyMethod(prefix), null,
-                    null, finalizer == null ? null : new HarmonyMethod(finalizer));
+                    null, finalizer == null ? null : new HarmonyMethod(finalizer), null);
                 _activeHooks.Add(label);
             } catch (Exception ex) { Logger.LogError("Failed to attach " + label + ": " + ex); }
         }
@@ -163,6 +179,33 @@ namespace FoundersCIV.WorldBoxM05
             try { return _getId == null || actor == null ? -1 : Convert.ToInt64(_getId.Invoke(actor, null)); }
             catch { return -1; }
         }
+        // Read the identical Actor.data.id member used by the M01 identity bridge.
+        // Reflection is observational; a missing member returns an empty ID and
+        // prevents Soul practice certification. Never mutate the Actor or its data.
+        private static object ReadActorMember(object obj, string member)
+        {
+            if (obj == null) return null;
+            for (Type t = obj.GetType(); t != null; t = t.BaseType) {
+                const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public |
+                    BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+                var field = t.GetField(member, flags);
+                if (field != null) return field.GetValue(obj);
+                var property = t.GetProperty(member, flags);
+                if (property != null && property.GetIndexParameters().Length == 0)
+                    return property.GetValue(obj, null);
+            }
+            return null;
+        }
+        private static string ActorDataId(object actor)
+        {
+            try {
+                var data = ReadActorMember(actor, "data");
+                var id = ReadActorMember(data, "id");
+                return id == null ? "" :
+                    (Convert.ToString(id, System.Globalization.CultureInfo.InvariantCulture) ?? "").Trim();
+            } catch { return ""; }
+        }
+
         private static int SafeInt(object value)
         {
             try {return Convert.ToInt32(value);} catch {return 0;}
@@ -187,6 +230,13 @@ namespace FoundersCIV.WorldBoxM05
                         return;
                     }
                     if (_lost > 0) {
+                        // Reserve TWO slots: the explicit loss marker and this event.
+                        // With only one free slot, reject this event rather than
+                        // exceeding the hard queue cap or hiding the loss.
+                        if (_pending.Count >= MaxQueue - 1) {
+                            ++_nextSequence; ++_lost;
+                            return;
+                        }
                         var lost = new Event {kind="bridge_loss", dropped=_lost,
                             notes="Event observer queue overflow; dataset MUST NOT be promoted"};
                         _lost = 0;
@@ -194,7 +244,9 @@ namespace FoundersCIV.WorldBoxM05
                     }
                     EnqueueLocked(ev);
                 }
-            } catch { // Observer MUST NOT change the native game's outcome.
+            } catch (Exception ex) {
+                var n = System.Threading.Interlocked.Increment(ref _emitErrors);
+                if (n <= 5) Logger.LogError("M05 event emission failed: " + ex);
             }
         }
         private void EnqueueLocked(Event ev)
@@ -205,9 +257,34 @@ namespace FoundersCIV.WorldBoxM05
             ev.observed_utc = DateTime.UtcNow.ToString("o");
             _pending.Enqueue(JsonUtility.ToJson(ev));
         }
+        private static void ReportCallbackFailure(string origin, Exception ex)
+        {
+            var n = System.Threading.Interlocked.Increment(ref _callbackErrors);
+            if (n <= 10) {
+                try { if (Current != null) Current.Logger.LogError("M05 callback " + origin +
+                    " failed (gameplay unchanged): " + ex); } catch { }
+            }
+        }
+        private static void Hit(ref long counter, string method)
+        {
+            if (System.Threading.Interlocked.Increment(ref counter) == 1)
+                Send(new Event {kind="hook_probe", source_method=method,
+                    notes="target_entered; outcome_unverified"});
+        }
+        private static string HookCounts()
+        {
+            return "nutrition=" + System.Threading.Interlocked.Read(ref _hitNutrition) +
+                ";prey=" + System.Threading.Interlocked.Read(ref _hitPrey) +
+                ";food=" + System.Threading.Interlocked.Read(ref _hitFood) +
+                ";kill=" + System.Threading.Interlocked.Read(ref _hitKill) +
+                ";death=" + System.Threading.Interlocked.Read(ref _hitDeath) +
+                ";baby=" + System.Threading.Interlocked.Read(ref _hitBaby) +
+                ";birth=" + System.Threading.Interlocked.Read(ref _hitBirth);
+        }
         private static void Send(Event ev)
         {
-            try { if (Current != null) Current.Emit(ev); } catch { }
+            try { if (Current != null && !Current._observerDisabled) Current.Emit(ev); }
+            catch (Exception ex) { ReportCallbackFailure("Send", ex); }
         }
         private static string CurrentContext()
         {
@@ -218,24 +295,25 @@ namespace FoundersCIV.WorldBoxM05
         // Void Harmony finalizers OBSERVE exceptions without changing them.
         // No prefix returns false, changes an argument, or changes a result.
         private static void NutritionPrefix(object __instance, out int __state)
-        { __state = Nutrition(__instance); }
+        { Hit(ref _hitNutrition, "Actor.addNutritionFromEating"); __state = Nutrition(__instance); }
         private static void NutritionFinalizer(object __instance, object[] __args,
             int __state, Exception __exception)
         {
             try {
             int after = Nutrition(__instance);
-            Send(new Event {kind="nutrition_call", actor_id=Id(__instance), source_method="Actor.addNutritionFromEating",
+            Send(new Event {kind="nutrition_call", actor_id=Id(__instance), actor_data_id=ActorDataId(__instance), source_method="Actor.addNutritionFromEating",
                 native_amount=__args.Length>0 ? SafeInt(__args[0]) : 0,
                 nutrition_before=__state,nutrition_after=after,
                 native_delta=(__state>=0&&after>=0) ? after-__state : 0,
                 context_id=CurrentContext(),native_success=__exception==null,
                 notes=__exception==null?"native_nutrition_change_not_physical_energy":"native_exception"});
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("NutritionFinalizer", ex); }
         }
 
         private static void PreyPrefix(object[] __args, out string __state)
         {
+            Hit(ref _hitPrey, "ai.behaviours.BehConsumeActorTarget.consume");
             var current = Current;
             __state = current==null ? "" : current._session+":"+ System.Threading.Interlocked.Increment(ref _nextContext);
             if (_consumptionContexts == null) _consumptionContexts=new Stack<string>();
@@ -258,27 +336,28 @@ namespace FoundersCIV.WorldBoxM05
                     _consumptionContexts.Pop();
             } catch { }
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("PreyFinalizer", ex); }
         }
 
         private static void ResourcePrefix(object __instance, out int __state)
-        { __state=Nutrition(__instance); }
+        { Hit(ref _hitFood, "Actor.consumeFoodResource"); __state=Nutrition(__instance); }
         private static void ResourceFinalizer(object __instance, object[] __args, int __state, Exception __exception)
         {
             try {
             int after=Nutrition(__instance);
             Send(new Event {kind="resource_consume_call",source_method="Actor.consumeFoodResource",
-                actor_id=Id(__instance),nutrition_before=__state,nutrition_after=after,
+                actor_id=Id(__instance),actor_data_id=ActorDataId(__instance),nutrition_before=__state,nutrition_after=after,
                 native_delta=(__state>=0&&after>=0) ? after-__state : 0,
                 resource=__args.Length>0?ResourceLabel(__args[0]):"",
                 context_id=CurrentContext(),native_success=__exception==null,
                 notes="can_overlap_nutrition_call_do_not_sum_as_separate_intake"});
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("ResourceFinalizer", ex); }
         }
         private struct KillState { public long ActorId; public long TargetId; }
         private static void KillPrefix(object __instance, object[] __args, out KillState __state)
         {
+            Hit(ref _hitKill, "Actor.newKillAction");
             __state = new KillState {ActorId=Id(__instance),TargetId=__args.Length>0?Id(__args[0]):-1};
         }
         private static void KillFinalizer(KillState __state, Exception __exception)
@@ -289,11 +368,11 @@ namespace FoundersCIV.WorldBoxM05
                 native_success=__exception==null,context_id=CurrentContext(),
                 notes="kill_callback_not_independently_verified_predation"});
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("KillFinalizer", ex); }
         }
         private struct DeathState { public long ActorId; public bool WasDead; }
         private static void DiePrefix(object __instance, out DeathState __state)
-        { __state=new DeathState{ActorId=Id(__instance),WasDead=HasDied(__instance)}; }
+        { Hit(ref _hitDeath, "Actor.die"); __state=new DeathState{ActorId=Id(__instance),WasDead=HasDied(__instance)}; }
         private static void DieFinalizer(object __instance, DeathState __state, Exception __exception)
         {
             try {
@@ -302,30 +381,65 @@ namespace FoundersCIV.WorldBoxM05
                 actor_id=__state.ActorId,native_success=__exception==null && !__state.WasDead && after,
                 context_id=CurrentContext(),notes="success_requires_false_to_true_hasDied"});
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("DieFinalizer", ex); }
         }
         private static void BabyFinalizer(object __result, Exception __exception)
         {
+            Hit(ref _hitBaby, "ActorManager.createBabyActorFromData");
             try {
             Send(new Event {kind="baby_factory_call",source_method="ActorManager.createBabyActorFromData",
                 actor_id=__exception==null?Id(__result):-1,
                 native_success=__exception==null && __result!=null,
                 notes="factory_can_be_used_for_reload_or_creation_not_certified_birth"});
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("BabyFinalizer", ex); }
         }
         private static void BirthFinalizer(object __instance, Exception __exception)
         {
+            Hit(ref _hitBirth, "Actor.birthEvent");
             try {
             Send(new Event {kind="birth_callback",source_method="Actor.birthEvent",
                 actor_id=Id(__instance),native_success=__exception==null,
                 notes="requires validation of birthEvent meaning in live game"});
         
-            } catch { /* never disrupt native game execution */ }
+            } catch (Exception ex) { ReportCallbackFailure("BirthFinalizer", ex); }
         }
 
         private void Update()
         {
+            ++_updateFrames;
+            if (!_observerDisabled && Time.unscaledTime >= _nextDisableCheck) {
+                _nextDisableCheck = Time.unscaledTime + 1f;
+                try {
+                    if (File.Exists(_disablePath)) {
+                        // Never re-enable hooks automatically after disabling.
+                        _observerDisabled = true;
+                        if (_harmony != null) _harmony.UnpatchSelf();
+                        Emit(new Event {kind="observer_disabled",
+                            notes="user_disable_flag;native_hooks_detached;restart_required_to_reenable"});
+                        Logger.LogWarning("M05 disabled by user; native hooks detached");
+                    }
+                } catch (Exception ex) {
+                    _observerDisabled = true; // failure to read/unpatch fails closed
+                    try { if (_harmony != null) _harmony.UnpatchSelf(); } catch { }
+                    Logger.LogError("M05 disable check failed; observer disabled: " + ex.Message);
+                }
+            }
+            if (_observerDisabled) {
+                // Previously queued observations are flushed, but disabled
+                // observers do not gather new snapshots, heartbeats or callbacks.
+                try { Drain(false); }
+                catch (Exception ex) { Logger.LogError("M05 disabled drain failure: " + ex.Message); }
+                return;
+            }
+            if (Time.unscaledTime >= _nextDiagnosticRead) {
+                _nextDiagnosticRead = Time.unscaledTime + 15f;
+                Emit(new Event {kind="observer_heartbeat",
+                    active_hooks=_activeHooks.ToArray(),
+                    notes="update_frames=" + _updateFrames + ";hook_hits=" + HookCounts() +
+                        ";callback_errors=" + System.Threading.Interlocked.Read(ref _callbackErrors) +
+                        ";emit_errors=" + System.Threading.Interlocked.Read(ref _emitErrors)});
+            }
             if (Time.unscaledTime >= _nextProjectionRead) {
                 _nextProjectionRead = Time.unscaledTime + 3f;
                 try {
@@ -360,7 +474,7 @@ namespace FoundersCIV.WorldBoxM05
         }
         private void OnGUI()
         {
-            if (_live == null || _live.trees == null) return;
+            if (_observerDisabled || _live == null || _live.trees == null) return;
             try {
                 int n = Math.Min(5, _live.trees.Length);
                 float width = 330f;
@@ -381,11 +495,18 @@ namespace FoundersCIV.WorldBoxM05
         private void OnDestroy()
         {
             try {
-                Emit(new Event{kind="session_close",notes="best_effort_graceful_plugin_shutdown"});
-                Drain(true);
-                if(_harmony!=null) _harmony.UnpatchSelf();
-                if(_writer!=null) {_writer.Dispose();_writer=null;}
-            } catch(Exception ex) { Logger.LogError("M05 shutdown error " + ex.Message); }
+                Emit(new Event{kind="session_close",
+                    notes="best_effort_graceful_plugin_shutdown;update_frames=" + _updateFrames +
+                        ";hook_hits=" + HookCounts() +
+                        ";callback_errors=" + System.Threading.Interlocked.Read(ref _callbackErrors) +
+                        ";emit_errors=" + System.Threading.Interlocked.Read(ref _emitErrors)});
+            } catch(Exception ex) { Logger.LogError("M05 shutdown emission error " + ex.Message); }
+            try { Drain(true); }
+            catch(Exception ex) { Logger.LogError("M05 shutdown drain error " + ex.Message); }
+            try { if(_harmony!=null) _harmony.UnpatchSelf(); }
+            catch(Exception ex) { Logger.LogError("M05 unpatch error " + ex.Message); }
+            try { if(_writer!=null) {_writer.Dispose();_writer=null;} }
+            catch(Exception ex) { Logger.LogError("M05 writer close error " + ex.Message); }
             Current=null;
         }
     }

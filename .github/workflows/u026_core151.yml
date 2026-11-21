@@ -1,0 +1,125 @@
+name: U026 Core151 provenance and integration
+on:
+  push:
+    branches: [Development]
+  pull_request:
+    branches: [Core, Development]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  core151-python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PYTHONPATH: .
+      PYTHONDONTWRITEBYTECODE: '1'
+    defaults:
+      run:
+        working-directory: Founders_CIV_CoreCompletion151/source/world023024
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify G2 candidate exact source fingerprints and no generated artifacts
+        id: provenance
+        continue-on-error: true  # run regressions despite drift; fail gate below
+        working-directory: .
+        run: python tools/u026_g2_exact_source_audit.py
+      - name: G1 acceptance - fail-closed exact-source mutation and unlisted Python
+        working-directory: .
+        run: |
+          python - <<'PY'
+          import subprocess
+          import sys
+          from pathlib import Path
+          source = Path('Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py')
+          unlisted = Path('Founders_CIV_CoreCompletion151/source/world023024/tests/_u026_g1_unlisted_probe.py')
+          original = source.read_bytes()
+          def audit():
+              return subprocess.run([sys.executable, 'tools/u026_g2_exact_source_audit.py'],
+                                    capture_output=True, text=True)
+          try:
+              source.write_bytes(original + b'\\n# unauthorized G1 source mutation\\n')
+              result = audit()
+              assert result.returncode != 0 and 'founders_civ/core/ledger.py' in result.stdout, result.stdout
+          finally:
+              source.write_bytes(original)
+          try:
+              unlisted.write_text('# unauthorized executable test\\n')
+              result = audit()
+              assert result.returncode != 0 and '_u026_g1_unlisted_probe.py' in result.stdout, result.stdout
+          finally:
+              unlisted.unlink(missing_ok=True)
+          clean = audit()
+          assert clean.returncode == 0, clean.stdout + clean.stderr
+          print('G1 fail-closed audit: mutated source rejected, unlisted Python rejected, clean checkout accepted')
+          PY
+      - name: Record exact G0 candidate source hashes
+        working-directory: .
+        run: |
+          sha256sum Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py
+          sha256sum Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_integration.py
+          sha256sum Founders_CIV_CoreCompletion151/source/world023024/tests/test_c002_provenance.py
+          sha256sum Founders_CIV_CoreCompletion151/source/world023024/tests/test_integration_025.py
+      - name: Install test runner
+        if: always()  # retain true regression evidence even when provenance rejects a PR merge
+        run: python -m pip install --disable-pip-version-check pytest==8.4.1
+      - name: Run 15 focused G1 replay and conservation tests
+        if: always()
+        run: python -m pytest -q tests/test_u026_g1_exact_replay.py
+      - name: Run G2 voluntary parent stewardship regression
+        if: always()
+        run: python -m pytest -q tests/test_u026_g2_parent_stewardship.py
+      - name: Generate deterministic observatory fixture only in CI workspace
+        if: always()
+        run: python -c "import json; from pathlib import Path; from founders_civ.runner import run; Path('web/sample_run.json').write_text(json.dumps(run(42,30,'1111')))"
+      - name: Run full Core151 WORLD-024 regression
+        if: always()
+        run: python -m pytest -q tests
+      - name: Enforce provenance gate after regressions
+        if: always()
+        env:
+          PROVENANCE_OUTCOME: ${{ steps.provenance.outcome }}
+        run: |
+          if [ "$PROVENANCE_OUTCOME" != success ]; then
+            echo 'G2 candidate provenance FAILED; regression evidence retained, promotion blocked.'
+            exit 1
+          fi
+
+  worldbox-source-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: M05 virtual observer sidecar tests (not the Core151 Book)
+        working-directory: FoundersCIV_WorldBox_M05_Integration
+        env:
+          PYTHONPATH: .
+        run: python -m unittest discover -s tests -v
+      - name: M01 snapshot/identity bridge tests
+        working-directory: Founders_CIV_WorldBox_M01
+        env:
+          PYTHONPATH: .
+        run: python -m unittest discover -s tests -v
+
+  g1-matched:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: G1 acceptance - 10 matched seeds, control and opt-in, 30 and 180 days
+        run: python tools/u026_g1_matched_acceptance.py --seeds 10 --days 180

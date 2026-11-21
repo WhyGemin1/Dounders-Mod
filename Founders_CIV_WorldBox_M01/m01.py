@@ -22,21 +22,48 @@ def main():
     q=subs.add_parser('shadow');q.add_argument('--world-id',required=True);q.add_argument('--core-source');q.add_argument('--core-state-json');q.add_argument('--seed',type=int,default=100001)
     q=subs.add_parser('export-core');q.add_argument('--core-source',required=True);q.add_argument('--seed',type=int,default=100001);q.add_argument('--output',required=True)
     q=subs.add_parser('live-probe');q.add_argument('--base-url',default='http://127.0.0.1:8723')
-    q=subs.add_parser('live-snapshot');q.add_argument('--base-url',default='http://127.0.0.1:8723');q.add_argument('--output',required=True)
+    q=subs.add_parser('live-snapshot');q.add_argument('--base-url',default='http://127.0.0.1:8723');q.add_argument('--output',required=True);q.add_argument('--asset-id',help='Exact native actor asset_id, e.g. rabbit; filter cohort in worlds with over 5000 actors');q.add_argument('--min-actors',type=int,default=20,help='Minimum filtered cohort size; use 20 before, 0 after to observe loss')
     args=p.parse_args()
     try:
         if args.command.startswith('live-'):
             client=BridgeClient(base_url=args.base_url)
             if args.command=='live-probe':
                 health=client.health();cap=client.capabilities()
-                show({'health':health,'capabilities':cap,
-                      'note':'No WorldBox mutations. New actor ID command must be installed before the snapshot call.'})
+                names=[c.get('name') for c in cap.get('commands',[])
+                       if isinstance(c,dict)]
+                present='query_actor_identities' in names
+                show({'health':health,
+                      'worldbox_version':cap.get('worldbox_version'),
+                      'native_assembly_sha256':cap.get('assembly_csharp_sha256'),
+                      'registered_commands':len(names),
+                      'query_actor_identities_registered':present,
+                      'next_step':('Pause a fully loaded disposable WorldBox world, then run -Stage before.'
+                                   if present else
+                                   'M01 command not in live capabilities. Check installed WorldBoxBridge.dll and BepInEx logs.'),
+                      'note':'Read-only bridge probe; no native mutations or Book writes.'})
+                if not present:raise RuntimeError('M01 command absent from live /capabilities; do not attempt identity snapshots')
                 return
-            snap=client.command('query_actor_identities')
+            cohort=args.asset_id.strip() if args.asset_id is not None else None
+            if args.asset_id is not None and not cohort:
+                raise ValueError('--asset-id must name a non-empty native asset')
+            request_args={'asset_id':cohort} if cohort else {}
+            snap=client.command('query_actor_identities',request_args)
             from founders_worldbox import normalize_snapshot
             meta,items=normalize_snapshot(snap)
+            # Explicit source-consistency gate: a filter must not silently
+            # include animals from another species; at least 20 identities
+            # are needed for our first save/reload acceptance experiment.
+            if args.min_actors < 0 or args.min_actors > 5000:
+                raise ValueError('--min-actors must be between 0 and 5000')
+            if cohort is not None:
+                if any(item.get('asset_id') != cohort for item in items):
+                    raise BridgeIntegrityError('Native bridge returned actors outside requested cohort')
+                if len(items) < args.min_actors:
+                    raise ValueError(f'Only {len(items)} native actors of asset_id={cohort}; required minimum {args.min_actors}')
+                snap['capture_asset_id']=cohort
             Path(args.output).write_text(json.dumps(snap,indent=2))
-            show({'saved':str(Path(args.output).resolve()),**meta,'note':'Paused native observation only; no Book writes'})
+            show({'saved':str(Path(args.output).resolve()),'asset_id_filter':cohort,**meta,
+                  'note':'Paused native observation only; no Book writes; matching filter required on reload'})
             return
         if args.command=='export-core':
             core=core151_snapshot(args.core_source,seed=args.seed)

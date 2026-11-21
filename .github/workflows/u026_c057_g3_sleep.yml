@@ -1,0 +1,24 @@
+name: U026 C057 G3 wakeful rest regression
+on:
+  push:
+    branches: [Development]
+    paths:
+      - 'Founders_CIV_CoreCompletion151/source/src/core_physiology_v2.py'
+      - 'tests/test_u026_c057_sleep_pressure.py'
+      - '.github/workflows/u026_c057_g3_sleep.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  g3-rest-sleep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test actual V2 physiology wakefulness and sleep recovery
+        run: python -m unittest discover -s tests -p test_u026_c057_sleep_pressure.py -v

@@ -1,0 +1,38 @@
+{
+  "release": "v0.19 standalone prototypes",
+  "live_core": "v0.18 unchanged",
+  "systems": [
+    {
+      "id": "founders",
+      "name": "100 Founders and checkpoints",
+      "v018_live_status": "specified",
+      "v019_extension_status": "tested_isolated_prototype",
+      "module": "founders_civ/experimental/founders.py",
+      "remaining": "No actor-loop autonomy, founder body conservation, world creation or live dashboard history"
+    },
+    {
+      "id": "soul_hierarchy",
+      "name": "States, Kingdoms, Nations, Realms",
+      "v018_live_status": "specified",
+      "v019_extension_status": "tested_isolated_prototype",
+      "module": "founders_civ/experimental/soul.py",
+      "remaining": "No full network dynamics, actual world abilities, real validation witnesses or Soul visualization"
+    },
+    {
+      "id": "evolution",
+      "name": "Biological and cultural evolution",
+      "v018_live_status": "specified",
+      "v019_extension_status": "tested_isolated_prototype",
+      "module": "founders_civ/experimental/evolution.py",
+      "remaining": "No complete real species life histories or trophic ecology; generational toy model"
+    },
+    {
+      "id": "maintained_constructs",
+      "name": "Energy-maintained constructs",
+      "v018_live_status": "specified",
+      "v019_extension_status": "tested_isolated_prototype",
+      "module": "founders_civ/experimental/constructs.py",
+      "remaining": "No true dimension geometry, traversal, occupants safety resolution or Founder-authored world control"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "schema": "u026-worldbox-live-gate-status-v1",
+  "cycle": "M01_PHASE4_001",
+  "branch": "Development",
+  "decision": "REVISE",
+  "scope": "Read-only native WorldBox identity bridge build and real save/reload preparation; no Core151 engine fork or merge",
+  "source_commit": "1105cd7d47c913c8953087ab01e87d548ee5b18f",
+  "evidence": {
+    "observed_M05_live_behavior_events": 14736,
+    "observed_M05_native_actor_ids": 4856,
+    "observed_M05_capture_integrity": "PASS; no sequence gaps or losses; nutrition mapping uncalibrated",
+    "worldbox_native_assembly_sha256": "51d275f0168be2f6ca26341ab292406714e694e0270eafcb25b999d5df6dd69f",
+    "worldbox_mcp_pinned_source": "e98d4f7062eb6fe21b590108de6c4545aa158f19",
+    "workflow_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43802711638",
+    "workflow_job": "m01-bridge-build",
+    "offline_m01_tests_passed": 46,
+    "native_bridge_dotnet_tests_passed": 224,
+    "native_bridge_dotnet_tests_failed": 0,
+    "native_bridge_build": "PASS",
+    "patch_reapply_idempotency": "PASS",
+    "native_game_install": "UNVERIFIED",
+    "native_game_read_response": "UNVERIFIED",
+    "real_saveload_identity_trials": 0,
+    "required_saveload_trials": 20
+  },
+  "phase_checks": [
+    {
+      "id": 1,
+      "name": "Live M05 baseline and authoritative Book separation",
+      "status": "PASS"
+    },
+    {
+      "id": 2,
+      "name": "Inspect current worldbox-mcp fork and M01 source",
+      "status": "PASS"
+    },
+    {
+      "id": 3,
+      "name": "Fix native M01 command compilation",
+      "status": "PASS"
+    },
+    {
+      "id": 4,
+      "name": "Build and test against pinned bridge fork",
+      "status": "PASS"
+    },
+    {
+      "id": 5,
+      "name": "Implement guarded installer and rollback",
+      "status": "SOURCE_READY_WINDOWS_UNVERIFIED"
+    },
+    {
+      "id": 6,
+      "name": "Implement fail-closed identity persistence comparison",
+      "status": "OFFLINE_PASS_LIVE_UNVERIFIED"
+    },
+    {
+      "id": 7,
+      "name": "Install native bridge and run 20 real save/reload trials",
+      "status": "BLOCKED_ON_WINDOWS_GAMEPLAY"
+    },
+    {
+      "id": 8,
+      "name": "Review evidence and decide native M01 gate",
+      "status": "REVISE"
+    }
+  ],
+  "paths": {
+    "build_script": "Founders_CIV_WorldBox_M01/Phase4-PrepareIdentityBridge.ps1",
+    "live_script": "Founders_CIV_WorldBox_M01/Phase4-RunLiveIdentity.ps1",
+    "comparator": "Founders_CIV_WorldBox_M01/compare_live_snapshots.py",
+    "native_command": "Founders_CIV_WorldBox_M01/worldbox_patch/QueryActorIdentitiesCommand.cs",
+    "CI": ".github/workflows/worldbox-m01-live-identity-build.yml",
+    "runbook": "Founders_CIV_WorldBox_M01/PHASE4_LIVE_GAMEPLAY_RUNBOOK.md"
+  },
+  "next_task": "With WorldBox closed on user's Windows PC, run Phase4-PrepareIdentityBridge.ps1 to build/test then opt-in install; relaunch disposable save and capture before/after paused native ID snapshots; run comparator and repeat real save/reload trials.",
+  "blockers": [
+    "No native installed M01 query_actor_identities command validated in user's current WorldBox gameplay session",
+    "No actual stable actor ID/lineage before-after save/reload pairs yet",
+    "WorldBox save-slot identity not independently bound by M05 operator world_key",
+    "No native nutrition calibration; no G2/G3/G4 or Core151 Book write certification"
+  ],
+  "nonclaims": [
+    "Do not count the 224 .NET tests as a live WorldBox test",
+    "Do not promote M01 based on the 46 offline tests",
+    "No native WorldBox DLL distributed",
+    "No Core151 / G1 Book changes",
+    "Do not auto-merge the GitHub bridge fork"
+  ]
+}

@@ -1,0 +1,22 @@
+name: U026 C055 G3 rest-choice regression
+on:
+  push:
+    branches: [Development]
+    paths:
+      - 'Founders_CIV_CoreCompletion151/source/src/core_physiology_v2.py'
+      - 'tests/test_u026_c055_g3_rest_choice.py'
+      - '.github/workflows/u026_c055_g3_rest.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  g3-rest-choice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test actual physiology choice implementation
+        run: python -m unittest discover -s tests -p test_u026_c055_g3_rest_choice.py -v

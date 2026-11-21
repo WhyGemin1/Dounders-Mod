@@ -1,0 +1,54 @@
+name: U026 WorldBox M05 native capture acceptance (offline fixtures)
+on:
+  push:
+    branches: [Development]
+    paths:
+      - 'FoundersCIV_WorldBox_M05_Integration/**'
+      - '.github/workflows/u026_worldbox_m05_capture.yml'
+  pull_request:
+    paths:
+      - 'FoundersCIV_WorldBox_M05_Integration/**'
+      - '.github/workflows/u026_worldbox_m05_capture.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  m05-windows-capture-contract:
+    runs-on: windows-2022
+    timeout-minutes: 20
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run M05 Python source and mechanism regression suite
+        working-directory: FoundersCIV_WorldBox_M05_Integration
+        shell: pwsh
+        run: |
+          $env:PYTHONPATH = (Get-Location).Path
+          python -m unittest discover -s tests -v
+          if ($LASTEXITCODE -ne 0) { throw 'M05 Python unit tests failed' }
+      - name: Run 15 synthetic session cases against the actual Windows capture gate
+        shell: pwsh
+        run: |
+          & ./FoundersCIV_WorldBox_M05_Integration/tests/Phase3-TestFixtures.ps1
+      - name: Compile real M05 observer source with test-only C# API stubs
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Run executable C# M05 queue overflow smoke
+        shell: pwsh
+        run: |
+          dotnet run --project FoundersCIV_WorldBox_M05_Integration/tests/offline_compiler/ObserverSmoke.csproj --configuration Release
+          if ($LASTEXITCODE -ne 0) { throw 'M05 C# smoke failed' }
+      - name: State offline-only boundary
+        shell: pwsh
+        run: |
+          Write-Host 'PASSED fixtures do NOT authorize a live WorldBox game test.'
+          Write-Host 'Windows game-local DLL build, copied-save backup/restore, native hooks, rollback and user logs remain WB-PKG requirements.'

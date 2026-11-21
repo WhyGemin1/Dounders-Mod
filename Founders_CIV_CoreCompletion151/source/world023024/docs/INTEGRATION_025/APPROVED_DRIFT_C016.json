@@ -1,0 +1,24 @@
+{
+  "schema": "founders-civ-reviewed-drift-v1",
+  "reference_release": "INTEGRATION-025 / WORLD-024",
+  "reviewed_source": "Core151 + U026-C016 EXPERIMENTAL recovery policy (local candidate, not Core approved)",
+  "baseline_manifest": "BASELINE_HASHES.json (immutable)",
+  "note": "Candidate, not promotion approval; C015 signature is immutable and must reject this new scheduler. Requires independent GitHub review.",
+  "approved_changes": {
+    "founders_civ/core/ledger.py": {
+      "baseline_sha256": "8c2e859c1227690a15bceb7504c69c3cfa44218a49e84e35b47505c25629112a",
+      "approved_sha256": "d2789540e8dda85dc23b2b340e4d47249369cfbc33334f939a469a8ebba19d1b",
+      "rationale": "C002: Book-owned operation journal, permanent fruit/seed IDs, finite river CE reservation, CE typing, portable food ingestion and fail-closed prevalidation."
+    },
+    "founders_civ/experimental/world_trees.py": {
+      "baseline_sha256": "9ab4ebf3b6d741e43a77c8b13cde627c7706b2af4ec84b3879a87aab15672616",
+      "approved_sha256": "20f00140ba0b0809d926af142bbaa6b6ea0cef68a172ee0196d11bbf05e02dfb",
+      "rationale": "C003: opt-in reserve-first actual WORLD024 provisioning tick and checkpoint state; C002 Book resource operations remain unchanged."
+    },
+    "founders_civ/experimental/world_integration.py": {
+      "baseline_sha256": "af2dcfa41965160a0b0366c6f014287873d34a449eac14ec39960d46405130be",
+      "approved_sha256": "c716477878f0b4bedc4edf9e7f29ef13376e8f57439a29077e5c808b7d9de463",
+      "rationale": "C016 opt-in Founder rest, accountable chemical-fuel mobilization, fatigue-dependent work efficiency and disabled legacy river recharge; C015 nutrition preserved."
+    }
+  }
+}

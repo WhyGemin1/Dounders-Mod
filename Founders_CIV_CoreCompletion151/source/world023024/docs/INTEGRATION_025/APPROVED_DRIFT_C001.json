@@ -1,0 +1,19 @@
+{
+  "schema": "founders-civ-reviewed-drift-v1",
+  "reference_release": "INTEGRATION-025 / WORLD-024",
+  "reviewed_source": "Core151 physiology + World Tree migration experimental ZIP",
+  "baseline_manifest": "BASELINE_HASHES.json (left immutable)",
+  "note": "G0 attestation for the two reviewed diffs; prevents unexpected tracked source drift. Runtime/eco correctness requires independent tests.",
+  "approved_changes": {
+    "founders_civ/core/ledger.py": {
+      "baseline_sha256": "8c2e859c1227690a15bceb7504c69c3cfa44218a49e84e35b47505c25629112a",
+      "approved_sha256": "dbe04338f9783f76543b07c4f48e9abafe929ba3b313eda060fe8239b5f39813",
+      "rationale": "Reviewed additional typed ingest relocation: one paired edible food lot and embedded energy to matched actor gut, no digestion or resource minting."
+    },
+    "founders_civ/experimental/world_trees.py": {
+      "baseline_sha256": "9ab4ebf3b6d741e43a77c8b13cde627c7706b2af4ec84b3879a87aab15672616",
+      "approved_sha256": "c227370517d00a23ecc59184142a654106ccce7ee1def2525b3603d3b0e7871d",
+      "rationale": "Reviewed migration-state tracking, chemical-energy-limited forage choice, cooldown knob default 0, and habitat-specific collapse accounting; real ecological superiority not yet validated."
+    }
+  }
+}

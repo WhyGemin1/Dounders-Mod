@@ -1,0 +1,40 @@
+{
+  "release": "WORLD-023A/B experimental first living World Tree",
+  "status": "tested vertical slice; not a validated ecology",
+  "source": "Founders_CIV_WORLD_022_Integrated_Release.zip",
+  "source_sha256": "4630a2305ef5edd37d05cbcdb0c1bf2d83429d93ff3cfcb1ea792bf1347d8590",
+  "tests": {
+    "inherited": 85,
+    "root": 39,
+    "total": 124,
+    "status": "passed"
+  },
+  "runs": {
+    "four_seeds_120_cycles": {
+      "seeds": [
+        400,
+        401,
+        402,
+        403
+      ],
+      "survived": 3,
+      "failed": 1
+    },
+    "single_seed_200_cycles": {
+      "seed": 400,
+      "survivors": 29,
+      "births": 52,
+      "deaths": 39
+    }
+  },
+  "files": {
+    "founders_civ/experimental/world_trees.py": "90c6a483496e2631b05a322642067f80b064fcd6110353dd7ea8441c6a5f3aa4",
+    "founders_civ/experimental/world_integration.py": "af2dcfa41965160a0b0366c6f014287873d34a449eac14ec39960d46405130be",
+    "launch_founder_world.py": "b437ea605c9791df44280c35372286ba638855afde0d9ee48bc779bfc13a1d45",
+    "founder_world.html": "11a7c84b3f167feea2e03c6f8c4439cc5135e18a4b3713117e7d39956bc32b69",
+    "run_world_tree_pilot.py": "ad0d748c4af17c6127f09a908e4b8ee4840f56824a1d524111cc99c6dcaacdad",
+    "test_world_tree_023.py": "f417520ef235d99bcdf4eeb6f0f24103fdbd04dfe8f87c5486bc535f1e6496ad",
+    "README_WORLD_023.md": "e4c71d31e2b003157ec12757e17f73b25b1ae1dc53b23ee0184d6c663a2380ac",
+    "docs/WORLD_023_IMPLEMENTATION_AND_TESTS.md": "07f936cb17d0c2f7bf54ca5230042f537e64dfe3aebdf5efb1943e9567486b26"
+  }
+}

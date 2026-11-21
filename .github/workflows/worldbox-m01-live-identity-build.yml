@@ -1,0 +1,68 @@
+name: WorldBox M01 live identity bridge build (offline, no game)
+on:
+  push:
+    branches: [Development]
+    paths:
+      - 'Founders_CIV_WorldBox_M01/**'
+      - '.github/workflows/worldbox-m01-live-identity-build.yml'
+  pull_request:
+    paths:
+      - 'Founders_CIV_WorldBox_M01/**'
+      - '.github/workflows/worldbox-m01-live-identity-build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  m01-bridge-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Checkout Founders-CIV
+        uses: actions/checkout@v4
+      - name: Checkout pinned user's WorldBox-MCP fork source
+        uses: actions/checkout@v4
+        with:
+          repository: WhyGemin1/worldbox-mcp
+          ref: e98d4f7062eb6fe21b590108de6c4545aa158f19
+          path: .m01-worldbox-bridge
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Run M01 source and registry regressions
+        working-directory: Founders_CIV_WorldBox_M01
+        run: python -m unittest discover -s tests -v
+      - name: Apply read-only M01 actor identity patch
+        run: python Founders_CIV_WorldBox_M01/apply_to_worldbox_bridge.py .m01-worldbox-bridge
+      - name: Verify command is registered exactly once
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root=Path('.m01-worldbox-bridge')
+          source=(root/'mod/src/WorldBoxBridge/Plugin.cs').read_text()
+          command=(root/'mod/src/WorldBoxBridge/Commands/Read/QueryActorIdentitiesCommand.cs').read_text()
+          assert source.count('registry.Register(new QueryActorIdentitiesCommand(worldAccess));') == 1
+          assert 'using WorldBoxBridge.Commands.Action;' in command
+          assert 'ctx.Require(Permission.ReadOwnFaction);' in command
+          assert 'native_actor_id' in command and 'parent_id_1' in command
+          assert 'More than 5000 actors' in command
+          assert 'No native game files or saved-world state are written' not in command
+          print('M01 source registration / read-only safety checks PASS')
+          PY
+      - name: Build patched native bridge with warnings as errors
+        working-directory: .m01-worldbox-bridge
+        run: |
+          dotnet restore mod/WorldBoxBridge.sln --locked-mode
+          dotnet build mod/WorldBoxBridge.sln --configuration Release --no-restore -warnaserror
+          dotnet test mod/WorldBoxBridge.sln --configuration Release --no-build --no-restore
+      - name: Reapply patch to prove idempotency
+        run: python Founders_CIV_WorldBox_M01/apply_to_worldbox_bridge.py .m01-worldbox-bridge

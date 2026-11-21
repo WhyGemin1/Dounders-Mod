@@ -1,0 +1,29 @@
+name: U026 C065 dependent danger behavior
+on:
+  push:
+    branches: [Development]
+    paths:
+      - 'Founders_CIV_CoreCompletion151/source/src/core_physiology_v2.py'
+      - 'Founders_CIV_CoreCompletion151/source/src/test_c065_dependent_danger.py'
+      - '.github/workflows/u026_c065_dependent_danger.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dependent-danger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    defaults:
+      run:
+        working-directory: Founders_CIV_CoreCompletion151/source/src
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run exact-source juvenile behavior tests
+        run: python -m unittest -v test_c065_dependent_danger
+      - name: Run preceding defensive migration regressions
+        run: |
+          python -m pip install pytest==8.4.1
+          python -m pytest -q test_c064_danger_migration.py test_c062_danger_feeding.py
