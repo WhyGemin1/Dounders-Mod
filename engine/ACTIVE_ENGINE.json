@@ -112,7 +112,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify exact-head CI for seed454 absent-account preflight; fix failure, then implement Book-backed durable idempotent local tending receipts.",
+  "next_engineering_task": "Verify exact-head CI for seed455 oversized stewardship energy; then implement durable Book-backed idempotent local tending receipts without a second ledger.",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -130,5 +130,6 @@
   "next_task": "Verify exact-head CI for second-tick settlement metadata equivalence; fix failures before expanding replay horizon",
   "p0_seed438_recovery": "VERIFIED CI #393 two-tick deterministic replay; second-tick numerical output and explicit authority assertions committed 0803b419, pending exact-head CI",
   "p0_seed453_checkpoint_rejection": "PROVISIONAL: seed453 test committed bfe621e; rejected underfunded tending must preserve checkpoint bytes and Book, then affordable tending must survive restart. Exact-head CI pending; no fresh residuals.",
-  "p0_seed454_missing_account": "PROVISIONAL: source-only isolated preflight fixture; removes Founder energy key in temporary defaultdict with audit mocked only during invalid-state preflight; restores canonical mapping and asserts audit. Not yet executed."
+  "p0_seed454_missing_account": "PROVISIONAL: source-only isolated preflight fixture; removes Founder energy key in temporary defaultdict with audit mocked only during invalid-state preflight; restores canonical mapping and asserts audit. Not yet executed.",
+  "p0_seed455_oversized_stewardship": "PROVISIONAL: source 50fe27da and seed455 regression 386284e committed; rejects 10**1000 before Book mutation; CI pending; no new numerical conservation residuals."
 }
