@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Seed465 corrected head bde29e0 GitHub Actions 44943576762 SUCCESS. Seed466 depleted-Founder replay after real tick and durable restart regression committed 8471265; exact-head CI pending.",
+  "source_status": "Seed466 CI #558 failed 60/61: post-tick Founder energy replenished to 1.15, invalidating depletion fixture. Test correction committed 8dc212d to drain post-tick balance via canonical Book; exact-head CI pending.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "GitHub Actions 44943576762 SUCCESS on bde29e01de044d8383d702f681f22baadb1176f3. New seed466 test unexecuted.",
+    "github_ci": "CI #558 (44949565173) FAILURE 60/61 on prior head 1c7fe99; seed466 depletion assertion failed, other 60 tests passed. Corrected test at 8dc212d unverified.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #443 SUCCESS on previous head; local clean checkout attempted 2026-11-20 but git clone failed: github.com DNS resolution unavailable.",
-    "book_audit_this_cycle": "CI on previous head printed seed427 tick 3->4 mass -3.1832314562052488e-11 -> -8.913048077374697e-11; energy -7.8580342233181e-9 -> -1.0244548320770264e-8, within 1e-6. No fresh post-fix audit.",
+    "book_audit_this_cycle": "CI #558 seed427 tick 3->4 mass -3.1832314562052488e-11 -> -8.9130480773746967e-11, energy -7.8580342233181e-9 -> -1.0244548320770264e-8 (prior head); corrected seed466 has no measured audit.",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -98,7 +98,8 @@
     "p0_seed439_preflight": "PROVISIONAL: source 57e83abe, test 78823e36 committed; exact-head CI pending; no new numerical residuals",
     "secondary_tree_shared_book": "PROVISIONAL: seed441 regression committed db5fcc3; audit-only shared-Book secondary Tree, exact-head CI pending; no ecology tick or native game test.",
     "seed465_real_tick_replay": "CI failed on bootstrap clock expectation, not replay assertion; test now asserts before_tick + 1, exact-head CI pending.",
-    "seed466_depleted_post_tick": "PROVISIONAL: committed 8471265; replay/mismatch/restart assertions after real tick; no exact-head execution yet."
+    "seed466_depleted_post_tick": "PROVISIONAL: committed 8471265; replay/mismatch/restart assertions after real tick; no exact-head execution yet.",
+    "seed466_depleted_replay": "PROVISIONAL: post-tick canonical Book drain correction committed 8dc212d; CI pending."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
