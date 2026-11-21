@@ -244,12 +244,36 @@ class SingleEngineSession:
             raise ValueError('stable planted World Tree required')
         if self.book.energy.get(f'founder:{founder_id}', 0.0) < energy:
             raise ValueError('Founder lacks upkeep energy')
+        # A rejected mismatched replay must not quarantine a healthy session.
+        # Compare canonical Book and creation side effects before allowing retry.
+        from copy import deepcopy
+        before_book = deepcopy((self.book.mass, self.book.energy, self.book.seq,
+                                self.book.transactions, self.book.transaction_history,
+                                self.book.request_receipts, self.book.last,
+                                self.book.external, self.book.toll_count))
+        before_events = (deepcopy(self.world.seeds.events),
+                         deepcopy(self.world.seeds.constructs.events),
+                         deepcopy(self.world.seeds.owner_reserve_knowledge))
         try:
             result = self.world.seeds.tend(founder_id, tree_id, energy, request_id=request_id)
             self._expected_book_sequence = self.book.seq
             self.audit()
-        except Exception:
-            self._checkpoint_uncertain = True
+        except Exception as failure:
+            after_book = deepcopy((self.book.mass, self.book.energy, self.book.seq,
+                                   self.book.transactions, self.book.transaction_history,
+                                   self.book.request_receipts, self.book.last,
+                                   self.book.external, self.book.toll_count))
+            after_events = (deepcopy(self.world.seeds.events),
+                            deepcopy(self.world.seeds.constructs.events),
+                            deepcopy(self.world.seeds.owner_reserve_knowledge))
+            if (not isinstance(failure, ValueError) or before_book != after_book or
+                    before_events != after_events):
+                self._checkpoint_uncertain = True
+            else:
+                try:
+                    self.audit()
+                except Exception:
+                    self._checkpoint_uncertain = True
             raise
         return result
 
