@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Production preflight fix 9f933b2: use non-mutating Book energy.get for rejected voluntary tending; exact-head CI pending; durable tending idempotency remains blocked.",
+  "source_status": "Seed454 missing-account defaultdict preflight regression committed 56d60f5; exact-head CI pending. Canonical Book writer unchanged; local tending receipts still not idempotent.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "VERIFIED prior-head GitHub Actions #491 run 44834079480 SUCCESS on 3afe72d; new source change 9f933b2 not yet verified.",
+    "github_ci": "VERIFIED GitHub Actions #494 run 44841219272 SUCCESS on preceding head fde1157; seed454 new test pending.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #443 SUCCESS on previous head; local clean checkout attempted 2026-11-20 but git clone failed: github.com DNS resolution unavailable.",
-    "book_audit_this_cycle": "No fresh numerical residuals collected; source-only preflight change pending CI.",
+    "book_audit_this_cycle": "No fresh numerical residuals; seed454 test includes restored canonical audit assertions but not executed.",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -112,7 +112,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify exact-head CI for seed453 checkpoint rejection/no-write and valid retry; resolve any failures, then implement durable idempotent local tending receipts without a second Book.",
+  "next_engineering_task": "Verify exact-head CI for seed454 absent-account preflight; fix failure, then implement Book-backed durable idempotent local tending receipts.",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -129,5 +129,6 @@
   },
   "next_task": "Verify exact-head CI for second-tick settlement metadata equivalence; fix failures before expanding replay horizon",
   "p0_seed438_recovery": "VERIFIED CI #393 two-tick deterministic replay; second-tick numerical output and explicit authority assertions committed 0803b419, pending exact-head CI",
-  "p0_seed453_checkpoint_rejection": "PROVISIONAL: seed453 test committed bfe621e; rejected underfunded tending must preserve checkpoint bytes and Book, then affordable tending must survive restart. Exact-head CI pending; no fresh residuals."
+  "p0_seed453_checkpoint_rejection": "PROVISIONAL: seed453 test committed bfe621e; rejected underfunded tending must preserve checkpoint bytes and Book, then affordable tending must survive restart. Exact-head CI pending; no fresh residuals.",
+  "p0_seed454_missing_account": "PROVISIONAL: source-only isolated preflight fixture; removes Founder energy key in temporary defaultdict with audit mocked only during invalid-state preflight; restores canonical mapping and asserts audit. Not yet executed."
 }
