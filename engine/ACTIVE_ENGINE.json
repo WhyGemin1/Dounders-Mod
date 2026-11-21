@@ -14,7 +14,7 @@
   "source_status": "Seed456 Core151 planted-Tree metadata preflight committed at 4f1aaeb; regression committed d8d1b0f. Exact-head CI pending; local idempotent tending receipts not yet implemented.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "VERIFIED GitHub Actions #501 (44853090181) SUCCESS on previous head 4e9084c; seed456 new source and test NOT YET VERIFIED.",
+    "github_ci": "VERIFIED Actions #508 run 44863760612 SUCCESS on prior head 642c1ec; seed458 unverified.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -112,7 +112,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify exact-head CI for seed457 real-tick continuation after rejected Tree metadata; then implement durable Book-backed idempotent local tending receipts with restart/replay tests.",
+  "next_engineering_task": "Verify seed458 exact-head CI; then implement durable Book-backed idempotent tending receipts with restart/replay and conservation tests.",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -132,5 +132,6 @@
   "p0_seed453_checkpoint_rejection": "PROVISIONAL: seed453 test committed bfe621e; rejected underfunded tending must preserve checkpoint bytes and Book, then affordable tending must survive restart. Exact-head CI pending; no fresh residuals.",
   "p0_seed454_missing_account": "PROVISIONAL: source-only isolated preflight fixture; removes Founder energy key in temporary defaultdict with audit mocked only during invalid-state preflight; restores canonical mapping and asserts audit. Not yet executed.",
   "p0_seed455_oversized_stewardship": "PROVISIONAL: source 50fe27da and seed455 regression 386284e committed; rejects 10**1000 before Book mutation; CI pending; no new numerical conservation residuals.",
-  "p0_seed457_rejected_metadata_real_tick": "PROVISIONAL: seed457 authority regression committed e3dbbbd; verifies rejected malformed Tree creation cannot mutate Book or block next real Core151 tick; exact-head CI pending."
+  "p0_seed457_rejected_metadata_real_tick": "PROVISIONAL: seed457 authority regression committed e3dbbbd; verifies rejected malformed Tree creation cannot mutate Book or block next real Core151 tick; exact-head CI pending.",
+  "p0_seed458_forged_receipt_checkpoint": "PROVISIONAL: regression b6272d0 committed; forged M01 Book receipt must prevent checkpoint overwrite and quarantine session after settlement. Exact-head CI pending; no numerical residuals collected."
 }
