@@ -1393,5 +1393,49 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(restored.audit().founder_count, 100)
             self.assertLessEqual(abs(restored.audit().book_energy_error), 1e-6)
 
+
+    def test_seed465_tending_replay_after_real_tick_and_durable_restart(self):
+        """A prior Book receipt remains a no-op after the real world advances."""
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        from founders_engine.checkpoint import load_checkpoint
+        world, _, tree_id = bootstrap(465)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        request_id = 'local:tend:seed465'
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'world.checkpoint'
+            session.checkpointed_tend_tree(
+                path, founder_id, tree_id, .01, request_id=request_id)
+            settled_receipt = dict(world.book.request_receipts)
+            session.step()  # One actual Core151 day, not an artificial clock increment.
+            from founders_engine.checkpoint import save_checkpoint
+            save_checkpoint(world, tree_id, path)
+            restored = load_checkpoint(path, expected_tree_id=tree_id)
+            w = restored.world
+            self.assertEqual(w.tick, 1)
+            self.assertEqual(w.ecology.day, w.tick)
+            self.assertEqual(frozenset(w.founders.people),
+                             frozenset(world.founders.people))
+            for key, receipt in settled_receipt.items():
+                self.assertEqual(w.book.request_receipts[key], receipt)
+            before = (w.tick, w.book.seq, dict(w.book.mass),
+                      dict(w.book.energy), dict(w.book.request_receipts),
+                      len(w.seeds.events), len(w.seeds.constructs.events))
+            restored.checkpointed_tend_tree(
+                path, founder_id, tree_id, .01, request_id=request_id)
+            self.assertEqual(before, (
+                w.tick, w.book.seq, dict(w.book.mass), dict(w.book.energy),
+                dict(w.book.request_receipts), len(w.seeds.events),
+                len(w.seeds.constructs.events)))
+            again = load_checkpoint(path, expected_tree_id=tree_id)
+            self.assertEqual(again.world.tick, w.tick)
+            self.assertEqual(again.world.book.seq, w.book.seq)
+            self.assertEqual(dict(again.world.book.energy), dict(w.book.energy))
+            proof = again.audit()
+            self.assertEqual(proof.founder_count, 100)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
 if __name__ == '__main__':
     unittest.main()
