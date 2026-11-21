@@ -1247,5 +1247,42 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
             self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+    def test_seed461_tending_checkpoint_failure_requires_durable_recovery(self):
+        """A failed local save cannot ACK a RAM-only Tree energy transfer."""
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from unittest.mock import patch
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+
+        world, _, tree_id = bootstrap(461)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'world.checkpoint'
+            save_checkpoint(world, tree_id, path)
+            original_bytes = path.read_bytes()
+            original_seq = world.book.seq
+            original_energy = dict(world.book.energy)
+            with patch('founders_engine.checkpoint.save_checkpoint',
+                       side_effect=OSError('seed461 injected save failure')):
+                with self.assertRaisesRegex(OSError, 'seed461 injected save failure'):
+                    session.checkpointed_tend_tree(path, founder_id, tree_id, .01)
+            self.assertTrue(session._checkpoint_uncertain)
+            self.assertEqual(path.read_bytes(), original_bytes)
+            with self.assertRaisesRegex(RuntimeError, 'checkpoint outcome uncertain'):
+                session.step()
+            recovered = load_checkpoint(path, expected_tree_id=tree_id)
+            self.assertEqual(recovered.book.seq, original_seq)
+            self.assertEqual(dict(recovered.book.energy), original_energy)
+            self.assertEqual(recovered.audit().founder_count, 100)
+            recovered.checkpointed_tend_tree(path, founder_id, tree_id, .01)
+            self.assertGreater(recovered.book.seq, original_seq)
+            reloaded = load_checkpoint(path, expected_tree_id=tree_id)
+            self.assertEqual(reloaded.book.seq, recovered.book.seq)
+            self.assertEqual(dict(reloaded.book.energy), dict(recovered.book.energy))
+            proof = reloaded.audit()
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
 if __name__ == '__main__':
     unittest.main()
