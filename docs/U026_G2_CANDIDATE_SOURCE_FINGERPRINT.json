@@ -1,5 +1,5 @@
 {
-  "source": "U026 C122 candidate snapshot after C120/C121; NOT promoted; independent review required",
+  "source": "U026 C130 candidate snapshot after C129; automated checks required; independent review pending",
   "files": 519,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
@@ -423,7 +423,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "60f171a4080a1ff0c46e763e5b513ca9c328db254bc958831a39f4a45c1953f3",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "26bfd626285919faeb32bd1fdcbf9fe16ebf3e99cfb419d36fb883296660920a",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "fdd79a5a05b4f8c62c54dc18bc0fce4cf8ac27693858f6f585168d2ef935da0d",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "36d544ff2885bbb9301141b1c1cf4fa12d68465b08e9f518cc641c2693905083",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "0631bae8c8cfa9cc71ed17c43b9ca11a6f9a9b07fa7eee65ed561a35b383f638",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py": "41fd892f3d9d1ffcd72c4a353a5c30d77c155fe356e206261babc1d2b47d9745",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/living_assets.py": "5fb57c92e243b2b95850f70ccac3b98c467b40482ae4da7b17ff24927c535853",
@@ -480,7 +480,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c010_digestion_fuel.py": "6dda563c953750894d41ea5ccf1727c4d70cdd8ce61ecb892721e9f8023ed3ef",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c013_lot_isolation.py": "79f0693cbdf86a81233977dd08c9ed9010ca107661b069cffc58d8bb8f273264",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c015_founder_nutrition.py": "734eae6a59ff4d03f330db15351ca04d4dec5a98039fbe2d50f8210837605202",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c016_metabolic_rest.py": "4d11edfdf310354be4a995d1f1e6892a2e813a345c9c03160a6107bd238e6e40",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c016_metabolic_rest.py": "dd34f4b51bf38311522fb6fe73ce3a40165aacc932549035f48926af0c01039e",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_community_foraging.py": "a2f6b63ed7b7971ebada3f1cf901966e874abc9bfb97a7ad02d1a35066807d30",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "8dd29f551248fdfa5d8841918c37e8751639209ea459af776bb09d96496aff53",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "5175102b1ff13eeb6f8947feec323f2c3897193c0edd2736c6dbb04fce883e36",
@@ -618,6 +618,6 @@
     "tools/u026_g2_exact_source_audit.py",
     "tools/u026_g2_matched_acceptance.py"
   ],
-  "gate_decision": "C122_PENDING_CI_AND_REVIEW",
-  "candidate_note": "C122 reconciles two source hashes after C120 rest counter validation and C121 missing test import fix; preserve fail-closed checks and ecological gate."
+  "gate_decision": "C130_PENDING_CI_AND_REVIEW",
+  "candidate_note": "C130 reconciles exact SHA256 of C129 work-receipt source and regression test; no ecological promotion."
 }
