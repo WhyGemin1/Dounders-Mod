@@ -14,12 +14,12 @@
   "source_status": "Pre-settlement canonical checkpoint receipt validation implemented at b5cc7b5; seed458 regression revised at 68c0130. Exact-head CI pending; durable idempotent local tending request IDs still NOT implemented.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "GitHub Actions #518 SUCCESS at previous head 9559335; new 34be5dde next-tick regression not yet verified.",
+    "github_ci": "GitHub Actions #521 SUCCESS on preceding head 15d2187; seed460 restart regression committed at 02b06f9 and exact-head CI not yet verified.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN (3 extra daily ticks do not establish 30/180/360/720/1080-day stability)",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #443 SUCCESS on previous head; local clean checkout attempted 2026-11-20 but git clone failed: github.com DNS resolution unavailable.",
-    "book_audit_this_cycle": "No fresh numerical residuals collected. New regression asserts 100 Founders, next real tick and Book residuals <=1e-6; unexecuted at authoring.",
+    "book_audit_this_cycle": "No fresh numerical residuals; seed460 asserts residuals <=1e-6 after restart and real tick, pending execution.",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -112,7 +112,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify exact-head CI for 34be5dde and repair any failure; then implement durable Book-backed idempotent local tending request IDs with checkpoint restart/replay tests.",
+  "next_engineering_task": "Verify seed460 exact-head CI; fix failures; then implement canonical Book-backed idempotent tending request IDs with restart/replay acceptance.",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -134,5 +134,6 @@
   "p0_seed455_oversized_stewardship": "PROVISIONAL: source 50fe27da and seed455 regression 386284e committed; rejects 10**1000 before Book mutation; CI pending; no new numerical conservation residuals.",
   "p0_seed457_rejected_metadata_real_tick": "PROVISIONAL: seed457 authority regression committed e3dbbbd; verifies rejected malformed Tree creation cannot mutate Book or block next real Core151 tick; exact-head CI pending.",
   "p0_seed458_forged_receipt_checkpoint": "PROVISIONAL: regression b6272d0 committed; forged M01 Book receipt must prevent checkpoint overwrite and quarantine session after settlement. Exact-head CI pending; no numerical residuals collected.",
-  "p0_seed459_m01_checkpoint_preflight": "VERIFIED previous exact-head CI #518 run 44877949861 SUCCESS on 9559335; seed459 corruption rejection tested. Additional next-real-tick regression committed 34be5dde, exact-head execution PENDING."
+  "p0_seed459_m01_checkpoint_preflight": "VERIFIED previous exact-head CI #518 run 44877949861 SUCCESS on 9559335; seed459 corruption rejection tested. Additional next-real-tick regression committed 34be5dde, exact-head execution PENDING.",
+  "p0_seed460_checkpointed_tending": "PROVISIONAL: seed460 test 02b06f9 verifies one Book, Founder IDs, energy transfer, checkpoint reload, real tick; exact-head execution pending."
 }
