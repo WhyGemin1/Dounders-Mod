@@ -256,8 +256,12 @@ class SingleEngineSession:
         session is quarantined; reload the last durable checkpoint before any
         further action. Callers must not blindly retry a successful tend.
         """
-        from founders_engine.checkpoint import save_checkpoint
+        from founders_engine.checkpoint import save_checkpoint, _validate_world
         self._assert_authority()
+        # Reject forged Book replay receipts before spending Founder energy.
+        # A post-settlement checkpoint rejection would otherwise leave a
+        # mutated RAM world requiring quarantine and durable recovery.
+        _validate_world(self.world, self.tree_id)
         self.tend_tree(founder_id, tree_id, energy)
         try:
             save_checkpoint(self.world, self.tree_id, checkpoint_path)
