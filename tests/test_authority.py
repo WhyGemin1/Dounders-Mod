@@ -1408,12 +1408,13 @@ class SingleAuthorityTests(unittest.TestCase):
             session.checkpointed_tend_tree(
                 path, founder_id, tree_id, .01, request_id=request_id)
             settled_receipt = dict(world.book.request_receipts)
+            before_tick = world.tick
             session.step()  # One actual Core151 day, not an artificial clock increment.
             from founders_engine.checkpoint import save_checkpoint
             save_checkpoint(world, tree_id, path)
             restored = load_checkpoint(path, expected_tree_id=tree_id)
             w = restored.world
-            self.assertEqual(w.tick, 1)
+            self.assertEqual(w.tick, before_tick + 1)
             self.assertEqual(w.ecology.day, w.tick)
             self.assertEqual(frozenset(w.founders.people),
                              frozenset(world.founders.people))
