@@ -76,10 +76,13 @@ def propose_self_trees(sim, founder, contacts):
         # Two independent research observations suffice for this synthetic
         # blueprint. Further identical research would only waste finite fuel.
         if b.stage == 'researching' and len(b.research_ticks) >= 2:
-            peers = [p for p in contacts if p != founder and p in sim.founders.people
-                     and sim.founders.people[p].alive
-                     and sim.founders.people[p].location == person.location]
-            if peers and sim.book.energy.get(f'founder:{peers[0]}', 0.) >= .11:
+            # A poor first contact must not hide another willing, funded peer.
+            # Stable ID ordering makes proposals independent of contact iteration order.
+            peers = sorted({p for p in contacts if p != founder and p in sim.founders.people
+                            and sim.founders.people[p].alive
+                            and sim.founders.people[p].location == person.location
+                            and sim.book.energy.get(f'founder:{p}', 0.) >= .11})
+            if peers:
                 return [(5.1, 'seed_request_review', peers[0], b.id)]
             return []
         if sim.tick not in b.research_ticks and energy >= .18:
