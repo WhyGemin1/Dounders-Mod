@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Seed464 exact-head CI #550 PASS at 9ae6e58; seed465 real-tick replay regression committed 7e4589f, exact-head CI pending. One canonical Book/clock; native ACK disabled.",
+  "source_status": "Seed465 CI run 44938365342 FAILED 1/60: test assumed world.tick starts at zero (actual bootstrap tick 3). Test corrected in 2aa0d3f; exact-head CI pending. Single Book/clock preserved.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "CI #550 SUCCESS on 9ae6e58: all 21 headless job steps successful including authority tests; seed465 exact-head CI pending.",
+    "github_ci": "Run 44938365342 completed FAILURE on 4429f0c: 59/60 authority tests passed; seed465 tick assertion 4 != 1. Corrected test source committed 2aa0d3f, not yet verified.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #443 SUCCESS on previous head; local clean checkout attempted 2026-11-20 but git clone failed: github.com DNS resolution unavailable.",
-    "book_audit_this_cycle": "No fresh numerical residuals collected for seed465; CI #550 conservation step succeeded on preceding head.",
+    "book_audit_this_cycle": "CI on previous head printed seed427 tick 3->4 mass -3.1832314562052488e-11 -> -8.913048077374697e-11; energy -7.8580342233181e-9 -> -1.0244548320770264e-8, within 1e-6. No fresh post-fix audit.",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -97,7 +97,7 @@
     "p0_boolean_negative_replay_counter": "COMMITTED e146995; exact-head CI pending; no new Book residuals collected",
     "p0_seed439_preflight": "PROVISIONAL: source 57e83abe, test 78823e36 committed; exact-head CI pending; no new numerical residuals",
     "secondary_tree_shared_book": "PROVISIONAL: seed441 regression committed db5fcc3; audit-only shared-Book secondary Tree, exact-head CI pending; no ecology tick or native game test.",
-    "seed465_real_tick_replay": "SOURCE COMMITTED 7e4589f; execution not yet verified. Tests one actual Core151 step, checkpoint, replay without duplicate Book transfer/events, and 100-Founder/conservation audits."
+    "seed465_real_tick_replay": "CI failed on bootstrap clock expectation, not replay assertion; test now asserts before_tick + 1, exact-head CI pending."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -106,14 +106,14 @@
     "M05 SQLite second writer removal/migration blocked",
     "Long-horizon ecological stability and in-game tests not run"
   ],
-  "next_cycle": "Verify exact-head CI for seed450 insufficient-funds preflight and valid retry; fix failures before checkpointed stewardship restart tests.",
+  "next_cycle": "Verify exact-head CI after seed465 bootstrap tick correction; if passing, extend post-tick depleted-Founder and mismatched-request replay regression.",
   "last_cycle": "2026-11-17 22:00 CST: M01 harvest conservation preflight, seed-418 regression",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
-  "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify exact-head CI for f6cb4ff rejected-replay recovery; then move canonical receipt matching ahead of current Founder energy balance checks and test depleted-Founder restart replay.",
+  "last_unverified_code_commit": "2aa0d3f551867a6c2ef0dcddc46a194f4810a071",
+  "next_engineering_task": "Verify exact-head CI after seed465 bootstrap tick correction; if passing, extend post-tick depleted-Founder and mismatched-request replay regression.",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
