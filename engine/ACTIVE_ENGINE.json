@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Seed464 provenance fingerprint repaired at 4c1ec9e; exact-head runtime CI pending. Single canonical Book/clock; native ACK disabled.",
+  "source_status": "Seed464 exact-head CI #550 PASS at 9ae6e58; seed465 real-tick replay regression committed 7e4589f, exact-head CI pending. One canonical Book/clock; native ACK disabled.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "CI #548 FAILED at provenance verifier: world_integration.py checkout blob 6b38bce... differed from reviewed pin b9484f2...; pin updated 4c1ec9e; new CI pending.",
+    "github_ci": "CI #550 SUCCESS on 9ae6e58: all 21 headless job steps successful including authority tests; seed465 exact-head CI pending.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #443 SUCCESS on previous head; local clean checkout attempted 2026-11-20 but git clone failed: github.com DNS resolution unavailable.",
-    "book_audit_this_cycle": "No numerical Book audit: CI #548 stopped at provenance stage.",
+    "book_audit_this_cycle": "No fresh numerical residuals collected for seed465; CI #550 conservation step succeeded on preceding head.",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -96,7 +96,8 @@
     "founder_identity_replay": "PROVISIONAL: added actual 100-Founder key-set equivalence against baseline and pre-corruption world after two ticks; pending exact-head CI",
     "p0_boolean_negative_replay_counter": "COMMITTED e146995; exact-head CI pending; no new Book residuals collected",
     "p0_seed439_preflight": "PROVISIONAL: source 57e83abe, test 78823e36 committed; exact-head CI pending; no new numerical residuals",
-    "secondary_tree_shared_book": "PROVISIONAL: seed441 regression committed db5fcc3; audit-only shared-Book secondary Tree, exact-head CI pending; no ecology tick or native game test."
+    "secondary_tree_shared_book": "PROVISIONAL: seed441 regression committed db5fcc3; audit-only shared-Book secondary Tree, exact-head CI pending; no ecology tick or native game test.",
+    "seed465_real_tick_replay": "SOURCE COMMITTED 7e4589f; execution not yet verified. Tests one actual Core151 step, checkpoint, replay without duplicate Book transfer/events, and 100-Founder/conservation audits."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
