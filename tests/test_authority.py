@@ -1205,5 +1205,47 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertLessEqual(abs(after.book_mass_error), 1e-6)
             self.assertLessEqual(abs(after.book_energy_error), 1e-6)
 
+
+    def test_seed460_checkpointed_tending_survives_restart_and_real_tick(self):
+        """Durable local tending keeps one Book and Founder registry after reload."""
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        from founders_engine.checkpoint import load_checkpoint, save_checkpoint
+        world, _, tree_id = bootstrap(460)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        founder_ids = frozenset(world.founders.people)
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'world.checkpoint'
+            save_checkpoint(world, tree_id, path)
+            before_seq = world.book.seq
+            before_energy = world.book.energy[f'founder:{founder_id}']
+            before_reserve = world.book.energy[f'reserve:{tree_id}']
+            session.checkpointed_tend_tree(path, founder_id, tree_id, 0.01)
+            self.assertGreater(world.book.seq, before_seq)
+            settled = (world.tick, world.book.seq,
+                       dict(world.book.mass), dict(world.book.energy),
+                       list(world.book.transaction_history))
+            self.assertAlmostEqual(
+                world.book.energy[f'founder:{founder_id}'],
+                before_energy - 0.01, places=7)
+            self.assertAlmostEqual(
+                world.book.energy[f'reserve:{tree_id}'],
+                before_reserve + 0.01, places=7)
+            recovered = load_checkpoint(path, expected_tree_id=tree_id)
+            self.assertIs(recovered.world.book, recovered.book)
+            self.assertIs(recovered.world.founders.book, recovered.book)
+            self.assertEqual(frozenset(recovered.world.founders.people), founder_ids)
+            self.assertEqual(settled, (
+                recovered.world.tick, recovered.book.seq,
+                dict(recovered.book.mass), dict(recovered.book.energy),
+                list(recovered.book.transaction_history)))
+            recovered.step()
+            proof = recovered.audit()
+            self.assertEqual(proof.tick, settled[0] + 1)
+            self.assertEqual(proof.founder_count, 100)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
 if __name__ == '__main__':
     unittest.main()
