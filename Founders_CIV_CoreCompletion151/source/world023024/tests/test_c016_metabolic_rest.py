@@ -535,3 +535,22 @@ def test_c129_successful_work_still_records_replay_receipt():
     assert (dict(sim.book.energy), sim.book.seq,
             sim.recovery_states[founder].fatigue) == before
     audit(sim)
+
+
+def test_c133_sub_epsilon_work_shortfall_never_overdraws_book():
+    sim, founder = bootstrap(seed=820)[0], 'F001'
+    sim.founder_recovery_enabled = True
+    sim.recovery_states[founder].fatigue = 0.
+    account = f'founder:{founder}'
+    # The previous 1e-10 affordability tolerance permitted a debit larger
+    # than the authoritative physical fuel balance.
+    sim.book.energy[account] = .01 - 5e-11
+    before = (dict(sim.book.energy), dict(sim.book.operations), sim.book.seq,
+              sim.recovery_states[founder].fatigue, len(sim.events))
+    assert paid_work(sim, founder, 'practice', .01,
+                     decision_id='c133-unfunded') is False
+    assert (dict(sim.book.energy), dict(sim.book.operations), sim.book.seq,
+            sim.recovery_states[founder].fatigue, len(sim.events)) == before
+    assert 'founder:work:F001:practice:c133-unfunded' not in sim.book.operations
+    # Restore the initial fuel so the existing conservation audit is valid.
+    sim.book.energy[account] = before[0][account]
