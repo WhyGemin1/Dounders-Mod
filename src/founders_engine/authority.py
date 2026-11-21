@@ -216,7 +216,16 @@ class SingleEngineSession:
         if tree_id not in self.world.world_trees.worlds:
             raise ValueError('unknown living World Tree')
         # Validate the requested amount before entering the mutable registry.
-        if type(energy) not in (int, float) or not isfinite(energy) or energy <= 0:
+        # Extremely large Python integers can raise OverflowError in isfinite().
+        # Treat them as invalid requests rather than exposing an unhandled
+        # numeric conversion error or entering the mutable SeedRegistry.
+        if type(energy) not in (int, float) or energy <= 0:
+            raise ValueError('invalid stewardship energy')
+        try:
+            finite_energy = isfinite(energy)
+        except OverflowError:
+            finite_energy = False
+        if not finite_energy:
             raise ValueError('invalid stewardship energy')
         # Core151 SeedRegistry.tend validates these before touching the Book.
         # Mirror those rejection checks here so a declined/underfunded action
