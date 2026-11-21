@@ -50,11 +50,18 @@ class ConstructRegistry:
         self.events.append(dict(event='build',id=id,kind=kind,host=host))
         return c
 
-    def top_up(self,id,amount,source='house'):
+    def top_up(self,id,amount,source='house',request_id=None):
         c=self.items[id]
         if c.status!='stable' or amount<=0:raise ValueError('invalid maintenance top-up')
-        self.book.move(energy=[(source,f'reserve:{id}',amount)])
-        self.events.append(dict(event='top_up',id=id,amount=amount))
+        legs=[(source,f'reserve:{id}',amount)]
+        if request_id is None:
+            self.book.move(energy=legs)
+            fresh=True
+        else:
+            _,fresh=self.book.move_once(request_id,energy=legs)
+        if fresh:
+            self.events.append(dict(event='top_up',id=id,amount=amount))
+        return fresh
 
     def tick(self,id):
         c=self.items[id]
