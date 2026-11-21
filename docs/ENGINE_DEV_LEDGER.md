@@ -1267,3 +1267,11 @@
 - Implementation: f045264 Core151 SeedRegistry and a6bdca9 session now validate an existing receipt via the SAME canonical Book.move_once before current Founder balance gate. Fresh requests still require funds; mismatch raises ValueError without a new debit. eb4dd6f adds seed464 checkpoint/restart replay regression after canonical Book-funded depletion, checking no duplicate events, transfers or receipts and 100 Founders.
 - Execute/test: source committed; exact-head CI NOT YET VERIFIED; no local clean-checkout run or fresh numerical Book residuals. The seed464 test and behavior remain PROVISIONAL until CI completes. No native WorldBox test or long-horizon ecological audit.
 - Safety: no new Book, clock or Founder identities; M01 iteration3 repair lock, M05 SQLite nonauthority, external read-only boundary preserved. PRs remain draft; main untouched. Next: inspect exact-head CI, fix any seed464 failure, then test replay with a later real tick and checkpoint recovery.
+
+## 2026-11-21 — Core151 cycle 11: seed464 source fingerprint reconciliation
+- Ground: PR #1 remains draft at 17ad5e9; PR #2 draft on feat/single-core151-authority. Previous head 44ff757 CI #548 FAILED during source provenance verification; runtime suite skipped.
+- Exact CI failure: `founders_civ/experimental/world_integration.py` actual Git blob `6b38bce282a502bc8b579b30a259ec34f2a6caf8` versus stale test pin `b9484f2f01dbfaa1b2e7586cb4fd64917c16c320`.
+- Integration: updated only reviewed source fingerprint in `tools/test_import_core151.py` at commit `4c1ec9ec7e3f3ac9f71b6f9725f0766557fd9d03`; no engine mechanics or second Book changed. Archive provenance remains distinct.
+- Execute/test: CI #548 failure verified via GitHub Actions job logs; no local clean-checkout tests or fresh Book residuals. Exact-head CI after repair NOT YET VERIFIED.
+- Audit: canonical world.book/world.tick/100 Founders unchanged by this repair; no ecological stability or native WorldBox evidence.
+- Next: verify exact-head CI, fix any seed464 runtime failure, then test replay across real ticks and checkpoint recovery.
