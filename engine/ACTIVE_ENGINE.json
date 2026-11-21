@@ -112,7 +112,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify seed458 exact-head CI; then implement durable Book-backed idempotent tending receipts with restart/replay and conservation tests.",
+  "next_engineering_task": "Verify exact-head CI for seed459 M01 checkpoint preflight; fix failures, then implement durable Book-backed idempotent local tending request IDs with restart/replay tests.",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -133,5 +133,6 @@
   "p0_seed454_missing_account": "PROVISIONAL: source-only isolated preflight fixture; removes Founder energy key in temporary defaultdict with audit mocked only during invalid-state preflight; restores canonical mapping and asserts audit. Not yet executed.",
   "p0_seed455_oversized_stewardship": "PROVISIONAL: source 50fe27da and seed455 regression 386284e committed; rejects 10**1000 before Book mutation; CI pending; no new numerical conservation residuals.",
   "p0_seed457_rejected_metadata_real_tick": "PROVISIONAL: seed457 authority regression committed e3dbbbd; verifies rejected malformed Tree creation cannot mutate Book or block next real Core151 tick; exact-head CI pending.",
-  "p0_seed458_forged_receipt_checkpoint": "PROVISIONAL: regression b6272d0 committed; forged M01 Book receipt must prevent checkpoint overwrite and quarantine session after settlement. Exact-head CI pending; no numerical residuals collected."
+  "p0_seed458_forged_receipt_checkpoint": "PROVISIONAL: regression b6272d0 committed; forged M01 Book receipt must prevent checkpoint overwrite and quarantine session after settlement. Exact-head CI pending; no numerical residuals collected.",
+  "p0_seed459_m01_checkpoint_preflight": "PROVISIONAL: production preflight 80f3ffc and seed459 regression 5ceeefc committed; exact-head execution pending; no fresh numerical residuals."
 }
