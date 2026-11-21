@@ -36,7 +36,8 @@ def _realm_to_develop(sim):
         planted = sum(p['kind'] == 'world' and p['status'] == 'stable'
                       and p['parent'] == realm['id'] for p in sim.seeds.plants.values())
         pending = sum(b.kind == 'world' and b.parent_id == realm['id']
-                      and b.stage != 'planted' for b in sim.seeds.blueprints.values())
+                      and b.stage in ('draft', 'researching', 'validated')
+                      for b in sim.seeds.blueprints.values())
         return planted + pending
     return min(realms, key=lambda r: (load(r), r['id']))['id']
 
