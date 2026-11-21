@@ -1458,6 +1458,14 @@ class SingleAuthorityTests(unittest.TestCase):
             session._expected_book_sequence = world.book.seq
             before_tick = world.tick
             session.step()
+            # A real Core151 day can replenish Founder energy. Drain the
+            # post-tick balance through the same canonical Book before replay.
+            # This tests depleted replay without assuming simulation inactivity.
+            post_tick_energy = world.book.energy[account]
+            if post_tick_energy > 0:
+                world.book.move(energy=[(account, 'environment:heat', post_tick_energy)])
+            session._expected_book_sequence = world.book.seq
+            session.audit()
             save_checkpoint(world, tree_id, path)
             restored = load_checkpoint(path, expected_tree_id=tree_id)
             w = restored.world
