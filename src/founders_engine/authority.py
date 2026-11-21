@@ -204,7 +204,7 @@ class SingleEngineSession:
             raise
         return receipt
 
-    def tend_tree(self, founder_id, tree_id, energy):
+    def tend_tree(self, founder_id, tree_id, energy, request_id=None):
         """Voluntary Founder stewardship through the one canonical Book.
 
         This is an in-memory Core151 action, not an external WorldBox ACK.
@@ -245,7 +245,7 @@ class SingleEngineSession:
         if self.book.energy.get(f'founder:{founder_id}', 0.0) < energy:
             raise ValueError('Founder lacks upkeep energy')
         try:
-            result = self.world.seeds.tend(founder_id, tree_id, energy)
+            result = self.world.seeds.tend(founder_id, tree_id, energy, request_id=request_id)
             self._expected_book_sequence = self.book.seq
             self.audit()
         except Exception:
@@ -253,7 +253,7 @@ class SingleEngineSession:
             raise
         return result
 
-    def checkpointed_tend_tree(self, checkpoint_path, founder_id, tree_id, energy):
+    def checkpointed_tend_tree(self, checkpoint_path, founder_id, tree_id, energy, request_id=None):
         """Settle voluntary tending and durably save the same canonical world.
 
         This is a trusted-local checkpoint, NOT an idempotent external request
@@ -267,7 +267,7 @@ class SingleEngineSession:
         # A post-settlement checkpoint rejection would otherwise leave a
         # mutated RAM world requiring quarantine and durable recovery.
         _validate_world(self.world, self.tree_id)
-        self.tend_tree(founder_id, tree_id, energy)
+        self.tend_tree(founder_id, tree_id, energy, request_id=request_id)
         try:
             save_checkpoint(self.world, self.tree_id, checkpoint_path)
         except Exception:
