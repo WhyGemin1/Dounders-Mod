@@ -1140,6 +1140,8 @@ class SingleAuthorityTests(unittest.TestCase):
             save_checkpoint(world, tree_id, path)
             original_bytes = path.read_bytes()
             before_tick = world.tick
+            before_seq = world.book.seq
+            before_energy = dict(world.book.energy)
             # A receipt referencing a nonexistent Book transaction must never
             # survive the canonical checkpoint validator.
             bogus = Transaction(world.book.seq + 1, 'move', (), (), 0.0, 0.0)
@@ -1147,13 +1149,18 @@ class SingleAuthorityTests(unittest.TestCase):
             try:
                 with self.assertRaises(ValueError):
                     session.checkpointed_tend_tree(path, founder_id, tree_id, 0.01)
-                self.assertTrue(session._checkpoint_uncertain)
+                # Preflight rejects corruption before any tending settlement.
+                self.assertFalse(session._checkpoint_uncertain)
                 self.assertEqual(path.read_bytes(), original_bytes)
                 self.assertEqual(world.tick, before_tick)
-                with self.assertRaisesRegex(RuntimeError, 'checkpoint outcome uncertain'):
-                    session.step()
+                self.assertEqual(world.book.seq, before_seq)
+                self.assertEqual(dict(world.book.energy), before_energy)
             finally:
                 world.book.request_receipts.pop('m01:forged:seed458', None)
+            # Removing the injected corruption restores a usable session.
+            session.checkpointed_tend_tree(path, founder_id, tree_id, 0.01)
+            self.assertGreater(world.book.seq, before_seq)
+            self.assertEqual(session.audit().founder_count, 100)
 
 if __name__ == '__main__':
     unittest.main()
