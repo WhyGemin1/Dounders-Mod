@@ -242,7 +242,12 @@ class SingleEngineSession:
         if (creation is None or creation.get('status') != 'stable' or
                 creation.get('kind') != 'world' or creation.get('id') != tree_id):
             raise ValueError('stable planted World Tree required')
-        if self.book.energy.get(f'founder:{founder_id}', 0.0) < energy:
+        # Validate a previously settled Book request before requiring new funds.
+        # Book.move_once checks receipt identity/history and performs no debit
+        # on replay; fresh requests must still pass the current balance gate.
+        if request_id is not None and request_id in self.book.request_receipts:
+            self.book.move_once(request_id, energy=[(f'founder:{founder_id}',f'reserve:{tree_id}',energy)])
+        elif self.book.energy.get(f'founder:{founder_id}', 0.0) < energy:
             raise ValueError('Founder lacks upkeep energy')
         # A rejected mismatched replay must not quarantine a healthy session.
         # Compare canonical Book and creation side effects before allowing retry.
