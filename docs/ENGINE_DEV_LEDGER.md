@@ -1212,3 +1212,11 @@
 - Execute/test: previous-head CI #521 SUCCESS; new seed460 test not yet verified at exact head, no local clean-checkout unittest, no fresh numeric Book residuals. PROVISIONAL.
 - Ecological/behavioral audit: no second engine/clock/Book; M01 iteration3 repair lock, M05 SQLite nonauthority, M02-M07 backlog, WorldBox read-only remain. No long-horizon ecology or native WorldBox gameplay tests.
 - Next: verify exact-head seed460 CI and repair failures; implement canonical Book-backed idempotent local tending request IDs with checkpoint replay and side-effect safety.
+
+## 2026-11-21 — seed461 checkpoint failure and durable recovery regression
+- Branch: `feat/single-core151-authority`, PR #2 remains draft; main unchanged.
+- Grounded live repository PR #1/#2, canonical `SingleEngineSession`, `Book.move_once`, checkpoint save/restore and authority tests. Prior-head GitHub Actions #524 SUCCESS on `994f375`.
+- Tangible test integration: `test_seed461_tending_checkpoint_failure_requires_durable_recovery` at `e796d49`. Injects an `OSError` on the checkpoint save after real Core151 voluntary tending, asserts session quarantine and unchanged last durable checkpoint, reloads the one Book, retries once, and verifies balances, 100 Founder identities and conservation assertions.
+- No production mechanics altered. This does NOT establish exactly-once tending; a caller still needs a durable request-ID protocol to prevent ambiguous repeated local requests.
+- Tests: previous-head CI #524 passed; seed461 NOT RUN at time of ledger write, exact-head CI pending. No local clean checkout, fresh measured Book residuals, ecological horizon or native WorldBox gameplay in this cycle.
+- Next: verify exact-head CI and fix failures; implement durable Book-backed idempotent tending IDs without duplicating SeedRegistry side effects.
