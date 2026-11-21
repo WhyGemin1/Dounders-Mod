@@ -1190,3 +1190,10 @@
 - State `cf70b76`: records provisional acceptance. No WorldBox write access, M01 iteration3 lock unchanged, M02-M07 backlog unchanged.
 - Tests: source changes committed; exact-head GitHub Actions outcome pending inspection. No local clean-checkout unittest, numerical Book audit or WorldBox gameplay performed this invocation. Assertions are NOT executed evidence.
 - Next: verify CI for this head, fix any failure, then implement Book-backed durable idempotent local tending request IDs and restart/replay tests without bypassing SeedRegistry side effects.
+
+## 2026-11-21 01:00 CST — canonical receipt preflight before M01 checkpointed harvest
+- Ground/design: inspected live draft PR #1/#2, Core151 authority, canonical Book.move_once, seed458 test, state and ledger. Exact preceding head 08f99b5 GitHub Actions #514 (44873634811) SUCCESS. Main unchanged.
+- Implementation: production commit 80f3ffc adds existing checkpoint _validate_world preflight to checkpointed_harvest before M01 settlement. Seed459 test 5ceeefc injects forged Book receipt and asserts no Book movement, no checkpoint overwrite, no quarantine and valid restored audit. Existing one Book, clock, 100 identities preserved.
+- Execute/test: prior-head CI #514 verified; new seed459 source committed but not executed locally or verified in exact-head CI. No fresh numerical residuals or WorldBox gameplay. PROVISIONAL.
+- Ecological/behavioral audit: guards M01 against pre-existing corrupt receipt settlement; does not establish external ACK, exactly-once tending, or ecological stability. M01 iteration3 lock, M05 nonauthority, M02-M07 backlog and WorldBox read-only remain.
+- Next: verify seed459 exact-head CI, repair failures; then implement durable Book-backed idempotent local tending request IDs with restart/replay tests.
