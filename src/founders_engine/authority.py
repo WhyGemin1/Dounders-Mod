@@ -211,6 +211,11 @@ class SingleEngineSession:
         A failed settlement quarantines the session until durable recovery.
         """
         self.audit()
+        # A direct local tend is mutable too: do not let forged replay receipts
+        # reach SeedRegistry merely because the caller skipped checkpointing.
+        # This validator reads the existing Book; it creates no second ledger.
+        from founders_engine.checkpoint import _validate_world
+        _validate_world(self.world, self.tree_id)
         if founder_id not in self._founder_ids:
             raise ValueError('unknown authoritative Founder')
         if tree_id not in self.world.world_trees.worlds:
