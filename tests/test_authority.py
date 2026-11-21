@@ -1162,5 +1162,40 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertGreater(world.book.seq, before_seq)
             self.assertEqual(session.audit().founder_count, 100)
 
+
+    def test_seed459_corrupt_receipt_blocks_checkpointed_harvest_before_book_move(self):
+        """A forged receipt must not let M01 spend Tree inventory before save."""
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        from founders_civ.core.ledger import Transaction
+        from founders_engine.checkpoint import save_checkpoint
+        world, _, tree_id = bootstrap(459)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'world.checkpoint'
+            save_checkpoint(world, tree_id, path)
+            original_bytes = path.read_bytes()
+            before = (world.tick, world.book.seq, dict(world.book.mass),
+                      dict(world.book.energy), list(world.book.transaction_history))
+            world.book.request_receipts['m01:forged:seed459'] = (
+                ((), ()), Transaction(world.book.seq + 1, 'move', (), (), 0., 0.))
+            try:
+                with self.assertRaises(ValueError):
+                    session.checkpointed_harvest(
+                        path, founder_id, 'seed459-source', 1,
+                        'world', 'plant', 0.01)
+                self.assertEqual(path.read_bytes(), original_bytes)
+                self.assertEqual(before, (world.tick, world.book.seq,
+                    dict(world.book.mass), dict(world.book.energy),
+                    list(world.book.transaction_history)))
+                self.assertFalse(session._checkpoint_uncertain)
+            finally:
+                world.book.request_receipts.pop('m01:forged:seed459', None)
+            proof = session.audit()
+            self.assertEqual(proof.founder_count, 100)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
 if __name__ == '__main__':
     unittest.main()
