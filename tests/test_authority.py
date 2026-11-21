@@ -1196,6 +1196,14 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(proof.founder_count, 100)
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
             self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+            # A rejected forged receipt must not disable subsequent real ticks.
+            before_tick = world.tick
+            session.step()
+            self.assertEqual(world.tick, before_tick + 1)
+            after = session.audit()
+            self.assertEqual(after.founder_count, 100)
+            self.assertLessEqual(abs(after.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(after.book_energy_error), 1e-6)
 
 if __name__ == '__main__':
     unittest.main()
