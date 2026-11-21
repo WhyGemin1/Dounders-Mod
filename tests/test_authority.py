@@ -1494,5 +1494,44 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
             self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+
+    def test_seed467_request_id_cannot_cross_founder_identity_after_restart(self):
+        """A settled tending ID cannot debit a different Founder after recovery."""
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from founders_engine.checkpoint import load_checkpoint
+        world, _, tree_id = bootstrap(467)
+        session = SingleEngineSession(world, tree_id)
+        first, second = list(world.founders.people)[:2]
+        request_id = 'local:tend:seed467:identity'
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'world.checkpoint'
+            session.checkpointed_tend_tree(
+                path, first, tree_id, .01, request_id=request_id)
+            recovered = load_checkpoint(path, expected_tree_id=tree_id)
+            w = recovered.world
+            before = (w.tick, w.book.seq, dict(w.book.mass),
+                      dict(w.book.energy), dict(w.book.request_receipts),
+                      list(w.book.transaction_history),
+                      len(w.seeds.events), len(w.seeds.constructs.events))
+            with self.assertRaisesRegex(ValueError, 'different transfer'):
+                recovered.checkpointed_tend_tree(
+                    path, second, tree_id, .01, request_id=request_id)
+            self.assertEqual(before, (
+                w.tick, w.book.seq, dict(w.book.mass), dict(w.book.energy),
+                dict(w.book.request_receipts), list(w.book.transaction_history),
+                len(w.seeds.events), len(w.seeds.constructs.events)))
+            self.assertFalse(recovered._checkpoint_uncertain)
+            recovered.checkpointed_tend_tree(
+                path, first, tree_id, .01, request_id=request_id)
+            self.assertEqual(before, (
+                w.tick, w.book.seq, dict(w.book.mass), dict(w.book.energy),
+                dict(w.book.request_receipts), list(w.book.transaction_history),
+                len(w.seeds.events), len(w.seeds.constructs.events)))
+            proof = recovered.audit()
+            self.assertEqual(proof.founder_count, 100)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
 if __name__ == '__main__':
     unittest.main()
