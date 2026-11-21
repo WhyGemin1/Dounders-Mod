@@ -1125,5 +1125,35 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
         self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+
+    def test_seed458_corrupt_book_receipt_blocks_checkpointed_tending(self):
+        """A forged M01 receipt cannot be durably endorsed by Tree tending."""
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        from founders_civ.core.ledger import Transaction
+        from founders_engine.checkpoint import save_checkpoint
+        world, _, tree_id = bootstrap(458)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'world.checkpoint'
+            save_checkpoint(world, tree_id, path)
+            original_bytes = path.read_bytes()
+            before_tick = world.tick
+            # A receipt referencing a nonexistent Book transaction must never
+            # survive the canonical checkpoint validator.
+            bogus = Transaction(world.book.seq + 1, 'move', (), (), 0.0, 0.0)
+            world.book.request_receipts['m01:forged:seed458'] = (((), ()), bogus)
+            try:
+                with self.assertRaises(ValueError):
+                    session.checkpointed_tend_tree(path, founder_id, tree_id, 0.01)
+                self.assertTrue(session._checkpoint_uncertain)
+                self.assertEqual(path.read_bytes(), original_bytes)
+                self.assertEqual(world.tick, before_tick)
+                with self.assertRaisesRegex(RuntimeError, 'checkpoint outcome uncertain'):
+                    session.step()
+            finally:
+                world.book.request_receipts.pop('m01:forged:seed458', None)
+
 if __name__ == '__main__':
     unittest.main()
