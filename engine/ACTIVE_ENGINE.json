@@ -112,13 +112,14 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "101f824628521a58e1db5d486a3c8fff00e4ba5d",
-  "next_engineering_task": "Verify exact-head CI after seed463 source provenance repin 300e131; fix any failing replay tests, then correct replay-before-current-balance validation and test depleted-Founder restart without duplicate side effects.",
+  "next_engineering_task": "Verify exact-head CI for f6cb4ff rejected-replay recovery; then move canonical receipt matching ahead of current Founder energy balance checks and test depleted-Founder restart replay.",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
     "p0_direct_boolean_replay": "VERIFIED PASS in PR CI #195; no numerical Book residuals collected",
     "p0_wellspring_validation_order": "SOURCE COMMITTED 6453baf; fixes #211 mismatch by validating malformed Wellspring legs before aggregate reconciliation; pending CI",
-    "seed461_repeat_tend_quarantine": "PROVISIONAL: added assertion on 2026-11-21 at 93d321d; rejects second checkpointed tend on uncertain RAM state without Book/clock/checkpoint mutation; exact-head CI pending."
+    "seed461_repeat_tend_quarantine": "PROVISIONAL: added assertion on 2026-11-21 at 93d321d; rejects second checkpointed tend on uncertain RAM state without Book/clock/checkpoint mutation; exact-head CI pending.",
+    "seed463_rejected_replay_recovery": "PROVISIONAL: production change f6cb4ff retains a healthy session for unchanged ValueError from mismatched tending request; CI #543 failed 1/58 at previous head c634fc3; new exact-head CI pending."
   },
   "latest_cycle": {
     "date": "2026-11-20",
