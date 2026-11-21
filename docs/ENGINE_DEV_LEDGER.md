@@ -1174,3 +1174,10 @@
 - Execute/test: preceding head CI #505 verified. New seed457 test not executed locally; exact-head CI pending. No new numerical Book residuals or WorldBox gameplay.
 - Ecological/behavioral audit: protects retryable rejection and real-world continuity, but does not establish voluntary stewardship frequency, exactly-once local tending, ecological stability or native ACK. M01 iteration3 repair lock, M05 nonauthority, M02–M07 backlog, WorldBox read-only, main unchanged and both PRs draft/unmerged.
 - Next: verify exact-head CI, repair seed457 failure if any, then implement durable Book-backed idempotent local tending receipts with restart/replay validation.
+
+## 2026-11-20 23:00 CST — forged receipt cannot be checkpointed by Tree tending
+- Ground/design: inspected live authority, canonical Book move_once receipts, checkpoint validator, active state and ledger. Exact preceding head 642c1ec GitHub Actions #508 (44863760612) completed SUCCESS. Drive archive metadata confirmed; no duplicate engine or import.
+- Implementation: seed458 test committed b6272d0 on existing feat/single-core151-authority. It injects a forged M01 receipt referencing a nonexistent Book sequence, invokes checkpointed_tend_tree, expects checkpoint validator rejection and session quarantine, and asserts original checkpoint bytes and clock unchanged. No production behavior changed; no second Book.
+- Execute/test: prior-head CI verified; seed458 test not executed in this run. No new numerical Book conservation measurements or native gameplay. New regression PROVISIONAL pending exact-head CI.
+- Ecological/behavioral audit: ensures corrupt receipts cannot be silently persisted after local voluntary tending; does not establish exactly-once local tending, ecological stability or native WorldBox ACK. M01 iteration3 repair lock, M05 nonauthority, M02-M07 backlog and WorldBox read-only remain. Main untouched.
+- Next: verify seed458 CI and repair failures; then implement durable Book-backed idempotent tending request IDs and restart/replay tests.
