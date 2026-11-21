@@ -56,6 +56,7 @@ def propose_self_trees(sim, founder, contacts):
     # research, consent, Book-funding and habitat resource preflights.
     b = _own_blueprint(sim, founder)
     energy = sim.book.energy.get(f'founder:{founder}', 0.)
+    # Proposal affordability must not overdraw physical fuel even by an epsilon.
     # No work spent merely on deciding whether to design a Tree.
     if b is None:
         # React to self-acquired propagation material, NOT a centralized
@@ -64,7 +65,7 @@ def propose_self_trees(sim, founder, contacts):
         if not any(_own_fruit(sim, founder)):
             return []
         parent = _realm_to_develop(sim)
-        if parent is None or energy < .08 - 1e-8:
+        if parent is None or energy < .08:
             return []
         if len(sim.seeds.plants) + len(sim.seeds.blueprints) >= 106:
             return []  # bounded research proposals; physical funding still decides
@@ -78,10 +79,10 @@ def propose_self_trees(sim, founder, contacts):
             peers = [p for p in contacts if p != founder and p in sim.founders.people
                      and sim.founders.people[p].alive
                      and sim.founders.people[p].location == person.location]
-            if peers and sim.book.energy.get(f'founder:{peers[0]}', 0.) >= .11 - 1e-8:
+            if peers and sim.book.energy.get(f'founder:{peers[0]}', 0.) >= .11:
                 return [(5.1, 'seed_request_review', peers[0], b.id)]
             return []
-        if sim.tick not in b.research_ticks and energy >= .18-1e-8:
+        if sim.tick not in b.research_ticks and energy >= .18:
             return [(4.6, 'seed_research', None, b.id)]
         return []
     if b.stage != 'validated':
@@ -89,11 +90,11 @@ def propose_self_trees(sim, founder, contacts):
     # A real collected fruit lot containing finite CE is a prerequisite to
     # constructing a new food Tree; proposal priority cannot bypass funding.
     if f'seed:fund:{b.id}' not in sim.book.operations:
-        if energy < .01 - 1e-8:
+        if energy < .01:
             return []
         fruits = list(_own_fruit(sim, founder))
         return [(5.3, 'seed_fund', None, (b.id, tid, lot)) for tid, lot in fruits[:1]]
-    if (energy >= 1.0000001
+    if (energy >= 1.0
             and sim.book.mass.get('soil:Solara:grassland',0.) >= 1.1
             and sim.book.energy.get('house',0.) >= 2.25):
         return [(5.6, 'seed_plant', None, b.id)]
