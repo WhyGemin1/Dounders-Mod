@@ -52,9 +52,11 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
             raise ValueError('work operation ID too long')
         # A replay must match its original action and requested physical cost,
         # even if fatigue has changed since the original debit.
+        # Inspect replay sidecars without creating state for a rejected work
+        # proposal. A failed fuel check must leave checkpoint state untouched.
         receipts = getattr(sim, 'work_receipts', None)
         if receipts is None:
-            receipts = sim.work_receipts = {}
+            receipts = {}
         # A decision identity is unique to a Founder, not to an action name.
         # Otherwise a retried decision with a different action can spend twice.
         prefix = f'founder:work:{founder}:'
@@ -111,6 +113,8 @@ def paid_work(sim, founder, action, base_cost, decision_id=None):
                         operation_id=operation)
     state.fatigue = min(1., state.fatigue + 0.03 + 0.16 * cost)
     if operation is not None:
+        if getattr(sim, 'work_receipts', None) is None:
+            sim.work_receipts = {}
         sim.work_receipts[operation] = (base_cost, txn)
     return txn
 
