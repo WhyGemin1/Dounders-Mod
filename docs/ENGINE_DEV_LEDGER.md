@@ -1139,3 +1139,10 @@
 - Execute/test: preceding-head CI #488 SUCCESS; new seed453 test NOT EXECUTED in this cycle, exact-head CI pending. No fresh numerical Book residuals. No local clean checkout or WorldBox gameplay test.
 - Ecological/behavioral audit: rejected upkeep remains voluntary and cannot overwrite the durable checkpoint; actual acceptance awaits CI. Native external ACK, long-horizon ecology and WorldBox remain unverified. M01 iteration3 lock, M05 nonauthority and M02–M07 backlog preserved. Main untouched, draft PRs unmerged.
 - Next: verify exact-head CI, repair failures, then implement local idempotent tending receipts in the canonical Book.
+
+## 2026-11-20 18:00 CST — non-mutating underfunded tending preflight
+- Ground/design: inspected live draft PR #1/#2, authority.py, checkpoint.py, tests, state and ledger; preceding-head GitHub Actions #491 (44834079480) SUCCESS on 3afe72d. Authorized Drive Cycle152 ZIP metadata confirmed. Main remains at historical base of PR #2.
+- Implementation: 9f933b2 changes the existing SingleEngineSession.tend_tree energy preflight from indexing the canonical Book energy mapping to `.get(account, 0.0)`. Rejected missing/underfunded accounts cannot be inserted into a default-creating Book mapping by this preflight. No new resource authority, engine or clock. State updated in 56cad46.
+- Execute/test: preceding-head CI verified; new exact-head source change NOT locally tested, no new measured mass/energy residuals; final-head CI pending. No new dedicated regression added in this cycle. No native WorldBox game test or long-horizon ecology.
+- Ecological/behavioral audit: production hardening only; no proof of voluntary stewardship rate, local idempotent tending receipts or external ACK. M01 iteration3 repair lock, M05 nonauthority, M02–M07 backlog and WorldBox read-only retained. Both PRs remain draft, main untouched.
+- Next: verify exact-head CI, then add a focused regression for missing Book account rejection without default-map insertion and implement durable idempotent local tending receipts compatible with checkpoint receipt validation.
