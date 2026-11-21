@@ -1042,6 +1042,22 @@ class SingleAuthorityTests(unittest.TestCase):
             world.ecology = original
         session.audit()
 
+    def test_oversized_integer_stewardship_rejected_without_book_mutation(self):
+        """Seed 455: huge int input must fail before mutable Core151 tending."""
+        world, _, tree_id = bootstrap(455)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        before = (world.tick, world.book.seq,
+                  dict(world.book.mass), dict(world.book.energy),
+                  list(world.book.transaction_history))
+        with self.assertRaisesRegex(ValueError, 'invalid stewardship energy'):
+            session.tend_tree(founder_id, tree_id, 10 ** 1000)
+        self.assertEqual(before, (world.tick, world.book.seq,
+                                  dict(world.book.mass), dict(world.book.energy),
+                                  list(world.book.transaction_history)))
+        self.assertFalse(session._checkpoint_uncertain)
+        session.audit()
+
     def test_seed427_numeric_book_residuals_in_ci(self):
         """Execute the actual seed-427 conservation test in the existing CI discovery pattern."""
         from test_book_residual_evidence import BookResidualEvidenceTests
