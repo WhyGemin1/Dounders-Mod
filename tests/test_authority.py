@@ -107,23 +107,24 @@ class SingleAuthorityTests(unittest.TestCase):
     def test_missing_energy_account_preflight_does_not_create_account(self):
         """An absent Founder energy key must not be inserted on rejection."""
         from collections import defaultdict
-        from unittest.mock import patch
         world, _, tree_id = bootstrap(454)
         session = SingleEngineSession(world, tree_id)
         founder = next(iter(world.founders.people))
         account = f'founder:{founder}'
         original_energy = world.book.energy
-        # Isolate the preflight lookup: removing a funded account would itself
-        # violate conservation, so do not present this as a full Book audit.
+        # A missing funded account violates Book conservation. The rejection
+        # must not silently recreate it or change the transaction sequence.
         missing_account_fixture = defaultdict(float, original_energy)
         missing_account_fixture.pop(account, None)
         before = (world.tick, world.book.seq,
                   dict(missing_account_fixture), len(world.book.transaction_history))
         try:
             world.book.energy = missing_account_fixture
-            with patch.object(session, 'audit'):
-                with self.assertRaisesRegex(ValueError, 'Founder lacks upkeep energy'):
-                    session.tend_tree(founder, tree_id, .01)
+            # The direct-tending receipt preflight now enforces full Book
+            # conservation before the missing-account payment check. Removing
+            # a funded account is corrupt Book state, not an ordinary decline.
+            with self.assertRaisesRegex(AssertionError, 'ledger error'):
+                session.tend_tree(founder, tree_id, .01)
             self.assertNotIn(account, missing_account_fixture)
             self.assertEqual(
                 (world.tick, world.book.seq,
