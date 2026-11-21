@@ -1205,3 +1205,10 @@
 - Execute/test: GitHub Actions #518 previous-head SUCCESS. New regression source committed; exact-head CI not yet confirmed, no local clean-checkout execution and no fresh numerical Book residuals collected. New assertions PROVISIONAL until actual execution.
 - Ecological/behavioral audit: single world.book, world.tick, and 100 Founder identity requirements remain; M01 iteration3 repair lock, M05 nonauthoritative SQLite, M02-M07 backlog and read-only WorldBox boundary unchanged. No native WorldBox gameplay, external ACK, or long-horizon ecology verification.
 - Next: verify exact-head CI for new real-tick regression and fix failures; then implement durable Book-backed idempotent tending request IDs with restart/replay coverage.
+
+## 2026-11-21 03:00 CST — seed460 durable voluntary tending restart regression
+- Ground/design: inspected live Core151 authority, canonical Book move_once, SeedRegistry.tend, checkpoint validation, tests and engine state. Previous-head GitHub Actions #521 (44882552922) SUCCESS on 15d2187; authorized Cycle152 Drive archive fetched (956121 bytes).
+- Implementation: committed `tests/test_authority.py` seed460 checkpointed tending restart and next real tick regression at `02b06f9818d4063219f0ac2b8b004b8b448900c6`. It verifies Book-funded 0.01 Founder-to-Tree reserve energy transfer, saved/restored exact Book history and balances, 100 Founder IDs, shared Book object identity, and subsequent one-tick conservation assertions. No production mechanics changed; not an idempotent tending implementation.
+- Execute/test: previous-head CI #521 SUCCESS; new seed460 test not yet verified at exact head, no local clean-checkout unittest, no fresh numeric Book residuals. PROVISIONAL.
+- Ecological/behavioral audit: no second engine/clock/Book; M01 iteration3 repair lock, M05 SQLite nonauthority, M02-M07 backlog, WorldBox read-only remain. No long-horizon ecology or native WorldBox gameplay tests.
+- Next: verify exact-head seed460 CI and repair failures; implement canonical Book-backed idempotent local tending request IDs with checkpoint replay and side-effect safety.
