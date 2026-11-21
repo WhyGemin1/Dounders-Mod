@@ -1227,3 +1227,10 @@
 - Execute/test: previous-head CI #527 SUCCESS; new assertion not executed in this run; no local clean-checkout or fresh numerical Book residuals. PROVISIONAL until exact-head CI passes.
 - Ecological/behavioral audit: one world.book, world.tick, 100 Founder IDs, M01 iteration3 lock, M05 nonauthority and WorldBox read-only contract preserved. Exactly-once tending request IDs, native gameplay and ecological horizons unverified.
 - Next: verify exact-head CI and fix any regression, then implement durable canonical Book-backed local tending request IDs with restart/replay and SeedRegistry side-effect tests.
+
+## 2026-11-21 06:00 CST — seed462 direct tending receipt preflight
+- Ground/design: inspected live draft PR #1/#2, Core151 authority source, seed461 tests, canonical engine state and ledger. GitHub Actions #529 (44897133476) SUCCESS on previous head f0a81fb. Authorized private Cycle152 archive metadata verified; no duplicate source import.
+- Implementation: production authority.py commit 01d9ebeff6104735dfef0866bc261d67d32dab1e calls existing checkpoint _validate_world before direct voluntary SeedRegistry.tend; seed462 regression fd c014a (full SHA fdc014aa333e09e06d3c2e137e4b2262136ca61d) injects forged Book replay receipt, requires rejection without Book/clock mutation, and audits after removing corruption. This is not an idempotent request-ID implementation.
+- Execute/test: preceding-head CI #529 SUCCESS; exact-head seed462 regression NOT YET VERIFIED at ledger write. No local clean-checkout execution or fresh numerical Book residuals. Source/test committed, behavior PROVISIONAL until CI.
+- Ecological/behavioral audit: existing world.book, world.tick, 100 Founder IDs, M01 iteration3 repair lock, M05 SQLite nonauthority, M02-M07 backlog, WorldBox read-only boundary unchanged. No native WorldBox gameplay, exactly-once ACK or long-horizon ecological tests.
+- Next: verify exact-head CI and repair any seed462 failure; then implement canonical Book-backed durable local tending request IDs with replay and SeedRegistry side-effect tests.
