@@ -1275,3 +1275,10 @@
 - Execute/test: CI #548 failure verified via GitHub Actions job logs; no local clean-checkout tests or fresh Book residuals. Exact-head CI after repair NOT YET VERIFIED.
 - Audit: canonical world.book/world.tick/100 Founders unchanged by this repair; no ecological stability or native WorldBox evidence.
 - Next: verify exact-head CI, fix any seed464 runtime failure, then test replay across real ticks and checkpoint recovery.
+
+## 2026-11-21 12:57 CST — seed465 real-tick durable replay regression
+- Ground/design: inspected live canonical branch source, state, ledger and authorized Cycle152 Drive ZIP metadata. Previous head 9ae6e583be841b6cb716b6d90acf80af4a65b638 GitHub Actions #550 (44932901164) SUCCESS: headless job and all 21 reported steps succeeded, including source provenance, one-engine regression, numerical Book audit step and checkpoint tests. PR #1/#2 are not merged by this cycle.
+- Implementation: commit 7e4589fab2bfc123bd7b4bbad5714f94b78bcb53 adds seed465 authority regression using the same Core151 IntegratedWorld, a real session.step(), durable checkpoint, load/replay of settled local tending request ID and no-op Book/event assertions. No new Book, clock, engine or forced stewardship. ACTIVE_ENGINE.json updated separately.
+- Execute/test: CI #550 verifies preceding seed464 head, not seed465. New test was committed but not executed locally; exact-head CI pending. No fresh numerical mass/energy residuals measured this cycle; no native WorldBox test.
+- Ecological/behavioral audit: regression requires 100 real Founder identities and mass/energy residuals within 1e-6 after restart. These are assertions, not observed seed465 results. Voluntary tending and M01 iteration3 repair lock retained; M05 SQLite nonauthority and native read-only boundary unchanged.
+- Next: inspect exact-head CI for seed465, correct any failure, then extend replay checks to post-tick depleted Founder and mismatch rejection after durable recovery.
