@@ -281,8 +281,11 @@ class SingleEngineSession:
         ID. External WorldBox writes are prohibited. The Book remains sole
         resource authority; the checkpoint is its persisted representation.
         """
-        from founders_engine.checkpoint import save_checkpoint
+        from founders_engine.checkpoint import save_checkpoint, _validate_world
         self._assert_authority()
+        # Fail closed on forged or stale Book receipts before M01 can move stock.
+        # This shares the same canonical validation as checkpointed tending.
+        _validate_world(self.world, self.tree_id)
         receipt = self.harvest(founder_id, source_id, revision, habitat,
                                material, quantity, chemical_energy)
         try:
