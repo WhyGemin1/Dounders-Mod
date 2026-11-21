@@ -1097,5 +1097,33 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
         self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+
+    def test_seed457_invalid_tree_metadata_allows_next_real_tick(self):
+        """A rejected voluntary tend cannot poison the next real Core151 day."""
+        world, _, tree_id = bootstrap(457)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        creation = world.seeds.plants[tree_id]
+        original_kind = creation['kind']
+        before_tick = world.tick
+        before_seq = world.book.seq
+        before_energy = dict(world.book.energy)
+        try:
+            creation['kind'] = 'species'
+            with self.assertRaisesRegex(ValueError, 'stable planted World Tree'):
+                session.tend_tree(founder_id, tree_id, 0.01)
+            self.assertEqual(world.tick, before_tick)
+            self.assertEqual(world.book.seq, before_seq)
+            self.assertEqual(dict(world.book.energy), before_energy)
+            self.assertFalse(session._checkpoint_uncertain)
+        finally:
+            creation['kind'] = original_kind
+        session.step()
+        proof = session.audit()
+        self.assertEqual(world.tick, before_tick + 1)
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
 if __name__ == '__main__':
     unittest.main()
