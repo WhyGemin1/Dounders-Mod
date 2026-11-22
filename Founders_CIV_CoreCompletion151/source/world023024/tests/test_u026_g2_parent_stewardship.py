@@ -57,6 +57,20 @@ class G2ParentStewardshipTests(unittest.TestCase):
         self.assertEqual(before, (dict(self.sim.book.energy), self.sim.book.seq))
         self.sim.book.audit()
 
+    def test_near_target_reserve_preserves_founder_fuel(self):
+        # A nearly funded Realm needs a small contribution, not the maximum
+        # 0.60 chemical-fuel transfer. This is a voluntary proposal only.
+        self.sim.seeds.owner_reserve_knowledge["R1"]["F1"]["reserve"] = 0.68
+        self.sim.book.move(energy=[("founder:F1", "reserve:R1", 0.63)],
+                           operation_id="setup-near-target")
+        before = (dict(self.sim.book.energy), self.sim.book.seq)
+        choices = propose_parent_stewardship(self.sim, "F1")
+        self.assertEqual(choices[0][3], ("R1", 0.15))
+        self.assertEqual(before, (dict(self.sim.book.energy), self.sim.book.seq))
+        tend_parent(self.sim, "F1", choices[0][3], "small-shortfall")
+        self.assertAlmostEqual(self.sim.book.energy["founder:F1"], 1.22)
+        self.sim.book.audit()
+
     def test_exact_retry_does_not_double_spend_or_duplicate_effects(self):
         first = tend_parent(self.sim, "F1", ("R1", 0.30), "decision-1")
         second = tend_parent(self.sim, "F1", ("R1", 0.30), "decision-1")
