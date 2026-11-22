@@ -3,10 +3,11 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
 from founders_civ.core.autonomous_provisioning import TreeProvisioningPolicy
+from founders_civ.core.ledger import Book
 
 class AllocationRetryTests(unittest.TestCase):
     def test_failed_fruit_allocation_retries_same_age(self):
-        book = object()
+        book = Book()
         tree = SimpleNamespace(
             book=book, sim=SimpleNamespace(book=book, seeds=SimpleNamespace(
                 plants={'TREE-TEST': {'status': 'stable'}})),
