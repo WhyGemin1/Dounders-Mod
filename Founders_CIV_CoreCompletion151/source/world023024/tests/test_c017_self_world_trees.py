@@ -268,3 +268,18 @@ def test_c140_review_selects_funded_peer_regardless_of_contact_order():
     assert propose_self_trees(sim, 'F002', ['F004', 'F003', 'F004']) == expected
     sim.book.energy['founder:F004'] = .11 - 5e-11
     assert propose_self_trees(sim, 'F002', ['F003', 'F004']) == []
+
+
+def test_c157_fruit_selection_is_checkpoint_order_independent(monkeypatch):
+    """Equivalent Book-owned inventories must select the same real fruit lot."""
+    from types import SimpleNamespace
+    import founders_civ.core.founder_exchange as exchange
+    from founders_civ.core.founder_tree_agency import _own_fruit
+    lots = ['fruit-z', 'fruit-a', 'fruit-m']
+    monkeypatch.setattr(exchange, 'owned_lots', lambda sim, founder, kind: iter(lots))
+    monkeypatch.setattr(exchange, '_origin', lambda sim, kind, lot: ('T1', object()))
+    sim = SimpleNamespace()
+    first = list(_own_fruit(sim, 'F002'))
+    lots.reverse()
+    second = list(_own_fruit(sim, 'F002'))
+    assert first == second == [('T1', 'fruit-a'), ('T1', 'fruit-m'), ('T1', 'fruit-z')]
