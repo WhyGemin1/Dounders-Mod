@@ -35,16 +35,18 @@ class ConstructRegistry:
             raise ValueError('construction work requires a funded non-House source')
         if self.book.energy['house']<initial_reserve+binding_energy:
             raise ValueError('not enough House energy')
-        # These are sequential source debits but prechecked; a real main-engine
-        # adapter should wrap build and ownership in one cross-registry transaction.
-        self.book.transform([(material_account,f'construct:{id}',mass)],
-                            source=work_source,work=1.,
-                            energy_outputs=[(work_source,'environment:heat',.9)])
-        q=initial_reserve+binding_energy
-        if q>0:
-            self.book.move(energy=[('house',f'reserve:{id}',initial_reserve),
-                                   ('house',f'binding:{id}',binding_energy)] if initial_reserve>0
-                           else [('house',f'binding:{id}',binding_energy)])
+        # One canonical Book transaction settles material transformation,
+        # work/toll, reserve and binding together. No partial debit can survive
+        # an exception in a later Book call because there is no later call.
+        # The work-source output remains exactly work minus the transform toll.
+        funding = [(work_source, 'environment:heat', .9)]
+        if initial_reserve > 0:
+            funding.append(('house', f'reserve:{id}', initial_reserve))
+        if binding_energy > 0:
+            funding.append(('house', f'binding:{id}', binding_energy))
+        self.book.transform([(material_account, f'construct:{id}', mass)],
+                            source=work_source, work=1.,
+                            energy_outputs=funding)
         c=Construct(id,kind,host,mass,daily_energy,collapse_to=collapse_to)
         self.items[id]=c
         self.events.append(dict(event='build',id=id,kind=kind,host=host))
