@@ -74,9 +74,9 @@ def propose_self_trees(sim, founder, contacts):
         parent = _realm_to_develop(sim)
         if parent is None or energy < .08:
             return []
-        if (len(sim.seeds.plants) + sum(b.stage in ('draft', 'researching', 'validated')
+        if (sum(p['status'] == 'stable' for p in sim.seeds.plants.values()) + sum(b.stage in ('draft', 'researching', 'validated')
                                          for b in sim.seeds.blueprints.values())) >= 106:
-            return []  # bounded active research proposals; terminal history does not consume capacity
+            return []  # bounded active research proposals; collapsed creations and terminal proposals do not consume capacity
         return [(4.35, 'seed_design', None, ('world', parent))]
     if b.parent_id not in sim.seeds.plants or sim.seeds.plants[b.parent_id]['status'] != 'stable':
         return []
