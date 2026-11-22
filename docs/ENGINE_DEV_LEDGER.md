@@ -1496,3 +1496,12 @@
 - Verification: actual GitHub CI #631 failure verified; repaired fingerprint equals GitHub `fetch_file` blob SHA. New exact-head CI not yet verified. No local clean-checkout unittest or fresh mass/energy residuals this cycle. Production atomicity remains PROVISIONAL until CI and fault-injection pass.
 - Restrictions: main unchanged, PRs remain draft, M01 iteration-3 lock and M05 nonauthority unchanged; native WorldBox and long-horizon ecology BLOCKED/unverified.
 - Next: verify exact-head GitHub Actions on ledger commit, resolve any construction regressions, and obtain numerical Book audit plus save/restart evidence.
+
+## 2026-11-22 17:03 CST — seed479 transaction-count CI repair
+- Ground: PR #1 remains draft at 17ad5e9; PR #2 draft head dc9204b at inspection. Exact-head GitHub Actions run 45074808811 FAILED: 75/76 authority tests passed. Seed479 expected Book seq +1 but actual was 2926 versus expected 2925. Seed480 and seed481 passed, including injected canonical construction Book failure.
+- Diagnosis: historical Core151 `SeedRegistry.plant` first moves one unit of Founder energy to a work account, then `ConstructRegistry.build` performs one atomic construction Book transform. Thus successful planting currently generates TWO Book transactions. Atomicity of the entire planting operation across both steps is not established; the construction sub-operation's single-transaction atomicity is narrower.
+- Implementation: repaired seed479 expected sequence delta from +1 to +2 with an explanatory comment in tests/test_authority.py, commit b686ef9. No production engine code changed.
+- State: ACTIVE_ENGINE.json updated at 8ecc8c8. CI for repaired head pending; no local clean-checkout test performed.
+- Measured prior-head CI seed427 residuals: mass -8.9130480773746967e-11; energy -1.0302755981683731e-08, not seed479-specific.
+- Safety: one Book and clock, 100 Founder identities; M01 iteration3 lock, M05 nonauthority, read-only WorldBox, draft PRs, main unchanged.
+- Next: verify repaired-head CI; then fault-inject failure between Founder work transfer and construction to determine whether full `SeedRegistry.plant` can leave a stranded work debit. If so, implement all-or-nothing planting through the existing Book.
