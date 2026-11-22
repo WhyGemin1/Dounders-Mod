@@ -96,6 +96,9 @@ class TreeProvisioningPolicy:
             lot=f'W-{world_id}-C003-{tree.id}-{kind}-{tree.age}'
         else:
             lot=f'C003-{tree.id}-{kind}-{tree.age}'
+        # A previous attempt may have committed this physical lot before a
+        # later habitat allocation failed. Never publish it twice on retry.
+        if lot in self.lots:return False
         if kind=='food':
             tree.make_portable_food(biome,lot)
         else:
@@ -177,8 +180,9 @@ class TreeProvisioningPolicy:
         # production requires a living, stable Tree; archived remnants may
         # mature or decay without minting any matter or Creation Energy.
         self._refresh()
-        self.last_age=tree.age
-        if tree.state!='active' or tree.sim.seeds.plants[tree.id]['status']!='stable':return False
+        if tree.state!='active' or tree.sim.seeds.plants[tree.id]['status']!='stable':
+            self.last_age=tree.age
+            return False
         # Deterministic habitat rotation, never an artificial time currency.
         habitats=tuple(tree.habitats)
         if tree.age%self.food_period==0:
@@ -187,6 +191,9 @@ class TreeProvisioningPolicy:
         if tree.age%self.fruit_period==0:
             idx=(tree.age//self.fruit_period-1)%len(habitats)
             self._allocate('fruit',habitats[idx])
+        # Commit the age only after all attempted Book-backed allocations
+        # return. A raised failure must remain retryable at the same age.
+        self.last_age=tree.age
         return True
 
     def mature_fruit(self):
