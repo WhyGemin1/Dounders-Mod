@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-22",
+  "updated_at": "2026-11-22T11:04:37-06:00",
   "repository": "WhyGemin1/Dounders-Mod",
   "active_engine": "Core151 IntegratedWorld (recovered Cycle152 source)",
   "authoritative_book": "IntegratedWorld.book (founders_civ.core.ledger.Book)",
@@ -114,13 +114,13 @@
     "Long-horizon ecological stability and in-game tests not run"
   ],
   "next_cycle": "Verify seed479 exact-head CI, repair failures; then address cross-registry atomic rollback for physical planting if construct.build fails after work debit.",
-  "last_cycle": "2026-11-17 22:00 CST: M01 harvest conservation preflight, seed-418 regression",
+  "last_cycle": "2026-11-22 11:04 CST: seed479 CI #616 failed 1/74 (clock changed outside session); test repaired to step through SingleEngineSession at 0f2d264; exact-head CI pending.",
   "archive_sha256": "29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8",
   "source_import_commit": "7f96cba5cb283688e0c30a40e75a049d05c7e772",
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
-  "last_unverified_code_commit": "2aa0d3f551867a6c2ef0dcddc46a194f4810a071",
-  "next_engineering_task": "Verify seed479 exact-head CI, repair failures; then address cross-registry atomic rollback for physical planting if construct.build fails after work debit.",
+  "last_unverified_code_commit": "0f2d264b94d5e4c66e4d5cd8906d6b1158f5451f",
+  "next_engineering_task": "Verify exact-head CI after seed479 clock repair; if passing, fault-inject ConstructRegistry.build() to expose partial Book settlement and implement atomic protection.",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -131,10 +131,11 @@
     "seed476_independent_founder": "PROVISIONAL: test extension b2e9b4109c1f7b2155071bfb44b43cb853c86b33; previous head e80bf2f PASS GitHub Actions run 45020531338; new exact-head CI pending.",
     "seed477_creation_draft": "PROVISIONAL: real Core151 draft of realm with canonical Book energy debit .08, invalid kind rollback, 100 Founder and mass/energy audits; not yet CI verified",
     "seed478_unvalidated_plant": "PROVISIONAL: rejected unvalidated physical realm planting after durable restart; unchanged Book/clock/creation events and persisted state asserted; no execution yet.",
-    "seed479_validated_realm_plant": "PROVISIONAL: validated peer-reviewed realm planting, three canonical Book transactions, checkpoint recovery and 100-Founder audits committed at 58659120; exact-head CI pending."
+    "seed479_validated_realm_plant": "PROVISIONAL: validated peer-reviewed realm planting, three canonical Book transactions, checkpoint recovery and 100-Founder audits committed at 58659120; exact-head CI pending.",
+    "seed479": "FAIL CI #616 73/74 passing; repaired authoritative clock use in test at 0f2d264; unverified exact-head"
   },
-  "latest_cycle": "2026-11-22 10:04 CST: seed479 real validated realm planting regression authored; archive historical tests 15/15 pass; exact-head CI pending.",
-  "next_task": "Verify exact-head CI for second-tick settlement metadata equivalence; fix failures before expanding replay horizon",
+  "latest_cycle": "2026-11-22 11:04 CST: seed479 CI #616 failed 1/74 (clock changed outside session); test repaired to step through SingleEngineSession at 0f2d264; exact-head CI pending.",
+  "next_task": "Verify exact-head CI after seed479 clock repair; if passing, fault-inject ConstructRegistry.build() to expose partial Book settlement and implement atomic protection.",
   "p0_seed438_recovery": "VERIFIED CI #393 two-tick deterministic replay; second-tick numerical output and explicit authority assertions committed 0803b419, pending exact-head CI",
   "p0_seed453_checkpoint_rejection": "PROVISIONAL: seed453 test committed bfe621e; rejected underfunded tending must preserve checkpoint bytes and Book, then affordable tending must survive restart. Exact-head CI pending; no fresh residuals.",
   "p0_seed454_missing_account": "PROVISIONAL: source-only isolated preflight fixture; removes Founder energy key in temporary defaultdict with audit mocked only during invalid-state preflight; restores canonical mapping and asserts audit. Not yet executed.",
