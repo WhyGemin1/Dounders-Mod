@@ -132,6 +132,13 @@ def tend_parent(sim, founder, target, decision_id):
     knowledge = sim.seeds.owner_reserve_knowledge.get(realm_id, {}).get(founder)
     if knowledge is None or sim.tick - knowledge['tick'] > 4:
         raise ValueError('fresh parent reserve observation required')
+    # A different steward may have replenished the Realm since observation.
+    # Do not consume a Founder's scarce chemical fuel when the authoritative
+    # Book already holds the full five-day upkeep reserve. This is a guard,
+    # not a free resource transfer; existing receipts replay above it.
+    realm = sim.seeds.plants[realm_id]
+    if sim.book.energy.get(f'reserve:{realm_id}', 0.) >= 5.0 * realm['upkeep'] - 1e-9:
+        raise ValueError('parent Realm already sufficiently funded')
     current = sim.book.energy.get(f'founder:{founder}', 0.)
     if current + 1e-9 < amount + .12:
         raise ValueError('insufficient existing Founder chemical work reserve')
