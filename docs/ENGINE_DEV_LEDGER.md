@@ -1423,3 +1423,11 @@
 - Execute/test: preceding head e80bf2f SUCCESS in GitHub Actions #604; new test extension NOT locally executed or exact-head CI-verified at this writing. No fresh numerical mass/energy residuals. Archive source extraction and clean local checkout not performed.
 - Ecological/behavioral audit: world.book, world.tick, 100 identities retained; M01 iteration3 repair lock, M05 nonauthority, WorldBox read-only, M02–M07 backlog preserved. PRs draft/unmerged; main unchanged. No long-horizon ecology, native gameplay or external exactly-once ACK verification.
 - Next: verify exact-head CI of new seed476 extension; repair failures, then implement/test genuine Book-funded World Tree creation receipt and conservation path.
+
+## 2026-11-22 07:55 CST — seed477 canonical Book-funded creation draft
+
+- Ground/design: inspected live draft PR #1 (17ad5e9), PR #2 (e671723), actual Core151 SeedRegistry.draft/plant source, authority tests and state. Exact previous-head GitHub Actions run 45024863822 SUCCESS on e671723. Authorized Drive Cycle152 ZIP metadata confirmed; no archive extraction.
+- Implementation/integration: added seed477 regression to tests/test_authority.py at dad06f1777b35ca64d4613cd1cd023d23340425d. Invalid creation kind must leave Book, clock, blueprint and event state unchanged; valid real Core151 realm draft debits .08 Founder energy to environment heat via sole world.book, adds one blueprint/event and passes 100-Founder and conservation assertions. This tests information-first drafting, NOT physical World Tree planting. No second authority or external WorldBox writer.
+- Execute/test: preceding-head CI run 45024863822 SUCCESS; new seed477 test not locally run or exact-head CI verified when committed. No fresh numerical Book residuals measured; conservation tolerance is an assertion. No clean checkout executed.
+- Ecological/behavioral audit: world.book, world.tick, 100 identities, M01 iteration3 repair lock, M05 nonauthority, read-only WorldBox and M02–M07 backlog preserved. PRs draft/unmerged; main unchanged. Physical creation receipt/planting, long-horizon ecology, native gameplay and external exactly-once ACK remain UNVERIFIED.
+- Next: verify exact-head seed477 CI and repair any failure, then test validated physical World Tree planting with durable checkpoint and Book conservation.
