@@ -1309,3 +1309,11 @@
 - Execute/test: prior-head GitHub Actions #561 SUCCESS. Seed467 exact-head CI NOT YET RETURNED; no local clean-checkout test run this cycle, no new measured mass/energy residuals. Regression's 1e-6 tolerance is an unexecuted assertion, not observed evidence.
 - Ecological/behavioral audit: canonical world.book/world.tick and 100 Founder identities remain the authority. M01 iteration3 repair lock, M05 SQLite non-authority, native WorldBox read-only and no auto-merge preserved. Long-horizon ecology and native exactly-once ACK unverified.
 - Next: verify exact-head CI for seed467; repair any failing cross-Founder replay behavior before expanding the request identity boundary to other creation operations.
+
+
+## 2026-11-21 18:02 CST — seed468 cross-Founder identity after world tick
+- Ground/design: live PR #1 remains draft at 17ad5e9; PR #2 draft head a3ba93e. Authorized Cycle152 ZIP fetched (956121 bytes), not imported this cycle. GitHub Actions #564 (44959656356) SUCCESS on prior head a3ba93e, accepting seed467. Read live authority test and state.
+- Implementation: commit 46b21547c46d9d0fdb9cf145e3a1c2500efc419c adds seed468 to existing authority regression, testing that a second Founder cannot reuse the first Founder's Book request ID after one real Core151 tick and durable checkpoint recovery; original Founder replay remains no-op. No new engine, Book, clock or forced tending.
+- Execute/test: prior-head CI SUCCESS; seed468 has NOT been executed locally or verified in CI. No fresh measured mass/energy residuals; tolerance 1e-6 is an assertion only. No native WorldBox game test.
+- Ecological/behavioral audit: one world.book, world.tick, 100 Founder identity contract unchanged; M01 iteration3 repair lock, M05 SQLite nonauthority, external WorldBox read-only boundary preserved. Ecological stability and long horizons unverified.
+- Next: inspect exact-head CI for seed468; fix any failure before production expansion of receipt identity semantics.
