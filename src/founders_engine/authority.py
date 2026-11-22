@@ -224,7 +224,8 @@ class SingleEngineSession:
         # Extremely large Python integers can raise OverflowError in isfinite().
         # Treat them as invalid requests rather than exposing an unhandled
         # numeric conversion error or entering the mutable SeedRegistry.
-        if type(energy) not in (int, float) or energy <= 0:
+        if (type(energy) not in (int, float) or energy <= 0 or
+                abs(energy) > 2**53):
             raise ValueError('invalid stewardship energy')
         try:
             finite_energy = isfinite(energy)
