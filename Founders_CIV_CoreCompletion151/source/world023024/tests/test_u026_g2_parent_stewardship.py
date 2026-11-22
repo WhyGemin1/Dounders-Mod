@@ -84,6 +84,20 @@ class G2ParentStewardshipTests(unittest.TestCase):
                                   len(self.sim.seeds.constructs.events), len(self.logs)))
         self.sim.book.audit()
 
+    def test_partial_concurrent_replenishment_rejects_stale_excess(self):
+        # Another steward partly fills the gap, leaving less than the
+        # original proposed transfer. Never silently overfund or mutate Book.
+        self.sim.book.move(energy=[("founder:F1", "reserve:R1", 0.45)],
+                           operation_id="concurrent-partial")
+        before = (dict(self.sim.book.energy), self.sim.book.seq,
+                  len(self.sim.seeds.constructs.events), len(self.logs))
+        with self.assertRaisesRegex(ValueError, "exceeds current parent reserve shortfall"):
+            tend_parent(self.sim, "F1", ("R1", 0.60), "stale-excess")
+        self.assertEqual(before, (dict(self.sim.book.energy), self.sim.book.seq,
+                                  len(self.sim.seeds.constructs.events), len(self.logs)))
+        self.assertNotIn("parent:steward:R1:F1:stale-excess", self.sim.book.operations)
+        self.sim.book.audit()
+
     def test_exact_retry_does_not_double_spend_or_duplicate_effects(self):
         first = tend_parent(self.sim, "F1", ("R1", 0.30), "decision-1")
         second = tend_parent(self.sim, "F1", ("R1", 0.30), "decision-1")
