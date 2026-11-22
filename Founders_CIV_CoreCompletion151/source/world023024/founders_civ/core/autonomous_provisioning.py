@@ -197,13 +197,11 @@ class TreeProvisioningPolicy:
         try:
             with tree.book.atomic_batch():
                 self._refresh()
-                if tree.state!='active' or tree.sim.seeds.plants[tree.id]['status']!='stable':
-                    self.last_age=tree.age
-                    return False
-                if tree.age%self.food_period==0:
+                inactive=(tree.state!='active' or tree.sim.seeds.plants[tree.id]['status']!='stable')
+                if not inactive and tree.age%self.food_period==0:
                     idx=(tree.age//self.food_period-1)%len(habitats)
                     self._allocate('food',habitats[idx])
-                if tree.age%self.fruit_period==0:
+                if not inactive and tree.age%self.fruit_period==0:
                     idx=(tree.age//self.fruit_period-1)%len(habitats)
                     self._allocate('fruit',habitats[idx])
         except Exception:
@@ -214,7 +212,7 @@ class TreeProvisioningPolicy:
             del self.events[event_count:]
             raise
         self.last_age=tree.age
-        return True
+        return not inactive
 
     def mature_fruit(self):
         tree=self.tree
