@@ -1,6 +1,6 @@
 {
-  "source": "U026 C169: authoritative Book fixtures for C168 atomic-day regression",
-  "files": 529,
+  "source": "U026 C171: fail-closed Tree checkpoint age, strict integer and replay guard",
+  "files": 530,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
     ".github/workflows/u026_g2_acceptance.yml": "5427dae9b78cbcb48831815007df1156c3370ea7e507ece1682ff52def817a3a",
@@ -402,7 +402,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/__init__.py": "2ebe358c0f18620a3d84851fde318dca48f8010775fcebcdbb63f136cba58205",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/canon.py": "c2ed048e8b717897f5a690084d3c339b312a9f15b15a859f443f9231d790d7ae",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "5c0a9ed3f8f99714081ae5f028f17d85b208be0075fcb19afa75a74b5d8470b5",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "cc472995946ae2e1b03f07f4adddaa4f980e5f2d9ad712a93c638fe14a8506d2",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "0a06b3e88dc4fd58c5314da62111c0609f302fab7e2360fbcdff22021a503539",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "73a8454648e9adc0420f78b3d631b80dfc11c6eaf6d63643268b243815e0b5d1",
@@ -530,7 +530,8 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c165_provisioning_refresh_retry.py": "506943cde62b7fd7afbc5710dcf8aa5bc285e4b25496b41e093124dd17abea25",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c166_allocation_retry.py": "b3a031a72b21e69f3f9d43cfbb6788c1139e3298d77ab3f983598b593c292d48",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c167_atomic_refresh.py": "6b918ba41600c718c78bbad2064e23cdecca2636f60c030c19bb16cf0922d39f",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c168_atomic_daily_provisioning.py": "e5a181537c5b426afda173dabd0e99f4ce7d4bcf7c920f7ec3005b1c6831d861"
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c168_atomic_daily_provisioning.py": "e5a181537c5b426afda173dabd0e99f4ce7d4bcf7c920f7ec3005b1c6831d861",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c171_checkpoint_age.py": "b078c28f746d815e8ee625c4a39b43e06b66a09c167a2abe1285a54353bfc483"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
