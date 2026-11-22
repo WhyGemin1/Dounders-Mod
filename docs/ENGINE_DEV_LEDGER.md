@@ -1464,3 +1464,11 @@
 - EXECUTE/TEST: previous-head GitHub CI SUCCESS; seed480 was committed but no exact-head execution or fresh numerical Book residual collected. No local clean-checkout test, native WorldBox gameplay or long-horizon ecology run. Seed480 PROVISIONAL.
 - AUDIT/HANDOFF: one world.book, world.tick, 100 identities, M01 iteration3 repair lock and M05 nonauthority preserved. This test does NOT resolve possible partial settlement across the three sequential construction Book transactions. No main modification or merge.
 - NEXT: inspect seed480 exact-head CI and repair if failing; then fault-inject second/third construction transfer and implement atomic rollback on the existing ConstructRegistry path if partial settlement is confirmed.
+
+## 2026-11-22 13:01 CST — seed480 failed-CI repair
+- Ground: PR #1 remains draft at `17ad5e9`; PR #2 draft at `1932ae6` before this cycle. Authorized Drive ZIP metadata confirmed (956121 bytes); archive contents not downloaded this cycle.
+- Executed GitHub CI inspection: run `45052951941` on `1932ae62190cf890807deaee0858170728937c87` **FAILED**: `Ran 75 tests in 14.087s`, 1 error, 74 pass. `test_seed480_planted_blueprint_cannot_be_planted_twice_after_restart` failed at initial `world.seeds.plant(...)` with `ValueError: not enough Founder work energy`. Source compile and provenance checks passed. No new local checkout tests executed.
+- Implementation: repaired the regression fixture by using `bootstrap(479)` (the same funded scenario proven by seed479 CI) while retaining independent duplicate-plant assertions. Commit `d10dd328ca53e24f978e5a04d3a5fd55cdc89efb`. This changes a test fixture only, not the simulation authority or production mechanics.
+- Conservation: failing CI printed unrelated seed427 post-tick mass residual `-8.9130480773746967e-11` and energy residual `-1.0244548320770264e-08`; **no new seed480 measured residual**. Exact-head repaired CI pending. No WorldBox gameplay or ecological stability testing.
+- Policy: one `world.book`, one `world.tick`, 100 Founder identities; M01 iteration3 lock, M05 nonauthority and read-only WorldBox preserved; no merge or main modification.
+- NEXT: confirm exact-head CI after repair; then fault-inject each of three physical construction Book transactions and implement atomic rollback if partial settlement is reproducible.
