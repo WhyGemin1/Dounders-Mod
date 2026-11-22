@@ -1431,3 +1431,11 @@
 - Execute/test: preceding-head CI run 45024863822 SUCCESS; new seed477 test not locally run or exact-head CI verified when committed. No fresh numerical Book residuals measured; conservation tolerance is an assertion. No clean checkout executed.
 - Ecological/behavioral audit: world.book, world.tick, 100 identities, M01 iteration3 repair lock, M05 nonauthority, read-only WorldBox and M02–M07 backlog preserved. PRs draft/unmerged; main unchanged. Physical creation receipt/planting, long-horizon ecology, native gameplay and external exactly-once ACK remain UNVERIFIED.
 - Next: verify exact-head seed477 CI and repair any failure, then test validated physical World Tree planting with durable checkpoint and Book conservation.
+
+## 2026-11-22 09:04 CST — seed478 unvalidated physical planting restart gate
+
+- Ground/design: read live canonical Core151 SeedRegistry.draft/plant, authority tests, ACTIVE_ENGINE and ledger; authorized Drive Cycle152 archive metadata confirmed. Previous exact-head GitHub Actions run 45030089866 SUCCESS at 2752ded (seed477).
+- Implementation/integration: committed seed478 regression at 383387d1c2c0869d9c788ce51cc6719ae3cd2d77. Draft a realm through real canonical Book, checkpoint and reload, reject unvalidated physical planting, assert unchanged Book mass/energy/history/seq, clock, plants and creation events; reload persisted state and audit 100 Founders. No alternative engine, no production mechanics changed.
+- Execute/test: previous-head CI success; new seed478 test NOT executed locally or in exact-head CI at time of commit. No numerical conservation residuals measured; <=1e-6 is an assertion only.
+- Ecological/behavioral audit: one world.book, world.tick, Founder registry, M01 iteration3 repair lock, M05 nonauthority, read-only WorldBox and M02–M07 backlog preserved. PRs remain draft/unmerged; main untouched. Physical World Tree planting, long-horizon ecology, native gameplay and external exactly-once ACK unverified.
+- Next: verify exact-head seed478 CI, repair failure if any, then test validated physical World Tree planting with durable Book conservation.
