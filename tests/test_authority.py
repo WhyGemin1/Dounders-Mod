@@ -11,6 +11,32 @@ class SingleAuthorityTests(unittest.TestCase):
     def setUp(self):
         self.session = SingleEngineSession(self.world, self.tree_id)
 
+    def test_m01_whitespace_request_components_fail_without_book_mutation(self):
+        """Whitespace-padded request identities cannot create ambiguous durable receipts."""
+        world, _, tree_id = bootstrap(469)
+        session = SingleEngineSession(world, tree_id)
+        founder = next(iter(world.founders.people))
+        tree = world.world_trees.worlds[tree_id]
+        habitat = next(iter(tree.habitats))
+        before = (world.tick, world.book.seq, dict(world.book.mass),
+                  dict(world.book.energy), dict(world.book.request_receipts),
+                  len(world.book.transaction_history))
+        for source_id, revision in (
+                (' source', 'rev'), ('source ', 'rev'),
+                ('source', ' rev'), ('source', 'rev ')):
+            with self.subTest(source_id=source_id, revision=revision):
+                with self.assertRaises(ValueError):
+                    session.harvest(founder, source_id, revision, habitat,
+                                    'plant', .01, 0.)
+                self.assertEqual(
+                    (world.tick, world.book.seq, dict(world.book.mass),
+                     dict(world.book.energy), dict(world.book.request_receipts),
+                     len(world.book.transaction_history)), before)
+                proof = session.audit()
+                self.assertEqual(proof.founder_count, 100)
+                self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+                self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
     def test_m01_gateway_authority_binding_cannot_be_replaced(self):
         """The adapter must not be rebound to a different resource authority."""
         world, _, tree_id = bootstrap(420)
