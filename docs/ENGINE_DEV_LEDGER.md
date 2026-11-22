@@ -1325,3 +1325,11 @@
 - Execute/test: prior-head GitHub Actions #567 SUCCESS. The new persisted-state assertion has NOT been run locally or accepted by exact-head CI. No fresh numerical mass/energy residuals measured. Native WorldBox gameplay NOT RUN.
 - Ecological/behavioral audit: existing world.book and world.tick remain authoritative, 100 Founder identities unchanged; M01 iteration3 lock, M05 SQLite nonauthority and native WorldBox read-only restrictions preserved. Ecological stability and long horizons unverified. No merge/main changes.
 - Next: verify CI for this ledger head; if green, review Book receipt identity across non-tending creation operations before changing production behavior.
+
+
+## 2026-11-21 20:04 CST — seed468 byte-level checkpoint replay gate
+- Ground/design: inspected live draft PR #1 (head 17ad5e9) and PR #2 (head 0c618758), authority test and checkpoint writer. Authorized Drive Cycle152 ZIP fetched (956121 bytes). Exact-head Actions #569 run 44969418228 completed SUCCESS on 0c6187581d6b2d6a4b255df6ccd4e2db931f9cff; this verifies preceding persisted-state regression only.
+- Implementation: test-only commit 9b5a274f5f3eb1175fde3fbe247535406b6ffd97 extends seed468 to compare durable checkpoint bytes before and after rejected cross-Founder request-ID collision and legitimate original-Founder replay. No new engine, Book, clock, or gameplay mechanic. State updated at e54f7268255af405cdc95f885314b2a58418b8dd.
+- Execute/test: previous-head CI #569 SUCCESS; NEW byte-level assertion not locally executed and exact-head CI pending. No fresh numerical mass/energy residuals; 1e-6 remains a test tolerance. Native WorldBox tests NOT RUN.
+- Ecological/behavioral audit: canonical world.book, world.tick, 100 Founder identities, M01 iteration3 repair lock, M05 SQLite nonauthority, and external WorldBox read-only restriction unchanged. Byte-level determinism may fail even when canonical state is identical; distinguish serializer differences before production changes. No main modification or merge. Long-horizon ecology unverified.
+- Next: verify exact-head CI, resolve any byte-level test failure, then review receipt identity across other creation operations.
