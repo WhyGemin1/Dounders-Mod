@@ -1415,3 +1415,11 @@
 - Ecological/behavioral audit and handoff: world.book remains sole writable material/energy Book, world.tick sole clock, 100 Founder IDs authoritative. M01 iteration3 repair lock, M05 SQLite nonauthority, read-only external WorldBox and M02–M07 backlog unchanged. No merge or main change. Long-horizon ecology, native gameplay and external exactly-once ACK UNVERIFIED.
 - Next: verify exact-head seed476 CI and repair failures before adding another production behavior or test.
 
+
+## 2026-11-22 06:55 CST — seed476 independent-Founder harvest recovery
+
+- Ground/design: inspected live draft PR #1 (17ad5e9), PR #2 (e80bf2f), authority tests, ACTIVE_ENGINE.json and ledger; authorized Cycle152 ZIP Drive metadata confirmed (956121 bytes). Exact previous-head CI GitHub Actions #604 (run 45020531338) SUCCESS on e80bf2f; no assertion that the new extension has passed.
+- Implementation/integration: extended existing seed476 test on the same Core151 authority branch (commit b2e9b4109c1f7b2155071bfb44b43cb853c86b33). After rejected cross-Founder receipt collision, second Founder must successfully settle an independent request exactly once, replay without a second debit, survive checkpoint reload, and pass 100-Founder and Book conservation audits. No new engine or production mechanics. ACTIVE_ENGINE.json updated at 260b5d108efabbf22a1275f77e7b447d6e1832ec.
+- Execute/test: preceding head e80bf2f SUCCESS in GitHub Actions #604; new test extension NOT locally executed or exact-head CI-verified at this writing. No fresh numerical mass/energy residuals. Archive source extraction and clean local checkout not performed.
+- Ecological/behavioral audit: world.book, world.tick, 100 identities retained; M01 iteration3 repair lock, M05 nonauthority, WorldBox read-only, M02–M07 backlog preserved. PRs draft/unmerged; main unchanged. No long-horizon ecology, native gameplay or external exactly-once ACK verification.
+- Next: verify exact-head CI of new seed476 extension; repair failures, then implement/test genuine Book-funded World Tree creation receipt and conservation path.
