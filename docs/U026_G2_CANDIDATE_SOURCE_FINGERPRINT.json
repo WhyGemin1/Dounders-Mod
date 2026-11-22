@@ -1,6 +1,6 @@
 {
-  "source": "U026 C166: retry failed physical allocations without duplicate lots",
-  "files": 527,
+  "source": "U026 C167: atomic multi-lot Tree refresh rollback",
+  "files": 528,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
     ".github/workflows/u026_g2_acceptance.yml": "5427dae9b78cbcb48831815007df1156c3370ea7e507ece1682ff52def817a3a",
@@ -402,7 +402,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/__init__.py": "2ebe358c0f18620a3d84851fde318dca48f8010775fcebcdbb63f136cba58205",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/canon.py": "c2ed048e8b717897f5a690084d3c339b312a9f15b15a859f443f9231d790d7ae",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "4640ad9e5f75f875fb03a4aa3c6f9adcd02aa06b35595e3cc7e7e74204067657",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "d17d09b8b03ddb0be137605f6f2edfb345aeb276717d56c947ce98438be9dd2c",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "0a06b3e88dc4fd58c5314da62111c0609f302fab7e2360fbcdff22021a503539",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "73a8454648e9adc0420f78b3d631b80dfc11c6eaf6d63643268b243815e0b5d1",
@@ -528,7 +528,8 @@
     "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
     "tools/u026_g2_matched_acceptance.py": "f9f61d8ead5e3db85a54fd3fba998e9f39dd265a8617b5febfa317415bbef148",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c165_provisioning_refresh_retry.py": "2cdcdaaf537b2d0423ee420e703c7d5e06fae27e3d61e9e2fc766f0678b37dba",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c166_allocation_retry.py": "2918f8b797b9bae3609ed88c8104a6067d3c0aae9adbb98f4cf1b9bb33973f76"
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c166_allocation_retry.py": "2918f8b797b9bae3609ed88c8104a6067d3c0aae9adbb98f4cf1b9bb33973f76",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c167_atomic_refresh.py": "6b918ba41600c718c78bbad2064e23cdecca2636f60c030c19bb16cf0922d39f"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
@@ -626,6 +627,6 @@
     "tools/u026_g2_exact_source_audit.py",
     "tools/u026_g2_matched_acceptance.py"
   ],
-  "gate_decision": "C130_PENDING_CI_AND_REVIEW",
+  "gate_decision": "C167_PENDING_CI_AND_REVIEW",
   "candidate_note": "Development experimental; CI, conservation, replay, ecology and review required"
 }
