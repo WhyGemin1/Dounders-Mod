@@ -1487,3 +1487,12 @@
 - Evidence: pre-repair CI #627 **FAILED** (75/76), confirmed seq change. Post-repair exact-head CI **NOT YET VERIFIED**; no local clean-checkout tests executed and no fresh Book numerical residuals measured. Previous seed427 residuals: mass -8.913048077e-11, energy -1.024454832e-8 (not repair-specific).
 - Constraints: main unchanged; PR #2 draft; M01 iteration3 lock, M05 nonauthority, read-only WorldBox, M02–M07 backlog unchanged. No native game or ecological long-horizon tests.
 - Next: verify post-repair CI and repair any failures; add an explicit third-leg insufficiency and checkpoint replay regression to prove all-or-nothing settlement under realistic funding failures.
+
+## 2026-11-22 15:55 CST — cycle: atomic construction provenance gate repair
+- Ground: inspected live PR #1 (draft 17ad5e9), PR #2 (draft 105c8f0), authorized Drive ZIP metadata, CI #631 run 45069374768 and failed job 137352681872.
+- Observed: CI #631 FAILED at `Source provenance drift verifier regression`: 8 importer tests, 1 failure, 2 skips. `founders_civ/experimental/constructs.py` expected Git blob 66b56f3cc4ff2a9cec078d09ae2c72bd051a105a; actual Git blob 0e538fa7c75aaf50b62483d0b778379298e5d156. Downstream engine and Book test steps were skipped.
+- Implementation: updated the reviewed source fingerprint in `tools/test_import_core151.py` to match the actual committed atomic-construction implementation (commit 319f11e). No new Book, clock, Founder registry, game writer, or simulation engine.
+- State: updated `engine/ACTIVE_ENGINE.json` (commit c3f923d). This ledger entry is append-only.
+- Verification: actual GitHub CI #631 failure verified; repaired fingerprint equals GitHub `fetch_file` blob SHA. New exact-head CI not yet verified. No local clean-checkout unittest or fresh mass/energy residuals this cycle. Production atomicity remains PROVISIONAL until CI and fault-injection pass.
+- Restrictions: main unchanged, PRs remain draft, M01 iteration-3 lock and M05 nonauthority unchanged; native WorldBox and long-horizon ecology BLOCKED/unverified.
+- Next: verify exact-head GitHub Actions on ledger commit, resolve any construction regressions, and obtain numerical Book audit plus save/restart evidence.
