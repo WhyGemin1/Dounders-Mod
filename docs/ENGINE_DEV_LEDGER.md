@@ -1317,3 +1317,11 @@
 - Execute/test: prior-head CI SUCCESS; seed468 has NOT been executed locally or verified in CI. No fresh measured mass/energy residuals; tolerance 1e-6 is an assertion only. No native WorldBox game test.
 - Ecological/behavioral audit: one world.book, world.tick, 100 Founder identity contract unchanged; M01 iteration3 repair lock, M05 SQLite nonauthority, external WorldBox read-only boundary preserved. Ecological stability and long horizons unverified.
 - Next: inspect exact-head CI for seed468; fix any failure before production expansion of receipt identity semantics.
+
+
+## 2026-11-21 19:00 CST — seed468 persisted-state acceptance extension
+- Ground/design: live PR #1 and #2 remain draft/unmerged. Exact-head GitHub Actions #567 (44964726221) SUCCESS on 4e68cf3, accepting original seed468. Authorized Cycle152 Drive ZIP metadata verified (956121 bytes); no archive import this cycle.
+- Implementation: commit c403073c3114af667317507a9a6a70da27940d49 extends existing seed468 regression to reload the durable checkpoint after rejected cross-Founder replay and legitimate original-Founder replay. It compares persisted canonical clock, Book sequence, mass/energy, receipts, transaction history, and creation-event counts with the pre-replay snapshot, then audits 100 identities and conservation. No new engine or production behavior change. ACTIVE_ENGINE.json updated at 56f9b9684a940c229147ca12dc2f5369a31331ea.
+- Execute/test: prior-head GitHub Actions #567 SUCCESS. The new persisted-state assertion has NOT been run locally or accepted by exact-head CI. No fresh numerical mass/energy residuals measured. Native WorldBox gameplay NOT RUN.
+- Ecological/behavioral audit: existing world.book and world.tick remain authoritative, 100 Founder identities unchanged; M01 iteration3 lock, M05 SQLite nonauthority and native WorldBox read-only restrictions preserved. Ecological stability and long horizons unverified. No merge/main changes.
+- Next: verify CI for this ledger head; if green, review Book receipt identity across non-tending creation operations before changing production behavior.
