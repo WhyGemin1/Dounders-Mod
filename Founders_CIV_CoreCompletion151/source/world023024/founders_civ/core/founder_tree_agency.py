@@ -46,7 +46,9 @@ def _realm_to_develop(sim):
 def _own_fruit(sim, founder):
     """Fruit personally harvested OR accepted through a real Book agreement."""
     from founders_civ.core.founder_exchange import owned_lots, _origin
-    for lot in owned_lots(sim, founder, 'fruit'):
+    # Stable lot ordering prevents equivalent checkpoint inventories from
+    # choosing different physical fruit for the same funded blueprint.
+    for lot in sorted(owned_lots(sim, founder, 'fruit'), key=str):
         tid, tree = _origin(sim, 'fruit', lot)
         if tree is not None:
             yield tid, lot
