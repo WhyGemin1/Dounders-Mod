@@ -1884,6 +1884,29 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(audit.founder_count, 100)
             self.assertLessEqual(abs(audit.book_mass_error), 1e-6)
             self.assertLessEqual(abs(audit.book_energy_error), 1e-6)
+            # A rejected cross-Founder collision must not prevent that Founder
+            # from independently harvesting with a fresh request identity.
+            next_seq = p.book.seq
+            independent = durable.checkpointed_harvest(
+                path, second, 'seed476-independent', 'v1', habitat, 'plant', .01, 0.)
+            self.assertEqual(p.book.seq, next_seq + 1)
+            settled = (p.tick, p.book.seq, dict(p.book.mass),
+                       dict(p.book.energy), dict(p.book.request_receipts),
+                       list(p.book.transaction_history))
+            self.assertEqual(independent, durable.checkpointed_harvest(
+                path, second, 'seed476-independent', 'v1', habitat, 'plant', .01, 0.))
+            self.assertEqual(settled, (
+                p.tick, p.book.seq, dict(p.book.mass), dict(p.book.energy),
+                dict(p.book.request_receipts), list(p.book.transaction_history)))
+            restarted = load_checkpoint(path, expected_tree_id=tree_id)
+            q = restarted.world
+            self.assertEqual(settled, (
+                q.tick, q.book.seq, dict(q.book.mass), dict(q.book.energy),
+                dict(q.book.request_receipts), list(q.book.transaction_history)))
+            proof = restarted.audit()
+            self.assertEqual(proof.founder_count, 100)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
 if __name__ == '__main__':
     unittest.main()
