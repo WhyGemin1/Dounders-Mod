@@ -4,11 +4,12 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from founders_civ.core.autonomous_provisioning import TreeProvisioningPolicy
+from founders_civ.core.ledger import Book
 
 
 class RefreshRetryTests(unittest.TestCase):
     def test_failed_refresh_does_not_consume_age(self):
-        book = object()
+        book = Book()
         tree = SimpleNamespace(
             book=book, sim=SimpleNamespace(book=book),
             world_id=None, habitats=('river',), age=3,
