@@ -182,29 +182,32 @@ class TreeProvisioningPolicy:
         # A refresh can decay several lots. Treat their Book transfers and
         # policy records as one retryable checkpoint operation; otherwise a
         # later failure leaves earlier decay/events committed on the same age.
-        lot_states={lot:rec.state for lot,rec in self.lots.items()}
+        # A scheduler day is one physical Book action: decay and all habitat
+        # allocations must commit together, or the same day remains retryable.
+        # Restore local lot identity/state and events if any later allocation
+        # rejects, including after an earlier allocation succeeded.
+        prior_lots=dict(self.lots)
+        prior_states={lot:rec.state for lot,rec in self.lots.items()}
         event_count=len(self.events)
         try:
             with tree.book.atomic_batch():
                 self._refresh()
+                if tree.state!='active' or tree.sim.seeds.plants[tree.id]['status']!='stable':
+                    self.last_age=tree.age
+                    return False
+                if tree.age%self.food_period==0:
+                    idx=(tree.age//self.food_period-1)%len(habitats)
+                    self._allocate('food',habitats[idx])
+                if tree.age%self.fruit_period==0:
+                    idx=(tree.age//self.fruit_period-1)%len(habitats)
+                    self._allocate('fruit',habitats[idx])
         except Exception:
-            for lot,state in lot_states.items():
+            self.lots.clear()
+            self.lots.update(prior_lots)
+            for lot,state in prior_states.items():
                 self.lots[lot].state=state
             del self.events[event_count:]
             raise
-        if tree.state!='active' or tree.sim.seeds.plants[tree.id]['status']!='stable':
-            self.last_age=tree.age
-            return False
-        # Deterministic habitat rotation, never an artificial time currency.
-        habitats=tuple(tree.habitats)
-        if tree.age%self.food_period==0:
-            idx=(tree.age//self.food_period-1)%len(habitats)
-            self._allocate('food',habitats[idx])
-        if tree.age%self.fruit_period==0:
-            idx=(tree.age//self.fruit_period-1)%len(habitats)
-            self._allocate('fruit',habitats[idx])
-        # Commit the age only after all attempted Book-backed allocations
-        # return. A raised failure must remain retryable at the same age.
         self.last_age=tree.age
         return True
 
