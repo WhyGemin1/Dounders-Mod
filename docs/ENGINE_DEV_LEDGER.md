@@ -1356,3 +1356,12 @@
 - Execute/test: prior-head GitHub Actions #579 SUCCESS (all reported job steps); new seed470 test not executed locally, exact-head GitHub CI not yet verified. No fresh mass/energy residuals. No clean-checkout local unittest or native WorldBox gameplay in this run.
 - Ecological/behavioral audit: world.book sole resource authority, world.tick sole clock, 100 Founder identities unchanged. M01 iteration3 repair lock, M05 SQLite nonauthority, external WorldBox read-only and no main merge preserved. Long-horizon ecological stability and native ACK remain unverified.
 - Next: verify exact-head CI on ledger head; if seed470 fails, correct it before expanding any behavior.
+
+## 2026-11-22 — seed471 tending numeric-input rejection
+
+- Ground: PR #1 and PR #2 remain draft/unmerged; PR #2 previous head `5e4523b1ad088618ef8c377cba25c32df178240a` passed GitHub Actions run #583 (`44987234942`). No main modification.
+- Integration: appended `test_seed471_invalid_tending_numeric_types_leave_canonical_book_unchanged` to existing `tests/test_authority.py`, commit `c37b886345148be555281943899fb1f1e2d9a3b3`. Checks boolean, zero, negative, nonfinite, string and complex tending amounts without Book/clock/creation mutation; no new engine, Book, or production behavior.
+- Local execution on separately extracted authorized Drive ZIP (SHA256 `29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8`): `python -m unittest -v test_world_tree_023.py` from `Founders_CIV_CoreCompletion151/source/world023024` => **15 tests, OK** (6.594s). This is not a GitHub clean-checkout test and does not execute seed471.
+- Book audit: no fresh numeric mass/energy residuals measured for branch; seed471 asserts both absolute residuals <= 1e-6, **PROVISIONAL** pending CI. Prior-head CI **VERIFIED**, new-head CI **UNVERIFIED**.
+- Preserved: canonical `world.book`, `world.tick`, 100 Founder identities, M01 iteration3 lock, M05 nonauthority, read-only WorldBox boundary, M02–M07 backlog. Native WorldBox gameplay and ecological long horizons **BLOCKED/UNVERIFIED**.
+- Next: verify exact-head CI for seed471; diagnose any failures before extending production Book-funded creation operations.
