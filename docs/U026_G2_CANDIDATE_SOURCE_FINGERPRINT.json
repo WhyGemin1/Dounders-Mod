@@ -1,5 +1,5 @@
 {
-  "source": "U026 C158 reserve-shortfall-aware voluntary parent stewardship; ecological acceptance pending",
+  "source": "U026 C160: concurrent parent stewardship reserve guard",
   "files": 525,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
@@ -409,7 +409,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "2355885bf289771f559799762272ae3dc9d957f8ca1d11defdcccaf3619af63a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "60f171a4080a1ff0c46e763e5b513ca9c328db254bc958831a39f4a45c1953f3",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "0d25571381d1d04522c5868a4b75a878a27743cd6156adde5aa63081586de483",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "34443718889b63a893355c7e5192257ecda00464edf9fe0b6e086f642ab67500",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "2e8ae65991be68a37ce099a32ff63d401e1b1d327bf051d50996c4b43cb1e938",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "decd31a229658d46aca81fd1e82473feac8117b1dfe22485085b6e87951a08bf",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py": "41fd892f3d9d1ffcd72c4a353a5c30d77c155fe356e206261babc1d2b47d9745",
@@ -511,7 +511,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_c012_cross_world_harvest.py": "e65c0f7301d326b84645a548a88e4bbcfa864e59082a755008ddabe70c689686",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_c153_blueprint_selection.py": "dee88b5de4ada6da200ada416c5c532f47785261f94cada1372a1219ff64e620",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_g1_exact_replay.py": "902fe7823597ce93c854f846da806d0ec9e018d0540b10087b6076b154bd665b",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_g2_parent_stewardship.py": "eb1dc232d029dc777f763c8cedd868209a3ba20474417b5d81bc19b71ca3ef69",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_g2_parent_stewardship.py": "1f22698928a532eb63935194b5a8611ccf24048b1bdbd816738eafed35bad9f4",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_v017_compat.py": "6d94da3ede3e69a1130d1a9bd6876446d2599bbcff7973ba27a7168d7d3cc3b4",
     "Founders_CIV_CoreCompletion151/source/world023024/tools/build_canon_doc.py": "d5c75e7ef8432cea7b4761ce07498fb903a3a228c02ede5780385cb3668f7554",
     "Founders_CIV_CoreCompletion151/source/world023024/tools/build_v019_doc.py": "00593af1b5307abbc06a3490a746eb99283417ffab9199e304c2ad6143a1e5c5",
@@ -625,5 +625,5 @@
     "tools/u026_g2_matched_acceptance.py"
   ],
   "gate_decision": "C130_PENDING_CI_AND_REVIEW",
-  "candidate_note": "C156 registers previously unlisted executable regression test without changing its content; full CI and ecological acceptance required."
+  "candidate_note": "C160 changes source and regression test; full CI and ecological acceptance required"
 }
