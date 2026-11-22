@@ -171,6 +171,11 @@ class TreeProvisioningPolicy:
                     rec.state not in ('stored', 'mature', 'transferred', 'decayed') or
                     (rec.kind == 'food' and rec.state == 'mature')):
                 raise ValueError('invalid Tree provisioned-lot checkpoint')
+        # Restored checkpoint age is a strict scheduler integer. A Boolean or
+        # fractional last_age can otherwise compare equal to a real day and
+        # silently skip physical production or decay without a Book entry.
+        if type(self.last_age) is not int or self.last_age < -1:
+            raise ValueError('invalid Tree provisioning checkpoint age')
         if tree.age==self.last_age:return False
         if tree.age<self.last_age:raise ValueError('Tree age reversed; restore consistent checkpoint')
         # Refresh can fail closed on a physical Book operation. Do not mark
