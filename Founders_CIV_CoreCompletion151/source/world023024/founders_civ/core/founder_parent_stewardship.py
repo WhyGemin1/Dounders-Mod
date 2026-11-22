@@ -138,6 +138,9 @@ def tend_parent(sim, founder, target, decision_id):
     # not a free resource transfer; existing receipts replay above it.
     realm = sim.seeds.plants[realm_id]
     if sim.book.energy.get(f'reserve:{realm_id}', 0.) >= 5.0 * realm['upkeep'] - 1e-9:
+        # The observation is no longer actionable. Do not keep proposing the
+        # same failed contribution on subsequent autonomous turns.
+        sim.seeds.owner_reserve_knowledge.get(realm_id, {}).pop(founder, None)
         raise ValueError('parent Realm already sufficiently funded')
     # Fail closed if a second steward has partially filled the shortfall.
     # The decision identity binds the requested amount; silently reducing it
