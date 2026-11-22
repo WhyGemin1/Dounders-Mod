@@ -1472,3 +1472,10 @@
 - Conservation: failing CI printed unrelated seed427 post-tick mass residual `-8.9130480773746967e-11` and energy residual `-1.0244548320770264e-08`; **no new seed480 measured residual**. Exact-head repaired CI pending. No WorldBox gameplay or ecological stability testing.
 - Policy: one `world.book`, one `world.tick`, 100 Founder identities; M01 iteration3 lock, M05 nonauthority and read-only WorldBox preserved; no merge or main modification.
 - NEXT: confirm exact-head CI after repair; then fault-inject each of three physical construction Book transactions and implement atomic rollback if partial settlement is reproducible.
+
+## 2026-11-22 14:03 CST — seed481 construction atomicity fault injection
+
+- Ground: GitHub Actions run 45058458633 succeeded for seed480 repaired head d49c082. PR #1/#2 remain review boundaries; no main modification intended.
+- Implementation: commit 6b7e22a adds a regression on the existing Core151 SeedRegistry planting path. It injects an OSError on the second canonical Book.apply call, asserting complete rollback of Book balances, sequence, history, physical creation events and blueprint stage. This is a red-risk regression; no production rollback implementation yet.
+- Execution: previous-head CI verified; new seed481 exact-head CI not yet verified. No clean-checkout local unittest or fresh numerical conservation residuals measured.
+- Audit: one world.book, world.tick and 100 Founder identities remain requirements. M01 iteration3 repair lock, M05 nonauthority and read-only WorldBox unchanged. Next: inspect seed481 CI; if red, implement atomic construction settlement in the existing Core151 path and rerun tests.
