@@ -1908,5 +1908,41 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
             self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+    def test_seed477_creation_draft_is_book_funded_and_invalid_kind_is_read_only(self):
+        """Real Core151 creation drafting uses the canonical Book, never a shadow ledger."""
+        world, _, tree_id = bootstrap(477)
+        session = SingleEngineSession(world, tree_id)
+        founder = next(iter(world.founders.people))
+        before = (world.tick, world.book.seq, dict(world.book.mass),
+                  dict(world.book.energy), len(world.seeds.blueprints),
+                  len(world.seeds.events))
+        with self.assertRaises(ValueError):
+            world.seeds.draft(founder, 'invalid-kind', 'Rejected creation')
+        self.assertEqual(before, (
+            world.tick, world.book.seq, dict(world.book.mass),
+            dict(world.book.energy), len(world.seeds.blueprints),
+            len(world.seeds.events)))
+        # Drafting is an actual information-first Core151 action funded by
+        # the same Book; it does not create physical material or a second world.
+        founder_account = f'founder:{founder}'
+        heat_before = world.book.energy['environment:heat']
+        energy_before = world.book.energy[founder_account]
+        draft = world.seeds.draft(founder, 'realm', 'Seed 477 Realm', x=70., y=70.)
+        self.assertEqual(draft.author, founder)
+        self.assertEqual(world.book.seq, before[1] + 1)
+        self.assertAlmostEqual(energy_before - world.book.energy[founder_account], .08)
+        self.assertAlmostEqual(world.book.energy['environment:heat'] - heat_before, .08)
+        self.assertEqual(dict(world.book.mass), before[2])
+        self.assertEqual(len(world.seeds.blueprints), before[4] + 1)
+        self.assertEqual(len(world.seeds.events), before[5] + 1)
+        self.assertIs(world.founders.book, world.book)
+        self.assertIs(world.world_trees.worlds[tree_id].book, world.book)
+        session._expected_book_sequence = world.book.seq
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
+
 if __name__ == '__main__':
     unittest.main()
