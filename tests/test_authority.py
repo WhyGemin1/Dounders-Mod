@@ -37,6 +37,29 @@ class SingleAuthorityTests(unittest.TestCase):
                 self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
                 self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+
+    def test_seed471_invalid_tending_numeric_types_leave_canonical_book_unchanged(self):
+        """Nonfinite, boolean, and nonpositive tending inputs never settle."""
+        world, _, tree_id = bootstrap(471)
+        session = SingleEngineSession(world, tree_id)
+        founder = next(iter(world.founders.people))
+        before = (world.tick, world.book.seq, dict(world.book.mass),
+                  dict(world.book.energy), dict(world.book.request_receipts),
+                  list(world.book.transaction_history), len(world.seeds.events))
+        for energy in (True, False, 0, -0.0, -1, float('nan'),
+                       float('inf'), float('-inf'), '1', 1j):
+            with self.subTest(energy=repr(energy)):
+                with self.assertRaises(ValueError):
+                    session.tend_tree(founder, tree_id, energy)
+                self.assertEqual(before, (
+                    world.tick, world.book.seq, dict(world.book.mass),
+                    dict(world.book.energy), dict(world.book.request_receipts),
+                    list(world.book.transaction_history), len(world.seeds.events)))
+                audit = session.audit()
+                self.assertEqual(audit.founder_count, 100)
+                self.assertLessEqual(abs(audit.book_mass_error), 1e-6)
+                self.assertLessEqual(abs(audit.book_energy_error), 1e-6)
+
     def test_seed470_tending_precision_guard_preserves_book_and_clock(self):
         """Oversized tending amounts cannot silently round into Book transfers."""
         world, _, tree_id = bootstrap(470)
