@@ -238,9 +238,13 @@ def test_c138_tree_proposals_never_use_epsilon_fuel_overdraft(monkeypatch):
             'kind': 'realm', 'status': 'stable', 'id': 'R1'}}),
         book=SimpleNamespace(energy={'founder:F002': .08 - 5e-11}),
     )
-    assert agency.propose_self_trees(sim, 'F002', []) == []
-    sim.book.energy['founder:F002'] = .08
+    # Voluntary design is free; no fuel debit is permitted for planning.
+    before = sim.book.energy['founder:F002']
     assert any(p[1] == 'seed_design' for p in agency.propose_self_trees(sim, 'F002', []))
+    assert sim.book.energy['founder:F002'] == before
+    sim.book.energy['founder:F002'] = 0.0
+    assert any(p[1] == 'seed_design' for p in agency.propose_self_trees(sim, 'F002', []))
+    assert sim.book.energy['founder:F002'] == 0.0
 
 
 def test_c140_review_selects_funded_peer_regardless_of_contact_order():
