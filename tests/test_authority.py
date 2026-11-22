@@ -130,6 +130,50 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(durable.audit().founder_count, 100)
 
 
+    def test_seed474_harvest_identity_rejection_after_tick_and_restart(self):
+        """Malformed M01 harvest identity must not mutate a restarted real Core151 Book."""
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+        world, _, tree_id = bootstrap(474)
+        session = SingleEngineSession(world, tree_id)
+        founder = next(iter(world.founders.people))
+        habitat = next(iter(world.world_trees.worlds[tree_id].habitats))
+        tick_before = world.tick
+        session.step()
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'world.checkpoint'
+            save_checkpoint(world, tree_id, path)
+            recovered = load_checkpoint(path, expected_tree_id=tree_id)
+            w = recovered.world
+            self.assertEqual(w.tick, tick_before + 1)
+            before = (w.tick, w.book.seq, dict(w.book.mass),
+                      dict(w.book.energy), dict(w.book.request_receipts),
+                      list(w.book.transaction_history), len(w.seeds.events),
+                      len(w.seeds.constructs.events))
+            for source, revision in ((' source', 'rev'), ('source ', 'rev'),
+                                     ('source', ' rev'), ('source', 'rev ')):
+                with self.subTest(source=source, revision=revision):
+                    with self.assertRaises(ValueError):
+                        recovered.checkpointed_harvest(
+                            path, founder, source, revision, habitat, 'plant', .01, 0.)
+                    self.assertEqual(before, (
+                        w.tick, w.book.seq, dict(w.book.mass),
+                        dict(w.book.energy), dict(w.book.request_receipts),
+                        list(w.book.transaction_history), len(w.seeds.events),
+                        len(w.seeds.constructs.events)))
+                    self.assertFalse(recovered._checkpoint_uncertain)
+            durable = load_checkpoint(path, expected_tree_id=tree_id)
+            p = durable.world
+            self.assertEqual(before, (
+                p.tick, p.book.seq, dict(p.book.mass), dict(p.book.energy),
+                dict(p.book.request_receipts), list(p.book.transaction_history),
+                len(p.seeds.events), len(p.seeds.constructs.events)))
+            proof = durable.audit()
+            self.assertEqual(proof.founder_count, 100)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
     def test_seed471_invalid_tending_numeric_types_leave_canonical_book_unchanged(self):
         """Nonfinite, boolean, and nonpositive tending inputs never settle."""
         world, _, tree_id = bootstrap(471)
