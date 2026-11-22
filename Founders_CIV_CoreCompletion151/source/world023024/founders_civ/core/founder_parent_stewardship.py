@@ -74,7 +74,11 @@ def propose_parent_stewardship(sim, founder):
         existing = sim.book.energy.get(f'founder:{founder}', 0.)
         # Preserve an embodied fuel reserve. Resource scarcity can prevent aid.
         available = max(0., existing - .12)
-        # Fund only the observed five-day shortfall (minimum viable transfer),\n        # rather than draining the Founder by the maximum on every visit.\n        # This preserves chemical fuel for digestion, travel and later care.\n        shortfall = max(0., 5.0 * realm['upkeep'] - predicted)\n        amount = round(min(.60, available, max(.15, shortfall)), 8)
+        # Fund only the observed five-day shortfall (minimum viable transfer),
+        # rather than draining the Founder by the maximum on every visit.
+        # This preserves chemical fuel for digestion, travel and later care.
+        shortfall = max(0., 5.0 * realm['upkeep'] - predicted)
+        amount = round(min(.60, available, max(.15, shortfall)), 8)
         if amount < .15:
             continue
         # A dependent Tree gives a concrete private incentive to maintain
