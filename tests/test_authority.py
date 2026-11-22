@@ -2083,5 +2083,49 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertLessEqual(abs(audit.book_energy_error), 1e-6)
 
 
+
+    def test_seed481_construction_second_book_transaction_failure_is_atomic(self):
+        """A failed physical build must not retain its first Book debit."""
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(479)
+        session = SingleEngineSession(world, tree_id)
+        author = next(iter(world.founders.people))
+        blueprint = world.seeds.draft(author, 'realm', 'Seed 481 Realm', x=70., y=70.)
+        world.seeds.research(author, blueprint.id)
+        session._expected_book_sequence = world.book.seq
+        session.step()
+        if world.tick not in blueprint.research_ticks:
+            world.seeds.research(author, blueprint.id)
+        reviewer = next(a for a, f in world.founders.people.items()
+                        if a != author and f.location == world.founders.people[author].location)
+        world.seeds.validate(reviewer, blueprint.id)
+        session._expected_book_sequence = world.book.seq
+        before = (world.tick, world.book.seq, dict(world.book.mass),
+                  dict(world.book.energy), list(world.book.transaction_history),
+                  len(world.seeds.plants), len(world.seeds.constructs.events))
+        original_apply = world.book.apply
+        calls = [0]
+
+        def fail_second_transaction(*args, **kwargs):
+            calls[0] += 1
+            if calls[0] == 2:
+                raise OSError('injected second construction Book transaction failure')
+            return original_apply(*args, **kwargs)
+
+        with patch.object(world.book, 'apply', side_effect=fail_second_transaction):
+            with self.assertRaisesRegex(OSError, 'second construction'):
+                world.seeds.plant(author, blueprint.id)
+        self.assertEqual(calls[0], 2)
+        self.assertEqual(before, (
+            world.tick, world.book.seq, dict(world.book.mass),
+            dict(world.book.energy), list(world.book.transaction_history),
+            len(world.seeds.plants), len(world.seeds.constructs.events)),
+            'Physical construction partially settled after second transaction failure')
+        self.assertEqual(blueprint.stage, 'validated')
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
 if __name__ == '__main__':
     unittest.main()
