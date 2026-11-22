@@ -2042,7 +2042,9 @@ class SingleAuthorityTests(unittest.TestCase):
         from pathlib import Path
         from tempfile import TemporaryDirectory
         from founders_engine.checkpoint import save_checkpoint, load_checkpoint
-        world, _, tree_id = bootstrap(480)
+        # Reuse the proven funded construction fixture; seed 480's first Founder
+        # has insufficient work energy after the real tick.
+        world, _, tree_id = bootstrap(479)
         session = SingleEngineSession(world, tree_id)
         author = next(iter(world.founders.people))
         blueprint = world.seeds.draft(author, 'realm', 'Seed 480 Realm', x=70., y=70.)
