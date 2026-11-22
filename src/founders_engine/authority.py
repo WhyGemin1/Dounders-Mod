@@ -243,6 +243,13 @@ class SingleEngineSession:
         if (creation is None or creation.get('status') != 'stable' or
                 creation.get('kind') != 'world' or creation.get('id') != tree_id):
             raise ValueError('stable planted World Tree required')
+        # Match canonical Book.move_once identity rules before the registry's
+        # dictionary membership lookup (which otherwise raises TypeError for
+        # unhashable IDs and can accept malformed IDs on fresh tending).
+        if request_id is not None and (
+                not isinstance(request_id, str) or not request_id.strip() or
+                request_id != request_id.strip()):
+            raise ValueError('invalid stewardship request identity')
         # Validate a previously settled Book request before requiring new funds.
         # Book.move_once checks receipt identity/history and performs no debit
         # on replay; fresh requests must still pass the current balance gate.
