@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Seed472 exact-head GitHub Actions run 44996380579 SUCCESS on 7345cb0. Seed473 real-tick/durable-restart malformed request identity regression committed 421fdf3; exact-head execution pending.",
+  "source_status": "Seed473 prior-head CI #592 (run 45000848051) SUCCESS at 7c94eba. Extended seed473 with valid tending after six malformed-ID rejections, idempotent replay, durable reload; source commit 936c7f2, exact-head CI pending.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "Seed472 exact-head PASS run 44996380579; seed473 pending.",
+    "github_ci": "Previous-head seed473 PASS run 45000848051; extended seed473 pending exact-head.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -103,7 +103,7 @@
     "m01_whitespace_identity": "Source fix 46f45f4 and seed469 regression f45fa9b committed; execution pending.",
     "seed470": "PROVISIONAL: new guard rejects tending energy above 2**53 before canonical Book transfer; test committed, CI pending.",
     "seed472": "Source and regression committed, exact-head CI not verified; invalid request IDs must not mutate Book, tick, or creation events.",
-    "seed473": "PROVISIONAL: test committed 421fdf3; malformed request identities after real Core151 tick and checkpoint recovery must not alter Book, clock, creation events, or persisted state; not executed."
+    "seed473": "Previous seed473 PASS CI #592; extension committed 936c7f2, unverified: rejected malformed IDs followed by valid exactly-once Book settlement and durable replay."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -119,7 +119,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "2aa0d3f551867a6c2ef0dcddc46a194f4810a071",
-  "next_engineering_task": "Verify exact-head CI for seed473, repair any failures, then advance a real Book-funded creation behavior with validated receipts.",
+  "next_engineering_task": "Verify exact-head CI for seed473 post-rejection valid tending extension; repair failures, then test actual Tree creation receipt identity and conservation.",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
