@@ -139,6 +139,12 @@ def tend_parent(sim, founder, target, decision_id):
     realm = sim.seeds.plants[realm_id]
     if sim.book.energy.get(f'reserve:{realm_id}', 0.) >= 5.0 * realm['upkeep'] - 1e-9:
         raise ValueError('parent Realm already sufficiently funded')
+    # Fail closed if a second steward has partially filled the shortfall.
+    # The decision identity binds the requested amount; silently reducing it
+    # would make checkpoint replay ambiguous and conceal an overfunded action.
+    actual_shortfall = max(0., 5.0 * realm['upkeep'] - sim.book.energy.get(f'reserve:{realm_id}', 0.))
+    if amount > actual_shortfall + 1e-9:
+        raise ValueError('stewardship amount exceeds current parent reserve shortfall')
     current = sim.book.energy.get(f'founder:{founder}', 0.)
     if current + 1e-9 < amount + .12:
         raise ValueError('insufficient existing Founder chemical work reserve')
