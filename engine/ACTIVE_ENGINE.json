@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "GitHub Actions #583 (44987234942) SUCCESS on prior head 5e4523b; seed471 invalid tending numeric-input regression committed at c37b886, exact-head CI pending. Core151 source remains single authority; no native WorldBox test.",
+  "source_status": "Prior head 4e942ea passed GitHub Actions #586 (44992158648). Seed472 malformed tending request ID validation implemented at 431cc97, regression committed at 70bd922; exact-head CI unverified. Single Core151 authority; no native WorldBox test.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "Prior head 5e4523b PASS in GitHub Actions #583 (44987234942); seed471 exact-head CI not yet verified.",
+    "github_ci": "Prior head 4e942ea PASS GitHub Actions #586 (44992158648); seed472 exact-head CI pending.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
     "clean_checkout": "GitHub Actions PR checkout #443 SUCCESS on previous head; local clean checkout attempted 2026-11-20 but git clone failed: github.com DNS resolution unavailable.",
-    "book_audit_this_cycle": "No new numerical Book residuals for GitHub branch; 15/15 tests PASS on exact authorized Cycle152 archive source (test_world_tree_023.py), not the branch checkout.",
+    "book_audit_this_cycle": "No fresh numerical Book residuals collected. Seed472 checks <=1e-6 but has not executed in CI yet.",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized ZIP downloaded; SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 verified locally; archive-to-checkout comparison not executed",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -101,7 +101,8 @@
     "seed466_depleted_post_tick": "PROVISIONAL: committed 8471265; replay/mismatch/restart assertions after real tick; no exact-head execution yet.",
     "seed466_depleted_replay": "PROVISIONAL: post-tick canonical Book drain correction committed 8dc212d; CI pending.",
     "m01_whitespace_identity": "Source fix 46f45f4 and seed469 regression f45fa9b committed; execution pending.",
-    "seed470": "PROVISIONAL: new guard rejects tending energy above 2**53 before canonical Book transfer; test committed, CI pending."
+    "seed470": "PROVISIONAL: new guard rejects tending energy above 2**53 before canonical Book transfer; test committed, CI pending.",
+    "seed472": "Source and regression committed, exact-head CI not verified; invalid request IDs must not mutate Book, tick, or creation events."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
