@@ -1985,5 +1985,54 @@ class SingleAuthorityTests(unittest.TestCase):
                 list(p.book.transaction_history)))
 
 
+
+    def test_seed479_validated_realm_plant_is_book_funded_and_durable(self):
+        """A real peer-reviewed realm must physically settle in the sole Book."""
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+        world, _, tree_id = bootstrap(479)
+        session = SingleEngineSession(world, tree_id)
+        author = next(iter(world.founders.people))
+        blueprint = world.seeds.draft(author, 'realm', 'Seed 479 Realm', x=70., y=70.)
+        world.seeds.research(author, blueprint.id)
+        world.step()
+        if world.tick not in blueprint.research_ticks:
+            world.seeds.research(author, blueprint.id)
+        reviewer = next(a for a, f in world.founders.people.items()
+                        if a != author and f.location == world.founders.people[author].location)
+        world.seeds.validate(reviewer, blueprint.id)
+        session._expected_book_sequence = world.book.seq
+        before_seq = world.book.seq
+        before_plants = len(world.seeds.plants)
+        planted = world.seeds.plant(author, blueprint.id)
+        self.assertEqual(world.book.seq, before_seq + 2)
+        self.assertEqual(len(world.seeds.plants), before_plants + 1)
+        self.assertEqual(blueprint.stage, 'planted')
+        self.assertEqual(blueprint.planted_id, planted['id'])
+        self.assertIs(world.seeds.constructs.book, world.book)
+        session._expected_book_sequence = world.book.seq
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'world.checkpoint'
+            save_checkpoint(world, tree_id, path)
+            restored = load_checkpoint(path, expected_tree_id=tree_id)
+            w = restored.world
+            self.assertEqual(w.tick, world.tick)
+            self.assertEqual(w.book.seq, world.book.seq)
+            self.assertEqual(dict(w.book.mass), dict(world.book.mass))
+            self.assertEqual(dict(w.book.energy), dict(world.book.energy))
+            self.assertEqual(w.seeds.plants[planted['id']], planted)
+            self.assertEqual(w.seeds.blueprints[blueprint.id].stage, 'planted')
+            self.assertIs(w.seeds.constructs.book, w.book)
+            audit = restored.audit()
+            self.assertEqual(audit.founder_count, 100)
+            self.assertLessEqual(abs(audit.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(audit.book_energy_error), 1e-6)
+
+
 if __name__ == '__main__':
     unittest.main()
