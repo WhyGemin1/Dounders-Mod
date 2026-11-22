@@ -2009,7 +2009,7 @@ class SingleAuthorityTests(unittest.TestCase):
         before_seq = world.book.seq
         before_plants = len(world.seeds.plants)
         planted = world.seeds.plant(author, blueprint.id)
-        self.assertEqual(world.book.seq, before_seq + 3)
+        self.assertEqual(world.book.seq, before_seq + 1)
         self.assertEqual(len(world.seeds.plants), before_plants + 1)
         self.assertEqual(blueprint.stage, 'planted')
         self.assertEqual(blueprint.planted_id, planted['id'])
@@ -2084,8 +2084,8 @@ class SingleAuthorityTests(unittest.TestCase):
 
 
 
-    def test_seed481_construction_second_book_transaction_failure_is_atomic(self):
-        """A failed physical build must not retain its first Book debit."""
+    def test_seed481_construction_book_transaction_failure_is_atomic(self):
+        """Injected canonical Book failure cannot partially fund physical creation."""
         from unittest.mock import patch
         world, _, tree_id = bootstrap(479)
         session = SingleEngineSession(world, tree_id)
@@ -2103,29 +2103,21 @@ class SingleAuthorityTests(unittest.TestCase):
         before = (world.tick, world.book.seq, dict(world.book.mass),
                   dict(world.book.energy), list(world.book.transaction_history),
                   len(world.seeds.plants), len(world.seeds.constructs.events))
-        original_apply = world.book.apply
-        calls = [0]
-
-        def fail_second_transaction(*args, **kwargs):
-            calls[0] += 1
-            if calls[0] == 2:
-                raise OSError('injected second construction Book transaction failure')
-            return original_apply(*args, **kwargs)
-
-        with patch.object(world.book, 'apply', side_effect=fail_second_transaction):
-            with self.assertRaisesRegex(OSError, 'second construction'):
+        with patch.object(world.book, 'apply',
+                          side_effect=OSError('injected construction Book failure')) as apply:
+            with self.assertRaisesRegex(OSError, 'construction Book failure'):
                 world.seeds.plant(author, blueprint.id)
-        self.assertEqual(calls[0], 2)
+        self.assertEqual(apply.call_count, 1)
         self.assertEqual(before, (
             world.tick, world.book.seq, dict(world.book.mass),
             dict(world.book.energy), list(world.book.transaction_history),
-            len(world.seeds.plants), len(world.seeds.constructs.events)),
-            'Physical construction partially settled after second transaction failure')
+            len(world.seeds.plants), len(world.seeds.constructs.events)))
         self.assertEqual(blueprint.stage, 'validated')
         proof = session.audit()
         self.assertEqual(proof.founder_count, 100)
         self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
         self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
 
 if __name__ == '__main__':
     unittest.main()
