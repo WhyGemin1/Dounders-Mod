@@ -38,6 +38,29 @@ class SingleAuthorityTests(unittest.TestCase):
                 self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
 
+    def test_seed472_malformed_tending_request_identity_is_read_only(self):
+        """Reject malformed local request IDs before touching the one Book."""
+        world, _, tree_id = bootstrap(472)
+        session = SingleEngineSession(world, tree_id)
+        founder = next(iter(world.founders.people))
+        before = (world.tick, world.book.seq, dict(world.book.mass),
+                  dict(world.book.energy), dict(world.book.request_receipts),
+                  list(world.book.transaction_history), len(world.seeds.events))
+        for request_id in (True, 1, 0.5, '', ' ', ' padded', 'padded ',
+                           [], {}, ['unhashable']):
+            with self.subTest(request_id=repr(request_id)):
+                with self.assertRaises(ValueError):
+                    session.tend_tree(founder, tree_id, .01,
+                                      request_id=request_id)
+                self.assertEqual(before, (
+                    world.tick, world.book.seq, dict(world.book.mass),
+                    dict(world.book.energy), dict(world.book.request_receipts),
+                    list(world.book.transaction_history), len(world.seeds.events)))
+                audit = session.audit()
+                self.assertEqual(audit.founder_count, 100)
+                self.assertLessEqual(abs(audit.book_mass_error), 1e-6)
+                self.assertLessEqual(abs(audit.book_energy_error), 1e-6)
+
     def test_seed471_invalid_tending_numeric_types_leave_canonical_book_unchanged(self):
         """Nonfinite, boolean, and nonpositive tending inputs never settle."""
         world, _, tree_id = bootstrap(471)
