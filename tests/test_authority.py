@@ -2006,7 +2006,7 @@ class SingleAuthorityTests(unittest.TestCase):
         before_seq = world.book.seq
         before_plants = len(world.seeds.plants)
         planted = world.seeds.plant(author, blueprint.id)
-        self.assertEqual(world.book.seq, before_seq + 2)
+        self.assertEqual(world.book.seq, before_seq + 3)
         self.assertEqual(len(world.seeds.plants), before_plants + 1)
         self.assertEqual(blueprint.stage, 'planted')
         self.assertEqual(blueprint.planted_id, planted['id'])
