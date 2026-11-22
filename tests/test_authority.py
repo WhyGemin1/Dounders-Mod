@@ -1839,5 +1839,51 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
             self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+    def test_seed476_harvest_request_collision_across_founders_after_restart(self):
+        """A settled M01 harvest identity cannot be reassigned to another Founder."""
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+        world, _, tree_id = bootstrap(476)
+        session = SingleEngineSession(world, tree_id)
+        first, second = list(world.founders.people)[:2]
+        habitat = next(iter(world.world_trees.worlds[tree_id].habitats))
+        session.step()
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'world.checkpoint'
+            save_checkpoint(world, tree_id, path)
+            recovered = load_checkpoint(path, expected_tree_id=tree_id)
+            w = recovered.world
+            receipt = recovered.checkpointed_harvest(
+                path, first, 'seed476-harvest', 'v1', habitat, 'plant', .01, 0.)
+            before = (w.tick, w.book.seq, dict(w.book.mass),
+                      dict(w.book.energy), dict(w.book.request_receipts),
+                      list(w.book.transaction_history), len(w.seeds.events),
+                      len(w.seeds.constructs.events))
+            with self.assertRaisesRegex(ValueError, 'different transfer'):
+                recovered.checkpointed_harvest(
+                    path, second, 'seed476-harvest', 'v1', habitat, 'plant', .01, 0.)
+            self.assertFalse(recovered._checkpoint_uncertain)
+            self.assertEqual(before, (
+                w.tick, w.book.seq, dict(w.book.mass), dict(w.book.energy),
+                dict(w.book.request_receipts), list(w.book.transaction_history),
+                len(w.seeds.events), len(w.seeds.constructs.events)))
+            self.assertEqual(receipt, recovered.checkpointed_harvest(
+                path, first, 'seed476-harvest', 'v1', habitat, 'plant', .01, 0.))
+            self.assertEqual(before, (
+                w.tick, w.book.seq, dict(w.book.mass), dict(w.book.energy),
+                dict(w.book.request_receipts), list(w.book.transaction_history),
+                len(w.seeds.events), len(w.seeds.constructs.events)))
+            durable = load_checkpoint(path, expected_tree_id=tree_id)
+            p = durable.world
+            self.assertEqual(before, (
+                p.tick, p.book.seq, dict(p.book.mass), dict(p.book.energy),
+                dict(p.book.request_receipts), list(p.book.transaction_history),
+                len(p.seeds.events), len(p.seeds.constructs.events)))
+            audit = durable.audit()
+            self.assertEqual(audit.founder_count, 100)
+            self.assertLessEqual(abs(audit.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(audit.book_energy_error), 1e-6)
+
 if __name__ == '__main__':
     unittest.main()
