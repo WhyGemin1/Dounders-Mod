@@ -29,9 +29,9 @@ class WorldBoxGatewayM01:
                         material, quantity, chemical_energy=0.0):
         if self.tree.book is not self.book or self.sim.book is not self.book:
             raise ValueError('Book authority changed')
-        if not isinstance(source_id, str) or not source_id.strip():
+        if not isinstance(source_id, str) or not source_id.strip() or source_id != source_id.strip():
             raise ValueError('request source_id required')
-        if not isinstance(revision, str) or not revision.strip():
+        if not isinstance(revision, str) or not revision.strip() or revision != revision.strip():
             raise ValueError('request revision required')
         # The durable receipt key uses ':' as a field delimiter. Reject ambiguous
         # components rather than allowing two different source/revision pairs
