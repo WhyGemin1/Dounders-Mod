@@ -73,7 +73,7 @@ def propose_self_trees(sim, founder, contacts):
         if not any(_own_fruit(sim, founder)):
             return []
         parent = _realm_to_develop(sim)
-        if parent is None or energy < .08:
+        if parent is None:
             return []
         if (sum(p['status'] == 'stable' for p in sim.seeds.plants.values()) + sum(b.stage in ('draft', 'researching', 'validated')
                                          for b in sim.seeds.blueprints.values())) >= 106:
