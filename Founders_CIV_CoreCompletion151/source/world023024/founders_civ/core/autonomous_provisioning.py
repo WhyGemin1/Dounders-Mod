@@ -179,7 +179,19 @@ class TreeProvisioningPolicy:
         # Existing physical lots continue aging after Tree collapse. Only new
         # production requires a living, stable Tree; archived remnants may
         # mature or decay without minting any matter or Creation Energy.
-        self._refresh()
+        # A refresh can decay several lots. Treat their Book transfers and
+        # policy records as one retryable checkpoint operation; otherwise a
+        # later failure leaves earlier decay/events committed on the same age.
+        lot_states={lot:rec.state for lot,rec in self.lots.items()}
+        event_count=len(self.events)
+        try:
+            with tree.book.atomic_batch():
+                self._refresh()
+        except Exception:
+            for lot,state in lot_states.items():
+                self.lots[lot].state=state
+            del self.events[event_count:]
+            raise
         if tree.state!='active' or tree.sim.seeds.plants[tree.id]['status']!='stable':
             self.last_age=tree.age
             return False
