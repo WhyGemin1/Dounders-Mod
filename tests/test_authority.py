@@ -104,6 +104,30 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(proof.founder_count, 100)
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
             self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+            # Rejected malformed IDs must not quarantine a healthy session:
+            # a fresh valid request settles exactly once in the same Book.
+            request_id = 'local:tend:seed473:recovery'
+            seq_before = p.book.seq
+            persisted.checkpointed_tend_tree(
+                path, founder, tree_id, .01, request_id=request_id)
+            self.assertEqual(p.book.seq, seq_before + 1)
+            self.assertIn(request_id, p.book.request_receipts)
+            after = (p.tick, p.book.seq, dict(p.book.mass),
+                     dict(p.book.energy), dict(p.book.request_receipts),
+                     list(p.book.transaction_history), len(p.seeds.events),
+                     len(p.seeds.constructs.events))
+            persisted.checkpointed_tend_tree(
+                path, founder, tree_id, .01, request_id=request_id)
+            self.assertEqual(after, (
+                p.tick, p.book.seq, dict(p.book.mass), dict(p.book.energy),
+                dict(p.book.request_receipts), list(p.book.transaction_history),
+                len(p.seeds.events), len(p.seeds.constructs.events)))
+            durable = load_checkpoint(path, expected_tree_id=tree_id)
+            self.assertEqual(durable.book.seq, p.book.seq)
+            self.assertEqual(dict(durable.book.request_receipts),
+                             dict(p.book.request_receipts))
+            self.assertEqual(durable.world.tick, p.tick)
+            self.assertEqual(durable.audit().founder_count, 100)
 
 
     def test_seed471_invalid_tending_numeric_types_leave_canonical_book_unchanged(self):
