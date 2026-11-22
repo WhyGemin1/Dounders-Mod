@@ -1996,7 +1996,10 @@ class SingleAuthorityTests(unittest.TestCase):
         author = next(iter(world.founders.people))
         blueprint = world.seeds.draft(author, 'realm', 'Seed 479 Realm', x=70., y=70.)
         world.seeds.research(author, blueprint.id)
-        world.step()
+        # Direct drafting/research settled in the canonical Book; resync before
+        # stepping through the sole session-owned clock.
+        session._expected_book_sequence = world.book.seq
+        session.step()
         if world.tick not in blueprint.research_ticks:
             world.seeds.research(author, blueprint.id)
         reviewer = next(a for a, f in world.founders.people.items()
