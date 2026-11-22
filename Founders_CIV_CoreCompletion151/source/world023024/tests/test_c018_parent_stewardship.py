@@ -184,3 +184,28 @@ def test_c049_policy_disabled_no_travel_or_care():
     sim.founders.people[owner].location = 'ridge'
     sim.founder_parent_stewardship_enabled = False
     assert propose_parent_stewardship(sim, owner) == []
+
+
+def test_c164_partial_concurrent_funding_invalidates_stale_knowledge():
+    sim, realm, _ = world()
+    owner = eligible_child_owner(sim, realm)
+    sim.founders.people[owner].location = 'riverbank'
+    reserve_low(sim, realm)
+    inspect_parent(sim, owner, realm)
+    proposal = next(p for p in propose_parent_stewardship(sim, owner)
+                    if p[1] == 'parent_steward')
+    requested = proposal[3][1]
+    # Another voluntary transfer reduces, but does not eliminate, the shortage.
+    account = f'reserve:{realm}'
+    target = 5.0 * sim.seeds.plants[realm]['upkeep']
+    existing = sim.book.energy[account]
+    fill = max(0., target - existing - .16)
+    assert fill > 0 and requested > .16
+    sim.book.move(energy=[('environment:heat', account, fill)])
+    before = (sim.book.seq, dict(sim.book.energy), len(sim.seeds.constructs.events))
+    with pytest.raises(ValueError, match='exceeds current parent reserve shortfall'):
+        tend_parent(sim, owner, proposal[3], 'c164-stale')
+    assert (sim.book.seq, dict(sim.book.energy), len(sim.seeds.constructs.events)) == before
+    assert owner not in sim.seeds.owner_reserve_knowledge.get(realm, {})
+    assert any(p[1] == 'parent_inspect' for p in propose_parent_stewardship(sim, owner))
+    sim.book.audit()
