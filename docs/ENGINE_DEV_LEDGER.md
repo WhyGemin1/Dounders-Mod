@@ -1365,3 +1365,12 @@
 - Book audit: no fresh numeric mass/energy residuals measured for branch; seed471 asserts both absolute residuals <= 1e-6, **PROVISIONAL** pending CI. Prior-head CI **VERIFIED**, new-head CI **UNVERIFIED**.
 - Preserved: canonical `world.book`, `world.tick`, 100 Founder identities, M01 iteration3 lock, M05 nonauthority, read-only WorldBox boundary, M02–M07 backlog. Native WorldBox gameplay and ecological long horizons **BLOCKED/UNVERIFIED**.
 - Next: verify exact-head CI for seed471; diagnose any failures before extending production Book-funded creation operations.
+
+## 2026-11-22 01:00 CST — seed472 tending request identity preflight
+
+- Ground/design: inspected live draft PR #1 (17ad5e9), PR #2 (prior head 4e942ea), canonical authority and Book.move_once identity validation. GitHub Actions #586 (44992158648) SUCCESS on prior head 4e942ea, accepting seed471. Authorized Cycle152 Drive ZIP metadata verified; source already tracked on PR #2 branch.
+- Implementation: commit 431cc97 adds local tending request-ID validation before dictionary membership and SeedRegistry entry; rejects non-string, empty, whitespace-padded, and unhashable IDs using ValueError. No new ledger, clock, engine, or external settlement path.
+- Regression: commit 70bd922 adds seed472 malformed-ID checks for no Book, tick, or creation-event mutation, 100 Founders and <=1e-6 Book residual assertions. State commit efdab49 records provisional status.
+- Execute/test: GitHub Actions #586 prior-head SUCCESS. New seed472 test NOT executed locally or verified in exact-head CI at ledger write. No fresh measured numerical residuals. No native WorldBox gameplay or long-horizon ecology test.
+- Ecological/behavioral audit: Core151 world.book sole resource writer, world.tick sole clock, 100 Founder identities authoritative; M01 iteration3 repair lock, M05 SQLite nonauthority, read-only external WorldBox, M02–M07 backlog, and no auto-merge preserved.
+- Next: verify exact-head CI for this ledger commit; fix seed472 if failing, then inspect other canonical Book-funded creation operations for replay/identity integrity.
