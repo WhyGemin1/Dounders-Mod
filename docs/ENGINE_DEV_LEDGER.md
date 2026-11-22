@@ -1406,3 +1406,12 @@
 - Execute/test: authorized archive SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8; extracted and executed `python -m unittest -q test_world_tree_023.py` in historical source: 15 tests, 4.839s, OK. Git clone failed due to github.com DNS resolution, so seed475 was NOT locally executed against GitHub checkout. Exact-head CI pending; no fresh numerical Book residuals measured.
 - Ecological/behavioral audit: canonical world.book, world.tick, 100 Founder identities preserved; M01 iteration3 repair lock, M05 SQLite nonauthority, read-only WorldBox and M02–M07 backlog unchanged. No merge or main changes. Long-horizon ecology, native gameplay, external exactly-once ACK unverified.
 - Next: verify exact-head seed475 CI; fix failure if present, then add a genuine Book-funded Tree creation receipt and conservation integration test.
+
+## 2026-11-22 06:00 CST — seed476 M01 harvest receipt collision after restart
+
+- Ground/design: inspected live draft PR #1 (17ad5e9), draft PR #2 (previous head 55c21cc), Core151 authority, M01 Book-funded gateway, tests, state and ledger. GitHub Actions run 45015175344 SUCCESS on seed475 previous head 55c21cc. Authorized Cycle152 Drive ZIP metadata confirmed (956121 bytes); no archive extraction this cycle.
+- Implementation/integration: added seed476 test in tests/test_authority.py (commit fa29b5b64532c2f0242695b815cf05cba034023c): after a real Core151 tick and durable restart, first Founder settles an M01 harvest; a second Founder reusing the same source/revision must fail without Book or event mutation; original Founder replays idempotently; durable reload must preserve balances, receipts, history and clock. No production mechanics or additional Book writer.
+- Execute/test: previous-head GitHub Actions run 45015175344 SUCCESS. Seed476 was committed but NOT locally executed or verified by exact-head CI at the time of this entry. No new numerical conservation residuals measured. Assertions require 100 Founders and mass/energy residuals <=1e-6 if executed successfully.
+- Ecological/behavioral audit and handoff: world.book remains sole writable material/energy Book, world.tick sole clock, 100 Founder IDs authoritative. M01 iteration3 repair lock, M05 SQLite nonauthority, read-only external WorldBox and M02–M07 backlog unchanged. No merge or main change. Long-horizon ecology, native gameplay and external exactly-once ACK UNVERIFIED.
+- Next: verify exact-head seed476 CI and repair failures before adding another production behavior or test.
+
