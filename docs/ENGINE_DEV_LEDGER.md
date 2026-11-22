@@ -1390,3 +1390,11 @@
 - Execute/test: extracted exact authorized Cycle152 ZIP and ran `python -m unittest -q test_world_tree_023.py` in `Founders_CIV_CoreCompletion151/source/world023024`: Ran 15 tests in 6.936s, OK. This is a historical-source test, not a GitHub clean-checkout test and does not execute the newly committed seed473 extension. Exact-head CI for extension PENDING; no new numerical Book residuals collected.
 - Ecological/behavioral audit: world.book sole material/energy writer, world.tick sole clock, 100 Founder IDs authoritative. M01 iteration3 repair lock, M05 SQLite nonauthority, read-only external WorldBox and M02–M07 backlog unchanged. Ecological long horizons, native gameplay and external exactly-once ACK UNVERIFIED. No auto-merge or main modification.
 - Next: verify exact-head CI on the updated PR #2 branch; repair any seed473 failure before extending real Tree creation receipt/conservation coverage.
+
+## 2026-11-22 04:00 CST — seed474 M01 harvest identity after durable real tick
+
+- Ground/design: inspected live PR #1 (draft, head 17ad5e9) and PR #2 (draft, previous head 456c42e), actual Core151 authority, tests and state. GitHub Actions #595 (run 45005169801) completed SUCCESS on previous head 456c42e, accepting seed473 extension.
+- Implementation/integration: added seed474 test in tests/test_authority.py (eb42d5fe7f91025504b6cccc6034873c3d820c62), testing four malformed M01 harvest source/revision identifiers after one actual Core151 tick and durable checkpoint restart. Rejection must leave Book balances, sequence, receipts, transaction history, clock and creation events unchanged and keep session healthy. No new simulation authority, production mechanics, or external writer.
+- Execute/test: verified previous-head GitHub CI #595 SUCCESS. Seed474 exact-head CI has NOT been observed passing; no local clean-checkout command run; no new numerical Book residuals measured. Commit is test-only and provisional.
+- Ecological/behavioral audit and handoff: sole world.book, world.tick, 100 Founder IDs, M01 iteration3 repair lock, M05 nonauthority, read-only WorldBox and M02–M07 backlog preserved. No main modification or merge. Long-horizon ecology, native gameplay, native ACK remain UNVERIFIED.
+- Next: verify exact-head CI for seed474 and repair any failure; then test actual Book-funded Tree creation receipt identity and conservation.
