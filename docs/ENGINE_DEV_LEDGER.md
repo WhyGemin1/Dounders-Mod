@@ -1374,3 +1374,11 @@
 - Execute/test: GitHub Actions #586 prior-head SUCCESS. New seed472 test NOT executed locally or verified in exact-head CI at ledger write. No fresh measured numerical residuals. No native WorldBox gameplay or long-horizon ecology test.
 - Ecological/behavioral audit: Core151 world.book sole resource writer, world.tick sole clock, 100 Founder identities authoritative; M01 iteration3 repair lock, M05 SQLite nonauthority, read-only external WorldBox, M02–M07 backlog, and no auto-merge preserved.
 - Next: verify exact-head CI for this ledger commit; fix seed472 if failing, then inspect other canonical Book-funded creation operations for replay/identity integrity.
+
+## 2026-11-22 02:00 CST — seed473 malformed tending IDs after real tick and restart
+
+- Ground/design: inspected live PR #1 (draft, unmerged, head 17ad5e9), PR #2 (draft, unmerged, head 7345cb0 before this cycle), existing authority and Book.move_once. Exact-head GitHub Actions run 44996380579 for seed472 completed SUCCESS; this is previous-head evidence only.
+- Integration: added seed473 to the existing tests/test_authority.py on the same Core151 branch, commit 421fdf3. It advances one actual IntegratedWorld tick, checkpoints/reloads, then rejects six malformed tending request IDs and compares in-memory and durable Book, clock, and creation state. No production mechanics, second engine, or external writer added.
+- Execute/test: authorized Cycle152 ZIP SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8 extracted locally; command `cd Founders_CIV_CoreCompletion151/source/world023024 && python -m unittest -q test_world_tree_023.py` => Ran 15 tests in 4.556s, OK. These are historical tests, NOT seed473 or a GitHub clean-checkout test. Seed473 exact-head CI PENDING. No new numerical Book residuals captured.
+- Ecological/behavioral audit: world.book, world.tick and 100 Founders remain authoritative; M01 iteration3 lock, M05 nonauthority, read-only WorldBox, M02–M07 backlog and no auto-merge preserved. Ecological long horizons, native WorldBox, exactly-once external ACK remain UNVERIFIED.
+- Next: verify exact-head CI for seed473, fix any failure, then integrate another actual Book-funded creation behavior.
