@@ -1448,3 +1448,11 @@
 - Ecological/behavioral audit: source shows a remaining atomicity risk: construct.build performs sequential prechecked Book operations and warns cross-registry transaction needed; a failure after Founder work debit may partially settle. This cycle tests successful physical creation, not fault injection or atomic rollback. M01 iteration3 repair lock, M05 SQLite nonauthority, WorldBox read-only, M02–M07 backlog preserved; PRs draft/unmerged and main untouched. No long-horizon or native gameplay verification.
 - Next: verify seed479 exact-head CI; fix failure, then implement/test safe rollback or preflight transaction integrity for construct.build failures.
 
+
+
+## 2026-11-22 11:04 CST — seed479 exact-head CI repair
+- Grounded PR #1 draft head `17ad5e9`, PR #2 draft head `22f8d2f`; main base unchanged. Authorized Cycle152 ZIP re-fetched (956121 bytes), SHA-256 `29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8`.
+- **EXECUTED REMOTELY:** GitHub Actions #616 (run 45041879472) on `22f8d2f` FAILED: 74 authority tests run, 1 ERROR in `test_seed479_validated_realm_plant_is_book_funded_and_durable` at `session.audit()` because test called `world.step()` outside `SingleEngineSession`, leaving `_expected_tick` stale. Other 73 tests passed. CI output also printed seed427 Book residual after tick mass `-8.9130480773746967e-11`, energy `-1.0244548320770264e-08`; these are historical regression outputs from this CI run, not seed479-specific residuals.
+- **IMPLEMENTED:** changed only seed479 regression to synchronize the canonical Book sequence after direct research and call `session.step()` instead of `world.step()`. Code commit `0f2d264b94d5e4c66e4d5cd8906d6b1158f5451f`; engine state updated next. This is a test harness repair, not production mechanics or a new engine.
+- **PROVISIONAL:** corrected test has not yet passed exact-head CI; local clean GitHub checkout blocked by container DNS (`Could not resolve host: github.com`). No fault-injected construction rollback or native WorldBox gameplay tested. The sole Book/clock/100 Founder and M01 read-only external boundary are retained.
+- **NEXT:** verify corrected seed479 exact-head CI, then fault-inject the three-step `ConstructRegistry.build()` settlement and implement atomic failure protection if partial Book settlement is observed. No merge or main modification.
