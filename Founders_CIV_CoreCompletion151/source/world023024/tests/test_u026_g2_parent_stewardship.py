@@ -82,6 +82,12 @@ class G2ParentStewardshipTests(unittest.TestCase):
             tend_parent(self.sim, "F1", ("R1", 0.20), "redundant-care")
         self.assertEqual(before, (dict(self.sim.book.energy), self.sim.book.seq,
                                   len(self.sim.seeds.constructs.events), len(self.logs)))
+        self.assertNotIn('F1', self.sim.seeds.owner_reserve_knowledge['R1'])
+        # A failed stale proposal must lead to local reinspection, not
+        # repeated attempts to spend scarce chemical fuel.
+        followup = propose_parent_stewardship(self.sim, 'F1')
+        self.assertTrue(any(p[1] == 'parent_inspect' for p in followup))
+        self.assertFalse(any(p[1] == 'parent_steward' for p in followup))
         self.sim.book.audit()
 
     def test_partial_concurrent_replenishment_rejects_stale_excess(self):
