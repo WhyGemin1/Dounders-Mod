@@ -71,6 +71,19 @@ class G2ParentStewardshipTests(unittest.TestCase):
         self.assertAlmostEqual(self.sim.book.energy["founder:F1"], 1.22)
         self.sim.book.audit()
 
+    def test_other_steward_funded_realm_rejects_redundant_new_transfer(self):
+        # A fresh observation can become outdated when another Founder
+        # funds the shared parent. The Book is authoritative for spending.
+        self.sim.book.move(energy=[("founder:F1", "reserve:R1", 0.70)],
+                           operation_id="another-steward-funded")
+        before = (dict(self.sim.book.energy), self.sim.book.seq,
+                  len(self.sim.seeds.constructs.events), len(self.logs))
+        with self.assertRaisesRegex(ValueError, "already sufficiently funded"):
+            tend_parent(self.sim, "F1", ("R1", 0.20), "redundant-care")
+        self.assertEqual(before, (dict(self.sim.book.energy), self.sim.book.seq,
+                                  len(self.sim.seeds.constructs.events), len(self.logs)))
+        self.sim.book.audit()
+
     def test_exact_retry_does_not_double_spend_or_duplicate_effects(self):
         first = tend_parent(self.sim, "F1", ("R1", 0.30), "decision-1")
         second = tend_parent(self.sim, "F1", ("R1", 0.30), "decision-1")
