@@ -1,5 +1,5 @@
 {
-  "source": "U026 C156 provenance repair: register C150 terminal-blueprint regression in exact source manifest; ecological acceptance pending",
+  "source": "U026 C157 deterministic fruit selection source + regression; ecological acceptance pending",
   "files": 525,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
@@ -411,7 +411,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "26bfd626285919faeb32bd1fdcbf9fe16ebf3e99cfb419d36fb883296660920a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "2e8ae65991be68a37ce099a32ff63d401e1b1d327bf051d50996c4b43cb1e938",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "9a5e91be5b3a3c2b4bb08394a8b04c1559864757af0078ffb395ebe9a358fd71",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "decd31a229658d46aca81fd1e82473feac8117b1dfe22485085b6e87951a08bf",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py": "41fd892f3d9d1ffcd72c4a353a5c30d77c155fe356e206261babc1d2b47d9745",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/living_assets.py": "5fb57c92e243b2b95850f70ccac3b98c467b40482ae4da7b17ff24927c535853",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/__init__.py": "e40f61d7c61986c018aba343681265a3d221c8b4b0db7c6fd9c101010551af25",
@@ -483,7 +483,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c015_founder_nutrition.py": "734eae6a59ff4d03f330db15351ca04d4dec5a98039fbe2d50f8210837605202",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c016_metabolic_rest.py": "492b72e2269611670bb13c350c28dc8fb3a75c4da8a1b8e90181a8938670965a",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_community_foraging.py": "a2f6b63ed7b7971ebada3f1cf901966e874abc9bfb97a7ad02d1a35066807d30",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "fe6ecb780bd8b349754049d0568c4343aed54fda73f6c914ac4596ba08eb59a4",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "0354fd66d19465874300d7277b1a8540c438f7cfa332a9ac5351bfb7cb7bbe33",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "5175102b1ff13eeb6f8947feec323f2c3897193c0edd2736c6dbb04fce883e36",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c019_founder_autonomy.py": "280dac3e1ebdc4596dfe5b606243e44289d8094d7158d06149a0e99efc7decc2",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c020_resource_agreements.py": "de2bd7a2bdff1d142afa4b5d159996fe3c67a8a71f0f93c31f153f84b4570e7a",
