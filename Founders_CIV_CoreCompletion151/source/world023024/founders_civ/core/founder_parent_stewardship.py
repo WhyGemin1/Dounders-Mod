@@ -147,6 +147,9 @@ def tend_parent(sim, founder, target, decision_id):
     # would make checkpoint replay ambiguous and conceal an overfunded action.
     actual_shortfall = max(0., 5.0 * realm['upkeep'] - sim.book.energy.get(f'reserve:{realm_id}', 0.))
     if amount > max(.15, actual_shortfall) + 1e-9:
+        # Concurrent partial funding invalidates the remembered shortage too.
+        # Force a fresh observation rather than retrying a stale proposal.
+        sim.seeds.owner_reserve_knowledge.get(realm_id, {}).pop(founder, None)
         raise ValueError('stewardship amount exceeds current parent reserve shortfall')
     current = sim.book.energy.get(f'founder:{founder}', 0.)
     if current + 1e-9 < amount + .12:
