@@ -16,7 +16,7 @@ def _stable_worlds(sim, founder):
 def _own_blueprint(sim, founder):
     return next((b for b in sim.seeds.blueprints.values()
                  if b.author == founder and b.kind == 'world'
-                 and b.stage != 'planted'), None)
+                 and b.stage in ('draft', 'researching', 'validated')), None)
 
 
 def _realm_to_develop(sim):
