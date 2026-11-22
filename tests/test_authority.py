@@ -1571,7 +1571,17 @@ class SingleAuthorityTests(unittest.TestCase):
                 w.tick, w.book.seq, dict(w.book.mass), dict(w.book.energy),
                 dict(w.book.request_receipts), list(w.book.transaction_history),
                 len(w.seeds.events), len(w.seeds.constructs.events)))
-            proof = recovered.audit()
+            # Reload the durable checkpoint after both attempted replays:
+            # neither a rejected identity collision nor a valid replay may
+            # change the persisted canonical Book, clock or creation events.
+            persisted = load_checkpoint(path, expected_tree_id=tree_id)
+            p = persisted.world
+            self.assertEqual(before, (
+                p.tick, p.book.seq, dict(p.book.mass),
+                dict(p.book.energy), dict(p.book.request_receipts),
+                list(p.book.transaction_history),
+                len(p.seeds.events), len(p.seeds.constructs.events)))
+            proof = persisted.audit()
             self.assertEqual(proof.founder_count, 100)
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
             self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
