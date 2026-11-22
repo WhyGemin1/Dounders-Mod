@@ -1333,3 +1333,12 @@
 - Execute/test: previous-head CI #569 SUCCESS; NEW byte-level assertion not locally executed and exact-head CI pending. No fresh numerical mass/energy residuals; 1e-6 remains a test tolerance. Native WorldBox tests NOT RUN.
 - Ecological/behavioral audit: canonical world.book, world.tick, 100 Founder identities, M01 iteration3 repair lock, M05 SQLite nonauthority, and external WorldBox read-only restriction unchanged. Byte-level determinism may fail even when canonical state is identical; distinguish serializer differences before production changes. No main modification or merge. Long-horizon ecology unverified.
 - Next: verify exact-head CI, resolve any byte-level test failure, then review receipt identity across other creation operations.
+
+
+## 2026-11-21 — seed468 checkpoint representation correction
+- Ground: PR #1 and PR #2 remain draft and unmerged. PR #2 preceding head `5d85b1845d50e06e260ed92dbb2504465f270651` failed GitHub Actions #572 (run 44974418206): 62/63 authority tests passed; failure at `tests/test_authority.py:1575`, checkpoint raw-byte equality after replay.
+- Implementation: `tests/test_authority.py` changed in `1a9eca1cc5ea920a551b980479a1b7048ffcb7f2` to rely on the already-present durable reload and canonical Book balances, receipts, history, clock, and creation-event assertions. Raw serialization bytes are not a stable equivalence contract. No production engine or resource-authority changes.
+- Execute: inspected GitHub Actions #572 job logs; test command was CI `python -m unittest` discovery via the authority job. 62/63 passed before correction; exact-head execution of the correction PENDING. No local clean-checkout run performed this cycle.
+- Book evidence from previous-head CI #572 seed427: before mass -3.1832314562052488e-11, energy -7.8580342233181e-09; after mass -8.9130480773746967e-11, energy -1.0244548320770264e-08; tolerance 1e-6. These are previous-head results, not evidence for corrected head.
+- Audit: existing `world.book`, `world.tick`, 100 Founder identities remain authoritative; M01 iteration3 repair lock, M05 SQLite nonauthority, native WorldBox read-only boundary preserved. Ecological stability and long-horizon tests remain unverified.
+- NEXT: verify exact-head CI, then inspect receipt identity for another actual Core151 creation operation; fix failures before extending mechanics.
