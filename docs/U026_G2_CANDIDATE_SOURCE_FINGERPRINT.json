@@ -1,5 +1,5 @@
 {
-  "source": "U026 C161: partial concurrent stewardship shortfall protection",
+  "source": "U026 C163: stale concurrent stewardship observation invalidation",
   "files": 525,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
@@ -409,7 +409,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "2355885bf289771f559799762272ae3dc9d957f8ca1d11defdcccaf3619af63a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "60f171a4080a1ff0c46e763e5b513ca9c328db254bc958831a39f4a45c1953f3",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "cff25067e685fb8eaee052d2e3f84187f824e30a9b3073cdb66701152cc6de6c",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "f0452526dc50c9b6651717f64e7d2e359e5e08b918bc47a0eacea60fc5fc5c21",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "2e8ae65991be68a37ce099a32ff63d401e1b1d327bf051d50996c4b43cb1e938",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "decd31a229658d46aca81fd1e82473feac8117b1dfe22485085b6e87951a08bf",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py": "41fd892f3d9d1ffcd72c4a353a5c30d77c155fe356e206261babc1d2b47d9745",
@@ -511,7 +511,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_c012_cross_world_harvest.py": "e65c0f7301d326b84645a548a88e4bbcfa864e59082a755008ddabe70c689686",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_c153_blueprint_selection.py": "dee88b5de4ada6da200ada416c5c532f47785261f94cada1372a1219ff64e620",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_g1_exact_replay.py": "902fe7823597ce93c854f846da806d0ec9e018d0540b10087b6076b154bd665b",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_g2_parent_stewardship.py": "2a527cb4d1cd4628be290f641b68acbcc7ab70dd15f36e2e01eba5b60c7f6229",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_g2_parent_stewardship.py": "c7434658b6e3fdf16b3f26f8e755d62eda2641fab2617135843ba355bde9bdc5",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_v017_compat.py": "6d94da3ede3e69a1130d1a9bd6876446d2599bbcff7973ba27a7168d7d3cc3b4",
     "Founders_CIV_CoreCompletion151/source/world023024/tools/build_canon_doc.py": "d5c75e7ef8432cea7b4761ce07498fb903a3a228c02ede5780385cb3668f7554",
     "Founders_CIV_CoreCompletion151/source/world023024/tools/build_v019_doc.py": "00593af1b5307abbc06a3490a746eb99283417ffab9199e304c2ad6143a1e5c5",
@@ -586,7 +586,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "2bda781121e51bdca547d01a356a453eb0ea82ac",
+  "source_commit": "f22054204a032d99e4f10429e3e12445a4a48e7b",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     ".github/workflows/u026_core151.yml",
