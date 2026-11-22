@@ -2037,5 +2037,49 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertLessEqual(abs(audit.book_energy_error), 1e-6)
 
 
+    def test_seed480_planted_blueprint_cannot_be_planted_twice_after_restart(self):
+        """A durable physical creation cannot debit the canonical Book twice."""
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+        world, _, tree_id = bootstrap(480)
+        session = SingleEngineSession(world, tree_id)
+        author = next(iter(world.founders.people))
+        blueprint = world.seeds.draft(author, 'realm', 'Seed 480 Realm', x=70., y=70.)
+        world.seeds.research(author, blueprint.id)
+        session._expected_book_sequence = world.book.seq
+        session.step()
+        if world.tick not in blueprint.research_ticks:
+            world.seeds.research(author, blueprint.id)
+        reviewer = next(a for a, f in world.founders.people.items()
+                        if a != author and f.location == world.founders.people[author].location)
+        world.seeds.validate(reviewer, blueprint.id)
+        session._expected_book_sequence = world.book.seq
+        planted = world.seeds.plant(author, blueprint.id)
+        session._expected_book_sequence = world.book.seq
+        session.audit()
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'world.checkpoint'
+            save_checkpoint(world, tree_id, path)
+            recovered = load_checkpoint(path, expected_tree_id=tree_id)
+            w = recovered.world
+            before = (w.tick, w.book.seq, dict(w.book.mass),
+                      dict(w.book.energy), list(w.book.transaction_history),
+                      len(w.seeds.plants), len(w.seeds.events),
+                      len(w.seeds.constructs.events))
+            with self.assertRaises(ValueError):
+                w.seeds.plant(author, blueprint.id)
+            self.assertEqual(before, (
+                w.tick, w.book.seq, dict(w.book.mass),
+                dict(w.book.energy), list(w.book.transaction_history),
+                len(w.seeds.plants), len(w.seeds.events),
+                len(w.seeds.constructs.events)))
+            self.assertEqual(w.seeds.blueprints[blueprint.id].planted_id, planted['id'])
+            audit = recovered.audit()
+            self.assertEqual(audit.founder_count, 100)
+            self.assertLessEqual(abs(audit.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(audit.book_energy_error), 1e-6)
+
+
 if __name__ == '__main__':
     unittest.main()
