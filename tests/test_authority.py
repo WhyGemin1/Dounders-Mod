@@ -1944,5 +1944,46 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
 
+    def test_seed478_unvalidated_plant_rejected_after_durable_creation_draft(self):
+        """Core151 must not physically plant an unvalidated draft after restart."""
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+        world, _, tree_id = bootstrap(478)
+        session = SingleEngineSession(world, tree_id)
+        founder = next(iter(world.founders.people))
+        draft = world.seeds.draft(founder, 'realm', 'Seed 478 Realm', x=70., y=70.)
+        session._expected_book_sequence = world.book.seq
+        session.audit()
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'world.checkpoint'
+            save_checkpoint(world, tree_id, path)
+            recovered = load_checkpoint(path, expected_tree_id=tree_id)
+            w = recovered.world
+            before = (w.tick, w.book.seq, dict(w.book.mass),
+                      dict(w.book.energy), len(w.seeds.plants),
+                      len(w.seeds.events), len(w.seeds.constructs.events),
+                      list(w.book.transaction_history))
+            with self.assertRaisesRegex(ValueError, 'validated blueprint'):
+                w.seeds.plant(founder, draft.id)
+            self.assertEqual(before, (
+                w.tick, w.book.seq, dict(w.book.mass),
+                dict(w.book.energy), len(w.seeds.plants),
+                len(w.seeds.events), len(w.seeds.constructs.events),
+                list(w.book.transaction_history)))
+            self.assertEqual(w.seeds.blueprints[draft.id].stage, 'draft')
+            proof = recovered.audit()
+            self.assertEqual(proof.founder_count, 100)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+            persisted = load_checkpoint(path, expected_tree_id=tree_id)
+            p = persisted.world
+            self.assertEqual(before, (
+                p.tick, p.book.seq, dict(p.book.mass),
+                dict(p.book.energy), len(p.seeds.plants),
+                len(p.seeds.events), len(p.seeds.constructs.events),
+                list(p.book.transaction_history)))
+
+
 if __name__ == '__main__':
     unittest.main()
