@@ -1,0 +1,66 @@
+{
+  "schema": "u026-g1-reviewed-exact-source-attestation-v1",
+  "gate": "G1",
+  "review_status": "reviewed_and_accepted",
+  "accepted_source_commit": "7191bca028111287547b32a5939e5e4ac4e79b86",
+  "historical_g0_gate_record": "docs/U026_G0_GATE_STATUS.json",
+  "full_source_snapshot": {
+    "path": "docs/U026_G2_CANDIDATE_SOURCE_FINGERPRINT.json",
+    "git_blob_sha": "1115395bc25a0449f85a5496b055e6723e2d5fad",
+    "files": 515,
+    "missing": 0,
+    "changed": 0,
+    "unlisted_python": 0,
+    "forbidden": 0,
+    "verification_run_id": 43790621005
+  },
+  "reviewed_g1_source_sha256": {
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/ledger.py": "41fd892f3d9d1ffcd72c4a353a5c30d77c155fe356e206261babc1d2b47d9745",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/living_assets.py": "5fb57c92e243b2b95850f70ccac3b98c467b40482ae4da7b17ff24927c535853",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "3d81dcbbccbceb28b571759362dca20ffeed3deae779a80f4da4358f33ae0d1c",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "8cb7b28e6f30eb31efa48356303f10bff69a901716ee99ec2b780a8551f9a754",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "d6ad4cd2a1b1d406376ee58a9b893da2a170cf6069d825ff07cace13e3587a7b",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_integration.py": "a96f50850a7ef85ebb7388e0dd8010a0f616e4795cf0f8f5bd1a913cfc95551f",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/world_trees.py": "20f00140ba0b0809d926af142bbaa6b6ea0cef68a172ee0196d11bbf05e02dfb",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/constructs.py": "8a672d78e73ef08e68b9bff6bc0750b029d9dee0a4e667295ee111b959cc1f25",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/experimental/social_agents.py": "7079d88453deda0d47f2b6ddfeb8ce1082477cf80caa35f866f574bba2e63bb3",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_autonomous_provisioning_c003.py": "9b374660599163dca3b7f62ce6fc7ff3cfa83663fa6c336d51d551b4812134d4",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_book_assets_c002.py": "151d47d1a4514cc49590da8aee9c78e2894b8a2bdd15573ba19bc69c65379e18",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_u026_g1_exact_replay.py": "902fe7823597ce93c854f846da806d0ec9e018d0540b10087b6076b154bd665b",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_integration_025.py": "cf1f044a6adde67996052cad0e2dd6684cebcbad2a72be62373f66385c1da101",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c006_ingestion.py": "acc0bd7382f4631a2beb05d1f7085c475e32ef81542c08e2b91ea27f0517085c",
+    ".github/workflows/u026_core151.yml": "df39338779fc0a1276eec10b3928a1ecd5a365c0a367f316cb873ae9fc8dee97",
+    "tools/u026_g1_matched_acceptance.py": "2f51a17d478b1a7927417eabd3bd52d44cbf0287ba9c37bbaa64a8a432911af3"
+  },
+  "source_review_rationale": "One Core151 Book; fully funded multi-leg transforms; exact replay and checkpoint identity; finite CE and fruit; composite Book rollback for provisioning, planting, Species Seed admission, upkeep and collapse; strict Founder energy preflight; no duplicate physical stocks; actual CI regression and matched-seed evidence.",
+  "acceptance_evidence": {
+    "github_actions_push_run_id": 43790621005,
+    "github_actions_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43790621005",
+    "event": "push",
+    "workflow_conclusion": "success",
+    "core151_pytest_passed": 294,
+    "core151_pytest_failed": 0,
+    "focused_g1_passed": 17,
+    "additional_parent_stewardship_tests_passed": 10,
+    "matched_seeds": 10,
+    "matched_arms": 2,
+    "matched_runs": 20,
+    "matched_horizons_days": [
+      30,
+      180
+    ],
+    "matched_conservation": "all 20 completed Book audits",
+    "mutation_rejection": "success",
+    "unlisted_python_rejection": "success",
+    "worldbox_source_offline": "success"
+  },
+  "nonclaims": [
+    "Does not approve G2 or G3 autonomous Tree adoption",
+    "Does not prove G4 ecological stability; Trees may collapse",
+    "Does not prove live WorldBox native runtime integration",
+    "Does not merge Development into Core, Integration, Outer or main",
+    "Does not authorize unreviewed future tracked-source changes"
+  ],
+  "invalidation_rule": "Any tracked source edit after the accepted source commit requires new exact-source attestation and full CI acceptance; historical G0 approvals remain unchanged."
+}

@@ -1,0 +1,13 @@
+{
+  "release_id":"INTEGRATION-025",
+  "status":"experimental opt-in SDK",
+  "parent":"WORLD-024",
+  "engine_authority":"founders_civ/core/ledger.py + experimental/world024.py",
+  "api":"1.0",
+  "systems":["CORE-018","KTC-019 (partial)","SOCIAL-021","WORLD-022","WORLD-023","WORLD-024"],
+  "supported_scenario":"examples/scenarios/commons.json",
+  "allowed_plugin_effect":"read-only instrumentation; native scenario shocks only",
+  "code_safe_to_copy":"integration package and independent CLIs; no physical core edits",
+  "known_gaps":["portable food energy","world materials -> construction","contracts and backup stewards","realistic knowledge decay","multispecies dynamics","persistent save-file migrations"],
+  "scientific_status":"synthetic software validation, not empirical human or ecology verification"
+}

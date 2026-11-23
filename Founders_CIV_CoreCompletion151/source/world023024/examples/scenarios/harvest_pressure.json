@@ -1,0 +1,1 @@
+{"schema_version":"1.0","seed":820,"cycles":12,"governance":"collective","extraction":"intensive","allow_private":true,"social_mode":"full","stress":[{"start":4,"end":10,"rainfall":0.55,"upkeeps":1.2}],"extensions":["event_tally","tree_watch"]}

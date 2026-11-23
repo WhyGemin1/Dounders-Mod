@@ -7,7 +7,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>FoundersCIV_M05_Observer</AssemblyName>
     <OutputType>Library</OutputType>
-    <!-- M05.2: always build against LOCAL COPIES of the installed game's dependencies.
+    <!-- M05.3: always build against LOCAL COPIES of the installed game's dependencies.
          build_bridge.ps1 stages these files; no $(GameDir) substitution is required. -->
   </PropertyGroup>
   <ItemGroup>
@@ -20,5 +20,7 @@
     <Reference Include="UnityEngine"><HintPath>../build/refs/UnityEngine.dll</HintPath><Private>False</Private></Reference>
     <Reference Include="UnityEngine.CoreModule"><HintPath>../build/refs/UnityEngine.CoreModule.dll</HintPath><Private>False</Private></Reference>
     <Reference Include="UnityEngine.IMGUIModule"><HintPath>../build/refs/UnityEngine.IMGUIModule.dll</HintPath><Private>False</Private></Reference>
+    <!-- UnityEngine.JsonUtility is defined in JSONSerializeModule, not CoreModule. -->
+    <Reference Include="UnityEngine.JSONSerializeModule"><HintPath>../build/refs/UnityEngine.JSONSerializeModule.dll</HintPath><Private>False</Private></Reference>
   </ItemGroup>
 </Project>

@@ -1,0 +1,124 @@
+{
+  "schema": "u026-gate-decision-v1",
+  "gate": "G1",
+  "decision": "PROMOTE",
+  "scope": "Development G1 one-authoritative-Book physical resource and transaction integration gate only",
+  "accepted_source_commit": "35af1fa5e622d311e22835bfdec9a31c3f9509a5",
+  "source_attestation": "docs/U026_G1_ACCEPTANCE_ATTESTATION_C041.json",
+  "source_snapshot": "docs/U026_G2_CANDIDATE_SOURCE_FINGERPRINT.json",
+  "historical_g0_record": "docs/U026_G0_GATE_STATUS.json",
+  "evidence": {
+    "github_actions_push_run_id": 43791096282,
+    "url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43791096282",
+    "event": "push",
+    "head_sha": "35af1fa5e622d311e22835bfdec9a31c3f9509a5",
+    "workflow_conclusion": "success",
+    "source_fingerprints_matched": 515,
+    "missing": 0,
+    "changed": 0,
+    "unlisted_python": 0,
+    "forbidden": 0,
+    "core151_regressions_passed": 296,
+    "core151_regressions_failed": 0,
+    "focused_g1_tests_passed": 17,
+    "additional_stewardship_tests_passed": 10,
+    "matched_seeds": 10,
+    "matched_runs": 20,
+    "matched_horizons_days": [
+      30,
+      180
+    ],
+    "matched_run_conclusion": "20/20 PASS",
+    "fail_closed_mutation_test": "PASS",
+    "worldbox_offline_job": "success"
+  },
+  "acceptance_matrix": [
+    {
+      "id": "G1-A01",
+      "status": "PASS",
+      "detail": "One Book identity asserted across Ecology, Tree and ConstructRegistry in 20 matched runs",
+      "evidence_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43791096282"
+    },
+    {
+      "id": "G1-A02",
+      "status": "PASS",
+      "detail": "Injected fruit growth, World planting, Species admission, maintenance logging and construct collapse failures; all state rollback regressions passed",
+      "evidence_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43791096282"
+    },
+    {
+      "id": "G1-A03",
+      "status": "PASS",
+      "detail": "Book.audit conserved synthetic mass/energy/CE in 20 matched 30/180-day runs and full regressions",
+      "evidence_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43791096282"
+    },
+    {
+      "id": "G1-A04",
+      "status": "PASS",
+      "detail": "17 exact replay tests, idempotent checkpoint tests and permanent asset IDs",
+      "evidence_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43791096282"
+    },
+    {
+      "id": "G1-A05",
+      "status": "PASS",
+      "detail": "Physical Tree food/fruit, Founder harvest, ingestion/digestion, CE seed and germination regressions",
+      "evidence_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43791096282"
+    },
+    {
+      "id": "G1-A06",
+      "status": "PASS",
+      "detail": "No mandatory stewardship; consent/refusal, wrong owner, depleted lot and negative resource tests",
+      "evidence_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43791096282"
+    },
+    {
+      "id": "G1-A07",
+      "status": "PASS",
+      "detail": "Shared Book and clock; offline WorldBox M01/M05 tests passed; no live native claim",
+      "evidence_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43791096282"
+    },
+    {
+      "id": "G1-A08",
+      "status": "PASS",
+      "detail": "296 full Core151 tests, 17 focused G1 tests, 10 stewardship tests; 10 matched seeds x 2 arms at 30/180 days",
+      "evidence_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43791096282"
+    },
+    {
+      "id": "G1-A09",
+      "status": "PASS",
+      "detail": "515/515 exact source audit; deliberately mutated Book and unlisted Python both rejected; clean checkout accepted",
+      "evidence_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43791096282"
+    },
+    {
+      "id": "G1-A10",
+      "status": "PASS",
+      "detail": "Exact Development push workflow 43791096282 completed success with all three jobs green",
+      "evidence_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/43791096282"
+    }
+  ],
+  "reviewed_scope": [
+    "Book.apply exact replay, finite typed physical resources and energy conservation",
+    "Composite rollback for fruit CE reservation, World Tree/Species planting, Founder upkeep and construct collapse",
+    "Book-backed food/fruit harvesting, ingestion and digestion with no instant chemical recharge",
+    "Single shared world clock and one physical ledger across Founder, Tree and ecology",
+    "Founder refusal and consensual trade are allowed; no forced Tree maintenance"
+  ],
+  "remaining_gates": {
+    "G2": "NOT_PROMOTED",
+    "G3": "NOT_PROMOTED",
+    "G4": "UNVERIFIED",
+    "WorldBox_native": "NOT_TESTED"
+  },
+  "nonclaims": [
+    "No Core, Integration, Outer or main merge",
+    "No ecological stability guarantee from the 180-day conservation acceptance",
+    "No native WorldBox runtime or Windows package acceptance",
+    "Any later tracked-source change requires a new reviewed source attestation and full acceptance rerun"
+  ],
+  "post_record_ci": "The gate decision is based on the immutable accepted source commit; the documentation-only promotion commit must also be reverified by CI.",
+  "previous_acceptance": {
+    "accepted_source_commit": "7191bca028111287547b32a5939e5e4ac4e79b86",
+    "github_actions_push_run_id": 43790621005,
+    "attestation": "docs/U026_G1_ACCEPTANCE_ATTESTATION.json",
+    "core151_regressions_passed": 294
+  },
+  "reviewed_follow_up": "C041: ingestion retries do not duplicate events; another Founder cannot replay consumed food; new exact-source attestation and 296-test CI."
+}

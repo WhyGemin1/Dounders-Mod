@@ -1,0 +1,22 @@
+name: U026 C086 native identity checkpoint regression
+on:
+  push:
+    branches: [Development]
+    paths:
+      - 'FoundersCIV_WorldBox_M05_Integration/bridge/native_identity_gate.py'
+      - 'FoundersCIV_WorldBox_M05_Integration/tests/test_c08*.py'
+      - '.github/workflows/u026-c086-identity-checkpoint.yml'
+  workflow_dispatch:
+jobs:
+  checkpoint-replay:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Execute C083-C086 identity tests from checked-out source
+        run: |
+          python -m unittest discover -s FoundersCIV_WorldBox_M05_Integration/tests -p 'test_c08*.py' -v
