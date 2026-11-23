@@ -46,7 +46,7 @@ def propose_nutrition(sim, founder):
                 if key.startswith('food:ingest:') and key.endswith(':'+founder)}
     for lot in sorted(set(owned_lots(sim, founder, 'food')) | ingested):
         tree_id, tree = _tree_for_lot(sim, lot)
-        if tree is None:
+        if tree is None or getattr(tree, 'book', None) is not book:
             continue
         holding = f'portable_food:lot:{lot}:founder:{founder}'
         gut = f'gut:founder:{founder}:lot:{lot}'
@@ -77,6 +77,8 @@ def perform_nutrition(sim, founder, action, target):
     actual_id, tree = _tree_for_lot(sim, lot)
     if actual_id != tree_id or tree is None:
         raise ValueError('unknown identified food lot')
+    if getattr(tree, 'book', None) is not sim.book:
+        raise ValueError('Tree does not share the authoritative Book')
     from founders_civ.core.founder_exchange import owns_lot
     # A completed ingestion consumed the portable holding; a retry must be
     # resolved by this Founder's exact Book receipt, not rejected as theft.
