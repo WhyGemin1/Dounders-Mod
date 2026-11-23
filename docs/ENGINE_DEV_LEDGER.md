@@ -1543,3 +1543,10 @@
 - Execution: earlier exact-head GitHub Actions #652 SUCCESS. **New test extension not yet executed**; no local clean-checkout unittest, new Book residuals, WorldBox gameplay, or long-horizon ecology executed. No claim of passed checkpoint extension.
 - Boundaries: `world.book` sole writable material/energy Book, `world.tick` sole clock, 100 Founder identities; M01 iteration-3 repair lock, M05 SQLite nonauthority, WorldBox read-only and M02–M07 backlog preserved. No main modification or merge.
 - Next: verify exact-head CI on updated branch and resolve any failure; then cover failed planting replay across restart.
+
+## 2026-11-22 23:00 CST — Restore seed479 executable assertions
+- GROUND: Inspected live Core151 test source, state, ledger, authorized Drive ZIP metadata and GitHub Actions #655 (45109576691), SUCCESS on f8df8a4. All headless job steps completed successfully, including authority, source provenance, conservation and checkpoint checks. The seed483 durable rejected-construction recovery test is now CI verified at that commit.
+- INTEGRATION: Found literal `\\n` characters in seed479 test source following an inline `#` comment, causing intended Book-sequence and physical-plant-count assertions to be commented out. Replaced these escapes with actual newlines in the existing tests/test_authority.py, commit f4aefea9db6363f062f7125d589c035a6abcf545. No new engine, Book, clock or gameplay mechanics.
+- EXECUTE: CI #655 SUCCESS on prior head; new restored seed479 assertions NOT YET EXECUTED against the updated head. No local clean-checkout run, numerical residual output, native WorldBox or long-horizon ecological test in this cycle.
+- AUDIT: Seed483 checkpoint recovery verified at prior head; seed479 newly active assertions PROVISIONAL until exact-head CI. Canonical world.book, world.tick, 100 Founders, M01 iteration3 lock, M05 nonauthority and external read-only policy unchanged. No merge/main write.
+- NEXT: Verify exact-head CI and correct any exposed seed479 failure; then add failed planting retry/replay across a real checkpoint restart.
