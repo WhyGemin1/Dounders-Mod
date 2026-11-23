@@ -2155,5 +2155,30 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
 
+    def test_seed483_insufficient_house_reserve_rejects_without_book_mutation(self):
+        """A physical construct cannot partially settle when House reserve is short."""
+        world, _, tree_id = bootstrap(479)
+        session = SingleEngineSession(world, tree_id)
+        constructs = world.seeds.constructs
+        self.assertIs(constructs.book, world.book)
+        before = (world.tick, world.book.seq, dict(world.book.mass),
+                  dict(world.book.energy), list(world.book.transaction_history),
+                  dict(constructs.items), list(constructs.events))
+        unavailable_reserve = world.book.energy['house'] + 1.
+        with self.assertRaisesRegex(ValueError, 'not enough House energy'):
+            constructs.build(
+                'seed483-unfunded', 'dimension', 'house',
+                'house', 1., 0.1, unavailable_reserve,
+                binding_energy=2., work_source='world_work')
+        self.assertEqual(before, (
+            world.tick, world.book.seq, dict(world.book.mass),
+            dict(world.book.energy), list(world.book.transaction_history),
+            dict(constructs.items), list(constructs.events)))
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
+
 if __name__ == '__main__':
     unittest.main()
