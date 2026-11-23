@@ -10,6 +10,16 @@ from __future__ import annotations
 
 MAX_STALENESS=6
 
+def _recent_observation(sim, evidence):
+    """Reject malformed/future perception timestamps before any proposal or transfer."""
+    if not isinstance(evidence, dict):
+        return False
+    seen = evidence.get('seen_tick')
+    tick = getattr(sim, 'tick', None)
+    return (type(seen) is int and type(tick) is int and
+            0 <= tick - seen <= MAX_STALENESS)
+
+
 
 def observed_lots(tree):
     """Take a bounded, current snapshot when a Founder actually observes a Tree."""
@@ -46,7 +56,7 @@ def propose_harvest(sim, founder):
     proposals=[]
     for tid,tree in sorted(sim.world_trees.worlds.items()):
         evidence=tree.observations.get(founder)
-        if evidence is None or not 0<=sim.tick-evidence.get('seen_tick',-10000)<=MAX_STALENESS:continue
+        if not _recent_observation(sim, evidence):continue
         for entry in evidence.get('known_lots',())[:10]:
             if entry.get('kind') not in ('fruit','food'):continue
             lot=entry.get('lot')
@@ -81,7 +91,7 @@ def perform_harvest(sim,founder,target):
     if tree.book is not sim.book:
         raise ValueError('Tree does not share the authoritative Book')
     evidence=tree.observations.get(founder)
-    if (evidence is None or not 0<=sim.tick-evidence.get('seen_tick',-10000)<=MAX_STALENESS or
+    if (not _recent_observation(sim, evidence) or
         not any(x.get('lot')==lot and x.get('kind')==kind for x in evidence.get('known_lots',()))):
         raise ValueError('resource not known through a recent observation')
     # A portable holding and its Book harvest receipt currently use the lot
