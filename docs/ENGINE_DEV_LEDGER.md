@@ -1586,3 +1586,10 @@
 - EXECUTE: Reviewed CI #670 job and log; previous interrupted-save test verified by CI. New exact-state assertions and numerical outputs NOT YET EXECUTED on exact head. No local clean-checkout run this cycle; no new numeric seed484 residuals claimed.
 - ECOLOGY/AUDIT/HANDOFF: Existing world.book, world.tick, 100 Founder identities, M01 iteration-3 repair lock, M05 nonauthority, and WorldBox read-only policy preserved. No merge or main change; ecological stability remains unverified.
 - NEXT: Verify exact-head CI of new regression, extract rollback/final-retry residuals, fix any failure before new mechanics.
+
+## 2026-11-23 04:55 CST — seed484 recovery identity and physical registry invariants
+- GROUND: Inspected live PR #1/#2 (both draft, main unchanged), canonical Core151 tests/state/ledger, authorized Drive ZIP metadata. GitHub Actions #672 (45151754825) SUCCESS on db5f076; 79 authority tests passed, all 19 headless workflow steps passed.
+- IMPLEMENT: Extended existing seed484 interrupted-save checkpoint test to assert restored world.tick, Founder ID set, and exact preplant physical construct ID set after rollback. Test commits e14eba1 and 54b7dd3; no production engine, Book, or clock changes.
+- EXECUTE: CI #672 log verifies prior seed484 Book equality and residuals: rollback mass=-8.7311491370201111e-11 energy=-1.0593794286251068e-08; durable retry mass=-8.7311491370201111e-11 energy=-1.0652001947164536e-08. New recovery assertions NOT YET EXECUTED; exact-head CI pending. No local clean checkout or native WorldBox test this cycle.
+- ECOLOGY/AUDIT/HANDOFF: Core151 world.book, world.tick, 100 Founders authoritative; M01 iteration-3 lock, M05 SQLite nonauthority, WorldBox read-only, M02–M07 backlog preserved. Ecological stability and long horizons unverified; no merge.
+- NEXT: Verify exact-head CI for recovery identity/clock/construct assertions; fix any failure before extending interrupted-write coverage.
