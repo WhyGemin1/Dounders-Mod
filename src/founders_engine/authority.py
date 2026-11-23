@@ -341,6 +341,9 @@ class SingleEngineSession:
 
     def attach_observer(self, observer):
         """Reject secondary clocks/writable ledgers; only read-only snapshot probes."""
+        # Even read-only attachments must not be accepted on a quarantined or
+        # externally substituted Core151 authority; recover first.
+        self._assert_authority()
         if any(hasattr(observer, attr) for attr in
                ('book', 'ledger', 'sqlite_book', 'clock', 'step', 'write')):
             raise ValueError('observer exposes independent state authority')
