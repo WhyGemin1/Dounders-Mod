@@ -175,12 +175,12 @@ class SeedRegistry:
         if book.energy['house']+1e-9<reserve+binding:raise ValueError('insufficient House reserve')
         cid=f'CRE-{len(self.plants)+1:05d}'
         work_acct=f'work:{actor}'
-        txn=book.move(energy=[(f_acct,work_acct,1.)])
         cost=recipe['daily_energy']*(.8+.4*b.rules['openness'])
         # Substrate changes physical state. One toll from the Founder's funded work.
         construct=self.constructs.build(cid,'dimension' if b.kind in ('realm','world','dimension') else 'construct',
             b.parent_id or 'sea',mat,recipe['material'],cost,
-            initial_reserve=reserve,binding_energy=binding,work_source=work_acct)
+            initial_reserve=reserve,binding_energy=binding,work_source=work_acct,
+            funding_source=f_acct)
         b.stage='planted';b.planted_id=cid
         item={'id':cid,'kind':b.kind,'symbol':recipe['symbol'],'name':b.name,'blueprint_id':b.id,
               'parent':b.parent_id,'owner':b.author,'rules':deepcopy(b.rules),'x':b.x,'y':b.y,
