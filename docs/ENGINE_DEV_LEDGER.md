@@ -1658,3 +1658,10 @@
 - EXECUTE: Inspected actual CI #697 job-step outcomes (21/21 success) for previous head. New observer guard NOT executed locally or in exact-head CI at ledger write; no fresh numerical Book residuals extracted. No local clean-checkout unittest this cycle. Workflow's authority command from previous ledger: PYTHONPATH=src python -m unittest discover -v -s tests -p 'test_*authority*.py'.
 - ECOLOGY/HANDOFF: One Core151 world.book/world.tick/100-Founder registry, M01 iteration3 repair lock, M05 SQLite nonauthority, WorldBox read-only boundary and M02-M07 backlog preserved. No native gameplay, long-horizon ecological stability or auto-merge/main modification.
 - NEXT: Verify exact-head CI for observer guard, add targeted poisoned-session observer regression, and extract numerical Book residuals before any native integration claim.
+
+### 2026-11-23 14:58 CST — Core151 observer quarantine gate
+- GROUND: Live PR #1 and PR #2 remain open/draft; verified prior-head GitHub Actions run 45255601733 SUCCESS on f8ef883. Authorized Cycle152 Drive ZIP metadata confirmed; canonical source already imported per state provenance.
+- IMPLEMENT: Added seed485 test on existing Core151 authority suite at fddd2e9218d43fc96adc296afc7e623aabaeb90c. Healthy read-only observer is accepted, while checkpoint-uncertain and step-uncertain sessions reject attachment and audit without changing Book, tick or Founder identity set. No new Book, clock or engine.
+- EXECUTE: Prior-head CI SUCCESS. Seed485 source committed but NOT executed locally or exact-head CI-verified in this cycle. No fresh numerical mass/energy residuals; previous seed484 CI measurements remain historical evidence only.
+- ECOLOGY/HANDOFF: M01 iteration3 repair lock, M05 SQLite nonauthority, WorldBox read-only boundary and M02–M07 backlog unchanged. No WorldBox gameplay, long-horizon stability test, main merge or PR promotion.
+- NEXT: Verify exact-head seed485 CI and return to production integration/clean-checkout audit.
