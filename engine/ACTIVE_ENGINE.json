@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-22T17:03:00-06:00",
+  "updated_at": "2026-11-22T19:00:00-06:00",
   "repository": "WhyGemin1/Dounders-Mod",
   "active_engine": "Core151 IntegratedWorld (recovered Cycle152 source)",
   "authoritative_book": "IntegratedWorld.book (founders_civ.core.ledger.Book)",
@@ -11,15 +11,15 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Atomic ConstructRegistry.build settlement 4233be5 remains; CI 45074808811 verified 75/76 authority tests, seed479 failed due to outdated +1 transaction assertion (actual +2: Founder work transfer plus atomic construction). Assertion repaired in b686ef9; post-repair CI pending. SeedRegistry.plant still performs a separate work transfer before construct build; whole planting operation atomicity NOT established.",
+  "source_status": "Seed482 confirmed stranded Founder work debit (CI #640: 76/77 tests, Book seq 2924->2925). Production source now routes Founder work funding into the same canonical Book transform as physical construction; pending exact-head CI.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "CI 45074808811 failed seed479 assertion 2926 != 2925; 75/76 passed incl seed481 injected construction Book failure. Repair b686ef9 committed; exact-head CI pending.",
+    "github_ci": "CI #640 FAILED seed482 (76/77 tests); source and test repair committed, new exact-head CI pending.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
-    "clean_checkout": "Previous seed479 GitHub Actions PR checkout succeeded; seed480 exact-head clean checkout not verified.",
-    "book_audit_this_cycle": "CI seed427 residual mass -8.9130480773746967e-11 energy -1.0302755981683731e-08; no seed479-specific numerical audit.",
+    "clean_checkout": "CI #640 completed checkout and provenance gate; failed authority seed482 before downstream suite.",
+    "book_audit_this_cycle": "CI #640 seed427 mass -8.9130480773746967e-11, energy -1.0302755981683731e-08; no post-repair numerical audit.",
     "import_security_synthetic": "9/9 PASS in local container using equivalent implementation and synthetic ZIP fixtures; committed tests NOT RUN against GitHub checkout",
     "real_archive_this_cycle": "Authorized Drive ZIP SHA256 29c6bc0a650a6b3c48d3f7cdc2ab49e94592f6243cdfc36a168416b514a54cd8; extracted historical World Tree tests 15/15 PASS locally.",
     "core151_source_smoke": "1/1 PASS local extracted exact SHA archive source",
@@ -104,7 +104,8 @@
     "seed470": "PROVISIONAL: new guard rejects tending energy above 2**53 before canonical Book transfer; test committed, CI pending.",
     "seed472": "Source and regression committed, exact-head CI not verified; invalid request IDs must not mutate Book, tick, or creation events.",
     "seed473": "Previous seed473 PASS CI #592; extension committed 936c7f2, unverified: rejected malformed IDs followed by valid exactly-once Book settlement and durable replay.",
-    "seed474": "PROVISIONAL: real Core151 tick, durable restart, four malformed M01 harvest source/revision identities; unchanged Book/clock/events and healthy session asserted; exact-head CI pending."
+    "seed474": "PROVISIONAL: real Core151 tick, durable restart, four malformed M01 harvest source/revision identities; unchanged Book/clock/events and healthy session asserted; exact-head CI pending.",
+    "seed482_atomic_planting": "PROVISIONAL: combined Founder work funding + construction settlement in one Book transform; seed479 transaction assertion updated; exact-head execution pending."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
