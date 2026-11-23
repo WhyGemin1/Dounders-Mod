@@ -2258,7 +2258,32 @@ class SingleAuthorityTests(unittest.TestCase):
             print('seed484 retry Book residuals: mass={:.17g} energy={:.17g}'.format(
                 retry_audit.book_mass_error, retry_audit.book_energy_error))
             self.assertEqual(w.seeds.blueprints[blueprint.id].planted_id, planted['id'])
-            save_checkpoint(w, tree_id, path)
+            # Crash before atomic replace: the durable checkpoint still
+            # describes the pre-plant world, never a partial Book settlement.
+            durable_before = path.read_bytes()
+            with patch('founders_engine.checkpoint.os.replace',
+                       side_effect=OSError('seed484 interrupted replace')):
+                with self.assertRaisesRegex(OSError, 'interrupted replace'):
+                    save_checkpoint(w, tree_id, path)
+            self.assertEqual(path.read_bytes(), durable_before)
+            rolled_back = load_checkpoint(path, expected_tree_id=tree_id)
+            self.assertEqual(rolled_back.book.seq, before[0])
+            self.assertEqual(rolled_back.world.seeds.blueprints[blueprint.id].stage,
+                             'validated')
+            self.assertEqual(len(rolled_back.world.seeds.plants), before[4])
+            rollback_audit = rolled_back.audit()
+            self.assertEqual(rollback_audit.founder_count, 100)
+            self.assertLessEqual(abs(rollback_audit.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(rollback_audit.book_energy_error), 1e-6)
+            # A successful retry after loading the last durable checkpoint
+            # must settle exactly once, not replay the unsaved in-memory build.
+            retry = rolled_back.world.seeds.plant(author, blueprint.id)
+            self.assertEqual(rolled_back.book.seq, before[0] + 1)
+            self.assertEqual(len(rolled_back.book.transaction_history),
+                             len(before[3]) + 1)
+            self.assertEqual(len(rolled_back.world.seeds.plants), before[4] + 1)
+            self.assertEqual(retry['id'], planted['id'])
+            save_checkpoint(rolled_back.world, tree_id, path)
             again = load_checkpoint(path, expected_tree_id=tree_id)
             v = again.world
             settled = (v.book.seq, dict(v.book.mass), dict(v.book.energy),
