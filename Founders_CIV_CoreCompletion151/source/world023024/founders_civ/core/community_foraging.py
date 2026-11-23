@@ -70,7 +70,10 @@ def prioritize_food(sim, founder, proposals):
     This changes choice *ranking* only. It does not grant permission to harvest,
     mutate matter/energy, or bypass the Book's ownership/replay checks.
     """
-    if not getattr(sim, 'founder_community_foraging_enabled', False):
+    # Nutrition is independently opt-in: disabling community scans must not
+    # disable fuel-aware ranking of already owned, Book-backed food.
+    if not (getattr(sim, 'founder_community_foraging_enabled', False)
+            or getattr(sim, 'founder_nutrition_enabled', False)):
         return proposals
     # Prioritize physiological fuel recovery, not a discretionary work budget.
     # Ingestion and digestion must outrank additional collection when the
