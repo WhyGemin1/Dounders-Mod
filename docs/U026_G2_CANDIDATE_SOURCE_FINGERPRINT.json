@@ -1,5 +1,5 @@
 {
-  "source": "U026 C186 reconcile C182/C183 test additions and C183 harvesting source",
+  "source": "U026 C187 detached Tree Book nutrition invariant and regression",
   "files": 538,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
@@ -423,7 +423,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "73a8454648e9adc0420f78b3d631b80dfc11c6eaf6d63643268b243815e0b5d1",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "1e0d89b42e701aed410c15b51cdabfd50ed8234954712be5dba393936cf7e38f",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "801bba0ede2bef8cb31273b0b9ca04efb9176549730ffe4abe09750e62bbd02d",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "41f44c5a9e308528e2423a10aedaab6159fbf6a46a74a00ad33e672872615d27",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "f29b6cdb76adbd0bd47d15e0daa5f9dca77ad7ebb2e318318527acb5429f394b",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "2e8ae65991be68a37ce099a32ff63d401e1b1d327bf051d50996c4b43cb1e938",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "decd31a229658d46aca81fd1e82473feac8117b1dfe22485085b6e87951a08bf",
@@ -481,7 +481,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c009_digestion_contract.py": "113b8b1d700f005edc7b7367cefd49a9901547df509b7444eaff925bfd9724c5",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c010_digestion_fuel.py": "6dda563c953750894d41ea5ccf1727c4d70cdd8ce61ecb892721e9f8023ed3ef",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c013_lot_isolation.py": "79f0693cbdf86a81233977dd08c9ed9010ca107661b069cffc58d8bb8f273264",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c015_founder_nutrition.py": "734eae6a59ff4d03f330db15351ca04d4dec5a98039fbe2d50f8210837605202",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c015_founder_nutrition.py": "4fd3ea73e73c49d9d7455e41db58fe0f8d2a7d5e3c20a9d15da02cca03d579fe",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c016_metabolic_rest.py": "492b72e2269611670bb13c350c28dc8fb3a75c4da8a1b8e90181a8938670965a",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_community_foraging.py": "a2f6b63ed7b7971ebada3f1cf901966e874abc9bfb97a7ad02d1a35066807d30",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "0354fd66d19465874300d7277b1a8540c438f7cfa332a9ac5351bfb7cb7bbe33",
@@ -606,5 +606,5 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c179_observation_timestamp.py"
   ],
   "gate_decision": "REVISE - C186 CI and ecological review pending",
-  "candidate_note": "Development-only, no ecological claim"
+  "candidate_note": "C187: fail closed on detached Tree Book during food proposal and ingestion; regression test"
 }
