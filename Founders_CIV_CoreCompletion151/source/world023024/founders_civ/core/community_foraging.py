@@ -18,7 +18,10 @@ def _accessible(sim, founder, tid):
     return bool(person is not None and person.alive
                 and person.location == 'riverbank'
                 and tree is not None and tree.state == 'active'
-                and sim.seeds.plants[tid]['status'] == 'stable'
+                and getattr(tree, 'book', None) is sim.book
+                and isinstance(getattr(sim.seeds, 'plants', None), dict)
+                and isinstance(sim.seeds.plants.get(tid), dict)
+                and sim.seeds.plants[tid].get('status') == 'stable'
                 and tree.provisioning is not None)
 
 
