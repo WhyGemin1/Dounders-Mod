@@ -1,0 +1,79 @@
+name: Core151 M01 single-Book regression
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'tools/import_core151.py'
+      - 'tools/test_import_core151.py'
+      - '.github/workflows/core151-m01-tests.yml'
+  workflow_dispatch:
+jobs:
+  headless:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile imported source
+        run: python -m compileall -q src
+      - name: Source provenance drift verifier regression
+        run: python -m unittest discover -v -s tools -p 'test_import_core151.py'
+      - name: One-engine and M01 gateway regression
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_*authority*.py'
+      - name: Real Core151 numerical Book conservation evidence (seed 427)
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_book_residual_evidence.py'
+      - name: M01 control-character receipt identity regression (seed 437)
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_identity_controls.py'
+      - name: M01 Book-funded harvest regression
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_gateway_integration.py'
+      - name: M01 trusted checkpoint and restart regression
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_checkpoint.py'
+      - name: M01 partial Book mutation, durable recovery and deterministic replay (seed 438)
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_partial_metadata.py'
+      - name: M01 multi-day uninterrupted versus restarted world
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_multitick_restart.py'
+      - name: M01 durable local checkpoint and interruption recovery
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_durable_harvest.py'
+      - name: Canonical Book history checkpoint growth and conservation
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_book_history_growth.py'
+      - name: M01 actual checkpoint file fsync and atomic replace faults
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_checkpoint_disk_faults.py'
+      - name: M01 actual subprocess exit at atomic checkpoint boundary
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_subprocess_termination.py'
+      - name: M01 actual subprocess exit at temporary and directory fsync boundaries
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_subprocess_fsync.py'
+      - name: M01 native claim fail-closed read-only contract
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_native_claim_boundary.py'
+      - name: M01 native read-only isolation on real Core151 world
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -v -s tests -p 'test_m01_native_core151_isolation.py'
