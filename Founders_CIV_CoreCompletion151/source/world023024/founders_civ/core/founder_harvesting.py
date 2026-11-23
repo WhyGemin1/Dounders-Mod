@@ -121,8 +121,17 @@ def perform_harvest(sim,founder,target):
     resolved_tree, _ = _origin(sim, kind, lot)
     if resolved_tree != tid:
         raise ValueError('ambiguous or unauthenticated cross-World resource lot')
-    record=tree.provisioning.lots.get(lot)
-    if record is None or record.kind!=kind:raise ValueError('unavailable identified resource lot')
+    lots=getattr(tree.provisioning, 'lots', None)
+    if not isinstance(lots, dict):
+        raise ValueError('malformed Tree resource registry')
+    record=lots.get(lot)
+    if (record is None or
+        not all(hasattr(record, field) for field in ('kind', 'state', 'created')) or
+        record.kind!=kind):
+        raise ValueError('unavailable identified resource lot')
+    if kind=='fruit' and (type(getattr(tree.provisioning, 'maturity_days', None)) is not int or
+                          tree.provisioning.maturity_days < 0):
+        raise ValueError('invalid Tree fruit maturity policy')
     source=f'{"portable_food" if kind=="food" else "fruit"}:lot:{lot}:tree:{tid}'
     if (record.state not in ('stored','mature') or
         (kind=='food' and record.state!='stored') or
