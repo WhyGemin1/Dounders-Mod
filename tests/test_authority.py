@@ -2271,10 +2271,15 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(rolled_back.world.seeds.blueprints[blueprint.id].stage,
                              'validated')
             self.assertEqual(len(rolled_back.world.seeds.plants), before[4])
+            self.assertEqual(dict(rolled_back.book.mass), before[1])
+            self.assertEqual(dict(rolled_back.book.energy), before[2])
+            self.assertEqual(list(rolled_back.book.transaction_history), before[3])
             rollback_audit = rolled_back.audit()
             self.assertEqual(rollback_audit.founder_count, 100)
             self.assertLessEqual(abs(rollback_audit.book_mass_error), 1e-6)
             self.assertLessEqual(abs(rollback_audit.book_energy_error), 1e-6)
+            print('seed484 interrupted rollback Book residuals: mass={:.17g} energy={:.17g}'.format(
+                rollback_audit.book_mass_error, rollback_audit.book_energy_error))
             # A successful retry after loading the last durable checkpoint
             # must settle exactly once, not replay the unsaved in-memory build.
             retry = rolled_back.world.seeds.plant(author, blueprint.id)
@@ -2301,6 +2306,8 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(proof.founder_count, 100)
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
             self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+            print('seed484 durable retry Book residuals: mass={:.17g} energy={:.17g}'.format(
+                proof.book_mass_error, proof.book_energy_error))
 
 if __name__ == '__main__':
     unittest.main()
