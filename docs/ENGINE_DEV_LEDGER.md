@@ -1621,3 +1621,11 @@
 - EXECUTE: Previous-head GitHub CI #684 verified. New second-recovery numerical assertions have NOT been executed or CI verified at ledger write. No local clean-checkout unittest or fresh numerical residuals this cycle. Prior #672 rollback residuals mass=-8.7311491370201111e-11 energy=-1.0593794286251068e-08; retry mass=-8.7311491370201111e-11 energy=-1.0652001947164536e-08 (tolerance 1e-6).
 - ECOLOGY/AUDIT/HANDOFF: Core151 world.book sole material/energy writer, world.tick sole clock, 100 Founder identities; M01 iteration3 lock, M05 SQLite nonauthority, WorldBox read-only and M02-M07 backlog unchanged. No merge/main modification; long-horizon ecology and native gameplay unverified.
 - NEXT: Verify exact-head CI and numerical output for second recovery; repair any failure before persistence changes.
+
+### 2026-11-23 09:59 CST — CI #687 failure repair
+- Grounded live PR #1/#2 (both draft), branch head 357487c; Actions #687 (run 45200048516) failed authority step with 78/79 passing and NameError at test_authority.py:1688 in seed465: `post_duplicate` undefined.
+- Implemented: moved the previously committed seed484 second-recovery audit assertions and residual print from seed465 into seed484 immediately after second checkpoint reload; test-only correction at 973ce13f0994f1d47db0da8e8cb75f1f61192569. No new engine or Book writer.
+- Executed: inspected GitHub Actions job 137780811306 logs. No local checkout/unittest executed this run; corrected exact-head CI pending.
+- Verified previous CI log: seed484 retry mass=-8.7311491370201111e-11, energy=-1.0652001947164536e-08; interrupted rollback mass=-8.7311491370201111e-11, energy=-1.0593794286251068e-08. Both within 1e-6. Second-recovery residual remains unverified.
+- Gates: WorldBox native writes disabled; M01 iteration3 lock retained; M05 SQLite nonauthoritative; ecology and game tests unverified. No main modification/merge.
+- Next: verify exact-head CI on scope repair and extract second-recovery residual; repair any failure.
