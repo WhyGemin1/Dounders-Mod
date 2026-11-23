@@ -1558,3 +1558,10 @@
 - Execute: GitHub Actions #658 verified previous head. Seed-484 exact-head CI not yet verified; no local clean-checkout run or new numerical Book residuals this cycle.
 - Audit: one world.book and world.tick; 100 Founder identities; M01 iteration-3 repair lock and M05 read-only nonauthority retained; WorldBox writes prohibited; no ecological/long-horizon claim.
 - Next: run exact-head seed-484 CI, fix any failure, then verify conservation and checkpoint replay on that same source SHA. No main merge.
+
+### 2026-11-23 00:55 CST — Seed-484 immediate retry conservation audit
+- GROUND: Inspected current branch test/state/ledger and GitHub Actions #661 (45120833985), SUCCESS on prior exact head 0cf71cd214e45c346e207a9258b1dc4e6cb5810b. Seed484 failed-plant/restart/retry/duplicate rejection therefore CI VERIFIED at that head.
+- IMPLEMENT: On existing Core151 branch, extended seed484 to assert exactly one added canonical Book history record after successful post-restart retry and immediately audit 100 Founder identities, mass/energy residual <=1e-6, printing actual residuals for future CI extraction. Test commit 53a0055a047250b79850895ea4966cb91694f95a. No production mechanics or alternative authority.
+- EXECUTE: Previous exact-head CI #661 SUCCESS; new audit assertions NOT YET EXECUTED. No local clean-checkout tests or new numerical residuals collected in this cycle; no native WorldBox or long-horizon ecology run.
+- AUDIT/HANDOFF: world.book and world.tick remain sole authorities, 100 Founder IDs, M01 iteration3 repair lock, M05 nonauthority, external WorldBox read-only, M02–M07 backlog unchanged. No main modification or merge.
+- NEXT: Verify CI for new head and extract seed484 numerical residuals; investigate any failures before expanding checkpoint interruption/replay tests.
