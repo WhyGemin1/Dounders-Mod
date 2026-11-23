@@ -2268,6 +2268,14 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(path.read_bytes(), durable_before)
             rolled_back = load_checkpoint(path, expected_tree_id=tree_id)
             self.assertEqual(rolled_back.book.seq, before[0])
+            # Interrupted persistence must restore the same authoritative clock,
+            # physical creation registries and Founder identities, not merely
+            # the pre-plant Book transaction sequence.
+            self.assertEqual(rolled_back.world.tick, world.tick)
+            self.assertEqual(set(rolled_back.world.founders.people),
+                             set(world.founders.people))
+            self.assertEqual(len(rolled_back.world.seeds.constructs.items),
+                             len(world.seeds.constructs.items) - 1)
             self.assertEqual(rolled_back.world.seeds.blueprints[blueprint.id].stage,
                              'validated')
             self.assertEqual(len(rolled_back.world.seeds.plants), before[4])
