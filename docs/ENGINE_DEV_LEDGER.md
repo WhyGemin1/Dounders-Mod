@@ -1529,3 +1529,10 @@
 - Execution: prior exact-head GitHub Actions #646 SUCCESS. Seed483 newly committed test NOT YET EXECUTED; no clean local checkout, numerical residuals or native WorldBox test this cycle. Historical authorized Drive ZIP fetched (956121 bytes) but archive contents not revalidated this cycle.
 - Boundaries: one `world.book`, one `world.tick`, 100 Founder identities; M01 iteration3 lock, M05 nonauthority, M02–M07 backlog and WorldBox read-only unchanged. PRs remain drafts, no merge.
 - Next: verify seed483 exact-head CI and repair failures; then add checkpoint-restart proof for insufficient funding and assess construct-event atomicity after Book commit.
+
+## 2026-11-22 21:01 CST — Seed483 House-reserve test fixture correction
+- Ground: inspected live branch source, CI #649 (45097592852), and authorized Drive archive metadata. CI ran 78 authority tests: 77 passed; seed483 failed because `world_work` was unfunded and the test reached the work-source guard before the intended House reserve guard.
+- Integration: updated only `tests/test_authority.py` at 2ded9b14 to select a real Founder with at least 1 unit Book energy and supply `funding_source=founder:<id>` to the existing canonical ConstructRegistry. No engine mechanics, Book or clock changed.
+- Execute: prior CI #649 FAILED; repaired exact-head CI NOT YET VERIFIED; no local clean-checkout tests run. Seed427 prior CI numeric residuals: mass -8.9130480773746967e-11, energy -1.0302755981683731e-08. Seed483 House guard remains provisional until new CI.
+- Audit: 100 Founder and conservation checks remain in seed483; WorldBox read-only, M01 iteration3 lock, M05 nonauthority and M02–M07 backlog preserved; main untouched and PR draft.
+- Next: verify exact-head CI and correct any remaining failure, then add durable restart verification for rejected insufficient-reserve physical construction.
