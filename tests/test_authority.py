@@ -2118,5 +2118,42 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
 
+    def test_seed482_construction_failure_after_work_funding_is_atomic(self):
+        """A failed physical build must not strand a Founder work debit."""
+        from unittest.mock import patch
+        world, _, tree_id = bootstrap(479)
+        session = SingleEngineSession(world, tree_id)
+        author = next(iter(world.founders.people))
+        blueprint = world.seeds.draft(author, 'realm', 'Seed 482 Realm', x=70., y=70.)
+        world.seeds.research(author, blueprint.id)
+        session._expected_book_sequence = world.book.seq
+        session.step()
+        if world.tick not in blueprint.research_ticks:
+            world.seeds.research(author, blueprint.id)
+        reviewer = next(a for a, f in world.founders.people.items()
+                        if a != author and f.location == world.founders.people[author].location)
+        world.seeds.validate(reviewer, blueprint.id)
+        session._expected_book_sequence = world.book.seq
+        before = (world.tick, world.book.seq, dict(world.book.mass),
+                  dict(world.book.energy), list(world.book.transaction_history),
+                  len(world.seeds.plants), len(world.seeds.events),
+                  len(world.seeds.constructs.events))
+        with patch.object(world.seeds.constructs, 'build',
+                          side_effect=OSError('injected failure after Founder funding')) as build:
+            with self.assertRaisesRegex(OSError, 'after Founder funding'):
+                world.seeds.plant(author, blueprint.id)
+        self.assertEqual(build.call_count, 1)
+        self.assertEqual(before, (
+            world.tick, world.book.seq, dict(world.book.mass),
+            dict(world.book.energy), list(world.book.transaction_history),
+            len(world.seeds.plants), len(world.seeds.events),
+            len(world.seeds.constructs.events)))
+        self.assertEqual(blueprint.stage, 'validated')
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
+
 if __name__ == '__main__':
     unittest.main()
