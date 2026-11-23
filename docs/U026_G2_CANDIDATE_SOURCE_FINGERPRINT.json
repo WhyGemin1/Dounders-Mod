@@ -1,5 +1,5 @@
 {
-  "source": "U026 C179 strict observation timestamp validation",
+  "source": "U026 C181 malformed observation lot collection validation",
   "files": 536,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
@@ -422,7 +422,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "73a8454648e9adc0420f78b3d631b80dfc11c6eaf6d63643268b243815e0b5d1",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "2355885bf289771f559799762272ae3dc9d957f8ca1d11defdcccaf3619af63a",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "e9d401404aa5efbf3c6fee7238dc722f1f0ead39a6be3ca4cd5e7332445cbb7a",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "32ad23cda1e453d664bb9a6e19dfdfaa0eb3129a2d688fd73257e2457b001391",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "f29b6cdb76adbd0bd47d15e0daa5f9dca77ad7ebb2e318318527acb5429f394b",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "2e8ae65991be68a37ce099a32ff63d401e1b1d327bf051d50996c4b43cb1e938",
@@ -508,7 +508,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c175_harvest_maturity_boundary.py": "d860abcb0a0cdc8f4ef2b09bdd03d58f45590cea363850ff6095e970e1cef70d",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c176_food_harvest_checkpoint.py": "e8b989979bb9999a062d56779c2e4a3054660739d882b353d12549671ea36bcb",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c178_observation_chronology.py": "8ea8d80e642d4b314d4548a8f1605cd7033566166e224a1669f00d0379b7ae28",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c179_observation_timestamp.py": "2ec3c329f13fe73dbe151dff3686bcaf4fe410fb12279a555cf184befddde16d",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c179_observation_timestamp.py": "b1cc7f7a578977ed63e8f3dddbd77c963542acc3929c3db8a0d463229f3f5a42",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_cycle099_fingerprint.py": "7ca1fff2c3db6e76cad17a549c021e356166735e36c1b6308f8fe367b28ff4b8",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_drift_audit_068.py": "2e729737b6a99d8aab6509f057c6a54bb2ab78042c7a5807202c3af13b93a115",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_drift_provenance_069.py": "e2ffa6e15b8631d39320ef31c7f3b18ca680415158df627a0829c1ad006c977b",
@@ -603,6 +603,6 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c179_observation_timestamp.py"
   ],
-  "gate_decision": "REVISE - C179 regression pending",
+  "gate_decision": "REVISE - C181 regression pending",
   "candidate_note": "Development-only, no ecological claim"
 }
