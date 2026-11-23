@@ -167,6 +167,9 @@ class SingleEngineSession:
         # Reject pre-existing conservation drift before invoking the M01 adapter.
         # A failed preflight must not create a new receipt or consume inventory.
         self.audit()
+        # Direct harvest must enforce the same receipt provenance as durable harvest.
+        from founders_engine.checkpoint import _validate_world
+        _validate_world(self.world, self.tree_id)
         before_sequence = self.book.seq
         # Validation failures are retryable only when the canonical Book is unchanged.
         from copy import deepcopy
