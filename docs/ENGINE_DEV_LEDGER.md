@@ -1550,3 +1550,11 @@
 - EXECUTE: CI #655 SUCCESS on prior head; new restored seed479 assertions NOT YET EXECUTED against the updated head. No local clean-checkout run, numerical residual output, native WorldBox or long-horizon ecological test in this cycle.
 - AUDIT: Seed483 checkpoint recovery verified at prior head; seed479 newly active assertions PROVISIONAL until exact-head CI. Canonical world.book, world.tick, 100 Founders, M01 iteration3 lock, M05 nonauthority and external read-only policy unchanged. No merge/main write.
 - NEXT: Verify exact-head CI and correct any exposed seed479 failure; then add failed planting retry/replay across a real checkpoint restart.
+
+
+### 2026-11-22 23:55 CST — Seed-484 failed planting retry checkpoint regression
+- Ground: GitHub Actions #658 completed SUCCESS for prior head 4f6f509; restored seed-479 Book-sequence and plant-count assertions now CI-verified.
+- Integration: committed test_seed484_failed_plant_retry_after_checkpoint_settles_once to existing tests/test_authority.py (7fccbd7). Injected build failure, asserts unchanged canonical Book/creation state, checkpoint reload, legitimate single settlement, second checkpoint reload, and duplicate rejection without another debit.
+- Execute: GitHub Actions #658 verified previous head. Seed-484 exact-head CI not yet verified; no local clean-checkout run or new numerical Book residuals this cycle.
+- Audit: one world.book and world.tick; 100 Founder identities; M01 iteration-3 repair lock and M05 read-only nonauthority retained; WorldBox writes prohibited; no ecological/long-horizon claim.
+- Next: run exact-head seed-484 CI, fix any failure, then verify conservation and checkpoint replay on that same source SHA. No main merge.
