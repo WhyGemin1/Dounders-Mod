@@ -1683,30 +1683,6 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(again.world.tick, w.tick)
             self.assertEqual(again.world.book.seq, w.book.seq)
             self.assertEqual(dict(again.world.book.energy), dict(w.book.energy))
-            # The second durable recovery must remain idempotent even if the
-            # original Founder repeats the same planting request again.
-            second_recovery_before = (
-                post_duplicate.book.seq,
-                dict(post_duplicate.book.mass),
-                dict(post_duplicate.book.energy),
-                list(post_duplicate.book.transaction_history),
-                dict(post_duplicate.world.seeds.constructs.items),
-                list(post_duplicate.world.seeds.constructs.events),
-                post_duplicate.world.tick,
-                set(post_duplicate.world.founders.people),
-            )
-            with self.assertRaises(ValueError):
-                post_duplicate.world.seeds.plant(author, blueprint.id)
-            self.assertEqual(second_recovery_before, (
-                post_duplicate.book.seq,
-                dict(post_duplicate.book.mass),
-                dict(post_duplicate.book.energy),
-                list(post_duplicate.book.transaction_history),
-                dict(post_duplicate.world.seeds.constructs.items),
-                list(post_duplicate.world.seeds.constructs.events),
-                post_duplicate.world.tick,
-                set(post_duplicate.world.founders.people),
-            ))
             proof = again.audit()
             self.assertEqual(proof.founder_count, 100)
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
@@ -2364,6 +2340,30 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(post_duplicate.world.tick, v.tick)
             self.assertEqual(set(post_duplicate.world.founders.people),
                              set(v.founders.people))
+            # The second durable recovery must remain idempotent even if the
+            # original Founder repeats the same planting request again.
+            second_recovery_before = (
+                post_duplicate.book.seq,
+                dict(post_duplicate.book.mass),
+                dict(post_duplicate.book.energy),
+                list(post_duplicate.book.transaction_history),
+                dict(post_duplicate.world.seeds.constructs.items),
+                list(post_duplicate.world.seeds.constructs.events),
+                post_duplicate.world.tick,
+                set(post_duplicate.world.founders.people),
+            )
+            with self.assertRaises(ValueError):
+                post_duplicate.world.seeds.plant(author, blueprint.id)
+            self.assertEqual(second_recovery_before, (
+                post_duplicate.book.seq,
+                dict(post_duplicate.book.mass),
+                dict(post_duplicate.book.energy),
+                list(post_duplicate.book.transaction_history),
+                dict(post_duplicate.world.seeds.constructs.items),
+                list(post_duplicate.world.seeds.constructs.events),
+                post_duplicate.world.tick,
+                set(post_duplicate.world.founders.people),
+            ))
             # The second durable recovery must conserve the canonical Book
             # independently of the earlier in-memory retry audit.
             second_recovery_audit = post_duplicate.audit()
