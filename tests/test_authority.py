@@ -2349,6 +2349,7 @@ class SingleAuthorityTests(unittest.TestCase):
                 list(post_duplicate.book.transaction_history),
                 dict(post_duplicate.world.seeds.constructs.items),
                 list(post_duplicate.world.seeds.constructs.events),
+                list(post_duplicate.world.seeds.events),
                 post_duplicate.world.tick,
                 set(post_duplicate.world.founders.people),
             )
@@ -2361,6 +2362,7 @@ class SingleAuthorityTests(unittest.TestCase):
                 list(post_duplicate.book.transaction_history),
                 dict(post_duplicate.world.seeds.constructs.items),
                 list(post_duplicate.world.seeds.constructs.events),
+                list(post_duplicate.world.seeds.events),
                 post_duplicate.world.tick,
                 set(post_duplicate.world.founders.people),
             ))
