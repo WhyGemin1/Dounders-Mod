@@ -2263,8 +2263,11 @@ class SingleAuthorityTests(unittest.TestCase):
             v = again.world
             settled = (v.book.seq, dict(v.book.mass), dict(v.book.energy),
                        list(v.book.transaction_history), len(v.seeds.plants))
+            checkpoint_bytes_before_duplicate = path.read_bytes()
             with self.assertRaises(ValueError):
                 v.seeds.plant(author, blueprint.id)
+            # A rejected duplicate must not alter the durable checkpoint.
+            self.assertEqual(path.read_bytes(), checkpoint_bytes_before_duplicate)
             self.assertEqual(settled, (v.book.seq, dict(v.book.mass),
                                        dict(v.book.energy),
                                        list(v.book.transaction_history),
