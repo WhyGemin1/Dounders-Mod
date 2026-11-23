@@ -87,7 +87,10 @@ def perform_harvest(sim,founder,target):
     record=tree.provisioning.lots.get(lot)
     if record is None or record.kind!=kind:raise ValueError('unavailable identified resource lot')
     source=f'{"portable_food" if kind=="food" else "fruit"}:lot:{lot}:tree:{tid}'
-    if (record.state not in ('stored','mature') or (kind=='fruit' and record.state!='mature') or
+    if (record.state not in ('stored','mature') or
+        (kind=='fruit' and (record.state!='mature' or
+          type(record.created) is not int or record.created < 0 or
+          type(tree.age) is not int or tree.age - record.created < tree.provisioning.maturity_days)) or
         tree.book.mass[source]<=1e-9):
         # The Founder learns the specific lot is unavailable only by reaching
         # the claimed resource or personally attempting the transfer.
