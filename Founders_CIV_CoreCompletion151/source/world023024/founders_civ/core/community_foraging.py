@@ -72,16 +72,19 @@ def prioritize_food(sim, founder, proposals):
     """
     if not getattr(sim, 'founder_community_foraging_enabled', False):
         return proposals
-    work = sim.book.energy.get(f'founder:{founder}', 0.)
+    # Prioritize physiological fuel recovery, not a discretionary work budget.
+    # Ingestion and digestion must outrank additional collection when the
+    # Founder's embodied chemical reserve is depleted. This changes ranking
+    # only: each action still requires its Book-backed eligibility checks.
     body = sim.book.energy.get(f'body_chemical:founder:{founder}', 0.)
-    if work >= .24 and body >= .02:
+    if body >= .02:
         return proposals
     out = []
     for score, action, target, meta in proposals:
         if action == 'tree_harvest' and isinstance(meta, (tuple, list)) and len(meta) == 3:
             if meta[2] == 'food':
-                score += 2.35
+                score += 1.40
         elif action in ('food_ingest', 'food_digest'):
-            score += 1.15
+            score += 3.00
         out.append((score, action, target, meta))
     return out
