@@ -1,5 +1,5 @@
 {
-  "source": "U026 C181 malformed observation lot collection validation",
+  "source": "U026 C185 C184 cross-world origin fail-closed provenance reconciliation",
   "files": 536,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
@@ -421,7 +421,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "0a06b3e88dc4fd58c5314da62111c0609f302fab7e2360fbcdff22021a503539",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "73a8454648e9adc0420f78b3d631b80dfc11c6eaf6d63643268b243815e0b5d1",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "2355885bf289771f559799762272ae3dc9d957f8ca1d11defdcccaf3619af63a",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "1e0d89b42e701aed410c15b51cdabfd50ed8234954712be5dba393936cf7e38f",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "32ad23cda1e453d664bb9a6e19dfdfaa0eb3129a2d688fd73257e2457b001391",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "f29b6cdb76adbd0bd47d15e0daa5f9dca77ad7ebb2e318318527acb5429f394b",
@@ -597,7 +597,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "cac5c44198662778a0219446715c7ab915491256",
+  "source_commit": "cdbeff10aab40dce732da98afea4220c214384d4",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py",
