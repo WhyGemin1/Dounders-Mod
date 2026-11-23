@@ -1629,3 +1629,11 @@
 - Verified previous CI log: seed484 retry mass=-8.7311491370201111e-11, energy=-1.0652001947164536e-08; interrupted rollback mass=-8.7311491370201111e-11, energy=-1.0593794286251068e-08. Both within 1e-6. Second-recovery residual remains unverified.
 - Gates: WorldBox native writes disabled; M01 iteration3 lock retained; M05 SQLite nonauthoritative; ecology and game tests unverified. No main modification/merge.
 - Next: verify exact-head CI on scope repair and extract second-recovery residual; repair any failure.
+
+## 2026-11-23 10:59 CST — Seed484 second durable recovery duplicate-replay gate
+- GROUND: Inspected live draft PR #1 and #2, Core151 authority test and engine state, and authorized Cycle152 ZIP metadata. GitHub Actions #689 (45211557957) SUCCESS on 0f8cedb: 79/79 authority tests and all headless workflow steps passed.
+- VERIFIED AUDIT: CI #689 seed484 retry mass=-8.7311491370201111e-11 energy=-1.0652001947164536e-08; interrupted rollback mass=-8.7311491370201111e-11 energy=-1.0593794286251068e-08; second durable recovery mass=-8.7311491370201111e-11 energy=-1.0652001947164536e-08; durable retry same. All <=1e-6. These values are from previous-head CI, not new code.
+- IMPLEMENT: Added seed484 second-restart duplicate planting rejection, asserting unchanged canonical Book sequence, balances and history, physical construct items/events, world clock and Founder identities (test commit 9e31e24). Updated ACTIVE_ENGINE.json. No second engine or production mechanic introduced.
+- EXECUTE: New test not executed locally or CI verified at ledger write. Exact-head GitHub CI pending; no local clean-checkout run this cycle. Previous-head CI #689 success does not verify new assertions.
+- ECOLOGY/HANDOFF: world.book sole writable material/energy Book, world.tick sole clock, 100 Founders. M01 iteration3 repair lock, M05 SQLite nonauthority, native WorldBox read-only and M02-M07 backlog unchanged. No native game or long-horizon ecological tests; no merge/main changes.
+- NEXT: Verify exact-head CI on new branch head and repair any failure before modifying production persistence mechanics.
