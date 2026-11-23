@@ -74,6 +74,12 @@ def perform_nutrition(sim, founder, action, target):
     if person is None or not person.alive:
         raise ValueError('active Founder required')
     tree_id, lot = target
+    # Validate the explicitly targeted Tree before resolving lot provenance.
+    # The origin resolver deliberately ignores detached Books; report that
+    # integrity violation directly rather than misclassifying a known lot.
+    targeted_tree = sim.world_trees.worlds.get(tree_id)
+    if targeted_tree is not None and getattr(targeted_tree, 'book', None) is not sim.book:
+        raise ValueError('Tree does not share the authoritative Book')
     actual_id, tree = _tree_for_lot(sim, lot)
     if actual_id != tree_id or tree is None:
         raise ValueError('unknown identified food lot')
