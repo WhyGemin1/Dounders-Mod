@@ -1672,3 +1672,10 @@
 - EXECUTE/TEST: Previous-head GitHub Actions #702 SUCCESS, verifying seed485 on prior code. New source and seed486 were committed but not yet tested by exact-head CI at this ledger write. No local clean-checkout test was executed because container GitHub DNS resolution failed; `git ls-remote https://github.com/WhyGemin1/Dounders-Mod.git refs/heads/feat/single-core151-authority` returned `Could not resolve host: github.com`. No fresh numerical Book residuals collected; prior seed484 figures are historical.
 - ECOLOGY/BEHAVIOR/HANDOFF: Single `world.book`, `world.tick`, 100 real Founder identities, M01 iteration3 repair lock, M05 SQLite nonauthority, WorldBox read-only boundary, and M02–M07 backlog preserved. No WorldBox gameplay, ecological long-horizon validation, merge or main modification.
 - NEXT: Verify exact-head CI for seed486 and report Book residuals if emitted; pursue clean-checkout and substantive production integration rather than repeated checkpoint-only regressions.
+
+
+## 2026-11-23 17:04 CST — direct harvest receipt provenance
+- VERIFIED: PR #1/#2 open draft, main base 26a02ba; exact prior head 4165a0c CI run 45275100307 headless success (22 steps), including checkout, provenance, authority and numerical conservation steps. Drive archive metadata confirmed, bytes not retrieved.
+- PROVISIONAL: direct harvest now invokes existing canonical checkpoint validator before settlement (8d0f67a); seed487 regression (2f228d3) rejects forged receipt without Book or clock mutation, checks 100 Founders and conservation. New exact-head tests pending. No fresh numerical residuals extracted.
+- BLOCKED/UNVERIFIED: native WorldBox writes, ecological stability, long horizons. No local checkout or game test this cycle. No second authority or main modification.
+- Next: verify exact-head CI and address any direct harvest validation regression before further production changes.
