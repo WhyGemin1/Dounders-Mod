@@ -2164,12 +2164,17 @@ class SingleAuthorityTests(unittest.TestCase):
         before = (world.tick, world.book.seq, dict(world.book.mass),
                   dict(world.book.energy), list(world.book.transaction_history),
                   dict(constructs.items), list(constructs.events))
+        # Use an actually funded Founder account so the House reserve guard,
+        # rather than the work-source guard, is the rejection under test.
+        funded_founder = next(fid for fid in world.founders.people
+                              if world.book.energy[f'founder:{fid}'] >= 1.)
         unavailable_reserve = world.book.energy['house'] + 1.
         with self.assertRaisesRegex(ValueError, 'not enough House energy'):
             constructs.build(
                 'seed483-unfunded', 'dimension', 'house',
                 'house', 1., 0.1, unavailable_reserve,
-                binding_energy=2., work_source='world_work')
+                binding_energy=2., work_source='world_work',
+                funding_source=f'founder:{funded_founder}')
         self.assertEqual(before, (
             world.tick, world.book.seq, dict(world.book.mass),
             dict(world.book.energy), list(world.book.transaction_history),
