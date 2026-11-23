@@ -343,7 +343,9 @@ class SingleEngineSession:
         """Reject secondary clocks/writable ledgers; only read-only snapshot probes."""
         # Even read-only attachments must not be accepted on a quarantined or
         # externally substituted Core151 authority; recover first.
-        self._assert_authority()
+        # Read-only admission must not certify a world whose canonical Book
+        # has already drifted: verify conservation and receipt metadata too.
+        self.audit()
         if any(hasattr(observer, attr) for attr in
                ('book', 'ledger', 'sqlite_book', 'clock', 'step', 'write')):
             raise ValueError('observer exposes independent state authority')
