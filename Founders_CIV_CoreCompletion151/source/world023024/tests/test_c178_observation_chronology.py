@@ -12,7 +12,7 @@ class ObservationChronologyTests(unittest.TestCase):
                 sim, _, tid = bootstrap(seed=821)
                 tree = sim.world_trees.worlds[tid]
                 tree.enable_provisioning()
-                for _ in range(9):
+                for _ in range(17):
                     sim.step()
                 initial = observed_lots(tree)
                 kind = 'fruit' if corruption.startswith('fruit') else 'food'
