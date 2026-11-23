@@ -536,7 +536,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c174_premature_fruit_checkpoint.py": "0846333d1e7b82166a09c6fa659a641b08df84402632425cc105a0bd5eee4ed5",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c175_harvest_maturity_boundary.py": "d860abcb0a0cdc8f4ef2b09bdd03d58f45590cea363850ff6095e970e1cef70d",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c176_food_harvest_checkpoint.py": "e8b989979bb9999a062d56779c2e4a3054660739d882b353d12549671ea36bcb",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c178_observation_chronology.py": "794687a44bea1ccb0d7d1631ff6b467fc4fbfbe55ae00bad7b6834141f3ac873"
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c178_observation_chronology.py": "8ea8d80e642d4b314d4548a8f1605cd7033566166e224a1669f00d0379b7ae28"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
