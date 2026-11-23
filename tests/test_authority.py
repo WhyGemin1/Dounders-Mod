@@ -2240,6 +2240,7 @@ class SingleAuthorityTests(unittest.TestCase):
                                   list(world.book.transaction_history),
                                   len(world.seeds.plants)))
         self.assertEqual(blueprint.stage, 'validated')
+        preplant_construct_ids = set(world.seeds.constructs.items)
         with TemporaryDirectory() as directory:
             path = Path(directory) / 'seed484.checkpoint'
             save_checkpoint(world, tree_id, path)
@@ -2274,8 +2275,8 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(rolled_back.world.tick, world.tick)
             self.assertEqual(set(rolled_back.world.founders.people),
                              set(world.founders.people))
-            self.assertEqual(len(rolled_back.world.seeds.constructs.items),
-                             len(world.seeds.constructs.items) - 1)
+            self.assertEqual(set(rolled_back.world.seeds.constructs.items),
+                             preplant_construct_ids)
             self.assertEqual(rolled_back.world.seeds.blueprints[blueprint.id].stage,
                              'validated')
             self.assertEqual(len(rolled_back.world.seeds.plants), before[4])
