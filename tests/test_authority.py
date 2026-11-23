@@ -2326,6 +2326,20 @@ class SingleAuthorityTests(unittest.TestCase):
                              len(preplant_construct_ids) + 1)
             self.assertEqual(v.tick, world.tick)
             self.assertEqual(set(v.founders.people), set(world.founders.people))
+            # Persist after rejected duplicate and verify a second recovery
+            # cannot resurrect a second settlement or physical creation.
+            save_checkpoint(v, tree_id, path)
+            post_duplicate = load_checkpoint(path, expected_tree_id=tree_id)
+            self.assertEqual(post_duplicate.book.seq, settled[0])
+            self.assertEqual(dict(post_duplicate.book.mass), settled[1])
+            self.assertEqual(dict(post_duplicate.book.energy), settled[2])
+            self.assertEqual(list(post_duplicate.book.transaction_history), settled[3])
+            self.assertEqual(len(post_duplicate.world.seeds.plants), settled[4])
+            self.assertEqual(set(post_duplicate.world.seeds.constructs.items),
+                             set(v.seeds.constructs.items))
+            self.assertEqual(post_duplicate.world.tick, v.tick)
+            self.assertEqual(set(post_duplicate.world.founders.people),
+                             set(v.founders.people))
             proof = again.audit()
             self.assertEqual(proof.founder_count, 100)
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
