@@ -1683,6 +1683,15 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertEqual(again.world.tick, w.tick)
             self.assertEqual(again.world.book.seq, w.book.seq)
             self.assertEqual(dict(again.world.book.energy), dict(w.book.energy))
+            # The second durable recovery must conserve the canonical Book
+            # independently of the earlier in-memory retry audit.
+            second_recovery_audit = post_duplicate.audit()
+            self.assertEqual(second_recovery_audit.founder_count, 100)
+            self.assertLessEqual(abs(second_recovery_audit.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(second_recovery_audit.book_energy_error), 1e-6)
+            print('seed484 second recovery Book residuals: mass={:.17g} energy={:.17g}'.format(
+                second_recovery_audit.book_mass_error,
+                second_recovery_audit.book_energy_error))
             proof = again.audit()
             self.assertEqual(proof.founder_count, 100)
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
