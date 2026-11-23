@@ -164,3 +164,27 @@ def test_c194_adequate_body_fuel_preserves_original_ranking():
     proposals = [(4.5, 'tree_harvest', None, ('TREE', 'lot', 'food')),
                  (4.7, 'food_digest', None, ('TREE', 'owned'))]
     assert prioritize_food(sim, 'F052', proposals) == proposals
+
+
+def test_c195_nutrition_priority_without_community_scanning():
+    """Already owned food remains a survival choice with scans disabled."""
+    from types import SimpleNamespace
+    sim = SimpleNamespace(founder_community_foraging_enabled=False,
+                          founder_nutrition_enabled=True,
+                          book=SimpleNamespace(energy={'body_chemical:founder:F052': 0.0}))
+    proposals = [(4.5, 'tree_harvest', None, ('TREE', 'lot', 'food')),
+                 (4.7, 'food_digest', None, ('TREE', 'owned')),
+                 (4.5, 'food_ingest', None, ('TREE', 'owned'))]
+    ranked = prioritize_food(sim, 'F052', proposals)
+    assert ranked[1][0] > ranked[0][0]
+    assert ranked[2][0] > ranked[0][0]
+    assert proposals[0][0] == 4.5
+    assert sim.book.energy['body_chemical:founder:F052'] == 0.0
+
+
+def test_c195_both_policies_disabled_preserve_ranking():
+    from types import SimpleNamespace
+    sim = SimpleNamespace(founder_community_foraging_enabled=False,
+                          founder_nutrition_enabled=False)
+    proposals = [(4.5, 'food_ingest', None, ('TREE', 'owned'))]
+    assert prioritize_food(sim, 'F052', proposals) is proposals
