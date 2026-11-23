@@ -1536,3 +1536,10 @@
 - Execute: prior CI #649 FAILED; repaired exact-head CI NOT YET VERIFIED; no local clean-checkout tests run. Seed427 prior CI numeric residuals: mass -8.9130480773746967e-11, energy -1.0302755981683731e-08. Seed483 House guard remains provisional until new CI.
 - Audit: 100 Founder and conservation checks remain in seed483; WorldBox read-only, M01 iteration3 lock, M05 nonauthority and M02–M07 backlog preserved; main untouched and PR draft.
 - Next: verify exact-head CI and correct any remaining failure, then add durable restart verification for rejected insufficient-reserve physical construction.
+
+## 2026-11-22 22:03 CST — seed483 durable rejection checkpoint regression
+- Ground: inspected live draft PR #1/#2, current authority test, checkpoint implementation, and authorized Drive ZIP metadata. PR #2 head at start: `311d9d630f814ce0e10b51dbebc1ee8e1f637a31`. GitHub Actions #652 (45103557623) completed SUCCESS for this head; earlier seed483 fixture repair now CI verified.
+- Implementation: extended the **existing** `tests/test_authority.py::SingleAuthorityTests.test_seed483_insufficient_house_reserve_rejects_without_book_mutation` to save and load the real Core151 checkpoint after rejection, assert one shared Book, unchanged Book balances/seq/history, unchanged world tick and construct records, absent rejected construct, 100 Founders, and mass/energy audit tolerance <=1e-6. Test-source commit `b69b920d2809a5880a66f283e539d5df62bdedb3`.
+- Execution: earlier exact-head GitHub Actions #652 SUCCESS. **New test extension not yet executed**; no local clean-checkout unittest, new Book residuals, WorldBox gameplay, or long-horizon ecology executed. No claim of passed checkpoint extension.
+- Boundaries: `world.book` sole writable material/energy Book, `world.tick` sole clock, 100 Founder identities; M01 iteration-3 repair lock, M05 SQLite nonauthority, WorldBox read-only and M02–M07 backlog preserved. No main modification or merge.
+- Next: verify exact-head CI on updated branch and resolve any failure; then cover failed planting replay across restart.
