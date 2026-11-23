@@ -1545,6 +1545,29 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
 
+    def test_seed487_direct_harvest_rejects_forged_receipt(self):
+        world, _, tree_id = bootstrap(487)
+        session = SingleEngineSession(world, tree_id)
+        founder_id = next(iter(world.founders.people))
+        before = (world.tick, world.book.seq, dict(world.book.mass),
+                  dict(world.book.energy), list(world.book.transaction_history))
+        key = 'm01:forged:seed487'
+        world.book.request_receipts[key] = 10**9
+        try:
+            with self.assertRaises((RuntimeError, ValueError)):
+                session.harvest(founder_id, 'seed487-source', 1,
+                                'world', 'plant', 0.01)
+            self.assertEqual(before, (world.tick, world.book.seq,
+                dict(world.book.mass), dict(world.book.energy),
+                list(world.book.transaction_history)))
+            self.assertFalse(session._checkpoint_uncertain)
+        finally:
+            world.book.request_receipts.pop(key, None)
+        proof = session.audit()
+        self.assertEqual(proof.founder_count, 100)
+        self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+        self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
     def test_seed462_direct_tending_rejects_forged_receipt_before_settlement(self):
         """Direct voluntary tending must reject forged Book replay metadata."""
         world, _, tree_id = bootstrap(462)
