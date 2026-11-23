@@ -1565,3 +1565,10 @@
 - EXECUTE: Previous exact-head CI #661 SUCCESS; new audit assertions NOT YET EXECUTED. No local clean-checkout tests or new numerical residuals collected in this cycle; no native WorldBox or long-horizon ecology run.
 - AUDIT/HANDOFF: world.book and world.tick remain sole authorities, 100 Founder IDs, M01 iteration3 repair lock, M05 nonauthority, external WorldBox read-only, M02–M07 backlog unchanged. No main modification or merge.
 - NEXT: Verify CI for new head and extract seed484 numerical residuals; investigate any failures before expanding checkpoint interruption/replay tests.
+
+### 2026-11-23 02:03 CST — Seed484 numeric audit and durable duplicate rejection
+- GROUND: Inspected live PR #1/#2, Core151 test/state/ledger and GitHub Actions #664 (45127625448), SUCCESS on 5911d5dad3586709d05ecdf40051ad6d08035020. CI log reports 79 authority tests PASS.
+- IMPLEMENT: Extended the existing seed484 Core151 checkpoint-retry test to compare checkpoint bytes before and after rejected duplicate planting, code commit a2b1ef588b7db1409bb06cfac2f972f4f38c1d3b. No production engine or additional Book.
+- EXECUTE: Prior-head CI #664 seed484 retry Book residual mass=-8.7311491370201111e-11 energy=-1.0652001947164536e-08 (both <=1e-6). New assertion NOT YET EXECUTED; exact-head CI pending. No local clean checkout or WorldBox game test this cycle.
+- AUDIT/HANDOFF: Existing world.book and world.tick remain sole authorities, 100 Founder identities verified by passing prior-head test. M01 iteration-3 lock, M05 SQLite nonauthority, read-only WorldBox boundary and M02–M07 backlog preserved. No merge or main change.
+- NEXT: Verify exact-head CI, repair any regression, then test interrupted checkpoint write/recovery and exactly-once planting.
