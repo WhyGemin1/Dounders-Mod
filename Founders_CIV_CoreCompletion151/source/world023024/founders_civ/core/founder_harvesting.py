@@ -38,8 +38,12 @@ def observed_lots(tree):
     """Take a bounded, current snapshot when a Founder actually observes a Tree."""
     policy=tree.provisioning
     if policy is None:return []
+    lots=getattr(policy, 'lots', None)
+    if not isinstance(lots, dict):return []
     available=[]
-    for lot,record in sorted(policy.lots.items()):
+    for lot,record in sorted(lots.items(), key=lambda pair: str(pair[0])):
+        if not isinstance(lot, str) or not lot:continue
+        if not all(hasattr(record, field) for field in ('kind', 'created', 'state')):continue
         # Observation must not advertise checkpoint-corrupt food or fruit.
         # This is perception filtering only; perform_harvest remains the
         # authoritative, independently checked Book transfer boundary.
@@ -49,6 +53,8 @@ def observed_lots(tree):
         if record.kind == 'food' and record.state != 'stored':continue
         if record.kind == 'fruit' and (
             record.state != 'mature' or
+            type(getattr(policy, 'maturity_days', None)) is not int or
+            policy.maturity_days < 0 or
             tree.age - record.created < policy.maturity_days):continue
         kind=record.kind
         source=f'{"portable_food" if kind=="food" else "fruit"}:lot:{lot}:tree:{tree.id}'
