@@ -1505,3 +1505,12 @@
 - Measured prior-head CI seed427 residuals: mass -8.9130480773746967e-11; energy -1.0302755981683731e-08, not seed479-specific.
 - Safety: one Book and clock, 100 Founder identities; M01 iteration3 lock, M05 nonauthority, read-only WorldBox, draft PRs, main unchanged.
 - Next: verify repaired-head CI; then fault-inject failure between Founder work transfer and construction to determine whether full `SeedRegistry.plant` can leave a stranded work debit. If so, implement all-or-nothing planting through the existing Book.
+
+## 2026-11-22 18:01 CST — seed482 cross-registry planting atomicity gate
+- Ground: inspected live GitHub PR #1 (draft 17ad5e9) and PR #2 (draft 7ba0dea); exact-head GitHub Actions #637 (run 45081174882) SUCCESS for 7ba0dea. Inspected canonical `SeedRegistry.plant` and `ConstructRegistry.build` in tracked Core151 source. Drive Cycle152 ZIP metadata confirmed; no new archive import.
+- Design finding: `SeedRegistry.plant` moves 1.0 energy from `founder:<actor>` to `work:<actor>` before invoking `ConstructRegistry.build`. The construction settlement is now one Book transaction, but the earlier work transfer is separately committed. Failure in build can strand the work transfer. This is a code-path risk, not yet a measured failing test.
+- Implementation: added seed482 regression in `tests/test_authority.py` at 9d28eab. It injects an OSError from the real construct registry's `build` after Founder funding and requires unchanged Book sequence, balances, transaction history, clock, creation events and blueprint stage, plus 100-Founder/conservation audits. No production engine change.
+- State: `engine/ACTIVE_ENGINE.json` updated at b5b49ee. This entry appended without rewriting prior records.
+- Execute: previous exact-head CI #637 PASS. New seed482 exact-head CI PENDING; local clean-checkout unavailable (git clone DNS failure). No fresh numerical Book residuals. Do not claim seed482 passes or that cross-registry planting is atomic.
+- Boundaries: single `world.book`, `world.tick`, 100 Founder identities, M01 iteration-3 lock, M05 nonauthority, read-only WorldBox, M02–M07 backlog, no main merge.
+- Next: verify seed482 CI. If red, eliminate the intermediate Founder work transfer by funding physical construction atomically within the existing canonical Book, then rerun planting, rollback, checkpoint and mass/energy tests.
