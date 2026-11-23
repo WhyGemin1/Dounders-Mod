@@ -48,9 +48,10 @@ def _origin(sim, kind, lot):
         # Legacy lightweight test doubles without a Book remain supported.
         if getattr(tree, 'book', sim.book) is not sim.book:
             continue
-        provisioned = (tree.provisioning is not None
-                       and lot in tree.provisioning.lots
-                       and tree.provisioning.lots[lot].kind == kind)
+        registry = getattr(getattr(tree, 'provisioning', None), 'lots', None)
+        record = registry.get(lot) if isinstance(registry, dict) else None
+        provisioned = (record is not None and
+                       getattr(record, 'kind', None) == kind)
         provenance = (f'food:make:{tid}:{lot}' if kind == 'food'
                       else f'fruit:grow:{tid}:{lot}')
         if provisioned or provenance in sim.book.operations:
