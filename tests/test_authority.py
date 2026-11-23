@@ -2209,5 +2209,63 @@ class SingleAuthorityTests(unittest.TestCase):
             self.assertLessEqual(abs(restored_proof.book_energy_error), 1e-6)
 
 
+
+    def test_seed484_failed_plant_retry_after_checkpoint_settles_once(self):
+        """An injected failure must not poison a valid post-restart planting retry."""
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from unittest.mock import patch
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+        world, _, tree_id = bootstrap(479)
+        session = SingleEngineSession(world, tree_id)
+        author = next(iter(world.founders.people))
+        blueprint = world.seeds.draft(author, 'realm', 'Seed 484 Realm', x=70., y=70.)
+        world.seeds.research(author, blueprint.id)
+        session._expected_book_sequence = world.book.seq
+        session.step()
+        if world.tick not in blueprint.research_ticks:
+            world.seeds.research(author, blueprint.id)
+        reviewer = next(a for a, f in world.founders.people.items()
+                        if a != author and f.location == world.founders.people[author].location)
+        world.seeds.validate(reviewer, blueprint.id)
+        session._expected_book_sequence = world.book.seq
+        before = (world.book.seq, dict(world.book.mass), dict(world.book.energy),
+                  list(world.book.transaction_history), len(world.seeds.plants))
+        with patch.object(world.seeds.constructs, 'build',
+                          side_effect=OSError('seed484 injected build failure')):
+            with self.assertRaisesRegex(OSError, 'seed484 injected'):
+                world.seeds.plant(author, blueprint.id)
+        self.assertEqual(before, (world.book.seq, dict(world.book.mass),
+                                  dict(world.book.energy),
+                                  list(world.book.transaction_history),
+                                  len(world.seeds.plants)))
+        self.assertEqual(blueprint.stage, 'validated')
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / 'seed484.checkpoint'
+            save_checkpoint(world, tree_id, path)
+            recovered = load_checkpoint(path, expected_tree_id=tree_id)
+            w = recovered.world
+            self.assertEqual(w.book.seq, before[0])
+            self.assertEqual(w.seeds.blueprints[blueprint.id].stage, 'validated')
+            planted = w.seeds.plant(author, blueprint.id)
+            self.assertEqual(w.book.seq, before[0] + 1)
+            self.assertEqual(len(w.seeds.plants), before[4] + 1)
+            self.assertEqual(w.seeds.blueprints[blueprint.id].planted_id, planted['id'])
+            save_checkpoint(w, tree_id, path)
+            again = load_checkpoint(path, expected_tree_id=tree_id)
+            v = again.world
+            settled = (v.book.seq, dict(v.book.mass), dict(v.book.energy),
+                       list(v.book.transaction_history), len(v.seeds.plants))
+            with self.assertRaises(ValueError):
+                v.seeds.plant(author, blueprint.id)
+            self.assertEqual(settled, (v.book.seq, dict(v.book.mass),
+                                       dict(v.book.energy),
+                                       list(v.book.transaction_history),
+                                       len(v.seeds.plants)))
+            proof = again.audit()
+            self.assertEqual(proof.founder_count, 100)
+            self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
+
 if __name__ == '__main__':
     unittest.main()
