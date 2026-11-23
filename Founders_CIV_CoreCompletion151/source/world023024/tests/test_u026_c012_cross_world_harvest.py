@@ -8,11 +8,11 @@ from founders_civ.core.founder_harvesting import perform_harvest
 class CrossWorldHarvestIdentityTests(unittest.TestCase):
     def make_sim(self, duplicate):
         lot = "LOCAL-7"
-        record = lambda: SimpleNamespace(kind="food", state="stored")
+        record = lambda: SimpleNamespace(kind="food", state="stored", created=0)
         def tree(tid):
             resources = SimpleNamespace(harvest_food=lambda lot, founder: "receipt-1")
             return SimpleNamespace(
-                id=tid, provisioning=SimpleNamespace(lots={lot: record()}),
+                id=tid, age=4, provisioning=SimpleNamespace(lots={lot: record()}),
                 observations={"F1": {"seen_tick": 4, "known_lots": [
                     {"lot": lot, "kind": "food"}]}},
                 resources=resources)
