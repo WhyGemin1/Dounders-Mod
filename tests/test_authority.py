@@ -2382,5 +2382,33 @@ class SingleAuthorityTests(unittest.TestCase):
             print('seed484 durable retry Book residuals: mass={:.17g} energy={:.17g}'.format(
                 proof.book_mass_error, proof.book_energy_error))
 
+    def test_seed485_poisoned_session_rejects_read_only_observer(self):
+        """Observer admission must fail closed after uncertain Core151 outcomes."""
+        class Observer:
+            def snapshot(self):
+                return {'read_only': True}
+
+        for poisoned_flag in ('_checkpoint_uncertain', '_step_uncertain'):
+            with self.subTest(poisoned_flag=poisoned_flag):
+                world, _, tree_id = bootstrap(485)
+                session = SingleEngineSession(world, tree_id)
+                observer = Observer()
+                self.assertIs(session.attach_observer(observer), observer)
+                before = (world.tick, world.book.seq, dict(world.book.mass),
+                          dict(world.book.energy),
+                          list(world.book.transaction_history),
+                          set(world.founders.people))
+                setattr(session, poisoned_flag, True)
+                with self.assertRaisesRegex(RuntimeError, 'outcome uncertain'):
+                    session.attach_observer(observer)
+                self.assertEqual(before, (
+                    world.tick, world.book.seq, dict(world.book.mass),
+                    dict(world.book.energy),
+                    list(world.book.transaction_history),
+                    set(world.founders.people)))
+                # Audit itself is also quarantined, not a false success.
+                with self.assertRaises(RuntimeError):
+                    session.audit()
+
 if __name__ == '__main__':
     unittest.main()
