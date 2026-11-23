@@ -2410,5 +2410,32 @@ class SingleAuthorityTests(unittest.TestCase):
                 with self.assertRaises(RuntimeError):
                     session.audit()
 
+    def test_seed486_observer_admission_requires_book_conservation(self):
+        """A read-only probe must not be admitted when Book history has drifted."""
+        world, _, tree_id = bootstrap(486)
+        session = SingleEngineSession(world, tree_id)
+
+        class Observer:
+            def snapshot(self):
+                return {'read_only': True}
+
+        observer = Observer()
+        self.assertIs(session.attach_observer(observer), observer)
+        before = (world.tick, world.book.seq, dict(world.book.mass),
+                  dict(world.book.energy), set(world.founders.people))
+        # Corrupt only receipt/history metadata; no balances or clock change.
+        original_transactions = world.book.transactions
+        try:
+            world.book.transactions = original_transactions + 1
+            with self.assertRaisesRegex(RuntimeError, 'Book history metadata drift'):
+                session.attach_observer(observer)
+            self.assertEqual(before, (world.tick, world.book.seq,
+                                      dict(world.book.mass),
+                                      dict(world.book.energy),
+                                      set(world.founders.people)))
+        finally:
+            world.book.transactions = original_transactions
+        self.assertIs(session.attach_observer(observer), observer)
+
 if __name__ == '__main__':
     unittest.main()
