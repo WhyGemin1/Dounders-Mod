@@ -52,10 +52,12 @@ def propose_nutrition(sim, founder):
         gut = f'gut:founder:{founder}:lot:{lot}'
         ingest_id = f'food:ingest:{lot}:{founder}'
         digest_id = f'food:digest:{lot}:{founder}'
-        if ingest_id not in book.operations and book.mass[holding] >= .08-1e-8:
+        if (ingest_id not in book.operations and book.mass[holding] >= .08-1e-8
+                and book.energy[f'food_energy:lot:{lot}:founder:{founder}'] >= .02-1e-8):
             proposals.append((4.50, 'food_ingest', None, (tree_id, lot)))
         elif (ingest_id in book.operations and digest_id not in book.operations
               and book.mass[gut] >= .08-1e-8
+              and book.energy[f'gut_energy:founder:{founder}:lot:{lot}'] >= .02-1e-8
               and (book.energy[f'founder:{founder}'] >= .001-1e-8
                    or book.energy[f'body_chemical:founder:{founder}'] >= .001-1e-8)):
             proposals.append((4.70, 'food_digest', None, (tree_id, lot)))
