@@ -135,3 +135,21 @@ def test_scheduler_do_executes_existing_choice_and_does_not_double_ingest():
     sim._do(founder, choice2, [], None, parent=None)
     assert sim.book.mass[f'assimilated:founder:{founder}'] == pytest.approx(.05)
     sim.book.audit()
+
+
+def test_detached_tree_book_cannot_authorize_nutrition():
+    """No portable food may be consumed through a second unaudited Book."""
+    sim, tree, founder, lot = prepared()
+    harvest(sim, tree, founder, lot)
+    assert propose_nutrition(sim, founder)
+    original = tree.book
+    tree.book = pickle.loads(pickle.dumps(original))
+    before = sim.book.seq
+    assert propose_nutrition(sim, founder) == []
+    with pytest.raises(ValueError, match='authoritative Book'):
+        perform_nutrition(sim, founder, 'food_ingest', (tree.id, lot))
+    assert sim.book.seq == before
+    assert sim.book.mass[f'gut:founder:{founder}:lot:{lot}'] == pytest.approx(0)
+    tree.book = original
+    perform_nutrition(sim, founder, 'food_ingest', (tree.id, lot))
+    assert sim.book.seq == before + 1
