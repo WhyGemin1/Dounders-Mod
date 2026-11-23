@@ -1,6 +1,6 @@
 {
-  "source": "U026 C188 detached Book target guard; regression pending",
-  "files": 538,
+  "source": "U026 C190 paired food chemical-charge proposal integrity",
+  "files": 539,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
     ".github/workflows/u026_g2_acceptance.yml": "5427dae9b78cbcb48831815007df1156c3370ea7e507ece1682ff52def817a3a",
@@ -423,7 +423,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "73a8454648e9adc0420f78b3d631b80dfc11c6eaf6d63643268b243815e0b5d1",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "1e0d89b42e701aed410c15b51cdabfd50ed8234954712be5dba393936cf7e38f",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "801bba0ede2bef8cb31273b0b9ca04efb9176549730ffe4abe09750e62bbd02d",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "28115f1ff09ed7b02fb281644a37b3cd43e797938c6ffcd618e0d05491cc3582",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "aaf4bb5aebf04ce7be2f401bc5d640d7f5dc614e94a8695ef06317bce9ca864d",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "f29b6cdb76adbd0bd47d15e0daa5f9dca77ad7ebb2e318318527acb5429f394b",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "2e8ae65991be68a37ce099a32ff63d401e1b1d327bf051d50996c4b43cb1e938",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "decd31a229658d46aca81fd1e82473feac8117b1dfe22485085b6e87951a08bf",
@@ -539,7 +539,8 @@
     "tools/u026_g2_exact_source_audit.py": "ee2a39609c35cd3e1046a433aba75315f15b054b255364f31c1a2e952afd0f29",
     "tools/u026_g2_matched_acceptance.py": "f9f61d8ead5e3db85a54fd3fba998e9f39dd265a8617b5febfa317415bbef148",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c182_malformed_tree_lots.py": "ed249a395054522a0a8ec9aec9634a2fb35344da69661160f1cb3400b561cb37",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c183_harvest_registry.py": "7702552b22ab8a4b2197365e686f7ed76c7d7a491c95840b31cdf85e3f628d2b"
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c183_harvest_registry.py": "7702552b22ab8a4b2197365e686f7ed76c7d7a491c95840b31cdf85e3f628d2b",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c190_nutrition_paired_charge.py": "f622cca7aecf96238d6cb2604efa12b97a86eca25a60c35528b3ef2d76eab217"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
@@ -602,9 +603,9 @@
   "source_commit": "ad6b8cb89615e9c8546c29c5502d234cf98d6954",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c179_observation_timestamp.py"
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c190_nutrition_paired_charge.py"
   ],
-  "gate_decision": "REVISE - C186 CI and ecological review pending",
-  "candidate_note": "C187: fail closed on detached Tree Book during food proposal and ingestion; regression test"
+  "gate_decision": "REVISE - C190 CI and ecological review pending",
+  "candidate_note": "C190: reject autonomous ingest/digest proposals when identified Book matter lacks paired chemical energy; new tests"
 }
