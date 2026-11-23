@@ -2297,6 +2297,13 @@ class SingleAuthorityTests(unittest.TestCase):
                              len(before[3]) + 1)
             self.assertEqual(len(rolled_back.world.seeds.plants), before[4] + 1)
             self.assertEqual(retry['id'], planted['id'])
+            # A replayed creation must produce exactly one physical construct,
+            # not just one Book transaction or one planting ledger entry.
+            self.assertEqual(set(rolled_back.world.seeds.constructs.items) -
+                             preplant_construct_ids,
+                             set(w.seeds.constructs.items) - preplant_construct_ids)
+            self.assertEqual(len(rolled_back.world.seeds.constructs.items),
+                             len(preplant_construct_ids) + 1)
             save_checkpoint(rolled_back.world, tree_id, path)
             again = load_checkpoint(path, expected_tree_id=tree_id)
             v = again.world
