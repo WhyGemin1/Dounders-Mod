@@ -1579,3 +1579,10 @@
 - EXECUTE: Reviewed prior-head GitHub CI #667 logs; source committed but new regression NOT YET EXECUTED on exact head. No local clean-checkout run or new numerical residuals this cycle. Native WorldBox and long-horizon ecology NOT RUN.
 - ECOLOGY/AUDIT/HANDOFF: Single world.book, world.tick and 100 Founder identities remain required. M01 iteration-3 repair lock, M05 SQLite nonauthority, external WorldBox read-only and M02–M07 backlog unchanged. Both PRs remain draft; no main merge.
 - NEXT: Run exact-head CI for seed484 interrupted replace, fix any failure (including deterministic creation ID assumptions), and collect numerical Book audit after durable retry.
+
+## 2026-11-23 03:57 CST — seed484 interrupted-save rollback Book equality
+- GROUND: Inspected existing Core151 branch source/state/ledger and authorized Drive ZIP metadata; GitHub Actions #670 (45142863891) completed SUCCESS on previous head b028dc3. All headless job steps succeeded, including authority suite. No native WorldBox test.
+- IMPLEMENT: Extended existing seed484 test (commit b39ba3f) to assert byte-independent canonical Book mass balances, energy balances and transaction history exactly match the pre-plant snapshot after failed os.replace and checkpoint reload. Added numeric conservation residual logging after rollback and final durable retry; no new Book or clock. Updated ACTIVE_ENGINE.json at f803684.
+- EXECUTE: Reviewed CI #670 job and log; previous interrupted-save test verified by CI. New exact-state assertions and numerical outputs NOT YET EXECUTED on exact head. No local clean-checkout run this cycle; no new numeric seed484 residuals claimed.
+- ECOLOGY/AUDIT/HANDOFF: Existing world.book, world.tick, 100 Founder identities, M01 iteration-3 repair lock, M05 nonauthority, and WorldBox read-only policy preserved. No merge or main change; ecological stability remains unverified.
+- NEXT: Verify exact-head CI of new regression, extract rollback/final-retry residuals, fix any failure before new mechanics.
