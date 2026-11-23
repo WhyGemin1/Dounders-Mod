@@ -24,14 +24,14 @@ class ConstructRegistry:
         self.book=book;self.items={};self.events=[]
 
     def build(self,id,kind,host,material_account,mass,daily_energy,
-              initial_reserve,binding_energy=2.,collapse_to='remnant',work_source='world_work'):
+              initial_reserve,binding_energy=2.,collapse_to='remnant',work_source='world_work',funding_source=None):
         if id in self.items or kind not in ('construct','dimension'):
             raise ValueError('duplicate or invalid construct')
         if min(mass,daily_energy,initial_reserve,binding_energy)<0 or mass==0 or binding_energy<.3:
             raise ValueError('invalid construct resources')
         if collapse_to not in ('remnant','mist','inert'):
             raise ValueError('unknown collapse state')
-        if work_source=='house' or self.book.energy[work_source]<1.:
+        if work_source=='house' or (self.book.energy[work_source]<1. if funding_source is None else (funding_source==work_source or self.book.energy[funding_source]<1.)):
             raise ValueError('construction work requires a funded non-House source')
         if self.book.energy['house']<initial_reserve+binding_energy:
             raise ValueError('not enough House energy')
@@ -40,6 +40,8 @@ class ConstructRegistry:
         # an exception in a later Book call because there is no later call.
         # The work-source output remains exactly work minus the transform toll.
         funding = [(work_source, 'environment:heat', .9)]
+        if funding_source is not None:
+            funding.append((funding_source, work_source, 1.))
         if initial_reserve > 0:
             funding.append(('house', f'reserve:{id}', initial_reserve))
         if binding_energy > 0:
