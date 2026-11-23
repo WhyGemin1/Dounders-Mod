@@ -140,3 +140,27 @@ def test_scan_rejects_missing_seed_or_detached_book_without_mutation():
         tree.book = original_book
     assert (dict(sim.book.mass), dict(sim.book.energy), sim.book.seq) == before
     assert founder not in tree.observations
+
+
+def test_c194_embodied_fuel_deficit_prefers_digestion_over_more_harvesting():
+    """Nutrition beats additional collection when embodied fuel is depleted."""
+    from types import SimpleNamespace
+    sim = SimpleNamespace(founder_community_foraging_enabled=True,
+                          book=SimpleNamespace(energy={'body_chemical:founder:F052': 0.0}))
+    proposals = [(4.5, 'tree_harvest', None, ('TREE', 'lot', 'food')),
+                 (4.7, 'food_digest', None, ('TREE', 'owned')),
+                 (4.5, 'food_ingest', None, ('TREE', 'owned'))]
+    ranked = prioritize_food(sim, 'F052', proposals)
+    assert ranked[1][0] > ranked[0][0]
+    assert ranked[2][0] > ranked[0][0]
+    assert sim.book.energy == {'body_chemical:founder:F052': 0.0}
+    assert proposals[0][0] == 4.5
+
+
+def test_c194_adequate_body_fuel_preserves_original_ranking():
+    from types import SimpleNamespace
+    sim = SimpleNamespace(founder_community_foraging_enabled=True,
+                          book=SimpleNamespace(energy={'body_chemical:founder:F052': 0.04}))
+    proposals = [(4.5, 'tree_harvest', None, ('TREE', 'lot', 'food')),
+                 (4.7, 'food_digest', None, ('TREE', 'owned'))]
+    assert prioritize_food(sim, 'F052', proposals) == proposals
