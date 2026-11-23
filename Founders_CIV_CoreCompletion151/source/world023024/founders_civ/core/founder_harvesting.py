@@ -21,6 +21,19 @@ def _recent_observation(sim, evidence):
 
 
 
+def _known_entries(evidence):
+    """Treat corrupted checkpoint perceptions as unavailable, never as actions."""
+    if not isinstance(evidence, dict):
+        return ()
+    entries = evidence.get('known_lots', ())
+    if not isinstance(entries, (list, tuple)):
+        return ()
+    return tuple(entry for entry in entries
+                 if isinstance(entry, dict)
+                 and isinstance(entry.get('lot'), str)
+                 and entry.get('kind') in ('food', 'fruit'))
+
+
 def observed_lots(tree):
     """Take a bounded, current snapshot when a Founder actually observes a Tree."""
     policy=tree.provisioning
@@ -57,7 +70,7 @@ def propose_harvest(sim, founder):
     for tid,tree in sorted(sim.world_trees.worlds.items()):
         evidence=tree.observations.get(founder)
         if not _recent_observation(sim, evidence):continue
-        for entry in evidence.get('known_lots',())[:10]:
+        for entry in _known_entries(evidence)[:10]:
             if entry.get('kind') not in ('fruit','food'):continue
             lot=entry.get('lot')
             if not isinstance(lot,str):continue
@@ -92,7 +105,7 @@ def perform_harvest(sim,founder,target):
         raise ValueError('Tree does not share the authoritative Book')
     evidence=tree.observations.get(founder)
     if (not _recent_observation(sim, evidence) or
-        not any(x.get('lot')==lot and x.get('kind')==kind for x in evidence.get('known_lots',()))):
+        not any(x.get('lot')==lot and x.get('kind')==kind for x in _known_entries(evidence))):
         raise ValueError('resource not known through a recent observation')
     # A portable holding and its Book harvest receipt currently use the lot
     # name without the World ID. Fail closed before any transfer when another
@@ -117,7 +130,7 @@ def perform_harvest(sim,founder,target):
         # The Founder learns the specific lot is unavailable only by reaching
         # the claimed resource or personally attempting the transfer.
         if tree.book.mass[source]<=1e-9:record.state='transferred'
-        evidence['known_lots']=[x for x in evidence['known_lots'] if x.get('lot')!=lot]
+        evidence['known_lots']=[x for x in _known_entries(evidence) if x.get('lot')!=lot]
         raise ValueError('resource no longer available')
     # No arbitrary decision/transfer cost; real labor physiology is separate.
     if kind=='fruit':txn=tree.resources.harvest_fruit(lot,founder)
