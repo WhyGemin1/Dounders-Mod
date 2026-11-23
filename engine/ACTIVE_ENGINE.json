@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-23T14:58:55-06:00",
+  "updated_at": "2026-11-23T15:57:35-06:00",
   "repository": "WhyGemin1/Dounders-Mod",
   "active_engine": "Core151 IntegratedWorld (recovered Cycle152 source)",
   "authoritative_book": "IntegratedWorld.book (founders_civ.core.ledger.Book)",
@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "CI run 45255601733 SUCCESS on prior head f8ef883; observer authority guard verified. Seed485 quarantined observer regression committed fddd2e9; exact-head execution pending.",
+  "source_status": "Previous exact-head CI #702 SUCCESS on 0b62fce; production observer admission now calls canonical Book audit at cd3a78c; seed486 metadata drift regression committed a42ac35, exact-head CI pending.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "Previous-head GitHub Actions 45255601733 SUCCESS; seed485 test not yet verified.",
+    "github_ci": "GitHub Actions #702 SUCCESS on previous head 0b62fce; new observer Book audit + seed486 not yet CI verified.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -107,7 +107,9 @@
     "seed474": "PROVISIONAL: real Core151 tick, durable restart, four malformed M01 harvest source/revision identities; unchanged Book/clock/events and healthy session asserted; exact-head CI pending.",
     "seed482_atomic_planting": "PROVISIONAL: combined Founder work funding + construction settlement in one Book transform; seed479 transaction assertion updated; exact-head execution pending.",
     "seed483_durable_rejection": "PROVISIONAL: test extended at b69b920 to save/reload after rejected construction and compare canonical Book, clock, construct state, 100 Founder audit; CI pending.",
-    "seed484_interrupted_replace": "VERIFIED GitHub Actions #670 (45142863891) on b028dc3; stronger exact Book state comparison and numerical rollback/durable-retry logs committed b39ba3f, unverified."
+    "seed484_interrupted_replace": "VERIFIED GitHub Actions #670 (45142863891) on b028dc3; stronger exact Book state comparison and numerical rollback/durable-retry logs committed b39ba3f, unverified.",
+    "seed485_observer_quarantine": "VERIFIED: GitHub Actions #702 SUCCESS on previous head 0b62fce, including seed485 observer quarantine.",
+    "seed486_observer_book_audit": "PROVISIONAL: production observer admission invokes audit() to reject Book receipt/history metadata drift; seed486 tests rejection, no Book/clock/Founder mutation and healthy recovery; exact-head CI pending."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -140,8 +142,8 @@
     "seed484_second_recovery_duplicate": "VERIFIED CI #697 SUCCESS on 82a306c, including seeds.events immutability assertion.",
     "seed485_observer_quarantine": "PROVISIONAL: test committed fddd2e9; tests _checkpoint_uncertain and _step_uncertain, unchanged Book/clock/Founder identities; exact-head CI pending."
   },
-  "latest_cycle": "2026-11-23 10:59 CST: CI #689 SUCCESS on 0f8cedb (79/79); seed484 second-recovery mass=-8.7311491370201111e-11 energy=-1.0652001947164536e-08. New second-recovery duplicate rejection test committed 9e31e24; exact-head CI pending.",
-  "next_task": "Verify exact-head CI for seed485, then prioritize production Core151 integration and clean-checkout tests; do not expand repetitive checkpoint tests.",
+  "latest_cycle": "2026-11-23 15:57 CST: prior-head CI #702 SUCCESS. Production Book audit before observer admission committed cd3a78c; seed486 regression committed a42ac35; exact-head CI pending.",
+  "next_task": "Verify exact-head CI on final ledger commit and run a fresh clean-checkout authority unittest; if successful prioritize actual production integration and WorldBox read-only boundary validation.",
   "p0_seed438_recovery": "VERIFIED CI #393 two-tick deterministic replay; second-tick numerical output and explicit authority assertions committed 0803b419, pending exact-head CI",
   "p0_seed453_checkpoint_rejection": "PROVISIONAL: seed453 test committed bfe621e; rejected underfunded tending must preserve checkpoint bytes and Book, then affordable tending must survive restart. Exact-head CI pending; no fresh residuals.",
   "p0_seed454_missing_account": "PROVISIONAL: source-only isolated preflight fixture; removes Founder energy key in temporary defaultdict with audit mocked only during invalid-state preflight; restores canonical mapping and asserts audit. Not yet executed.",
