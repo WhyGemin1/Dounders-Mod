@@ -2184,6 +2184,28 @@ class SingleAuthorityTests(unittest.TestCase):
         self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
         self.assertLessEqual(abs(proof.book_energy_error), 1e-6)
 
+        # Rejected settlement must remain absent after durable recovery.
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        from founders_engine.checkpoint import save_checkpoint, load_checkpoint
+        with TemporaryDirectory() as directory:
+            checkpoint = Path(directory) / 'seed483.checkpoint'
+            save_checkpoint(world, tree_id, checkpoint)
+            recovered = load_checkpoint(checkpoint, expected_tree_id=tree_id)
+            restored = recovered.world
+            self.assertIs(restored.seeds.constructs.book, restored.book)
+            self.assertEqual(before, (
+                restored.tick, restored.book.seq, dict(restored.book.mass),
+                dict(restored.book.energy),
+                list(restored.book.transaction_history),
+                dict(restored.seeds.constructs.items),
+                list(restored.seeds.constructs.events)))
+            self.assertNotIn('seed483-unfunded', restored.seeds.constructs.items)
+            restored_proof = recovered.audit()
+            self.assertEqual(restored_proof.founder_count, 100)
+            self.assertLessEqual(abs(restored_proof.book_mass_error), 1e-6)
+            self.assertLessEqual(abs(restored_proof.book_energy_error), 1e-6)
+
 
 if __name__ == '__main__':
     unittest.main()
