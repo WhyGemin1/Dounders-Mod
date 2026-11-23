@@ -1,5 +1,5 @@
 {
-  "source": "U026 C187 detached Tree Book nutrition invariant and regression",
+  "source": "U026 C188 detached Book target guard; regression pending",
   "files": 538,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
@@ -423,7 +423,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "73a8454648e9adc0420f78b3d631b80dfc11c6eaf6d63643268b243815e0b5d1",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "1e0d89b42e701aed410c15b51cdabfd50ed8234954712be5dba393936cf7e38f",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "801bba0ede2bef8cb31273b0b9ca04efb9176549730ffe4abe09750e62bbd02d",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "41f44c5a9e308528e2423a10aedaab6159fbf6a46a74a00ad33e672872615d27",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "28115f1ff09ed7b02fb281644a37b3cd43e797938c6ffcd618e0d05491cc3582",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "f29b6cdb76adbd0bd47d15e0daa5f9dca77ad7ebb2e318318527acb5429f394b",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "2e8ae65991be68a37ce099a32ff63d401e1b1d327bf051d50996c4b43cb1e938",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_tree_agency.py": "decd31a229658d46aca81fd1e82473feac8117b1dfe22485085b6e87951a08bf",
