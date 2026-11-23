@@ -1,6 +1,6 @@
 {
-  "source": "U026 C177: repair C012 fixture after C176 food chronology gate",
-  "files": 534,
+  "source": "U026 C178: filter checkpoint-corrupt Tree lot observations",
+  "files": 535,
   "sha256": {
     ".github/workflows/u026_core151.yml": "09e104759798d3d96942d13f29363681e4e32dcacea9bed349c117d3ab860fd9",
     ".github/workflows/u026_g2_acceptance.yml": "5427dae9b78cbcb48831815007df1156c3370ea7e507ece1682ff52def817a3a",
@@ -407,7 +407,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "73a8454648e9adc0420f78b3d631b80dfc11c6eaf6d63643268b243815e0b5d1",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "2355885bf289771f559799762272ae3dc9d957f8ca1d11defdcccaf3619af63a",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "ade3593d15d70a59e6ff85d0821a3d1fef3ee495a04505e439a0a859e302b27a",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_harvesting.py": "86ec1c943fd77941bd2d5cdffddb395e0ed1d10a5baee02347197ce3be5e44b6",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py": "b2715c371541680501ac4a3de3e1895ac4d92e9bddf69dc6e9444e2b46225c9a",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_parent_stewardship.py": "f29b6cdb76adbd0bd47d15e0daa5f9dca77ad7ebb2e318318527acb5429f394b",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_recovery.py": "2e8ae65991be68a37ce099a32ff63d401e1b1d327bf051d50996c4b43cb1e938",
@@ -535,7 +535,8 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c172_inactive_checkpoint.py": "48f742c29ba389f28496074e4a036ddd07a6e6b80b96f5ec4948f4fb0207ef7e",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c174_premature_fruit_checkpoint.py": "0846333d1e7b82166a09c6fa659a641b08df84402632425cc105a0bd5eee4ed5",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c175_harvest_maturity_boundary.py": "d860abcb0a0cdc8f4ef2b09bdd03d58f45590cea363850ff6095e970e1cef70d",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c176_food_harvest_checkpoint.py": "e8b989979bb9999a062d56779c2e4a3054660739d882b353d12549671ea36bcb"
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c176_food_harvest_checkpoint.py": "e8b989979bb9999a062d56779c2e4a3054660739d882b353d12549671ea36bcb",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c178_observation_chronology.py": "f2f02b517a688e5fc2aacdb4b57b8d6ab5a8cc420ffa9c53f68c664166010d22"
   },
   "excluded": [
     "Founders_CIV_CoreCompletion151/source/world023024/__pycache__/knowledge_architecture.cpython-313.pyc",
