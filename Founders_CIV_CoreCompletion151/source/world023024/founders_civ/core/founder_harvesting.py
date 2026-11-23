@@ -88,6 +88,10 @@ def perform_harvest(sim,founder,target):
     if record is None or record.kind!=kind:raise ValueError('unavailable identified resource lot')
     source=f'{"portable_food" if kind=="food" else "fruit"}:lot:{lot}:tree:{tid}'
     if (record.state not in ('stored','mature') or
+        (kind=='food' and record.state!='stored') or
+        (type(record.created) is not int or record.created < 0 or
+         type(tree.age) is not int or tree.age < 0 or
+         record.created > tree.age) or
         (kind=='fruit' and (record.state!='mature' or
           type(record.created) is not int or record.created < 0 or
           type(tree.age) is not int or tree.age - record.created < tree.provisioning.maturity_days)) or
