@@ -169,7 +169,9 @@ class TreeProvisioningPolicy:
                     rec.created > tree.age or rec.biome not in habitats or
                     rec.kind not in ('food', 'fruit') or
                     rec.state not in ('stored', 'mature', 'transferred', 'decayed') or
-                    (rec.kind == 'food' and rec.state == 'mature')):
+                    (rec.kind == 'food' and rec.state == 'mature') or
+                    (rec.kind == 'fruit' and rec.state == 'mature' and
+                     tree.age - rec.created < self.maturity_days)):
                 raise ValueError('invalid Tree provisioned-lot checkpoint')
         # Restored checkpoint age is a strict scheduler integer. A Boolean or
         # fractional last_age can otherwise compare equal to a real day and
