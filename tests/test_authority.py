@@ -2318,6 +2318,14 @@ class SingleAuthorityTests(unittest.TestCase):
                                        dict(v.book.energy),
                                        list(v.book.transaction_history),
                                        len(v.seeds.plants)))
+            # Duplicate rejection must also leave the physical registry and
+            # authoritative identity/clock state unchanged after restart.
+            self.assertEqual(set(v.seeds.constructs.items),
+                             set(rolled_back.world.seeds.constructs.items))
+            self.assertEqual(len(v.seeds.constructs.items),
+                             len(preplant_construct_ids) + 1)
+            self.assertEqual(v.tick, world.tick)
+            self.assertEqual(set(v.founders.people), set(world.founders.people))
             proof = again.audit()
             self.assertEqual(proof.founder_count, 100)
             self.assertLessEqual(abs(proof.book_mass_error), 1e-6)
