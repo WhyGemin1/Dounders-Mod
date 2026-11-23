@@ -1514,3 +1514,11 @@
 - Execute: previous exact-head CI #637 PASS. New seed482 exact-head CI PENDING; local clean-checkout unavailable (git clone DNS failure). No fresh numerical Book residuals. Do not claim seed482 passes or that cross-registry planting is atomic.
 - Boundaries: single `world.book`, `world.tick`, 100 Founder identities, M01 iteration-3 lock, M05 nonauthority, read-only WorldBox, M02–M07 backlog, no main merge.
 - Next: verify seed482 CI. If red, eliminate the intermediate Founder work transfer by funding physical construction atomically within the existing canonical Book, then rerun planting, rollback, checkpoint and mass/energy tests.
+
+
+### 2026-11-22 19:00 CST — Seed482 whole-planting atomicity repair
+- GROUND: GitHub Actions #640 (45086438807) failed 1 of 77 authority tests; seed482 proved partial Book settlement (sequence 2924 to 2925) when construction fails after Founder work funding. Provenance gate passed. Authorized Drive Cycle152 archive metadata confirmed.
+- IMPLEMENT: Existing `SeedRegistry.plant()` no longer separately debits Founder work. `ConstructRegistry.build()` accepts optional `funding_source` and includes Founder-to-work funding in its one canonical `Book.transform` transaction. No new Book or world clock. Seed479 expected sequence increment changed from two to one; exact reviewed source blob pins updated.
+- EXECUTE: Previous-head CI failed; new head CI NOT YET VERIFIED. No local clean checkout (container GitHub DNS resolution failure). No post-repair Book residuals. Previous-head seed427 residual mass -8.9130480773746967e-11; energy -1.0302755981683731e-08.
+- AUDIT: Atomic rollback and checkpoint durability PROVISIONAL until new CI; native WorldBox, ecological stability, and long horizons BLOCKED/unverified. M01 iteration3 lock and M05 nonauthority preserved. PR remains draft, main untouched.
+- NEXT: Verify exact-head CI and correct any failure; then add underfunded construction and restart assertions for whole-operation atomicity.
