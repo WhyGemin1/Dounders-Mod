@@ -114,3 +114,29 @@ def test_g2_food_only_owner_observation_does_not_crash_or_invent_census():
     assert (dict(sim.book.mass), dict(sim.book.energy), sim.book.seq) == before
     assert len(sim.founders.people) == 100
     sim.book.audit()
+
+
+def test_scan_rejects_missing_seed_or_detached_book_without_mutation():
+    """A stale Tree registry cannot authorize perception or alter Book state."""
+    sim, tid = prepared()
+    founder = 'F052'
+    sim.founders.people[founder].location = 'riverbank'
+    tree = sim.world_trees.worlds[tid]
+    before = (dict(sim.book.mass), dict(sim.book.energy), sim.book.seq)
+    seed_record = sim.seeds.plants.pop(tid)
+    try:
+        assert propose_community_scan(sim, founder) == []
+        with pytest.raises(ValueError, match='physically'):
+            perform_community_scan(sim, founder, tid)
+    finally:
+        sim.seeds.plants[tid] = seed_record
+    original_book = tree.book
+    tree.book = object()
+    try:
+        assert propose_community_scan(sim, founder) == []
+        with pytest.raises(ValueError, match='physically'):
+            perform_community_scan(sim, founder, tid)
+    finally:
+        tree.book = original_book
+    assert (dict(sim.book.mass), dict(sim.book.energy), sim.book.seq) == before
+    assert founder not in tree.observations
