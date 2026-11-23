@@ -418,7 +418,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/canon.py": "c2ed048e8b717897f5a690084d3c339b312a9f15b15a859f443f9231d790d7ae",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/autonomous_provisioning.py": "edc792f9ea2daa68b2db16884d8759345703d0c4e33cebf2af9c39c6ef4a72fd",
-    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "92a8c7861af904f238d8101a8f2f1147f152de815ba70419977ebe9eb0332d21",
+    "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/community_foraging.py": "b9fe204b6f2f225cf4895a28b2304720f9a74a224c453a5d956e259875251ab3",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/engine.py": "69b95520daa3e8e0296f894484b68ad58860bcb8b112158d5c30fd532cb86070",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_autonomy.py": "73a8454648e9adc0420f78b3d631b80dfc11c6eaf6d63643268b243815e0b5d1",
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_exchange.py": "1e0d89b42e701aed410c15b51cdabfd50ed8234954712be5dba393936cf7e38f",
@@ -483,7 +483,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c013_lot_isolation.py": "79f0693cbdf86a81233977dd08c9ed9010ca107661b069cffc58d8bb8f273264",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c015_founder_nutrition.py": "4fd3ea73e73c49d9d7455e41db58fe0f8d2a7d5e3c20a9d15da02cca03d579fe",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c016_metabolic_rest.py": "492b72e2269611670bb13c350c28dc8fb3a75c4da8a1b8e90181a8938670965a",
-    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_community_foraging.py": "2f2eeb5d6a8f65e43793992e4e22866400e3067967095f94f359dc89564be2ae",
+    "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_community_foraging.py": "ce72c846847e033fae76810c9e51e60f94b1af50a8fdd1e58e0ccbbfe5ba86cb",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c017_self_world_trees.py": "0354fd66d19465874300d7277b1a8540c438f7cfa332a9ac5351bfb7cb7bbe33",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c018_parent_stewardship.py": "14ec6bd1389436559e8eb781c41f20ec4d6c925eeb1e2ee8fe5ee9c18d096633",
     "Founders_CIV_CoreCompletion151/source/world023024/tests/test_c019_founder_autonomy.py": "280dac3e1ebdc4596dfe5b606243e44289d8094d7158d06149a0e99efc7decc2",
@@ -600,7 +600,7 @@
     "Founders_CIV_CoreCompletion151/source/world023024/web/sample_run.json"
   ],
   "schema": "u026-g2-source-candidate-v1",
-  "source_commit": "ad6b8cb89615e9c8546c29c5502d234cf98d6954",
+  "source_commit": "6e004576c47798ebe6a1c7c366c87b150d04d504",
   "historical_source_manifest": "docs/U026_C018_SOURCE_FINGERPRINT.json",
   "reviewed_change_paths": [
     "Founders_CIV_CoreCompletion151/source/world023024/founders_civ/core/founder_nutrition.py",
