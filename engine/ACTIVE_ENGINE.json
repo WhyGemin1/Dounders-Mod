@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-22T21:01:00-06:00",
+  "updated_at": "2026-11-22T22:03:00-06:00",
   "repository": "WhyGemin1/Dounders-Mod",
   "active_engine": "Core151 IntegratedWorld (recovered Cycle152 source)",
   "authoritative_book": "IntegratedWorld.book (founders_civ.core.ledger.Book)",
@@ -11,10 +11,10 @@
   "historical_archive": "Founders_CIV_Cycle152_SparseFounding_Experimental.zip",
   "overlay": "M01 synthetic Book-funded gateway committed under src/founders_civ/experimental/worldbox_gateway_m01.py; earlier overlays not assumed equivalent",
   "dual_authority_policy": "M05 SQLite Book cannot transact independently; read-only observer until migration",
-  "source_status": "Seed483 CI #649 failed at preflight work-source guard (77/78 passed); fixture repaired on 2ded9b14 to fund work from real Founder, exact-head CI pending.",
+  "source_status": "Seed483 repaired fixture verified CI #652 on 311d9d6; durable checkpoint recovery assertions committed b69b920, exact-head CI pending.",
   "tests": {
     "local_targeted": "6/6 passed headless",
-    "github_ci": "GitHub Actions #649 FAILURE on 2b1d46a: 77/78 authority tests passed, seed483 expected House reserve guard but reached unfunded work-source guard; repair committed 2ded9b14, new CI not verified.",
+    "github_ci": "GitHub Actions #652 SUCCESS at 311d9d630f814ce0e10b51dbebc1ee8e1f637a31, including seed483 insufficient House reserve preflight.",
     "worldbox_game": "NOT RUN",
     "ecology_long_horizon": "NOT RUN",
     "importer_local": "3/3 PASS against exact Drive archive; 27 files extracted",
@@ -105,7 +105,8 @@
     "seed472": "Source and regression committed, exact-head CI not verified; invalid request IDs must not mutate Book, tick, or creation events.",
     "seed473": "Previous seed473 PASS CI #592; extension committed 936c7f2, unverified: rejected malformed IDs followed by valid exactly-once Book settlement and durable replay.",
     "seed474": "PROVISIONAL: real Core151 tick, durable restart, four malformed M01 harvest source/revision identities; unchanged Book/clock/events and healthy session asserted; exact-head CI pending.",
-    "seed482_atomic_planting": "PROVISIONAL: combined Founder work funding + construction settlement in one Book transform; seed479 transaction assertion updated; exact-head execution pending."
+    "seed482_atomic_planting": "PROVISIONAL: combined Founder work funding + construction settlement in one Book transform; seed479 transaction assertion updated; exact-head execution pending.",
+    "seed483_durable_rejection": "PROVISIONAL: test extended at b69b920 to save/reload after rejected construction and compare canonical Book, clock, construct state, 100 Founder audit; CI pending."
   },
   "book_audit": "Prior Core151 tests passed in run 43767189062 before native test fixture failure; no game or long horizon audit",
   "open_gates": [
@@ -121,7 +122,7 @@
   "last_verified_code_commit": "485f1b43dc6acefab96ea2af547b02236cde6ca9",
   "last_verified_ci_url": "https://github.com/WhyGemin1/Dounders-Mod/actions/runs/44455836736",
   "last_unverified_code_commit": "0f2d264b94d5e4c66e4d5cd8906d6b1158f5451f",
-  "next_engineering_task": "Run seed482 exact-head CI; if it fails with stranded Founder work debit, repair SeedRegistry.plant to settle Founder funding and construction in one canonical Book transaction, then verify rollback, checkpoint recovery, 100 identities and conservation.",
+  "next_engineering_task": "Verify exact-head CI for seed483 durable recovery, repair any failure; then add failed planting replay across restart without second settlement.",
   "test_results": {
     "p0_historical_account_alias": "SOURCE f95eadb and TEST ca1e6d9 committed; clean-checkout CI unverified; local git clone failed DNS resolution",
     "p0_boolean_receipt_sequence": "SOURCE 78c8db10 and TEST 212220a2 committed; CI not yet verified",
@@ -136,7 +137,7 @@
     "seed479": "VERIFIED: exact-head GitHub Actions #637 passed at 7ba0dea; corrected successful planting expects two canonical Book transactions.",
     "seed482_cross_registry_atomicity": "PROVISIONAL: regression 9d28eab fault-injects ConstructRegistry.build after Founder work transfer; requires unchanged Book and creation state; exact-head CI pending."
   },
-  "latest_cycle": "2026-11-22 18:01 CST: exact-head CI #637 PASS on 7ba0dea; seed482 post-funding construction failure regression committed 9d28eab, execution pending.",
+  "latest_cycle": "2026-11-22 22:03 CST: CI #652 PASS on 311d9d6; extended seed483 with checkpoint/restart invariants at b69b920, pending exact-head CI.",
   "next_task": "Run seed482 exact-head CI; if it fails with stranded Founder work debit, repair SeedRegistry.plant to settle Founder funding and construction in one canonical Book transaction, then verify rollback, checkpoint recovery, 100 identities and conservation.",
   "p0_seed438_recovery": "VERIFIED CI #393 two-tick deterministic replay; second-tick numerical output and explicit authority assertions committed 0803b419, pending exact-head CI",
   "p0_seed453_checkpoint_rejection": "PROVISIONAL: seed453 test committed bfe621e; rejected underfunded tending must preserve checkpoint bytes and Book, then affordable tending must survive restart. Exact-head CI pending; no fresh residuals.",
