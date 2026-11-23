@@ -17,8 +17,16 @@ def observed_lots(tree):
     if policy is None:return []
     available=[]
     for lot,record in sorted(policy.lots.items()):
-        if record.state not in ('stored','mature'):continue
-        if record.kind=='fruit' and record.state!='mature':continue
+        # Observation must not advertise checkpoint-corrupt food or fruit.
+        # This is perception filtering only; perform_harvest remains the
+        # authoritative, independently checked Book transfer boundary.
+        if record.kind not in ('food', 'fruit'):continue
+        if type(record.created) is not int or record.created < 0:continue
+        if type(tree.age) is not int or tree.age < record.created:continue
+        if record.kind == 'food' and record.state != 'stored':continue
+        if record.kind == 'fruit' and (
+            record.state != 'mature' or
+            tree.age - record.created < policy.maturity_days):continue
         kind=record.kind
         source=f'{"portable_food" if kind=="food" else "fruit"}:lot:{lot}:tree:{tree.id}'
         if tree.book.mass[source]<=1e-9:continue
